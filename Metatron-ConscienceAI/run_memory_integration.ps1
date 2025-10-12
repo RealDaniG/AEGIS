@@ -12,32 +12,22 @@ Param(
     [switch]$Example
 )
 
-Set-StrictMode -Version Latest
-$ErrorActionPreference = 'Stop'
-
-Write-Host "========================================" -ForegroundColor Cyan
-Write-Host "  CONSCIENCEAI MEMORY SYSTEM INTEGRATION" -ForegroundColor Cyan
-Write-Host "  METATRONV2 Integration" -ForegroundColor Cyan
-Write-Host "========================================" -ForegroundColor Cyan
+Write-Host "CONSCIENCEAI MEMORY SYSTEM INTEGRATION"
+Write-Host "METATRONV2 Integration"
 
 # Check Python availability
-Write-Host "`n[1/2] Checking Python environment..." -ForegroundColor Yellow
 python --version 2>$null
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "❌ Error: Python not found in PATH!" -ForegroundColor Red
-    Write-Host "   Please install Python 3.8+ and add to PATH." -ForegroundColor Yellow
+    Write-Host "Error: Python not found in PATH!"
     exit 1
 }
-Write-Host "✅ Python environment OK" -ForegroundColor Green
 
 # Check script existence
 $ScriptPath = Join-Path $PSScriptRoot "scripts\integrate_memory_system.py"
 if (-not (Test-Path $ScriptPath)) {
-    Write-Host "❌ Error: Integration script not found at $ScriptPath" -ForegroundColor Red
+    Write-Host "Error: Integration script not found at $ScriptPath"
     exit 1
 }
-
-Write-Host "`n[2/2] Running memory system integration..." -ForegroundColor Yellow
 
 # Build command arguments
 $ArgsList = @()
@@ -74,19 +64,4 @@ $ArgsList += "--metatron-url"
 $ArgsList += $MetatronUrl
 
 # Execute the integration script
-Write-Host "`nExecuting: python $ScriptPath $($ArgsList -join ' ')" -ForegroundColor Gray
 python $ScriptPath @ArgsList
-
-if ($LASTEXITCODE -eq 0) {
-    Write-Host "`n✅ Memory system integration completed successfully!" -ForegroundColor Green
-} else {
-    Write-Host "`n❌ Memory system integration failed!" -ForegroundColor Red
-    exit $LASTEXITCODE
-}
-
-Write-Host "`n📝 Memory file location: $MemoryPath" -ForegroundColor Yellow
-Write-Host "🌐 METATRON API: $MetatronUrl" -ForegroundColor Yellow
-
-Write-Host "`n========================================" -ForegroundColor Cyan
-Write-Host "  Integration Complete" -ForegroundColor Cyan
-Write-Host "========================================" -ForegroundColor Cyan
