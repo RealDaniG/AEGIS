@@ -33,10 +33,9 @@ class RobustRealTimeVisualizer:
     def __init__(self):
         # Connection endpoints
         self.metatron_host = "localhost"
-        # Updated to use the correct port (8005 for HTTP API, 8006 for WebSocket)
-        self.metatron_port = 8005
-        self.ws_port = 8006
-        self.ws_url = f"ws://{self.metatron_host}:{self.ws_port}/ws"
+        # Updated to use the correct port (8003 for both HTTP API and WebSocket)
+        self.metatron_port = 8003
+        self.ws_url = f"ws://{self.metatron_host}:{self.metatron_port}/ws"
         self.api_base = f"http://{self.metatron_host}:{self.metatron_port}"
         
         # Data management
@@ -120,7 +119,7 @@ class RobustRealTimeVisualizer:
         """Establish HTTP connection with validation"""
         try:
             self.connections["http"]["last_attempt"] = time.time()
-            response = requests.get(f"{self.api_base}/health", timeout=3)
+            response = requests.get(f"{self.api_base}/api/health", timeout=3)
             
             if response.status_code == 200:
                 health_data = response.json()
