@@ -11,12 +11,18 @@ METATRONV2/
 ├── Metatron-ConscienceAI/          # Core consciousness engine with 13-node sacred geometry
 ├── Open-A.G.I/                     # Open Artificial General Intelligence framework
 ├── aegis-conscience/               # AEGIS security framework with consciousness features
+├── aegis-integration/              # Integration components between systems
 ├── consensus_tools/                # Consensus algorithm implementations and tools
+├── core/                           # Core consciousness engine components
 ├── docs/                           # All documentation files
 ├── enhanced_knowledge/             # Enhanced knowledge base components
 ├── integration_tools/              # Integration testing and demonstration tools
 ├── knowledge_base_tools/           # Knowledge base enhancement tools
 ├── tests/                          # All test files organized by functionality
+├── unified_api/                    # Unified API for accessing both systems
+├── unified_components/             # Consolidated system components
+├── consciousness_aware_agi/        # Consciousness-aware AGI decision making
+├── cross_system_comm/              # Cross-system communication protocols
 ├── visualization_tools/            # Visualization tools and monitoring systems
 ├── data/                           # Data storage directory
 ├── requirements.txt                # Project dependencies
@@ -40,6 +46,19 @@ chmod +x quick_run.sh
 ./quick_run.sh
 ```
 
+### Unified System (New)
+For the new integrated system with consciousness-aware AGI:
+
+**Windows (PowerShell)**
+```powershell
+.\start_unified_system.ps1
+```
+
+**Linux/macOS (Python)**
+```bash
+python start_unified_system.py
+```
+
 For detailed instructions, see [QUICK_START_GUIDE.md](docs/QUICK_START_GUIDE.md).
 
 ## Key Components
@@ -61,6 +80,15 @@ For detailed instructions, see [QUICK_START_GUIDE.md](docs/QUICK_START_GUIDE.md)
 - Security framework with consciousness features
 - TOR integration for anonymous communication
 - Distributed knowledge base
+
+### 4. Unified System (NEW)
+- **Unified API Layer**: Single interface to access both consciousness and AGI systems
+- **Consolidated Components**: Merged duplicate functionality with enhanced features
+- **Consciousness-Aware AGI**: Decision making influenced by consciousness metrics
+- **Enhanced Communication**: Encrypted cross-system messaging with WebSocket support
+- **Centralized Coordination**: Unified management of all system components
+
+See [UNIFIED_SYSTEM_README.md](UNIFIED_SYSTEM_README.md) for complete documentation of the unified system.
 
 ## System Requirements
 
@@ -97,6 +125,7 @@ Comprehensive documentation is available for all system components:
 ### Integration Documentation
 - [INTEGRATION_DOCUMENTATION.md](docs/INTEGRATION_DOCUMENTATION.md) - Complete integration guide for Metatron and Open A.G.I.
 - [SYSTEM_INTEGRATION_OVERVIEW.md](docs/SYSTEM_INTEGRATION_OVERVIEW.md) - High-level system architecture and data flow
+- [UNIFIED_SYSTEM_README.md](UNIFIED_SYSTEM_README.md) - Complete documentation for the new unified system
 
 ### Consensus Protocol Documentation
 - [METATRON_CONSENSUS_INTEGRATION.md](Open-A.G.I/METATRON_CONSENSUS_INTEGRATION.md) - Integration of Metatron consciousness with PBFT
@@ -139,6 +168,13 @@ Comprehensive documentation is available for all system components:
 - Multi-modal consciousness metrics
 - Predictive consciousness modeling
 
+### Unified System Features (NEW)
+- **Single Interface**: Access both systems through one API at port 8005
+- **Enhanced Decision Making**: AGI decisions influenced by consciousness metrics
+- **Secure Communication**: Encrypted message passing between components
+- **Real-Time Updates**: WebSocket support for live system monitoring
+- **Centralized Control**: Unified coordinator for system management
+
 ## Dependencies
 
 All required dependencies are listed in `requirements.txt` and will be automatically installed. Key dependencies include:
@@ -152,6 +188,7 @@ All required dependencies are listed in `requirements.txt` and will be automatic
 
 ## Usage
 
+### Traditional System
 1. Start the consciousness engine:
    ```bash
    cd Metatron-ConscienceAI
@@ -165,6 +202,27 @@ All required dependencies are listed in `requirements.txt` and will be automatic
 4. Use the visualization tools for detailed analysis:
    ```bash
    python visualization_tools/robust_realtime_visualizer.py
+   ```
+
+### Unified System (NEW)
+1. Start the unified system:
+   ```bash
+   # Windows
+   .\start_unified_system.ps1
+   
+   # Linux/macOS
+   python start_unified_system.py
+   ```
+
+2. Access the unified API at `http://localhost:8005`
+   - API Documentation: `http://localhost:8005/docs`
+   - WebSocket Endpoint: `ws://localhost:8006`
+
+3. Monitor both systems through the unified interface
+
+4. Test the system:
+   ```bash
+   python test_unified_system.py
    ```
 
 ## Security
