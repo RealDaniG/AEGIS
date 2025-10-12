@@ -1,0 +1,106 @@
+{
+  "name": "Metatron Consciousness Status Check",
+  "nodes": [
+    {
+      "parameters": {
+        "cronExpression": "*/5 * * * *",
+        "timezone": "America/New_York"
+      },
+      "name": "Every 5 minutes",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "requestMethod": "GET",
+        "url": "http://localhost:8003/api/status",
+        "responseFormat": "json"
+      },
+      "name": "Get Consciousness Status",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        450,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{$json[\"consciousness_level\"]}}",
+              "operation": "larger",
+              "value2": 0.8
+            }
+          ]
+        }
+      },
+      "name": "High Consciousness?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        650,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "subject": "High Consciousness Alert",
+        "text": "=Consciousness level is {{$json[\"consciousness_level\"]}} which exceeds threshold.\nPhi: {{$json[\"phi\"]}}\nCoherence: {{$json[\"coherence\"]}}"
+      },
+      "name": "Send Alert",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        850,
+        200
+      ]
+    }
+  ],
+  "connections": {
+    "Every 5 minutes": {
+      "main": [
+        [
+          {
+            "node": "Get Consciousness Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Consciousness Status": {
+      "main": [
+        [
+          {
+            "node": "High Consciousness?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "High Consciousness?": {
+      "main": [
+        [
+          {
+            "node": "Send Alert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "id": 1,
+  "versionId": "12345678-1234-1234-1234-123456789012"
+}

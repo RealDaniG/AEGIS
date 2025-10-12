@@ -1,0 +1,80 @@
+{
+  "name": "Sensory Input Webhook",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "sensory-input",
+        "responseMode": "lastNode",
+        "responseData": "firstEntryJson"
+      },
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "requestMethod": "POST",
+        "url": "http://localhost:8003/api/input",
+        "responseFormat": "json",
+        "options": {},
+        "bodyContentType": "json",
+        "jsonContent": "={{\n  \"physical\": {{$json[\"data\"][\"physical\"] || 0.5}},\n  \"emotional\": {{$json[\"data\"][\"emotional\"] || 0.5}},\n  \"mental\": {{$json[\"data\"][\"mental\"] || 0.5}},\n  \"spiritual\": {{$json[\"data\"][\"spiritual\"] || 0.5}},\n  \"temporal\": {{$json[\"data\"][\"temporal\"] || 0.5}}\n}}"
+      },
+      "name": "Send to Consciousness",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        450,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "responseMode": "onReceived",
+        "responseCode": 200,
+        "responseBody": "={\n  \"status\": \"success\",\n  \"message\": \"Sensory input processed\",\n  \"timestamp\": \"{{new Date().toISOString()}}\"\n}"
+      },
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        650,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Send to Consciousness",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send to Consciousness": {
+      "main": [
+        [
+          {
+            "node": "Respond",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "id": 2,
+  "versionId": "12345678-1234-1234-1234-123456789013"
+}

@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  aegis-node-1:
+    build: .
+    container_name: aegis-node-1
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./data/node1:/app/data
+      - ./logs/node1:/app/logs
+    environment:
+      - NODE_ID=node-1
+      - TOR_CONTROL_PORT=9051
+      - TOR_SOCKS_PORT=9050
+    networks:
+      - aegis-network
+    depends_on:
+      - tor-proxy
+  
+  aegis-node-2:
+    build: .
+    container_name: aegis-node-2
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./data/node2:/app/data
+      - ./logs/node2:/app/logs
+    environment:
+      - NODE_ID=node-2
+      - TOR_CONTROL_PORT=9051
+      - TOR_SOCKS_PORT=9050
+    networks:
+      - aegis-network
+    depends_on:
+      - tor-proxy
+  
+  tor-proxy:
+    image: dperson/torproxy
+    container_name: tor-proxy
+    ports:
+      - "9050:9050"  # SOCKS proxy
+      - "9051:9051"  # Control port
+    networks:
+      - aegis-network
+    environment:
+      - TZ=UTC
+
+networks:
+  aegis-network:
+    driver: bridge

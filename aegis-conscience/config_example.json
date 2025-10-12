@@ -1,0 +1,44 @@
+{
+  "node": {
+    "id": "user_node_1",
+    "port": 8080,
+    "data_directory": "./data"
+  },
+  "security": {
+    "password_file": "./node_password.txt",
+    "tor_enabled": true,
+    "tor_control_port": 9051,
+    "tor_socks_port": 9050
+  },
+  "network": {
+    "authorized_peers": [
+      {
+        "node_id": "trusted_peer_1",
+        "onion_address": "peer1onion1234567890abcd.onion",
+        "port": 8080,
+        "public_key": "PEER1_PUBLIC_KEY_HEX_HERE"
+      },
+      {
+        "node_id": "trusted_peer_2",
+        "onion_address": "peer2onion0987654321zyxw.onion",
+        "port": 8080,
+        "public_key": "PEER2_PUBLIC_KEY_HEX_HERE"
+      }
+    ],
+    "max_peers": 10,
+    "message_batch_interval": 3.0,
+    "dummy_traffic_probability": 0.1
+  },
+  "consensus": {
+    "min_reputation": 0.7,
+    "pbft_timeout": 30
+  },
+  "storage": {
+    "max_entries": 1000,
+    "sync_interval": 60
+  },
+  "monitoring": {
+    "dashboard_port": 8081,
+    "metrics_update_interval": 5
+  }
+}

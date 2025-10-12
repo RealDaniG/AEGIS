@@ -1,0 +1,18 @@
+{
+  "cid": "123476da41925ce4b8d9f0273b7dd8a3",
+  "data": {
+    "node_id": "test_node",
+    "timestamp": 1760232524.1514535,
+    "entropy": 0.5,
+    "valence": 0.3,
+    "arousal": 0.7,
+    "coherence": 0.8,
+    "empathy_score": 0.6,
+    "insight_strength": 0.4,
+    "signature": null
+  },
+  "timestamp": 1760232524.151506,
+  "node_id": "test_node",
+  "signature": null,
+  "references": []
+}

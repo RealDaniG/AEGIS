@@ -1,0 +1,16 @@
+{
+  "server_url": "http://jxbkod2dxo6qidybrqjazzr3leofeybd6n7lyq4lwbahdzcaepilw3yd.onion",
+  "token": "change-me",
+  "node_id": "node_01",
+  "model_dir": "models\\finetune_es_pdf_lm",
+  "eval_dir": "ai_runs",
+  "proxy_socks5": "127.0.0.1:9050",
+  "compute_contribution": {
+    "enabled": true,
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "qa_subset_size": 200,
+    "epochs": 1,
+    "batch_size": 1,
+    "max_seq_len": 512
+  }
+}

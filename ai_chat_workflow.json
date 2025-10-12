@@ -1,0 +1,80 @@
+{
+  "name": "AI Chat Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "ai-chat",
+        "responseMode": "lastNode",
+        "responseData": "firstEntryJson"
+      },
+      "name": "Chat Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "requestMethod": "POST",
+        "url": "http://localhost:8003/api/chat",
+        "responseFormat": "json",
+        "options": {},
+        "bodyContentType": "json",
+        "jsonContent": "={\n  \"message\": \"{{$json[\"message\"]}}\",\n  \"session_id\": \"n8n_session_{{$execution.id}}\"\n}"
+      },
+      "name": "Chat with AI",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        450,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "responseMode": "onReceived",
+        "responseCode": 200,
+        "responseBody": "={{\n  \"response\": \"{{$json[\"response\"]}}\",\n  \"timestamp\": \"{{new Date().toISOString()}}\"\n}}"
+      },
+      "name": "Respond to Chat",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        650,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Chat Webhook": {
+      "main": [
+        [
+          {
+            "node": "Chat with AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chat with AI": {
+      "main": [
+        [
+          {
+            "node": "Respond to Chat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "id": 3,
+  "versionId": "12345678-1234-1234-1234-123456789014"
+}

@@ -1,0 +1,19 @@
+{
+  "total_nodes": 3,
+  "local_node_id": "node-4",
+  "local_connections": 0,
+  "connection_matrix": {
+    "node-1": [],
+    "node-2": [],
+    "node-3": []
+  },
+  "known_nodes": {
+    "node-1": {
+      "node_id": "node-1",
+      "ip_address": "127.0.0.1",
+      "port": 8080,
+      "public_key": "mock_key_0",
+      "onion_address": null,
+      "last_seen": 1760260469.627726,
+      "status": "failed",
+      "connections": 

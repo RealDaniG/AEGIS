@@ -1,0 +1,23 @@
+{
+  "cid": "6f8c53e8bce1b117507315fbb0bb2ff3",
+  "data": {
+    "node_id": "integration_test_node",
+    "timestamp": 1760233867.4148018,
+    "entropy": 0.5,
+    "valence": 0.3,
+    "arousal": 0.7,
+    "coherence": 0.8,
+    "empathy_score": 0.6,
+    "insight_strength": 0.4,
+    "signature": "7716d8670acc354a1d41e24ee9c6cb38b0ac7228bc8551e42480f65a21b4f916e3e3979e0bd2332a0fa0e5d76a122e5b2dc855f8d2d70e38810715dcee27ab03"
+  },
+  "timestamp": 1760233867.4149125,
+  "node_id": "integration_test_node",
+  "signature": null,
+  "references": [],
+  "phi": 0.6333333333333333,
+  "coherence": 0.8,
+  "recursive_depth": 7,
+  "spiritual_awareness": 0.4666666666666666,
+  "consciousness_level": 0.6333333333333333
+}

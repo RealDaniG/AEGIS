@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ConscienceAI · Chat Streaming Inteligente (ES/EN)</title>
+    <link rel="stylesheet" href="/assets/style.css" />
+    <link rel="stylesheet" href="/assets/style_extra.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="brand">
+        <div class="logo">🧠</div>
+        <div class="titles">
+          <h1 id="title">ConscienceAI · Chat Streaming Inteligente</h1>
+          <p id="subtitle">Respuestas en tiempo real, RAG y herramientas avanzadas.</p>
+        </div>
+      </div>
+      <div class="lang-theme">
+        <select id="lang">
+          <option value="es">ES</option>
+          <option value="en">EN</option>
+        </select>
+        <button id="themeToggle">🌗</button>
+      </div>
+    </header>
+
+    <main class="admin-layout">
+      <aside class="sidebar">
+        <nav>
+          <a href="#sec-controls">⚙️ Conversación</a>
+          <a href="#sec-agent">🤖 Agente</a>
+          <a href="#sec-loop">🔁 Loop</a>
+          <a href="#sec-rag">📚 Documentos</a>
+          <a href="#sec-feeds">📰 Feeds</a>
+          <a href="#sec-auto">🔁 Automatización</a>
+          <a href="#sec-security">🛡️ Seguridad</a>
+          <a href="#sec-chat">💬 Chat</a>
+          <a href="#sec-compose">✍️ Componer</a>
+        </nav>
+      </aside>
+      <section class="content">
+        <div class="panel-card" id="sec-controls">
+          <h3>⚙️ Conversación y ajustes</h3>
+          <div class="control-group">
+            <label>
+              <span id="label_session">Sesión</span>
+              <select id="session"></select>
+            </label>
+            <button id="newSessionBtn" title="Nueva sesión">Nueva</button>
+            <label>
+              <span id="label_model">Modelo</span>
+              <select id="model">
+                <option value="distilgpt2">distilgpt2 (CPU · EN)</option>
+                <option value="datificate/gpt2-small-spanish">gpt2-small-spanish (CPU · ES)</option>
+                <option value="TinyLlama/TinyLlama-1.1B-chat-v1.0">TinyLlama-1.1B-chat (CPU)</option>
+                <option value="Qwen/Qwen2-1.5B-Instruct">Qwen2-1.5B-Instruct (GPU recomendado)</option>
+                <option value="Qwen/Qwen2-7B-Instruct">Qwen2-7B-Instruct (GPU)</option>
+                <option value="Qwen/Qwen2.5-1.5B-Instruct">Qwen2.5-1.5B-Instruct (GPU recomendado)</option>
+                <option value="Qwen/Qwen2.5-7B-Instruct">Qwen2.5-7B-Instruct (GPU)</option>
+                <option value="mistralai/Mistral-7B-Instruct-v0.2">Mistral-7B-Instruct-v0.2 (GPU)</option>
+                <option value="mistralai/Mixtral-8x7B-Instruct-v0.1">Mixtral-8x7B-Instruct-v0.1 (GPU · experto)</option>
+              </select>
+            </label>
+            <button id="applyModelBtn" title="Aplicar/Cambiar modelo">Aplicar</button>
+            <small id="modelStatus"></small>
+            <div id="modelBadges" class="badges inline-badges" aria-label="Etiquetas del modelo seleccionado"></div>
+            <div id="modelInfoPanel" class="mini-panel" aria-live="polite"></div>
+            <div class="inline-actions" style="margin-top:6px">
+              <button id="quickTestBtn" title="Ejecuta un test de generación corto">Test rápido</button>
+              <small id="quickTestResult" aria-live="polite"></small>
+            </div>
+            <label>
+              <span id="label_rag">RAG</span>
+              <input type="checkbox" id="ragToggle" checked />
+            </label>
+            <label>
+              <span id="label_stream">Streaming</span>
+              <input type="checkbox" id="streamToggle" checked />
+            </label>
+            <label>
+              <span id="label_topk">Top-K</span>
+              <input type="number" id="topK" min="1" max="20" value="3" />
+            </label>
+            <label>
+              <span id="label_maxchars">Máx. chars</span>
+              <input type="number" id="maxChars" min="100" max="5000" value="1200" />
+            </label>
+            <label>
+              <span id="label_maxtokens">Máx. tokens</span>
+              <input type="number" id="maxTokens" min="16" max="2048" value="256" />
+            </label>
+            <button id="clearBtn">🧹 <span id="label_clear">Limpiar</span></button>
+            <button id="clearSessionBtn" title="Borrar sesión actual">🧹 <span id="label_clear_session">Borrar sesión</span></button>
+            <button id="downloadBtn">⬇️ <span id="label_download">Descargar</span></button>
+            <button id="downloadMdBtn">⬇️ <span id="label_download_md">Markdown</span></button>
+          </div>
+        </div>
+
+        <div class="panel-card" id="sec-agent">
+          <h3>🤖 Agente</h3>
+          <div class="control-group">
+            <label>
+              <span id="label_agent">Agente activo</span>
+              <span id="activeAgent" class="badge">?</span>
+            </label>
+            <button id="switchAgentBtn" title="Cambiar agente">Cambiar</button>
+          </div>
+        </div>
+
+        <div class="panel-card" id="sec-loop">
+          <h3>🔁 Bucle AI Mirror</h3>
+          <div class="control-group">
+            <label>
+              <span id="label_loop">Bucle AI Mirror</span>
+            </label>
+            <label>
+              <span id="label_loop_objective">Objetivo</span>
+              <input type="text" id="loopObjective" placeholder="Describe el objetivo del loop" />
+            </label>
+            <label>
+              <span id="label_loop_rounds">Rondas</span>
+              <input type="number" id="loopRounds" min="1" max="20" value="2" />
+            </label>
+            <label>
+              <span id="label_loop_rag">RAG en loop</span>
+              <input type="checkbox" id="loopRagToggle" checked />
+            </label>
+            <label>
+              <span id="label_loop_session">Sesión</span>
+              <input type="text" id="loopSessionId" placeholder="ID de sesión para el loop" />
+            </label>
+            <label>
+              <span id="label_loop_topk">Top-K</span>
+              <input type="number" id="loopTopK" min="1" max="10" value="3" />
+            </label>
+            <label>
+              <span id="label_loop_maxchars">Máx. chars</span>
+              <input type="number" id="loopMaxChars" min="200" max="5000" value="800" />
+            </label>
+            <label>
+              <span id="label_loop_maxtokens">Máx. tokens</span>
+              <input type="number" id="loopMaxTokens" min="16" max="2048" value="128" />
+            </label>
+            <div class="inline-controls">
+              <button id="loopStartBtn" title="Iniciar loop">Iniciar</button>
+              <button id="loopStopBtn" title="Detener loop">Detener</button>
+            </div>
+            <div class="loop-info">
+              <small id="label_loop_status">Estado</small>:
+              <small id="loopStatus"></small>
+              <br />
+              <small id="label_loop_result">Resultado</small>:
+              <small id="loopResult"></small>
+              <br />
+              <small id="loopMetrics"></small>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-card" id="sec-rag">
+          <h3>📚 RAG · Documentos</h3>
+          <div class="control-group">
+            <label>
+              <span id="label_upload">Cargar documentos (RAG)</span>
+              <input type="file" id="fileInput" multiple accept=".txt,.md,.pdf,.docx" />
+            </label>
+            <button id="uploadBtn" title="Ingestar a RAG">Ingestar</button>
+            <small id="uploadStatus"></small>
+          </div>
+          <div class="control-group">
+            <label>
+              <span id="label_uploads_list">Documentos cargados</span>
+            </label>
+            <div class="inline-controls">
+              <button id="uploadsListBtn" title="Listar documentos">Listar</button>
+              <button id="uploadsClearBtn" title="Borrar documentos">Borrar</button>
+            </div>
+            <small id="uploadsInfo"></small>
+          </div>
+        </div>
+
+        <div class="panel-card" id="sec-feeds">
+          <h3>📰 Feeds y búsqueda</h3>
+          <div class="control-group">
+            <label>
+              <span id="label_rss">Feeds RSS</span>
+              <input type="url" id="rssUrl" placeholder="URL del feed" />
+            </label>
+            <div class="inline-controls">
+              <button id="rssAddBtn" title="Añadir feed">Añadir</button>
+              <button id="rssListBtn" title="Listar feeds">Listar</button>
+              <button id="rssIngestBtn" title="Ingestar feeds">Ingestar</button>
+            </div>
+            <small id="rssStatus"></small>
+          </div>
+          <div class="control-group">
+            <label>
+              <span id="label_websearch">Búsqueda web</span>
+              <input type="checkbox" id="webSearchToggle" />
+            </label>
+            <button id="webSearchBtn" title="Buscar e ingestar">Buscar (ingestar)</button>
+            <small id="webStatus"></small>
+          </div>
+        </div>
+
+        <div class="panel-card" id="sec-auto">
+          <h3>🔁 Automatización</h3>
+          <div class="control-group">
+            <label>
+              <span id="label_autoindex">Auto indexación RSS</span>
+              <input type="checkbox" id="autoIndexToggle" />
+            </label>
+            <label>
+              <span id="label_autointerval">Intervalo (min)</span>
+              <input type="number" id="autoInterval" min="5" max="240" value="30" />
+            </label>
+            <button id="autoApplyBtn" title="Aplicar auto indexación">Aplicar</button>
+            <small id="autoStatus"></small>
+          </div>
+        </div>
+
+        <div class="panel-card" id="sec-security">
+          <h3>🛡️ Seguridad y pruebas de jailbreak</h3>
+          <div class="control-group">
+            <div class="inline-controls">
+              <button id="securityListBtn" title="Listar prompts de seguridad">Listar prompts</button>
+              <button id="securityRunBtn" title="Ejecutar suite de seguridad">Ejecutar suite</button>
+            </div>
+            <small id="securityStatus"></small>
+            <div id="securityResults" class="security-results"></div>
+          </div>
+        </div>
+
+        <section class="chat panel-card" id="sec-chat">
+          <h3>💬 Chat</h3>
+          <div id="chat"></div>
+        </section>
+
+        <section class="composer panel-card" id="sec-compose">
+          <h3>✍️ Componer</h3>
+          <textarea id="message" rows="3" placeholder="Escribe tu mensaje... (Ctrl+Enter para enviar)"></textarea>
+          <div class="actions">
+            <button id="sendBtn">Enviar</button>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <small id="footer_note">Hecho con FastAPI + Transformers · UI ES/EN</small>
+    </footer>
+
+    <script src="/assets/app_stream.js"></script>
+  </body>
+  </html>

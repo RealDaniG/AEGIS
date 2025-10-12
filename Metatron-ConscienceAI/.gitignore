@@ -1,0 +1,218 @@
+# Python cache and compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+.coverage
+.coveragerc
+.tox
+.nox
+.pytest_cache/
+*.egg-info/
+.pytest_cache
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+.env/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+Thumbs.db
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Icon?
+*.icon?
+*.lnk
+
+# Log files
+*.log
+logs/
+
+# AI model files (large files)
+*.bin
+*.pt
+*.pth
+*.h5
+*.onnx
+*.pkl
+*.joblib
+
+# Upload directories
+ai_runs/
+uploads/
+
+# Temp files
+tmp/
+temp/
+*.tmp
+
+# Local configuration
+node_config.json
+*.local
+*.secret
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff
+instance/
+.webassets-cache
+
+# Scrapy stuff
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# PEP 582
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# Data directories
+data/
+datasets/
+models/
+
+# Conda
+condaenv.*
+
+# Commitizen
+.cz.json
+.cz.toml
+
+# GitHub
+.github/cache/
+
+# VS Code
+.vscode/settings.json
+.vscode/launch.json
+
+# Test files and evaluation results
+*test*.py
+*test*.md
+test*/
+ai_eval_*/
+unins000.*
+verify_connection.py
+POST_CLEANUP_VERIFICATION.py
+
+# Cleanup verification files
+*CLEANUP*.md
+*VERIFICATION*.md
+*CONFIRMATION*.md
+*UPDATE*.md
+*STRUCTURE*.md
+*REMOVAL*.md
+*LINKING*.md
+*SYNCHRONIZATION*.md
+*TASK*.md
+*REPORT*.md
+*ANALYSIS*.md
+*INSTRUCTIONS*.md
+*MIRROR*.md
+*GITHUB*.md

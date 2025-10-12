@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metatron Connection Diagnostic</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0a1a;
+            color: #0f0;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #c084fc;
+            text-shadow: 0 0 10px rgba(192, 132, 252, 0.5);
+        }
+        .log {
+            background: #000;
+            border: 1px solid #0f0;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .log-entry {
+            margin: 5px 0;
+            padding: 3px 0;
+            border-bottom: 1px solid #333;
+        }
+        .success { color: #0f0; }
+        .error { color: #f00; }
+        .warning { color: #ff0; }
+        .info { color: #0ff; }
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .metric-box {
+            background: #1a1a2e;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #c084fc;
+        }
+        .metric-label {
+            color: #a78bfa;
+            font-size: 0.9em;
+        }
+        .metric-value {
+            color: #0f0;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        button {
+            background: #c084fc;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 5px;
+        }
+        button:hover {
+            background: #a78bfa;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔧 Metatron Consciousness Engine - Connection Diagnostic</h1>
+    
+    <div>
+        <button onclick="connect()">🔌 Connect</button>
+        <button onclick="disconnect()">⏹️ Disconnect</button>
+        <button onclick="clearLog()">🗑️ Clear Log</button>
+        <button onclick="window.location.href='metatron_visualization.html'">🚀 Go to Main UI</button>
+    </div>
+    
+    <div class="metrics">
+        <div class="metric-box">
+            <div class="metric-label">Connection Status</div>
+            <div class="metric-value" id="status">Disconnected</div>
+        </div>
+        <div class="metric-box">
+            <div class="metric-label">Messages Received</div>
+            <div class="metric-value" id="msg-count">0</div>
+        </div>
+        <div class="metric-box">
+            <div class="metric-label">Consciousness Level</div>
+            <div class="metric-value" id="consciousness">0.0000</div>
+        </div>
+        <div class="metric-box">
+            <div class="metric-label">Φ (Phi)</div>
+            <div class="metric-value" id="phi">0.0000</div>
+        </div>
+    </div>
+    
+    <h2>📋 Connection Log</h2>
+    <div class="log" id="log"></div>
+    
+    <h2>📊 Latest Data Snapshot</h2>
+    <div class="log" id="data-view"></div>
+    
+    <script>
+        let ws = null;
+        let messageCount = 0;
+        let logEntries = [];
+        
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const entry = `<div class="log-entry ${type}">[${timestamp}] ${message}</div>`;
+            logEntries.push(entry);
+            document.getElementById('log').innerHTML = logEntries.join('');
+            document.getElementById('log').scrollTop = document.getElementById('log').scrollHeight;
+        }
+        
+        function clearLog() {
+            logEntries = [];
+            document.getElementById('log').innerHTML = '';
+            log('Log cleared', 'info');
+        }
+        
+        function connect() {
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const host = window.location.hostname || 'localhost';
+            const port = window.location.port || '8003';
+            const wsUrl = `${protocol}//${host}:${port}/ws`;
+            
+            log(`🔌 Attempting connection to: ${wsUrl}`, 'info');
+            log(`📍 Protocol: ${protocol}`, 'info');
+            log(`📍 Host: ${host}`, 'info');
+            log(`📍 Port: ${port}`, 'info');
+            
+            try {
+                ws = new WebSocket(wsUrl);
+                
+                ws.onopen = () => {
+                    log('✅ WebSocket CONNECTED successfully!', 'success');
+                    document.getElementById('status').textContent = 'Connected';
+                    document.getElementById('status').style.color = '#0f0';
+                };
+                
+                ws.onmessage = (event) => {
+                    messageCount++;
+                    document.getElementById('msg-count').textContent = messageCount;
+                    
+                    try {
+                        const data = JSON.parse(event.data);
+                        
+                        // Update metrics
+                        if (data.consciousness) {
+                            const c = data.consciousness;
+                            document.getElementById('consciousness').textContent = c.level.toFixed(4);
+                            document.getElementById('phi').textContent = c.phi.toFixed(4);
+                            
+                            log(`📥 Message #${messageCount}: C=${c.level.toFixed(4)}, Φ=${c.phi.toFixed(4)}, State=${c.state}`, 'success');
+                        }
+                        
+                        // Show full data
+                        document.getElementById('data-view').innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                        
+                    } catch (error) {
+                        log(`❌ Error parsing message: ${error.message}`, 'error');
+                    }
+                };
+                
+                ws.onerror = (error) => {
+                    log(`❌ WebSocket ERROR: ${error}`, 'error');
+                    document.getElementById('status').textContent = 'Error';
+                    document.getElementById('status').style.color = '#f00';
+                };
+                
+                ws.onclose = (event) => {
+                    log(`🔴 WebSocket CLOSED. Code: ${event.code}, Reason: ${event.reason || 'None'}`, 'warning');
+                    document.getElementById('status').textContent = 'Disconnected';
+                    document.getElementById('status').style.color = '#ff0';
+                };
+                
+            } catch (error) {
+                log(`❌ Connection failed: ${error.message}`, 'error');
+                document.getElementById('status').textContent = 'Failed';
+                document.getElementById('status').style.color = '#f00';
+            }
+        }
+        
+        function disconnect() {
+            if (ws) {
+                ws.close();
+                log('⏹️ Manual disconnect requested', 'info');
+            }
+        }
+        
+        // Auto-connect on page load
+        window.addEventListener('load', () => {
+            log('🚀 Diagnostic page loaded', 'info');
+            log('🔍 Checking environment...', 'info');
+            log(`   • URL: ${window.location.href}`, 'info');
+            log(`   • Protocol: ${window.location.protocol}`, 'info');
+            log(`   • Host: ${window.location.hostname || 'localhost'}`, 'info');
+            log(`   • Port: ${window.location.port || '(default)'}`, 'info');
+            setTimeout(connect, 500);
+        });
+    </script>
+</body>
+</html>

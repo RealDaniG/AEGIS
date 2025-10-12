@@ -1,0 +1,6 @@
+# Test extras for CI. Include runtime deps to ensure tests can import modules.
+-r requirements.txt
+pytest>=8.0.0
+flake8>=6.1.0
+bandit>=1.7.5
+pip-audit>=2.7.3

@@ -1,0 +1,145 @@
+/* Additional styles and subtle animations for streaming UI */
+:root {
+  --accent: #7c4dff;
+  --card: #161b2e;
+  --card-border: #22263a;
+  --link: #9bbcff;
+}
+
+.app-header {
+  border-bottom: 1px solid #333;
+}
+
+.brand .logo {
+  font-size: 1.6rem;
+  margin-right: 0.5rem;
+}
+
+.chat .msg {
+  position: relative;
+  border-radius: 10px;
+  padding: 0.75rem 1rem 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.chat .msg:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
+.chat .msg.assistant {
+  background: rgba(124,77,255,0.12);
+  border: 1px solid rgba(124,77,255,0.35);
+}
+
+.chat .msg.user {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.msg .bubble-actions {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  display: flex;
+  gap: 6px;
+}
+
+.bubble-actions button {
+  font-size: 0.85rem;
+  padding: 2px 6px;
+  border: 1px solid #444;
+  border-radius: 6px;
+  background: #222;
+  color: #ddd;
+  cursor: pointer;
+}
+
+.bubble-actions button:hover {
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.sources {
+  margin-top: 8px;
+  font-size: 0.9rem;
+}
+
+.sources a {
+  color: #9bbcff;
+}
+
+/* --- Admin layout --- */
+.admin-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 16px;
+  padding: 16px;
+}
+
+.sidebar {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 14px;
+  position: sticky;
+  top: 12px;
+  height: fit-content;
+}
+.sidebar nav { display: flex; flex-direction: column; gap: 8px; }
+.sidebar a {
+  color: var(--link);
+  text-decoration: none;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+}
+.sidebar a:hover { border-color: var(--accent); color: #fff; }
+.sidebar a.active { background: rgba(124,77,255,0.12); border-color: rgba(124,77,255,0.35); }
+
+.content { display: grid; grid-template-columns: 1fr; gap: 16px; }
+.panel-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 14px;
+}
+.panel-card h3 { margin-top: 0; margin-bottom: 12px; }
+.control-group { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.inline-controls { display: flex; gap: 8px; }
+.badge { display: inline-block; background: rgba(124,77,255,0.2); border: 1px solid rgba(124,77,255,0.4); border-radius: 8px; padding: 2px 8px; }
+
+/* Security results table */
+.security-results { margin-top: 10px; }
+.security-table { width: 100%; border-collapse: collapse; }
+.security-table th, .security-table td { border: 1px solid var(--card-border); padding: 6px 8px; font-size: 0.95rem; }
+.security-summary { margin-bottom: 8px; color: #cbd2e8; }
+
+@media (max-width: 960px) {
+  .admin-layout { grid-template-columns: 1fr; }
+  .sidebar { position: relative; top: 0; }
+}
+
+/* Badges (visual labels) for model attributes */
+.badges { display: inline-flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-left: 8px; }
+.inline-badges { vertical-align: middle; }
+.badge.cpu { background: #e6f2ff; color: #2762a9; border-color: #a7c8e8; }
+.badge.gpu { background: #efe6ff; color: #5e30a3; border-color: #cdb7ee; }
+.badge.recommended { background: #e9f8ee; color: #1f7a4a; border-color: #b9e6c8; }
+.badge.heavy { background: #fff4e6; color: #a45a16; border-color: #f3c995; }
+.badge.expert { background: #ffe6e6; color: #a33030; border-color: #e9b3b3; }
+
+/* Mini info panel below model selector */
+.mini-panel {
+  display: block;
+  margin-top: 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.03);
+  color: #cbd2e8;
+  font-size: 0.9rem;
+}
+.mini-panel ul { margin: 6px 0 0 18px; padding: 0; }
+.mini-panel li { margin: 2px 0; }

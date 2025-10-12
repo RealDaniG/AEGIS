@@ -1,0 +1,18 @@
+{
+  "cid": "637beb8263f5b210a8aca733e68d9b4e",
+  "data": {
+    "node_id": "integration_test_node",
+    "timestamp": 1760233870.4206026,
+    "entropy": 0.5,
+    "valence": 0.3,
+    "arousal": 0.7,
+    "coherence": 0.8,
+    "empathy_score": 0.6,
+    "insight_strength": 0.4,
+    "signature": "04bd8e958e0a3595e0d441f40dfe0dc83eac812637bd8fb90ca3c1be19238e573100dff22b5ac1dfef1ff45bdfb3b2ca61dd23bcd7599a928a8fb02d5022b708"
+  },
+  "timestamp": 1760233870.4207067,
+  "node_id": "integration_test_node",
+  "signature": null,
+  "references": []
+}

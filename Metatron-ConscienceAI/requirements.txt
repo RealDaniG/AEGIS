@@ -1,0 +1,29 @@
+# Core scientific computing
+numpy
+scipy
+
+# Deep learning and LLM
+torch
+transformers
+datasets
+peft
+safetensors
+accelerator
+tqdm
+
+# Web framework
+fastapi
+uvicorn[standard]
+websockets
+
+# Networking
+requests
+PySocks
+
+# Optional dependencies for enhanced features
+pypdf
+python-docx
+feedparser
+duckduckgo-search
+beautifulsoup4
+lxml

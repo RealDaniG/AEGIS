@@ -1,0 +1,18 @@
+{
+  "cid": "bb1d8c2ce116bb95659f91bd315d5b01",
+  "data": {
+    "node_id": "node-1",
+    "timestamp": 1760260481.7300317,
+    "entropy": 0.5,
+    "valence": 0.3,
+    "arousal": 0.7,
+    "coherence": 0.8,
+    "empathy_score": 0.6,
+    "insight_strength": 0.4,
+    "signature": "2b6dbfd3f3dca0a6467cab271de403ffa9f0176d4740d5b2919bb0f7587df718fecc590db2ad8a0fb494373afa9be6afda88d9ed6e6eeee4855bdfcb56f83c0c"
+  },
+  "timestamp": 1760260481.730367,
+  "node_id": "node-1",
+  "signature": null,
+  "references": []
+}

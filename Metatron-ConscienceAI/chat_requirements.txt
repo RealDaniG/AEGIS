@@ -1,0 +1,8 @@
+# Requirements for ConscienceAI Web Chat Server
+fastapi
+uvicorn[standard]
+websockets
+transformers
+torch
+numpy
+pypdf  # Optional for PDF support
