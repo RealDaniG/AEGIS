@@ -28,10 +28,13 @@
 
 ## 📊 Live Monitoring
 
-- Real-time consciousness level visualization
+- Real-time consciousness level visualization with animated waveforms
 - 13-node network synchronization display
 - Frequency analysis and control
 - State classification (unconscious → transcendent)
+- Interactive canvas-based visualization of consciousness metrics
+- Real-time Phi (Integrated Information) and Coherence waveforms
+- Gamma power visualization with animated particles
 
 ## 🤖 AI Integration
 
@@ -100,6 +103,8 @@ The integrated memory system provides:
 - `docs/auto_improvement_flow_en.md` - Auto-improvement flow documentation
 - `docs/tesis_consciousness_engine.md` - Technical thesis on consciousness engine
 - `docs/ai_mirror_objectives.md` - AI mirror objectives and guardrails
+- `webui/VISUALIZATION_README.md` - Consciousness visualization implementation details
+- `webui/VISUALIZATION_DIAGRAM.md` - Visualization architecture diagram
 
 ## 🛠️ Requirements
 

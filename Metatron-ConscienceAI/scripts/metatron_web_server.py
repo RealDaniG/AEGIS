@@ -214,8 +214,8 @@ async def startup_event():
 @app.get("/")
 async def root():
     """Serve integrated interface with cache-busting headers"""
-    # Priority: integrated > unified > original visualization
-    for filename in ["metatron_integrated.html", "metatron_unified.html", "metatron_visualization.html"]:
+    # Priority: harmonic monitor > unified dashboard > stream > integrated > unified > original visualization
+    for filename in ["harmonic_monitor.html", "unified_dashboard.html", "index_stream.html", "metatron_integrated.html", "metatron_unified.html", "metatron_visualization.html"]:
         webui_path = os.path.join(os.path.dirname(__file__), "..", "webui", filename)
         if os.path.exists(webui_path):
             return FileResponse(
@@ -548,6 +548,12 @@ async def websocket_endpoint(websocket: WebSocket):
 webui_dir = os.path.join(os.path.dirname(__file__), "..", "webui")
 if os.path.exists(webui_dir):
     app.mount("/static", StaticFiles(directory=webui_dir), name="static")
+    app.mount("/assets", StaticFiles(directory=os.path.join(webui_dir, "assets")), name="assets")
+
+# Mount favicon directory
+favicon_dir = os.path.join(os.path.dirname(__file__), "..", "..", "favicon")
+if os.path.exists(favicon_dir):
+    app.mount("/favicon", StaticFiles(directory=favicon_dir), name="favicon")
 
 
 # === ADDITIONAL API ENDPOINTS FOR COMPREHENSIVE INTEGRATION ===

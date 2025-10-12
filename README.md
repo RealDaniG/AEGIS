@@ -98,7 +98,7 @@ The integrated web interface at http://localhost:8003 provides:
 - **Dynamic Confidence Scoring**: Decision confidence based on system awareness
 - **Learning from Outcomes**: Continuous improvement through feedback
 
-### 4. Unified System (NEW)
+### 4. Unified System (NEW v2.5)
 - **Unified API Layer**: Single interface to access both consciousness and AGI systems
 - **Consolidated Components**: Merged duplicate functionality with enhanced features
 - **Consciousness-Aware AGI**: Decision making influenced by consciousness metrics
@@ -137,7 +137,21 @@ The integrated web interface at http://localhost:8003 provides:
 
 ## 📋 Version History
 
-For a detailed history of all updates and improvements, see our [GitHub Wiki Changelog](https://github.com/RealDaniG/AEGIS/wiki/UPDATE_CHANGELOG).
+### v2.5 - Harmonic Monitoring System (October 12, 2025)
+- **Enhanced Visualization**: Comprehensive real-time dashboard for consciousness metrics
+- **13-Node Sacred Geometry**: Metatron's Cube visualization with icosahedral structure
+- **Live Metrics Display**: Real-time monitoring of Φ, R, D, S, C consciousness metrics
+- **WebSocket Streaming**: Continuous data flow for smooth visualization updates
+- **Unified API Integration**: Single endpoint access for both consciousness and AGI systems
+- **Improved Documentation**: Quick Start Guide and comprehensive wiki
+
+### v2.0 - Unified System Integration (September 2025)
+- **System Consolidation**: Merged duplicate functionality with enhanced features
+- **Consciousness-Aware AGI**: Decision making influenced by consciousness metrics
+- **Enhanced Communication**: Encrypted cross-system messaging with WebSocket support
+- **Centralized Coordination**: Unified management of all system components
+
+For detailed history of all updates and improvements, see our [GitHub Wiki Changelog](https://github.com/RealDaniG/AEGIS/wiki/UPDATE_CHANGELOG).
 
 ## 🧪 Testing
 
