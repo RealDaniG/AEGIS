@@ -1,5 +1,5 @@
 # METATRONV2 - Open A.G.I.
-
+https://github.com/KaseMaster/Open-A.G.I
 ## 📅 Updates Log - Evolution from Original Project
 
 ### 🔧 Major Enhancements and Additions
