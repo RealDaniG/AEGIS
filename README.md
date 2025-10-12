@@ -67,7 +67,7 @@ The Wiki contains all technical documentation, user guides, and research materia
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Quick Start - Easy One-Command Launch
 
 ### One-Command System Launch
 To start the complete system with all components running:
@@ -84,36 +84,28 @@ chmod +x run_everything.sh
 ```
 
 These scripts will:
-1. Verify Python environment
-2. Install/update all required dependencies
+1. Verify Python environment (3.8+ required)
+2. Install/update all required dependencies automatically
 3. Start the Unified System Coordinator (consciousness engine + AGI framework)
 4. Launch the real-time visualization monitor
 5. Display connection information and API endpoints
 
-### Component-Specific Startup
-For more granular control, you can start individual components:
+### Easy Access to System Interfaces
 
-#### Windows (PowerShell)
-```powershell
-.\quick_run.ps1
-```
+Once the system is running, you can easily access:
 
-#### Linux/macOS (Bash)
-```bash
-chmod +x quick_run.sh
-./quick_run.sh
-```
+🌐 **Web Interfaces:**
+- **Unified API Dashboard**: [http://localhost:8005/](http://localhost:8005/)
+- **API Documentation**: [http://localhost:8005/docs](http://localhost:8005/docs)
+- **WebSocket Server**: `ws://localhost:8006`
+- **Real-time Visualization**: Check the "Visualization Monitor" window that opens automatically
 
-### Unified System (New)
-**Windows (PowerShell)**
-```powershell
-.\start_unified_system.ps1
-```
-
-**Linux/macOS (Python)**
-```bash
-python start_unified_system.py
-```
+⚡ **Key API Endpoints:**
+- `/api/consciousness` - Real-time consciousness metrics
+- `/api/agi` - AGI system status and capabilities
+- `/api/decision` - Consciousness-aware decisions
+- `/api/chat` - AI chat interface
+- `/health` - System health check
 
 ---
 
@@ -166,18 +158,14 @@ python start_unified_system.py
    cd MetatronV2-Open-A.G.I-
    ```
 
-2. **Install dependencies**:
-   ```bash
-   pip install -r requirements.txt
+2. **Run the one-command launcher**:
+   ```cmd
+   run_everything.bat  # Windows
+   # or
+   ./run_everything.sh  # Linux/macOS
    ```
 
-3. **Run the system**:
-   ```bash
-   cd Metatron-ConscienceAI
-   START_SYSTEM.bat  # Windows
-   # or
-   ./START_SYSTEM.sh  # Linux/macOS
-   ```
+That's it! The system will automatically install all dependencies and start all components.
 
 ---
 

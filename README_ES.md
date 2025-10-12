@@ -67,7 +67,7 @@ La Wiki contiene toda la documentación técnica, guías de usuario y materiales
 
 ---
 
-## 🚀 Inicio Rápido
+## 🚀 Inicio Rápido - Lanzamiento con Un Solo Comando
 
 ### Inicio del Sistema con Un Solo Comando
 Para iniciar el sistema completo con todos los componentes ejecutándose:
@@ -84,36 +84,28 @@ chmod +x run_everything.sh
 ```
 
 Estos scripts realizarán:
-1. Verificación del entorno Python
-2. Instalación/actualización de todas las dependencias requeridas
+1. Verificación del entorno Python (se requiere 3.8+)
+2. Instalación/actualización automática de todas las dependencias requeridas
 3. Inicio del Coordinador del Sistema Unificado (motor de conciencia + marco AGI)
 4. Lanzamiento del monitor de visualización en tiempo real
 5. Visualización de información de conexión y puntos finales API
 
-### Inicio de Componentes Específicos
-Para un control más granular, puede iniciar componentes individuales:
+### Acceso Fácil a las Interfaces del Sistema
 
-#### Windows (PowerShell)
-```powershell
-.\quick_run.ps1
-```
+Una vez que el sistema esté en ejecución, puede acceder fácilmente a:
 
-#### Linux/macOS (Bash)
-```bash
-chmod +x quick_run.sh
-./quick_run.sh
-```
+🌐 **Interfaces Web:**
+- **Panel de la API Unificada**: [http://localhost:8005/](http://localhost:8005/)
+- **Documentación de la API**: [http://localhost:8005/docs](http://localhost:8005/docs)
+- **Servidor WebSocket**: `ws://localhost:8006`
+- **Visualización en Tiempo Real**: Verifique la ventana del "Monitor de Visualización" que se abre automáticamente
 
-### Sistema Unificado (Nuevo)
-**Windows (PowerShell)**
-```powershell
-.\start_unified_system.ps1
-```
-
-**Linux/macOS (Python)**
-```bash
-python start_unified_system.py
-```
+⚡ **Puntos Finales Clave de la API:**
+- `/api/consciousness` - Métricas de conciencia en tiempo real
+- `/api/agi` - Estado y capacidades del sistema AGI
+- `/api/decision` - Decisiones con conciencia
+- `/api/chat` - Interfaz de chat de IA
+- `/health` - Verificación del estado del sistema
 
 ---
 
@@ -166,18 +158,14 @@ python start_unified_system.py
    cd MetatronV2-Open-A.G.I-
    ```
 
-2. **Instalar dependencias**:
-   ```bash
-   pip install -r requirements.txt
+2. **Ejecutar el lanzador de un solo comando**:
+   ```cmd
+   run_everything.bat  # Windows
+   # o
+   ./run_everything.sh  # Linux/macOS
    ```
 
-3. **Ejecutar el sistema**:
-   ```bash
-   cd Metatron-ConscienceAI
-   START_SYSTEM.bat  # Windows
-   # o
-   ./START_SYSTEM.sh  # Linux/macOS
-   ```
+¡Eso es todo! El sistema instalará automáticamente todas las dependencias e iniciará todos los componentes.
 
 ---
 
