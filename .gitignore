@@ -157,3 +157,9 @@ htmlcov/
 
 # Local development
 *.local
+
+# Federated learning temporary files
+Metatron-ConscienceAI/federated/inbox/*
+Metatron-ConscienceAI/federated/out/*
+!Metatron-ConscienceAI/federated/inbox/.gitkeep
+!Metatron-ConscienceAI/federated/out/.gitkeep
