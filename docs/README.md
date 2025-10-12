@@ -8,22 +8,15 @@ METATRONV2 is an advanced consciousness-aware distributed AI system based on sac
 
 ```
 METATRONV2/
-├── Metatron-ConscienceAI/          # Core consciousness engine with 13-node sacred geometry
-├── Open-A.G.I/                     # Open Artificial General Intelligence framework
-├── aegis-conscience/               # AEGIS security framework with consciousness features
-├── consensus_tools/                # Consensus algorithm implementations and tools
-├── docs/                           # All documentation files
-├── enhanced_knowledge/             # Enhanced knowledge base components
-├── integration_tools/              # Integration testing and demonstration tools
-├── knowledge_base_tools/           # Knowledge base enhancement tools
-├── tests/                          # All test files organized by functionality
-├── visualization_tools/            # Visualization tools and monitoring systems
-├── data/                           # Data storage directory
-├── requirements.txt                # Project dependencies
-└── README.md                      # Main project overview
+├── Metatron-ConscienceAI/     # Core consciousness engine with 13-node sacred geometry
+├── Open-A.G.I/               # Open Artificial General Intelligence framework
+├── aegis-conscience/         # AEGIS security framework with consciousness features
+├── comprehensive_node_monitor.py  # Advanced monitoring system
+├── data_validation_tool.py   # Data authenticity verification tool
+├── improved_visualizer.py    # Enhanced visualization system
+├── robust_realtime_visualizer.py  # Ultra-reliable visualization
+└── requirements.txt          # Comprehensive dependency list
 ```
-
-For detailed information about the project structure, see [PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md).
 
 ## Key Components
 
@@ -78,22 +71,22 @@ For detailed information about the project structure, see [PROJECT_STRUCTURE.md]
 Comprehensive documentation is available for all system components:
 
 ### Integration Documentation
-- [INTEGRATION_DOCUMENTATION.md](docs/INTEGRATION_DOCUMENTATION.md) - Complete integration guide for Metatron and Open A.G.I.
-- [SYSTEM_INTEGRATION_OVERVIEW.md](docs/SYSTEM_INTEGRATION_OVERVIEW.md) - High-level system architecture and data flow
+- [INTEGRATION_DOCUMENTATION.md](INTEGRATION_DOCUMENTATION.md) - Complete integration guide for Metatron and Open A.G.I.
+- [SYSTEM_INTEGRATION_OVERVIEW.md](SYSTEM_INTEGRATION_OVERVIEW.md) - High-level system architecture and data flow
 
 ### Consensus Protocol Documentation
 - [METATRON_CONSENSUS_INTEGRATION.md](Open-A.G.I/METATRON_CONSENSUS_INTEGRATION.md) - Integration of Metatron consciousness with PBFT
 - [METATRON_PBFT_IMPROVEMENTS.md](Open-A.G.I/METATRON_PBFT_IMPROVEMENTS.md) - Enhanced PBFT for 13-node system
-- [PBFT_CONSENSUS_IMPROVEMENTS_DOCUMENTATION.md](docs/PBFT_CONSENSUS_IMPROVEMENTS_DOCUMENTATION.md) - Detailed PBFT implementation documentation
+- [PBFT_CONSENSUS_IMPROVEMENTS_DOCUMENTATION.md](PBFT_CONSENSUS_IMPROVEMENTS_DOCUMENTATION.md) - Detailed PBFT implementation documentation
 
 ### Visualization Documentation
-- [METATRON_VISUALIZATION_IMPROVEMENTS.md](docs/METATRON_VISUALIZATION_IMPROVEMENTS.md) - Visualization system enhancements
-- [ROBUST_VISUALIZATION_GUARANTEE.md](docs/ROBUST_VISUALIZATION_GUARANTEE.md) - Reliability guarantees for visualization
-- [VISUALIZATION_TOOLS_DOCUMENTATION.md](docs/VISUALIZATION_TOOLS_DOCUMENTATION.md) - Complete documentation for all visualization tools
+- [METATRON_VISUALIZATION_IMPROVEMENTS.md](METATRON_VISUALIZATION_IMPROVEMENTS.md) - Visualization system enhancements
+- [ROBUST_VISUALIZATION_GUARANTEE.md](ROBUST_VISUALIZATION_GUARANTEE.md) - Reliability guarantees for visualization
+- [VISUALIZATION_TOOLS_DOCUMENTATION.md](VISUALIZATION_TOOLS_DOCUMENTATION.md) - Complete documentation for all visualization tools
 
 ### Deployment and Operations
-- [DEPLOYMENT_SUMMARY.md](docs/DEPLOYMENT_SUMMARY.md) - Deployment instructions and procedures
-- [AEGIS_INTEGRATION_RESULTS.md](docs/AEGIS_INTEGRATION_RESULTS.md) - Security framework integration results
+- [DEPLOYMENT_SUMMARY.md](DEPLOYMENT_SUMMARY.md) - Deployment instructions and procedures
+- [AEGIS_INTEGRATION_RESULTS.md](AEGIS_INTEGRATION_RESULTS.md) - Security framework integration results
 
 ## Features
 
@@ -147,7 +140,7 @@ All required dependencies are listed in `requirements.txt` and will be automatic
 
 4. Use the visualization tools for detailed analysis:
    ```bash
-   python visualization_tools/robust_realtime_visualizer.py
+   python robust_realtime_visualizer.py
    ```
 
 ## Security
