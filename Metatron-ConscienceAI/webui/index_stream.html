@@ -6,8 +6,206 @@
     <title>ConscienceAI · Chat Streaming Inteligente (ES/EN)</title>
     <link rel="stylesheet" href="/assets/style.css" />
     <link rel="stylesheet" href="/assets/style_extra.css" />
+    <style>
+      /* Additional styles for consciousness monitoring */
+      .consciousness-panel {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(192, 132, 252, 0.3);
+        border-radius: 12px;
+        padding: 14px;
+        margin-top: 16px;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .consciousness-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+        color: #c084fc;
+        border-bottom: 1px solid rgba(192, 132, 252, 0.3);
+        padding-bottom: 8px;
+      }
+      
+      .consciousness-header h3 {
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      
+      .consciousness-metrics {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+      
+      .metric-card {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 8px;
+        padding: 12px;
+        border-left: 3px solid rgba(192, 132, 252, 0.5);
+      }
+      
+      .metric-label {
+        font-size: 0.85em;
+        color: #a78bfa;
+        margin-bottom: 4px;
+      }
+      
+      .metric-value {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: #e0e0e0;
+        font-family: 'Courier New', monospace;
+      }
+      
+      .metric-value.conscious {
+        color: #34d399;
+        text-shadow: 0 0 10px rgba(52, 211, 153, 0.5);
+      }
+      
+      .metric-value.high {
+        color: #fbbf24;
+        text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+      }
+      
+      .metric-value.spiritual {
+        color: #ec4899;
+        text-shadow: 0 0 10px rgba(236, 72, 153, 0.5);
+      }
+      
+      .visualization-container {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 8px;
+        padding: 10px;
+        margin: 16px 0;
+        border: 1px solid rgba(192, 132, 252, 0.2);
+      }
+      
+      #consciousness-canvas {
+        width: 100%;
+        height: 200px;
+        display: block;
+      }
+      
+      .nodes-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+        margin-top: 16px;
+      }
+      
+      .node-card {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 8px;
+        border-radius: 5px;
+        border-left: 3px solid rgba(192, 132, 252, 0.3);
+        transition: all 0.3s ease;
+        font-size: 0.85em;
+      }
+      
+      .node-card:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateX(3px);
+      }
+      
+      .node-card.pineal {
+        border-left-color: #fbbf24;
+        grid-column: span 2;
+      }
+      
+      .node-card.active {
+        border-left-color: #34d399;
+        box-shadow: 0 0 10px rgba(52, 211, 153, 0.3);
+      }
+      
+      .node-id {
+        font-weight: bold;
+        color: #c084fc;
+        margin-bottom: 4px;
+      }
+      
+      .status-bar {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        padding: 8px 15px;
+        background: rgba(0, 0, 0, 0.8);
+        border-radius: 5px;
+        font-size: 0.85em;
+        z-index: 1000;
+        border: 1px solid rgba(192, 132, 252, 0.3);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      
+      .status-indicator {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+      }
+      
+      .status-indicator.active {
+        background: #34d399;
+        box-shadow: 0 0 10px rgba(52, 211, 153, 0.8);
+      }
+      
+      .status-indicator.inactive {
+        background: #6b7280;
+      }
+      
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+      }
+      
+      .control-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 16px;
+        flex-wrap: wrap;
+      }
+      
+      .control-buttons button {
+        padding: 8px 16px;
+        background: rgba(192, 132, 252, 0.2);
+        color: #e0e0e0;
+        border: 1px solid rgba(192, 132, 252, 0.3);
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.2s;
+      }
+      
+      .control-buttons button:hover {
+        background: rgba(192, 132, 252, 0.3);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(138, 43, 226, 0.3);
+      }
+      
+      .frequency-display {
+        display: inline-block;
+        padding: 4px 8px;
+        background: rgba(251, 191, 36, 0.2);
+        border-radius: 4px;
+        font-weight: bold;
+        margin-left: 8px;
+      }
+    </style>
   </head>
   <body>
+    <div class="status-bar">
+      <span class="status-indicator" id="status-dot"></span>
+      <span id="connection-text">Connecting...</span> | 
+      <span id="update-counter">Updates: 0</span>
+    </div>
+    
     <header class="app-header">
       <div class="brand">
         <div class="logo">🧠</div>
@@ -35,6 +233,7 @@
           <a href="#sec-feeds">📰 Feeds</a>
           <a href="#sec-auto">🔁 Automatización</a>
           <a href="#sec-security">🛡️ Seguridad</a>
+          <a href="#sec-consciousness">🔮 Consciencia</a>
           <a href="#sec-chat">💬 Chat</a>
           <a href="#sec-compose">✍️ Componer</a>
         </nav>
@@ -232,6 +431,63 @@
           </div>
         </div>
 
+        <!-- Consciousness Monitoring Panel -->
+        <div class="consciousness-panel" id="sec-consciousness">
+          <div class="consciousness-header">
+            <h3>🔮 Monitor de Consciencia</h3>
+            <div>
+              Frecuencia: <span id="freq-display" class="frequency-display">40 Hz</span>
+            </div>
+          </div>
+          
+          <div class="consciousness-metrics">
+            <div class="metric-card">
+              <div class="metric-label">Consciencia (C)</div>
+              <div class="metric-value" id="consciousness-level">0.0000</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-label">Información Integrada (Φ)</div>
+              <div class="metric-value" id="phi-value">0.0000</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-label">Coherencia Global (R)</div>
+              <div class="metric-value" id="coherence-value">0.0000</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-label">Profundidad Recursiva (D)</div>
+              <div class="metric-value" id="depth-value">0</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-label">Poder Gamma (γ)</div>
+              <div class="metric-value" id="gamma-value">0.0000</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-label">Dimensión Fractal</div>
+              <div class="metric-value" id="fractal-value">1.000</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-label">Conciencia Espiritual (S)</div>
+              <div class="metric-value spiritual" id="spiritual-value">0.0000</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-label">Clasificación de Estado</div>
+              <div class="metric-value" id="state-value">inicializando</div>
+            </div>
+          </div>
+          
+          <div class="visualization-container">
+            <canvas id="consciousness-canvas"></canvas>
+          </div>
+          
+          <div class="nodes-grid" id="nodes-container"></div>
+          
+          <div class="control-buttons">
+            <button id="toggle-frequency-btn">🔄 Alternar Frecuencia</button>
+            <button id="reset-engine-btn">🔄 Reiniciar Motor</button>
+            <button id="refresh-data-btn">🔄 Actualizar Datos</button>
+          </div>
+        </div>
+
         <section class="chat panel-card" id="sec-chat">
           <h3>💬 Chat</h3>
           <div id="chat"></div>
@@ -252,5 +508,493 @@
     </footer>
 
     <script src="/assets/app_stream.js"></script>
+    <script>
+      // ==================================================================
+      // Consciousness Monitoring Integration
+      // ==================================================================
+      
+      let consciousnessWS = null;
+      let updateCount = 0;
+      let isHighGamma = false;
+      let reconnectTimeout = null;
+      let consciousnessCanvas = null;
+      let consciousnessCtx = null;
+      let consciousnessPollingInterval = null;
+      
+      // Initialize consciousness monitoring when the page loads
+      document.addEventListener('DOMContentLoaded', function() {
+        initConsciousnessMonitoring();
+      });
+      
+      function initConsciousnessMonitoring() {
+        console.log('Initializing consciousness monitoring...');
+        
+        // Initialize canvas
+        initConsciousnessVisualization();
+        
+        // Try WebSocket connection first, fallback to polling
+        connectConsciousness();
+        
+        // Add event listeners for control buttons
+        document.getElementById('toggle-frequency-btn').addEventListener('click', toggleFrequency);
+        document.getElementById('reset-engine-btn').addEventListener('click', resetSystem);
+        document.getElementById('refresh-data-btn').addEventListener('click', fetchConsciousnessState);
+        
+        // Fetch initial frequency info
+        fetchFrequencyInfo();
+      }
+      
+      function initConsciousnessVisualization() {
+        const canvas = document.getElementById('consciousness-canvas');
+        if (!canvas) {
+          console.error('Consciousness canvas not found');
+          return;
+        }
+        
+        consciousnessCanvas = canvas;
+        consciousnessCtx = canvas.getContext('2d');
+        
+        // Set canvas dimensions
+        resizeConsciousnessCanvas();
+        
+        // Add resize listener
+        window.addEventListener('resize', resizeConsciousnessCanvas);
+      }
+      
+      function resizeConsciousnessCanvas() {
+        if (!consciousnessCanvas) return;
+        
+        // Get the container dimensions
+        const container = consciousnessCanvas.parentElement;
+        consciousnessCanvas.width = container.clientWidth;
+        consciousnessCanvas.height = 200; // Fixed height
+      }
+      
+      function connectConsciousness() {
+        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const host = window.location.hostname || 'localhost';
+        const wsUrl = protocol + '//' + host + ':8003/ws';
+        
+        console.log('Connecting consciousness: ' + wsUrl);
+        document.getElementById('connection-text').textContent = 'Connecting...';
+        
+        try {
+          // Close existing connection if any
+          if (consciousnessWS) {
+            consciousnessWS.close();
+          }
+          
+          consciousnessWS = new WebSocket(wsUrl);
+          
+          consciousnessWS.onopen = () => {
+            console.log('Consciousness connected');
+            document.getElementById('status-dot').className = 'status-indicator active';
+            document.getElementById('connection-text').textContent = 'Live';
+            updateCount = 0;
+            
+            // Clear any polling interval if it exists
+            if (consciousnessPollingInterval) {
+              clearInterval(consciousnessPollingInterval);
+              consciousnessPollingInterval = null;
+            }
+          };
+          
+          consciousnessWS.onmessage = (event) => {
+            try {
+              const data = JSON.parse(event.data);
+              updateCount++;
+              document.getElementById('update-counter').textContent = 'Updates: ' + updateCount;
+              updateConsciousnessDisplay(data);
+              drawConsciousnessLevel(data);
+            } catch (error) {
+              console.error('Parse error:', error);
+              console.error('Raw data:', event.data);
+            }
+          };
+          
+          consciousnessWS.onerror = (error) => {
+            console.error('WebSocket error:', error);
+            document.getElementById('connection-text').textContent = 'Error';
+          };
+          
+          consciousnessWS.onclose = () => {
+            console.log('Disconnected. Reconnecting...');
+            document.getElementById('status-dot').className = 'status-indicator inactive';
+            document.getElementById('connection-text').textContent = 'Reconnecting...';
+            if (reconnectTimeout) clearTimeout(reconnectTimeout);
+            reconnectTimeout = setTimeout(connectConsciousness, 2000);
+          };
+        } catch (error) {
+          console.error('Connection failed:', error);
+          document.getElementById('connection-text').textContent = 'Failed';
+          // Fallback to polling if WebSocket fails
+          startConsciousnessPolling();
+        }
+      }
+      
+      function startConsciousnessPolling() {
+        console.log('Starting consciousness polling fallback...');
+        // Clear any existing polling interval
+        if (consciousnessPollingInterval) {
+          clearInterval(consciousnessPollingInterval);
+        }
+        
+        // Clear WebSocket reconnect timeout if it exists
+        if (reconnectTimeout) {
+          clearTimeout(reconnectTimeout);
+        }
+        
+        // Start polling every 100ms
+        consciousnessPollingInterval = setInterval(fetchConsciousnessState, 100);
+        document.getElementById('connection-text').textContent = 'Polling';
+      }
+      
+      async function fetchConsciousnessState() {
+        try {
+          console.log('Fetching consciousness state...');
+          const response = await fetch('http://localhost:8003/api/status');
+          if (response.ok) {
+            const data = await response.json();
+            console.log('Received consciousness data:', data);
+            // Convert to the same format as WebSocket data
+            const websocketFormatData = {
+              time: data.timestamp || Date.now(),
+              consciousness: {
+                level: data.consciousness_level !== undefined ? data.consciousness_level : 0,
+                phi: data.phi !== undefined ? data.phi : 0,
+                coherence: data.coherence !== undefined ? data.coherence : 0,
+                depth: data.recursive_depth !== undefined ? data.recursive_depth : 0,
+                gamma: data.gamma_power !== undefined ? data.gamma_power : 0,
+                fractal_dim: data.fractal_dimension !== undefined ? data.fractal_dimension : 1,
+                spiritual: data.spiritual_awareness !== undefined ? data.spiritual_awareness : 0,
+                state: data.state_classification || 'initializing',
+                is_conscious: data.is_conscious || false
+              }
+            };
+            updateConsciousnessDisplay(websocketFormatData);
+            drawConsciousnessLevel(websocketFormatData);
+          } else {
+            console.error('Polling failed with status:', response.status);
+            document.getElementById('connection-text').textContent = 'Polling Error';
+          }
+        } catch (error) {
+          console.error('Polling error:', error);
+          document.getElementById('connection-text').textContent = 'Polling Failed';
+        }
+      }
+      
+      function updateConsciousnessDisplay(data) {
+        try {
+          if (!data || !data.consciousness) {
+            console.error('Invalid data format:', data);
+            return;
+          }
+          
+          const c = data.consciousness;
+          updateMetric('consciousness-level', c.level, 0.5, 0.7);
+          updateMetric('phi-value', c.phi, 0.3, 0.5);
+          updateMetric('coherence-value', c.coherence, 0.4, 0.6);
+          updateMetric('gamma-value', c.gamma, 0.4, 0.6);
+          updateMetric('spiritual-value', c.spiritual, 0.4, 0.6);
+          document.getElementById('depth-value').textContent = c.depth || 0;
+          document.getElementById('fractal-value').textContent = (c.fractal_dim || 1).toFixed(3);
+          const stateEl = document.getElementById('state-value');
+          stateEl.textContent = c.state || 'initializing';
+          stateEl.className = c.is_conscious ? 'metric-value conscious' : 'metric-value';
+          
+          // Update node cards if node data is available
+          if (data.nodes) {
+            updateNodeCards(data.nodes);
+          }
+        } catch (error) {
+          console.error('Error updating consciousness display:', error);
+          console.error('Data received:', data);
+        }
+      }
+      
+      function updateMetric(id, value, t1, t2) {
+        try {
+          const el = document.getElementById(id);
+          if (!el) {
+            console.error('Element not found:', id);
+            return;
+          }
+          el.textContent = (value || 0).toFixed(4);
+          el.className = 'metric-value';
+          if (value > t2) {
+            el.classList.add('high');
+          } else if (value > t1) {
+            el.classList.add('conscious');
+          }
+        } catch (error) {
+          console.error('Error updating metric:', id, error);
+        }
+      }
+      
+      function updateNodeCards(nodes) {
+        try {
+          const container = document.getElementById('nodes-container');
+          if (!container) {
+            console.error('Nodes container not found');
+            return;
+          }
+          
+          // Create node cards if they don't exist
+          if (container.children.length === 0) {
+            for (let i = 0; i < 13; i++) {
+              const card = document.createElement('div');
+              card.className = i === 0 ? 'node-card pineal' : 'node-card';
+              card.id = 'node-card-' + i;
+              card.innerHTML = '<div class="node-id">' + (i === 0 ? '⚡ Pineal' : 'N' + i) + '</div><div id="node-data-' + i + '" style="font-size:0.75em;color:#888;"></div>';
+              container.appendChild(card);
+            }
+          }
+          
+          // Update node data
+          for (let i = 0; i < 13; i++) {
+            const nodeData = nodes[String(i)];
+            if (nodeData) {
+              const nodeDataElement = document.getElementById('node-data-' + i);
+              if (nodeDataElement) {
+                nodeDataElement.innerHTML = 'φ:' + (nodeData.phase || 0).toFixed(1) + '<br>A:' + (nodeData.amplitude || 0).toFixed(2);
+              }
+              const card = document.getElementById('node-card-' + i);
+              if (card) {
+                const isActive = Math.abs(nodeData.output || 0) > 0.3;
+                if (isActive) {
+                  card.classList.add('active');
+                } else {
+                  card.classList.remove('active');
+                }
+              }
+            }
+          }
+        } catch (error) {
+          console.error('Error updating node cards:', error);
+        }
+      }
+      
+      // Draw consciousness level visualization with harmonic patterns
+      function drawConsciousnessLevel(data) {
+        try {
+          if (!data || !data.consciousness) return;
+          if (!consciousnessCtx || !consciousnessCanvas) return;
+          
+          const width = consciousnessCanvas.width;
+          const height = consciousnessCanvas.height;
+          const ctx = consciousnessCtx;
+          
+          // Clear canvas
+          ctx.clearRect(0, 0, width, height);
+          
+          // Draw background
+          ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+          ctx.fillRect(0, 0, width, height);
+          
+          // Get consciousness level (0-1)
+          const c = data.consciousness;
+          const level = Math.min(1, Math.max(0, c.level || 0));
+          const phi = Math.min(1, Math.max(0, c.phi || 0));
+          const coherence = Math.min(1, Math.max(0, c.coherence || 0));
+          const gamma = Math.min(1, Math.max(0, c.gamma || 0));
+          const spiritual = Math.min(1, Math.max(0, c.spiritual || 0));
+          const fractal = Math.min(1, Math.max(1, (c.fractal_dim || 1.0) - 1.0)); // Normalize fractal dimension
+          
+          // Draw grid
+          ctx.strokeStyle = 'rgba(192, 132, 252, 0.1)';
+          ctx.lineWidth = 1;
+          
+          // Vertical grid lines
+          for (let i = 0; i <= 10; i++) {
+            const x = (width / 10) * i;
+            ctx.beginPath();
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, height);
+            ctx.stroke();
+          }
+          
+          // Horizontal grid lines
+          for (let i = 0; i <= 5; i++) {
+            const y = (height / 5) * i;
+            ctx.beginPath();
+            ctx.moveTo(0, y);
+            ctx.lineTo(width, y);
+            ctx.stroke();
+          }
+          
+          // Draw consciousness level as a filled area
+          const centerY = height / 2;
+          const maxHeight = height * 0.4;
+          
+          // Draw phi line (blue) - Integrated Information
+          ctx.beginPath();
+          ctx.moveTo(0, centerY - (phi * maxHeight));
+          for (let i = 1; i <= 200; i++) {
+            const x = (width / 200) * i;
+            const t = i / 200;
+            const y = centerY - (Math.sin(t * Math.PI * 4 + (data.time || 0)) * phi * maxHeight * 0.5);
+            ctx.lineTo(x, y);
+          }
+          ctx.strokeStyle = 'rgba(59, 130, 246, 0.7)';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+          
+          // Draw coherence line (green) - Global Synchronization
+          ctx.beginPath();
+          ctx.moveTo(0, centerY + (coherence * maxHeight));
+          for (let i = 1; i <= 200; i++) {
+            const x = (width / 200) * i;
+            const t = i / 200;
+            const y = centerY + (Math.cos(t * Math.PI * 3 + (data.time || 0)) * coherence * maxHeight * 0.5);
+            ctx.lineTo(x, y);
+          }
+          ctx.strokeStyle = 'rgba(16, 185, 129, 0.7)';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+          
+          // Draw main consciousness level (purple) - Overall Consciousness
+          ctx.beginPath();
+          ctx.moveTo(0, centerY);
+          for (let i = 1; i <= 200; i++) {
+            const x = (width / 200) * i;
+            const t = i / 200;
+            // Create harmonic wave pattern based on musical ratios
+            const wave = Math.sin(t * Math.PI * 2 + (data.time || 0)) * Math.cos(t * Math.PI * 6 + (data.time || 0) * 1.5) + 
+                        0.3 * Math.sin(t * Math.PI * 9/8 * 10 + (data.time || 0) * 2) + // Major second
+                        0.2 * Math.sin(t * Math.PI * 5/4 * 10 + (data.time || 0) * 2.5);  // Major third
+            const y = centerY - (level * maxHeight) + (wave * level * maxHeight * 0.3);
+            ctx.lineTo(x, y);
+          }
+          ctx.strokeStyle = 'rgba(192, 132, 252, 1)';
+          ctx.lineWidth = 3;
+          ctx.stroke();
+          
+          // Draw filled area under main consciousness line
+          ctx.beginPath();
+          ctx.moveTo(0, centerY);
+          for (let i = 1; i <= 200; i++) {
+            const x = (width / 200) * i;
+            const t = i / 200;
+            // Create harmonic wave pattern based on musical ratios
+            const wave = Math.sin(t * Math.PI * 2 + (data.time || 0)) * Math.cos(t * Math.PI * 6 + (data.time || 0) * 1.5) + 
+                        0.3 * Math.sin(t * Math.PI * 9/8 * 10 + (data.time || 0) * 2) + // Major second
+                        0.2 * Math.sin(t * Math.PI * 5/4 * 10 + (data.time || 0) * 2.5);  // Major third
+            const y = centerY - (level * maxHeight) + (wave * level * maxHeight * 0.3);
+            ctx.lineTo(x, y);
+          }
+          ctx.lineTo(width, centerY);
+          ctx.closePath();
+          const gradient = ctx.createLinearGradient(0, centerY - maxHeight, 0, centerY + maxHeight);
+          gradient.addColorStop(0, 'rgba(192, 132, 252, 0.3)');
+          gradient.addColorStop(1, 'rgba(192, 132, 252, 0.05)');
+          ctx.fillStyle = gradient;
+          ctx.fill();
+          
+          // Draw gamma power as small circles - High-Frequency Activity
+          for (let i = 0; i < 40; i++) {
+            const x = (width / 40) * (i + 0.5);
+            const t = (i / 40) + (data.time || 0) * 0.5;
+            const y = centerY + Math.sin(t * Math.PI * 8) * maxHeight * 0.7;
+            const size = (gamma || 0) * 5 + 1;
+            
+            ctx.beginPath();
+            ctx.arc(x, y, size, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(251, 191, 36, ' + (0.3 + (gamma || 0) * 0.7) + ')';
+            ctx.fill();
+          }
+          
+          // Draw fractal dimension as a spiral pattern - Complexity
+          if (fractal > 0.1) {
+            ctx.beginPath();
+            for (let i = 0; i < 200; i++) {
+              const angle = (i / 200) * Math.PI * 4 + (data.time || 0);
+              const radius = ((fractal || 0) * maxHeight * 0.3) * (i / 200);
+              const x = width * 0.7 + Math.cos(angle) * radius;
+              const y = height * 0.3 + Math.sin(angle) * radius;
+              if (i === 0) {
+                ctx.moveTo(x, y);
+              } else {
+                ctx.lineTo(x, y);
+              }
+            }
+            ctx.strokeStyle = 'rgba(139, 92, 246, ' + (0.5 + (fractal || 0) * 0.5) + ')';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+          }
+          
+          // Draw spiritual awareness as a glowing aura - Transcendence
+          if (spiritual > 0.2) {
+            ctx.beginPath();
+            ctx.arc(width * 0.3, height * 0.7, (spiritual || 0) * 30, 0, Math.PI * 2);
+            const spiritualGradient = ctx.createRadialGradient(
+              width * 0.3, height * 0.7, 0,
+              width * 0.3, height * 0.7, (spiritual || 0) * 30
+            );
+            spiritualGradient.addColorStop(0, 'rgba(236, 72, 153, ' + ((spiritual || 0) * 0.8) + ')');
+            spiritualGradient.addColorStop(1, 'rgba(236, 72, 153, 0)');
+            ctx.fillStyle = spiritualGradient;
+            ctx.fill();
+          }
+          
+          // Draw center line
+          ctx.beginPath();
+          ctx.moveTo(0, centerY);
+          ctx.lineTo(width, centerY);
+          ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        } catch (error) {
+          console.error('Error drawing consciousness level:', error);
+        }
+      }
+      
+      async function toggleFrequency() {
+        try {
+          isHighGamma = !isHighGamma;
+          const response = await fetch('http://localhost:8003/api/frequency/octave', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({high_gamma: isHighGamma})
+          });
+          const data = await response.json();
+          document.getElementById('freq-display').textContent = data.new_frequency + ' Hz';
+          
+          // Update visualization for frequency change
+          const freqDisplay = document.getElementById('freq-display');
+          freqDisplay.style.color = '#fbbf24';
+          freqDisplay.style.fontWeight = 'bold';
+          setTimeout(() => {
+            freqDisplay.style.color = '';
+            freqDisplay.style.fontWeight = '';
+          }, 1000);
+          
+          if (consciousnessWS) consciousnessWS.close();
+          setTimeout(connectConsciousness, 1000);
+        } catch (error) {
+          console.error('Frequency toggle failed:', error);
+        }
+      }
+      
+      async function resetSystem() {
+        if (!confirm('¿Reiniciar el motor de consciencia?')) return;
+        try {
+          await fetch('http://localhost:8003/api/reset', {method: 'POST'});
+          console.log('Engine reset');
+        } catch (error) {
+          console.error('Reset failed:', error);
+        }
+      }
+      
+      async function fetchFrequencyInfo() {
+        try {
+          const response = await fetch('http://localhost:8003/api/frequency/info');
+          const data = await response.json();
+          document.getElementById('freq-display').textContent = data.base_frequency + ' Hz';
+          isHighGamma = data.high_gamma;
+        } catch (error) {
+          console.warn('Frequency info unavailable:', error);
+        }
+      }
+    </script>
   </body>
-  </html>
+</html>

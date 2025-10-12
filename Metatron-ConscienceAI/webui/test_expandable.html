@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expandable Section Test</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 50%, #0a0a1a 100%);
+            color: #e0e0e0;
+            padding: 20px;
+            margin: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .expandable-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .section-header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .section-header h2 {
+            color: #c084fc;
+            margin: 0;
+            font-size: 1.5em;
+        }
+        
+        .toggle-icon {
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+        }
+        
+        .toggle-icon.expanded {
+            transform: rotate(180deg);
+        }
+        
+        .section-content {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        
+        .section-content.expanded {
+            padding: 20px;
+            max-height: 1000px;
+        }
+        
+        .content-box {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Expandable Section Test</h1>
+        
+        <div class="expandable-section">
+            <div class="section-header" onclick="toggleSection('section1')">
+                <h2>Test Section 1</h2>
+                <span class="toggle-icon" id="section1-toggle">▼</span>
+            </div>
+            <div class="section-content" id="section1-content">
+                <div class="content-box">
+                    <h3>Content Header</h3>
+                    <p>This is sample content that should be hidden by default and visible when expanded.</p>
+                </div>
+                <div class="content-box">
+                    <h3>Another Content Box</h3>
+                    <p>Multiple content boxes can be included in the expandable section.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="expandable-section">
+            <div class="section-header" onclick="toggleSection('section2')">
+                <h2>Test Section 2</h2>
+                <span class="toggle-icon" id="section2-toggle">▼</span>
+            </div>
+            <div class="section-content" id="section2-content">
+                <div class="content-box">
+                    <h3>Different Content</h3>
+                    <p>This section demonstrates that multiple expandable sections can work independently.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function toggleSection(sectionId) {
+            const content = document.getElementById(sectionId + '-content');
+            const icon = document.getElementById(sectionId + '-toggle');
+            
+            content.classList.toggle('expanded');
+            icon.classList.toggle('expanded');
+        }
+    </script>
+</body>
+</html>

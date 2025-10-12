@@ -5,12 +5,17 @@ This module coordinates all the unified components and provides a single interfa
 for managing the integrated system.
 """
 
+import sys
+import os
+
+# Add the project root to the Python path to ensure imports work correctly
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
 import asyncio
 import logging
 import time
 from typing import Dict, List, Optional, Any
 import signal
-import sys
 
 from unified_api.server import app as unified_api_app
 from unified_api.client import UnifiedAPIClient

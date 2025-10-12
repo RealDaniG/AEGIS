@@ -8,7 +8,7 @@ transformers
 datasets
 peft
 safetensors
-accelerator
+accelerate
 tqdm
 
 # Web framework

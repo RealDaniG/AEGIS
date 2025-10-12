@@ -305,7 +305,7 @@ class CrossSystemCommunicator:
                     "consciousness": asdict(state.consciousness) if state.consciousness else None,
                     "agi": asdict(state.agi) if state.agi else None,
                     "timestamp": state.timestamp,
-                    "status": state.system_status.value
+                    "status": state.system_status if isinstance(state.system_status, str) else state.system_status.value
                 },
                 timestamp=time.time(),
                 priority=5

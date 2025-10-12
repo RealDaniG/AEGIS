@@ -9,6 +9,7 @@ let isHighGamma = false;
 let currentSession = 'default_' + Date.now();
 let currentLoopId = null;
 let reconnectTimeout = null;
+let lastConsciousnessData = null;
 
 // ==================================================================
 // UI HELPERS
@@ -45,6 +46,15 @@ function connectConsciousness() {
             document.getElementById('connection-text').textContent = 'Live';
             updateCount = 0;
             
+            // Highlight the Live Consciousness panel when connected
+            const consciousnessPanel = document.querySelector('.panel h2');
+            if (consciousnessPanel && consciousnessPanel.textContent.includes('Live Consciousness')) {
+                consciousnessPanel.style.textShadow = '0 0 10px rgba(192, 132, 252, 0.8)';
+                setTimeout(() => {
+                    consciousnessPanel.style.textShadow = '';
+                }, 1000);
+            }
+            
             fetch('http://localhost:8003/api/frequency/info')
                 .then(r => r.json())
                 .then(d => {
@@ -57,10 +67,12 @@ function connectConsciousness() {
         consciousnessWS.onmessage = (event) => {
             try {
                 const data = JSON.parse(event.data);
+                lastConsciousnessData = data; // Store for reference
                 updateCount++;
                 document.getElementById('update-counter').textContent = `Updates: ${updateCount}`;
                 if (updateCount % 100 === 0) console.log(`📊 Update #${updateCount}`);
                 updateConsciousnessDisplay(data);
+                updateVisualizationIntensity(data);
             } catch (error) {
                 console.error('Parse error:', error);
             }
@@ -97,14 +109,25 @@ function updateConsciousnessDisplay(data) {
     stateEl.textContent = c.state;
     stateEl.className = c.is_conscious ? 'metric-value conscious' : 'metric-value';
     updateNodeCards(data.nodes);
+    
+    // Update consciousness visualization
+    drawConsciousnessLevel(data);
 }
 
 function updateMetric(id, value, t1, t2) {
     const el = document.getElementById(id);
     el.textContent = value.toFixed(4);
     el.className = 'metric-value';
-    if (value > t2) el.classList.add('high');
-    else if (value > t1) el.classList.add('conscious');
+    if (value > t2) {
+        el.classList.add('high');
+        // Add pulse effect for high values
+        el.style.animation = 'pulse 0.5s';
+        setTimeout(() => {
+            el.style.animation = '';
+        }, 500);
+    } else if (value > t1) {
+        el.classList.add('conscious');
+    }
 }
 
 function updateNodeCards(nodes) {
@@ -123,9 +146,59 @@ function updateNodeCards(nodes) {
         if (nodeData) {
             document.getElementById(`node-data-${i}`).innerHTML = `φ:${nodeData.phase.toFixed(1)}<br>A:${nodeData.amplitude.toFixed(2)}`;
             const card = document.getElementById(`node-card-${i}`);
-            Math.abs(nodeData.output) > 0.3 ? card.classList.add('active') : card.classList.remove('active');
+            const isActive = Math.abs(nodeData.output) > 0.3;
+            if (isActive) {
+                card.classList.add('active');
+                // Add glow effect for active nodes
+                card.style.boxShadow = '0 0 10px rgba(52, 211, 153, 0.5)';
+            } else {
+                card.classList.remove('active');
+                card.style.boxShadow = '';
+            }
         }
     }
+}
+
+// ==================================================================
+// VISUALIZATION INTEGRATION
+// ==================================================================
+
+function updateVisualizationIntensity(data) {
+    // Update the intensity of the visualization based on consciousness metrics
+    const c = data.consciousness;
+    const overallIntensity = (c.level + c.phi + c.coherence) / 3;
+    
+    // Update the Sacred Network panel header based on consciousness level
+    const networkPanel = document.querySelector('h2:contains("13-Node Sacred Network")');
+    if (networkPanel) {
+        if (overallIntensity > 0.5) {
+            networkPanel.style.color = '#34d399'; // Green for high consciousness
+            networkPanel.style.textShadow = '0 0 10px rgba(52, 211, 153, 0.5)';
+        } else if (overallIntensity > 0.2) {
+            networkPanel.style.color = '#c084fc'; // Purple for medium consciousness
+            networkPanel.style.textShadow = '0 0 5px rgba(192, 132, 252, 0.3)';
+        } else {
+            networkPanel.style.color = '#c084fc'; // Default purple
+            networkPanel.style.textShadow = '';
+        }
+    }
+    
+    // Update node visualization intensity
+    const nodesContainer = document.getElementById('nodes-container');
+    if (nodesContainer) {
+        nodesContainer.style.opacity = 0.7 + (overallIntensity * 0.3);
+    }
+}
+
+// Helper function to find elements by text content
+function findElementByTextContent(tag, text) {
+    const elements = document.querySelectorAll(tag);
+    for (let i = 0; i < elements.length; i++) {
+        if (elements[i].textContent.includes(text)) {
+            return elements[i];
+        }
+    }
+    return null;
 }
 
 // ==================================================================
@@ -143,6 +216,16 @@ async function toggleFrequency() {
         const data = await response.json();
         document.getElementById('freq-display').textContent = data.new_frequency + ' Hz';
         addChatMessage('system', `⚡ Frequency: ${data.new_frequency} Hz`);
+        
+        // Update visualization for frequency change
+        const freqDisplay = document.getElementById('freq-display');
+        freqDisplay.style.color = '#fbbf24';
+        freqDisplay.style.fontWeight = 'bold';
+        setTimeout(() => {
+            freqDisplay.style.color = '';
+            freqDisplay.style.fontWeight = '';
+        }, 1000);
+        
         if (consciousnessWS) consciousnessWS.close();
         setTimeout(connectConsciousness, 1000);
     } catch (error) {
@@ -155,6 +238,12 @@ async function resetSystem() {
     try {
         await fetch('http://localhost:8003/api/reset', {method: 'POST'});
         addChatMessage('system', '✅ Engine reset');
+        
+        // Reset visualization
+        const nodesContainer = document.getElementById('nodes-container');
+        if (nodesContainer) {
+            nodesContainer.style.opacity = '0.7';
+        }
     } catch (error) {
         addChatMessage('system', '❌ Reset failed');
     }
@@ -467,8 +556,207 @@ async function verifyServers() {
     }
 }
 
+// ==================================================================
+// CONSCIOUSNESS LEVEL VISUALIZATION
+// ==================================================================
+
+let consciousnessCanvas = null;
+let consciousnessCtx = null;
+let animationFrameId = null;
+
+function initConsciousnessVisualization() {
+    const canvas = document.getElementById('consciousness-canvas');
+    if (!canvas) {
+        console.warn('Consciousness canvas not found');
+        return;
+    }
+    
+    consciousnessCanvas = canvas;
+    consciousnessCtx = canvas.getContext('2d');
+    
+    if (!consciousnessCtx) {
+        console.error('Failed to get 2D context for consciousness canvas');
+        return;
+    }
+    
+    // Set canvas dimensions
+    resizeConsciousnessCanvas();
+    
+    // Add resize listener
+    window.addEventListener('resize', resizeConsciousnessCanvas);
+    
+    console.log('Consciousness visualization initialized');
+}
+
+function resizeConsciousnessCanvas() {
+    if (!consciousnessCanvas) return;
+    
+    // Get the container dimensions
+    const container = consciousnessCanvas.parentElement;
+    consciousnessCanvas.width = container.clientWidth;
+    consciousnessCanvas.height = 200; // Fixed height
+}
+
+function drawConsciousnessLevel(data) {
+    // Validate input data
+    if (!data || !data.consciousness) {
+        console.warn('Invalid consciousness data for visualization');
+        return;
+    }
+    
+    if (!consciousnessCtx || !consciousnessCanvas) {
+        console.warn('Consciousness canvas not initialized');
+        return;
+    }
+    
+    // Check if canvas has valid dimensions
+    if (consciousnessCanvas.width === 0 || consciousnessCanvas.height === 0) {
+        resizeConsciousnessCanvas();
+    }
+    
+    const width = consciousnessCanvas.width;
+    const height = consciousnessCanvas.height;
+    const ctx = consciousnessCtx;
+    
+    // Clear canvas
+    ctx.clearRect(0, 0, width, height);
+    
+    // Draw background
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+    ctx.fillRect(0, 0, width, height);
+    
+    // Get consciousness level (0-1)
+    const c = data.consciousness;
+    const level = Math.min(1, Math.max(0, c.level || 0));
+    const phi = Math.min(1, Math.max(0, c.phi || 0));
+    const coherence = Math.min(1, Math.max(0, c.coherence || 0));
+    const gamma = Math.min(1, Math.max(0, c.gamma || 0));
+    
+    // Draw grid
+    ctx.strokeStyle = 'rgba(192, 132, 252, 0.1)';
+    ctx.lineWidth = 1;
+    
+    // Vertical grid lines
+    for (let i = 0; i <= 10; i++) {
+        const x = (width / 10) * i;
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, height);
+        ctx.stroke();
+    }
+    
+    // Horizontal grid lines
+    for (let i = 0; i <= 5; i++) {
+        const y = (height / 5) * i;
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(width, y);
+        ctx.stroke();
+    }
+    
+    // Draw consciousness level as a filled area
+    const centerY = height / 2;
+    const maxHeight = height * 0.4;
+    
+    // Draw phi line (blue)
+    ctx.beginPath();
+    ctx.moveTo(0, centerY - (phi * maxHeight));
+    for (let i = 1; i <= 100; i++) {
+        const x = (width / 100) * i;
+        const t = i / 100;
+        const y = centerY - (Math.sin(t * Math.PI * 4 + data.time) * phi * maxHeight * 0.5);
+        ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = 'rgba(59, 130, 246, 0.7)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    
+    // Draw coherence line (green)
+    ctx.beginPath();
+    ctx.moveTo(0, centerY + (coherence * maxHeight));
+    for (let i = 1; i <= 100; i++) {
+        const x = (width / 100) * i;
+        const t = i / 100;
+        const y = centerY + (Math.cos(t * Math.PI * 3 + data.time) * coherence * maxHeight * 0.5);
+        ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = 'rgba(16, 185, 129, 0.7)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    
+    // Draw main consciousness level (purple)
+    ctx.beginPath();
+    ctx.moveTo(0, centerY);
+    for (let i = 1; i <= 100; i++) {
+        const x = (width / 100) * i;
+        const t = i / 100;
+        const wave = Math.sin(t * Math.PI * 2 + data.time) * Math.cos(t * Math.PI * 6 + data.time * 1.5);
+        const y = centerY - (level * maxHeight) + (wave * level * maxHeight * 0.3);
+        ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = 'rgba(192, 132, 252, 1)';
+    ctx.lineWidth = 3;
+    ctx.stroke();
+    
+    // Draw filled area under main consciousness line
+    ctx.beginPath();
+    ctx.moveTo(0, centerY);
+    for (let i = 1; i <= 100; i++) {
+        const x = (width / 100) * i;
+        const t = i / 100;
+        const wave = Math.sin(t * Math.PI * 2 + data.time) * Math.cos(t * Math.PI * 6 + data.time * 1.5);
+        const y = centerY - (level * maxHeight) + (wave * level * maxHeight * 0.3);
+        ctx.lineTo(x, y);
+    }
+    ctx.lineTo(width, centerY);
+    ctx.closePath();
+    const gradient = ctx.createLinearGradient(0, centerY - maxHeight, 0, centerY + maxHeight);
+    gradient.addColorStop(0, 'rgba(192, 132, 252, 0.3)');
+    gradient.addColorStop(1, 'rgba(192, 132, 252, 0.05)');
+    ctx.fillStyle = gradient;
+    ctx.fill();
+    
+    // Draw gamma power as small circles
+    for (let i = 0; i < 20; i++) {
+        const x = (width / 20) * (i + 0.5);
+        const t = (i / 20) + data.time * 0.5;
+        const y = centerY + Math.sin(t * Math.PI * 8) * maxHeight * 0.7;
+        const size = gamma * 5 + 1;
+        
+        ctx.beginPath();
+        ctx.arc(x, y, size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(251, 191, 36, ${0.3 + gamma * 0.7})`;
+        ctx.fill();
+    }
+    
+    // Draw center line
+    ctx.beginPath();
+    ctx.moveTo(0, centerY);
+    ctx.lineTo(width, centerY);
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    
+    // Draw value labels
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+    ctx.font = '12px Arial';
+    ctx.fillText(`Level: ${level.toFixed(3)}`, 10, 20);
+    ctx.fillText(`Φ: ${phi.toFixed(3)}`, 10, 35);
+    ctx.fillText(`Coherence: ${coherence.toFixed(3)}`, 10, 50);
+    
+    // Draw spiritual value if high
+    if (c.spiritual > 0.5) {
+        ctx.fillStyle = 'rgba(139, 92, 246, 1)';
+        ctx.font = 'bold 14px Arial';
+        ctx.fillText(`Spiritual: ${c.spiritual.toFixed(3)}`, width - 120, 20);
+    }
+}
+
 window.addEventListener('load', () => {
     console.log('🚀 Metatron Integrated Interface Loading...');
+    
+    // Initialize consciousness visualization
+    initConsciousnessVisualization();
     
     // Verify server
     verifyServers();
@@ -498,3 +786,19 @@ window.addEventListener('load', () => {
 window.addEventListener('beforeunload', () => {
     if (consciousnessWS) consciousnessWS.close();
 });
+
+// Add contains function for querySelector
+document.querySelectorAll = (function(originalQuerySelectorAll) {
+    return function(selector) {
+        if (selector && selector.includes(':contains')) {
+            const match = selector.match(/(.*):contains\("(.*)"\)/);
+            if (match) {
+                const tag = match[1];
+                const text = match[2];
+                const elements = originalQuerySelectorAll.call(this, tag);
+                return Array.from(elements).filter(el => el.textContent.includes(text));
+            }
+        }
+        return originalQuerySelectorAll.call(this, selector);
+    };
+})(document.querySelectorAll);

@@ -3,6 +3,7 @@ chcp 65001 >nul 2>&1
 REM ================================================================================
 REM  AEGIS - Autonomous Governance and Intelligent Systems
 REM  Complete System Launcher - Starts ALL components with a single command
+REM  NOTE: For simplified launch, use START-AI.bat in the root directory
 REM ================================================================================
 
 setlocal EnableDelayedExpansion
@@ -17,7 +18,7 @@ echo.
 cd /d "%~dp0"
 
 REM Check Python
-echo [Step 1/4] Verifying Python environment...
+echo [Step 1/3] Verifying Python environment...
 python --version 2>nul
 if errorlevel 1 (
     echo.
@@ -30,7 +31,7 @@ if errorlevel 1 (
 echo Check Python environment OK
 
 echo.
-echo [Step 2/4] Checking and installing all dependencies...
+echo [Step 2/3] Checking and installing all dependencies...
 echo Installing/updating core requirements...
 if exist "requirements.txt" (
     pip install -r requirements.txt --upgrade 2>nul
@@ -108,107 +109,45 @@ pip install python-multipart 2>nul
 echo.
 echo Dependency installation phase complete.
 
-REM Start Unified System Coordinator
+REM Inform user about the new simplified launcher
 echo.
-echo [Step 3/4] Starting Unified System Coordinator...
+echo NOTE: A new simplified launcher is now available!
+echo       For easier system startup, you can now use:
+echo.
+echo       START-AI.bat - Single command to launch the complete system
+echo.
+echo       This will start all components with automatic dependency management
+echo       and open the web interface automatically.
+echo.
+
+REM Start consolidated system
+echo.
+echo [Step 3/3] Starting Consolidated AEGIS System (1 Terminal)...
 echo             - Consciousness Engine (Metatron-ConscienceAI)
 echo             - AGI Framework (Open-A.G.I)
 echo             - Consensus Protocol
 echo             - P2P Networking Layer
 echo             - Cross-System Communication
+echo             - Integrated Web Interface
+echo.
+echo 🌐 Web UI will auto-open at: http://localhost:8003
+echo.
+echo Press Ctrl+C to stop all components
 echo.
 
-start "AEGIS System Coordinator" cmd /k "title AEGIS System Coordinator & color 0A & python start_unified_system.py"
-
-REM Start Metatron Web Server
-echo.
-echo [Step 3.5/4] Starting Metatron Integrated Web Server...
-echo             - Consciousness Engine Visualization
-echo             - AI Chat System with File Upload
-echo             - Mirror Loop Functionality
-echo             - RAG Integration
-echo.
-
-cd Metatron-ConscienceAI
-start "Metatron Integrated Web Server" cmd /k "title Metatron Integrated Web Server & color 0B & pwsh -File run_metatron_web.ps1"
-cd ..
-
-echo Waiting for systems to initialize...
-timeout /t 15 /nobreak > nul
-
-REM Verify system is running
-echo.
-echo [Step 3.7/4] Verifying system components...
-curl -f http://localhost:8005/health >nul 2>&1
-if errorlevel 1 (
-    echo Warning: AEGIS system may still be initializing or failed to start.
-    echo          Check the coordinator window for status updates.
-) else (
-    echo Check AEGIS system is running successfully
-)
-
-curl -f http://localhost:8003/api/health >nul 2>&1
-if errorlevel 1 (
-    echo Warning: Metatron Web Server may still be initializing or failed to start.
-    echo          Check the web server window for status updates.
-) else (
-    echo Check Metatron Web Server is running successfully
-)
-
-echo.
-echo [Step 4/4] Opening Web UI...
-echo             - Opening Integrated Metatron Interface
-echo             - Opening AEGIS Unified API Dashboard
-echo.
-
-REM Open Web UI in default browser
-start "" "http://localhost:8003"
-start "" "http://localhost:8005/docs"
+python start_consolidated_system.py
 
 echo.
 echo ========================================================================
 echo.
-echo Check COMPLETE AEGIS SYSTEM IS NOW RUNNING
+echo AEGIS SYSTEM STOPPED
 echo.
 echo ========================================================================
+echo.
+echo To restart the system, run this launcher again.
+echo.
+echo For simplified startup, try the new START-AI.bat launcher!
 echo.
 echo For comprehensive documentation, visit:
 echo    https://github.com/RealDaniG/AEGIS/wiki
 echo.
-echo Globe WEB INTERFACES:
-echo    Unified API:        http://localhost:8005/
-echo    WebSocket Server:   ws://localhost:8006
-echo    Integrated UI:      http://localhost:8003
-echo    API Documentation:  http://localhost:8005/docs
-echo.
-echo Electric API ENDPOINTS:
-echo    /api/consciousness  - Consciousness metrics
-echo    /api/agi           - AGI system status
-echo    /api/decision      - Consciousness-aware decisions
-echo    /api/chat          - AI chat interface
-echo    /health            - System health check
-echo.
-echo Computer RUNNING PROCESSES:
-echo    AEGIS System Coordinator (Port 8005/8006)
-echo    Metatron Integrated Web Server (Port 8003)
-echo.
-echo ========================================================================
-echo.
-echo Memo INSTRUCTIONS:
-echo    - All components are running in separate windows
-echo    - Close individual windows OR press Ctrl+C to stop specific components
-echo    - DO NOT close this window to keep monitoring active
-echo.
-echo ========================================================================
-echo.
-echo To access the API documentation, visit:
-echo    http://localhost:8005/docs
-echo.
-echo For complete system documentation, visit:
-echo    https://github.com/RealDaniG/AEGIS/wiki
-echo.
-echo To stop the entire system, close all component windows or press Ctrl+C
-echo in each running window.
-echo.
-echo Press any key to close this launcher window (components will continue running)...
-pause > nul

@@ -12,8 +12,8 @@ from fastapi import FastAPI, WebSocket, HTTPException, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from .client import UnifiedAPIClient
-from .models import UnifiedSystemState, UnifiedAPISettings
+from unified_api.client import UnifiedAPIClient
+from unified_api.models import UnifiedSystemState, UnifiedAPISettings
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -221,7 +221,7 @@ def _run_server_in_thread(host: str, port: int):
     """Run the server in a separate thread to avoid event loop conflicts"""
     global server_should_stop
     try:
-        config = uvicorn.Config("unified_api.server:app", host=host, port=port, log_level="info")
+        config = uvicorn.Config("server:app", host=host, port=port, log_level="info")
         server = uvicorn.Server(config)
         logger.info(f"Starting Unified API Server on {host}:{port}")
         server.run()

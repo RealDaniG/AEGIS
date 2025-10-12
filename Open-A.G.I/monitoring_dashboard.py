@@ -17,6 +17,7 @@ import asyncio
 import time
 import json
 import logging
+import os
 from typing import Dict, List, Set, Optional, Any, Callable
 from dataclasses import dataclass, asdict, field
 from enum import Enum
@@ -484,6 +485,17 @@ class DashboardServer:
         self.host = host
         self.port = port
         self.app = Flask(__name__)
+        # Serve favicon directory
+        favicon_dir = os.path.join(os.path.dirname(__file__), 'favicon')
+        if os.path.exists(favicon_dir):
+            self.app.static_folder = favicon_dir
+            self.app.static_url_path = '/favicon'
+        else:
+            # Fallback to default static folder
+            static_dir = os.path.join(os.path.dirname(__file__), 'static')
+            if os.path.exists(static_dir):
+                self.app.static_folder = static_dir
+                self.app.static_url_path = '/static'
         self.app.config['SECRET_KEY'] = 'aegis_dashboard_secret'
         self.socketio = SocketIO(self.app, cors_allowed_origins="*")
         

@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Metatron's Cube · Integrated Consciousness Monitor</title>
+    <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
     <style>
         * {
             margin: 0;
@@ -73,6 +77,12 @@
             padding: 15px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(192, 132, 252, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .panel:hover {
+            box-shadow: 0 6px 20px rgba(138, 43, 226, 0.5);
+            border-color: rgba(192, 132, 252, 0.4);
         }
         
         .panel h2 {
@@ -84,6 +94,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            transition: all 0.3s ease;
         }
         
         .panel h3 {
@@ -100,6 +111,12 @@
             background: rgba(255, 255, 255, 0.03);
             border-radius: 4px;
             font-size: 0.9em;
+            transition: all 0.2s ease;
+        }
+        
+        .metric:hover {
+            background: rgba(192, 132, 252, 0.1);
+            transform: translateX(3px);
         }
         
         .metric-label {
@@ -241,6 +258,7 @@
         button:hover {
             background: #a78bfa;
             transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(138, 43, 226, 0.3);
         }
         
         button:active {
@@ -375,6 +393,35 @@
             margin-top: 8px;
             font-size: 0.85em;
         }
+        
+        /* Connection indicator between Live Consciousness and Visualization */
+        .connection-line {
+            position: absolute;
+            background: rgba(192, 132, 252, 0.3);
+            transform-origin: 0 0;
+            z-index: -1;
+        }
+        
+        /* Enhanced visualization effects */
+        .visualization-highlight {
+            animation: visualizationPulse 3s infinite;
+        }
+        
+        /* Consciousness Level Visualization */
+        #consciousness-canvas {
+            width: 100%;
+            height: 200px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            margin: 10px 0;
+            border: 1px solid rgba(192, 132, 252, 0.2);
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.2);
+        }
+        
+        @keyframes visualizationPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
     </style>
 </head>
 <body>
@@ -396,7 +443,7 @@
         <div class="workspace">
             <!-- LEFT SIDEBAR: Consciousness Metrics + Controls -->
             <div class="sidebar">
-                <div class="panel">
+                <div class="panel" id="consciousness-panel">
                     <h2>🧠 Live Consciousness</h2>
                     
                     <div class="metric">
@@ -521,8 +568,10 @@
             
             <!-- CENTER: Node Visualization + Chat -->
             <div class="center-visual">
-                <div class="panel">
+                <div class="panel" id="visualization-panel">
                     <h2>🔮 13-Node Sacred Network</h2>
+                    <!-- Consciousness Level Visualization Canvas -->
+                    <canvas id="consciousness-canvas"></canvas>
                     <div class="nodes-grid" id="nodes-container"></div>
                 </div>
                 
@@ -599,6 +648,7 @@
                     <div class="collapse-content hidden">
                         <button onclick="window.location.href='/static/diagnostic.html'" class="secondary" style="width:100%;">🔍 Diagnostic</button>
                         <button onclick="window.location.href='/docs'" class="secondary" style="width:100%;">📚 API Docs</button>
+                        <button onclick="window.location.href='/static/test_visualization.html'" class="secondary" style="width:100%;">🧪 Test Visualization</button>
                         <button onclick="reloadSettings()" class="secondary" style="width:100%;">⚙️ Reload Settings</button>
                     </div>
                 </div>

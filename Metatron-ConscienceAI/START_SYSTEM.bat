@@ -3,6 +3,7 @@ chcp 65001 >nul 2>&1
 REM ================================================================================
 REM  Metatron Consciousness Engine - Unified System Launcher
 REM  ALL FEATURES INTEGRATED ON PORT 8003
+REM  NOTE: For complete system launch, use START-AI.bat in the root directory
 REM ================================================================================
 
 setlocal EnableDelayedExpansion
@@ -163,6 +164,9 @@ echo    http://localhost:8003/docs
 echo.
 echo To stop the server, close the "Metatron Unified Server" command window
 echo or press Ctrl+C in that window.
+echo.
+echo NOTE: For complete system launch with all components (Metatron + Open-A.G.I + AEGIS),
+echo       please use START-AI.bat in the root directory (D:\metatronV2\START-AI.bat)
 echo.
 echo Press any key to close this launcher window (server will continue running)...
 pause > nul

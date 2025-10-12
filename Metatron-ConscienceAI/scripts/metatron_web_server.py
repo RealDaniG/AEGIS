@@ -214,8 +214,8 @@ async def startup_event():
 @app.get("/")
 async def root():
     """Serve integrated interface with cache-busting headers"""
-    # Priority: harmonic monitor > unified dashboard > stream > integrated > unified > original visualization
-    for filename in ["harmonic_monitor.html", "unified_dashboard.html", "index_stream.html", "metatron_integrated.html", "metatron_unified.html", "metatron_visualization.html"]:
+    # Priority: advanced integrated dashboard > integrated dashboard > unified dashboard > harmonic monitor > stream > integrated > unified > original visualization
+    for filename in ["metatron_advanced_integrated.html", "integrated_dashboard.html", "unified_dashboard_updated.html", "unified_dashboard.html", "harmonic_monitor.html", "index_stream.html", "metatron_integrated.html", "metatron_unified.html", "metatron_visualization.html"]:
         webui_path = os.path.join(os.path.dirname(__file__), "..", "webui", filename)
         if os.path.exists(webui_path):
             return FileResponse(
@@ -488,6 +488,10 @@ async def websocket_endpoint(websocket: WebSocket):
             state = consciousness_system.update_system()
             performance_metrics['total_updates'] += 1
             performance_metrics['last_update_time'] = time.time()
+            
+            # Debug logging
+            if performance_metrics['total_updates'] % 100 == 0:
+                print(f"Update #{performance_metrics['total_updates']}: C={state['global']['consciousness_level']:.4f}, Φ={state['global']['phi']:.4f}")
             
             # Prepare data for sending (convert numpy types to native Python)
             websocket_data = {
@@ -867,7 +871,7 @@ def _get_musical_note_name(ratio):
 
 @app.post("/api/chat")
 async def api_chat(request: Request):
-    """Chat endpoint with optional model loading"""
+    """Chat endpoint with optional model loading and consciousness integration"""
     global chat_model, chat_tokenizer, chat_device
     
     if not CHAT_AVAILABLE:
@@ -875,6 +879,64 @@ async def api_chat(request: Request):
             "error": "Chat unavailable. Install: pip install transformers torch"
         }, status_code=503)
     
+    if consciousness_system is None:
+        # Fallback if consciousness system is not available
+        try:
+            data = await request.json()
+            message = str(data.get('message', '')).strip()
+            session_id = str(data.get('session_id', 'default'))
+            model_name = str(data.get('model_name', 'distilgpt2'))
+            max_new_tokens = min(int(data.get('max_new_tokens', 128)), 512)
+            
+            if not message:
+                return JSONResponse({"error": "Empty message"}, status_code=400)
+            
+            # Load different model if requested
+            if chat_model is None or (hasattr(chat_tokenizer, 'name_or_path') and 
+                                       model_name != getattr(chat_tokenizer, 'name_or_path', 'distilgpt2')):
+                print(f"Loading model: {model_name}...")
+                chat_tokenizer = AutoTokenizer.from_pretrained(model_name)
+                if chat_tokenizer.pad_token_id is None:
+                    chat_tokenizer.pad_token_id = chat_tokenizer.eos_token_id
+                chat_model = AutoModelForCausalLM.from_pretrained(model_name)
+                chat_device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+                chat_model.to(chat_device)
+                print(f"Model {model_name} loaded on {chat_device}")
+            
+            # Generate response
+            prompt = f"User: {message}\n\nAssistant:"
+            inputs = chat_tokenizer(prompt, return_tensors="pt").to(chat_device)
+            outputs = chat_model.generate(**inputs, max_new_tokens=max_new_tokens, do_sample=True, temperature=0.7)
+            response_text = chat_tokenizer.decode(outputs[0], skip_special_tokens=True)
+            
+            # Extract assistant response
+            if "Assistant:" in response_text:
+                response = response_text.split("Assistant:")[-1].strip()
+            else:
+                response = response_text.strip()
+            
+            # Save to session
+            if session_id not in chat_sessions:
+                chat_sessions[session_id] = []
+            chat_sessions[session_id].append({
+                'timestamp': time.time(),
+                'user': message,
+                'assistant': response,
+                'model': model_name
+            })
+            
+            return JSONResponse({
+                "response": response,
+                "model": model_name,
+                "session_id": session_id
+            })
+            
+        except Exception as e:
+            return JSONResponse({
+                "error": f"Chat failed: {str(e)}"
+            }, status_code=500)
+    
+    # Consciousness system is available, integrate with it
     try:
         data = await request.json()
         message = str(data.get('message', '')).strip()
@@ -884,6 +946,10 @@ async def api_chat(request: Request):
         
         if not message:
             return JSONResponse({"error": "Empty message"}, status_code=400)
+        
+        # Get current consciousness state before processing
+        state_before = consciousness_system.get_current_state()
+        global_state_before = state_before.get('global', {})
         
         # Load different model if requested
         if chat_model is None or (hasattr(chat_tokenizer, 'name_or_path') and 
@@ -909,6 +975,12 @@ async def api_chat(request: Request):
         else:
             response = response_text.strip()
         
+        # Update consciousness system with chat interaction
+        # Send a small sensory input based on the chat interaction
+        sensory_input = np.array([0.1, 0.1, 0.2, 0.1, 0.1])  # Small mental/emotional input
+        state_after = consciousness_system.update_system(sensory_input)
+        global_state_after = state_after.get('global', {})
+        
         # Save to session
         if session_id not in chat_sessions:
             chat_sessions[session_id] = []
@@ -919,10 +991,27 @@ async def api_chat(request: Request):
             'model': model_name
         })
         
+        # Prepare consciousness metrics for response
+        consciousness_metrics = {
+            "before": {
+                "consciousness_level": float(global_state_before.get('consciousness_level', 0)),
+                "phi": float(global_state_before.get('phi', 0)),
+                "coherence": float(global_state_before.get('coherence', 0)),
+                "state": global_state_before.get('state_classification', 'unknown')
+            },
+            "after": {
+                "consciousness_level": float(global_state_after.get('consciousness_level', 0)),
+                "phi": float(global_state_after.get('phi', 0)),
+                "coherence": float(global_state_after.get('coherence', 0)),
+                "state": global_state_after.get('state_classification', 'unknown')
+            }
+        }
+        
         return JSONResponse({
             "response": response,
             "model": model_name,
-            "session_id": session_id
+            "session_id": session_id,
+            "consciousness": consciousness_metrics
         })
         
     except Exception as e:

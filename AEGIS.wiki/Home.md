@@ -14,7 +14,6 @@ Welcome to the AEGIS (Autonomous Governance and Intelligent Systems) Wiki. This 
 - [Metatron Consciousness Engine](Metatron-Consciousness-Engine) - Sacred geometry-based consciousness simulation
 - [Consciousness Metrics](Consciousness-Metrics) - Φ, R, D, S, C metrics explanation
 - [Harmonic Monitoring System](Harmonic-Monitoring-System) - Real-time visualization and monitoring
-- [Sacred Geometry Foundation](Sacred-Geometry-Foundation) - Metatron's Cube and icosahedral structure
 
 ### AGI Framework
 - [Open-A.G.I Overview](Open-AGI-Overview) - Decentralized AGI substrate
@@ -61,6 +60,10 @@ Welcome to the AEGIS (Autonomous Governance and Intelligent Systems) Wiki. This 
 - [Technical Wiki](AEGIS-Technical-Wiki) - Comprehensive technical documentation
 - [Deployment Guide](Deployment-Guide) - Production deployment instructions
 - [Contributing Guide](Contributing-Guide) - How to contribute to the project
+
+## 🌺 Sacred Geometry
+
+- [Flower of Life](FLOWER_OF_LIFE) - Advanced geometric principles and implementation details
 
 ## 🤝 Community
 

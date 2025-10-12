@@ -11,7 +11,7 @@ transformers>=4.35.0
 datasets>=2.14.0
 peft>=0.6.0
 safetensors>=0.4.0
-accelerator>=0.19.0
+accelerate>=0.19.0
 tqdm>=4.66.0
 
 # Web framework

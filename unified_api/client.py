@@ -7,7 +7,7 @@ import aiohttp
 import json
 import logging
 from typing import Optional, Dict, Any
-from .models import UnifiedSystemState, ConsciousnessState, AGIState, UnifiedAPISettings
+from unified_api.models import UnifiedSystemState, ConsciousnessState, AGIState, UnifiedAPISettings, SystemStatus
 
 logger = logging.getLogger(__name__)
 
@@ -24,7 +24,9 @@ class UnifiedAPIClient:
         """Initialize the API client"""
         try:
             if not self.session:
-                self.session = aiohttp.ClientSession()
+                # Create client session with SSL verification disabled for AGI connections
+                connector = aiohttp.TCPConnector(verify_ssl=False)
+                self.session = aiohttp.ClientSession(connector=connector)
             self._is_initialized = True
             logger.info("Unified API Client initialized")
             return True
@@ -88,26 +90,30 @@ class UnifiedAPIClient:
             
         try:
             # First try the health check endpoint
-            health_url = f"{self.settings.agi_api_url}/health"
-            async with self.session.get(health_url) as response:
-                if response.status == 200:
-                    health_data = await response.json()
-                    
-                    # Try to get more detailed status if available
-                    agi_state = AGIState(
-                        node_id="agi_system",
-                        timestamp=health_data.get("timestamp", 0),
-                        consensus_status=health_data.get("status", "unknown"),
-                        network_health=health_data.get("network", {}),
-                        performance_metrics=health_data.get("performance", {}),
-                        active_connections=health_data.get("active_connections", 0),
-                        byzantine_threshold=health_data.get("byzantine_threshold", 0),
-                        quorum_size=health_data.get("quorum_size", 0)
-                    )
-                    return agi_state
-                else:
-                    logger.warning(f"Failed to get AGI health: {response.status}")
-                    return None
+            health_url = f"{self.settings.agi_api_url}/api/health"
+            try:
+                async with self.session.get(health_url) as response:
+                    if response.status == 200:
+                        health_data = await response.json()
+                        
+                        # Try to get more detailed status if available
+                        agi_state = AGIState(
+                            node_id="agi_system",
+                            timestamp=health_data.get("timestamp", 0),
+                            consensus_status=health_data.get("status", "unknown"),
+                            network_health=health_data.get("network", {}),
+                            performance_metrics=health_data.get("performance", {}),
+                            active_connections=health_data.get("active_connections", 0),
+                            byzantine_threshold=health_data.get("byzantine_threshold", 0),
+                            quorum_size=health_data.get("quorum_size", 0)
+                        )
+                        return agi_state
+                    else:
+                        logger.warning(f"Failed to get AGI health: {response.status}")
+                        return None
+            except aiohttp.ClientError as e:
+                logger.warning(f"AGI system not available: {e}")
+                return None
         except Exception as e:
             logger.error(f"Error getting AGI state: {e}")
             return None
@@ -126,28 +132,46 @@ class UnifiedAPIClient:
             return_exceptions=True
         )
         
-        # Handle exceptions
+        # Handle exceptions and extract valid states
+        valid_consciousness_state: Optional[ConsciousnessState] = None
+        valid_agi_state: Optional[AGIState] = None
+        
+        if not isinstance(consciousness_state, Exception) and consciousness_state is not None:
+            valid_consciousness_state = consciousness_state
+            
+        if not isinstance(agi_state, Exception) and agi_state is not None:
+            valid_agi_state = agi_state
+        
+        # Log exceptions
         if isinstance(consciousness_state, Exception):
             logger.error(f"Consciousness state error: {consciousness_state}")
-            consciousness_state = None
             
         if isinstance(agi_state, Exception):
             logger.error(f"AGI state error: {agi_state}")
-            agi_state = None
         
         # Calculate integration metrics
+        consciousness_level = 0.0
+        if valid_consciousness_state is not None and hasattr(valid_consciousness_state, 'consciousness_level'):
+            consciousness_level = valid_consciousness_state.consciousness_level
+            
+        consensus_status = "unknown"
+        if valid_agi_state is not None and hasattr(valid_agi_state, 'consensus_status'):
+            consensus_status = getattr(valid_agi_state, 'consensus_status', 'unknown')
+        
         integration_metrics = {
-            "systems_operational": (consciousness_state is not None, agi_state is not None),
-            "consciousness_level": consciousness_state.consciousness_level if consciousness_state else 0.0,
-            "consensus_status": agi_state.consensus_status if agi_state else "unknown",
+            "systems_operational": (valid_consciousness_state is not None, valid_agi_state is not None),
+            "consciousness_level": consciousness_level,
+            "consensus_status": consensus_status,
             "timestamp": asyncio.get_event_loop().time()
         }
         
+        system_status = SystemStatus.RUNNING if (valid_consciousness_state or valid_agi_state) else SystemStatus.ERROR
+        
         unified_state = UnifiedSystemState(
             timestamp=asyncio.get_event_loop().time(),
-            system_status="running" if (consciousness_state or agi_state) else "error",
-            consciousness=consciousness_state,
-            agi=agi_state,
+            system_status=system_status,
+            consciousness=valid_consciousness_state,
+            agi=valid_agi_state,
             integration_metrics=integration_metrics
         )
         

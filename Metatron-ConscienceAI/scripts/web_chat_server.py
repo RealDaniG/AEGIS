@@ -325,7 +325,7 @@ async def api_health():
 
 @app.post("/api/chat")
 async def api_chat(request: Request):
-    """Chat endpoint with RAG integration."""
+    """Chat endpoint with RAG integration and consciousness system update."""
     global chat_model, chat_tokenizer, chat_device, rag_retriever
     
     if not CHAT_AVAILABLE or chat_model is None:
@@ -342,6 +342,26 @@ async def api_chat(request: Request):
         
         if not message:
             return JSONResponse({"error": "Empty message"}, status_code=400)
+        
+        # Try to update consciousness system if available
+        consciousness_update = None
+        try:
+            # Try to connect to the consciousness system on port 8003
+            import requests
+            consciousness_response = requests.post(
+                "http://localhost:8003/api/input",
+                json={
+                    "mental": 0.2,  # Small mental input from chat
+                    "emotional": 0.1,  # Small emotional input from chat
+                    "session_id": session_id
+                },
+                timeout=1
+            )
+            if consciousness_response.status_code == 200:
+                consciousness_update = consciousness_response.json()
+        except Exception as e:
+            # Consciousness system not available, continue without it
+            pass
         
         # Retrieve context with RAG if enabled
         context = ""
@@ -378,11 +398,17 @@ async def api_chat(request: Request):
         
         chat_performance_metrics['total_messages'] += 1
         
-        return JSONResponse({
+        # Prepare response with consciousness update info if available
+        response_data = {
             "response": response,
             "context": context,
             "sources": []  # For compatibility with frontend
-        })
+        }
+        
+        if consciousness_update:
+            response_data["consciousness_update"] = consciousness_update
+        
+        return JSONResponse(response_data)
         
     except Exception as e:
         chat_performance_metrics['errors'] += 1
