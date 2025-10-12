@@ -27,27 +27,77 @@ echo "Check Python environment OK"
 echo ""
 echo "[Step 2/4] Checking and installing all dependencies..."
 echo "Installing/updating core requirements..."
-pip install -r requirements.txt 2>/dev/null
+if [ -f "requirements.txt" ]; then
+    pip install -r requirements.txt --upgrade 2>/dev/null
+    if [ $? -ne 0 ]; then
+        echo "Warning: Some core requirements failed to install, continuing anyway..."
+    fi
+else
+    echo "Warning: requirements.txt not found, skipping..."
+fi
 
 echo "Installing Metatron-ConscienceAI requirements..."
-cd Metatron-ConscienceAI
-pip install -r requirements.txt 2>/dev/null
-cd ..
+if [ -f "Metatron-ConscienceAI/requirements.txt" ]; then
+    cd Metatron-ConscienceAI
+    pip install -r requirements.txt --upgrade 2>/dev/null
+    if [ $? -ne 0 ]; then
+        echo "Warning: Some Metatron-ConscienceAI requirements failed to install, continuing anyway..."
+    fi
+    cd ..
+else
+    echo "Warning: Metatron-ConscienceAI/requirements.txt not found, skipping..."
+fi
 
 echo "Installing Open-A.G.I requirements..."
-cd Open-A.G.I
-pip install -r requirements.txt 2>/dev/null
-cd ..
+if [ -f "Open-A.G.I/requirements.txt" ]; then
+    cd Open-A.G.I
+    pip install -r requirements.txt --upgrade 2>/dev/null
+    if [ $? -ne 0 ]; then
+        echo "Warning: Some Open-A.G.I requirements failed to install, continuing anyway..."
+    fi
+    cd ..
+else
+    echo "Warning: Open-A.G.I/requirements.txt not found, skipping..."
+fi
 
 echo "Installing aegis-conscience requirements..."
-cd aegis-conscience
-pip install -r requirements.txt 2>/dev/null
-cd ..
+if [ -f "aegis-conscience/requirements.txt" ]; then
+    cd aegis-conscience
+    pip install -r requirements.txt --upgrade 2>/dev/null
+    if [ $? -ne 0 ]; then
+        echo "Warning: Some aegis-conscience requirements failed to install, continuing anyway..."
+    fi
+    cd ..
+else
+    echo "Warning: aegis-conscience/requirements.txt not found, skipping..."
+fi
 
 echo "Installing unified system requirements..."
-pip install -r unified_requirements.txt 2>/dev/null
+if [ -f "unified_requirements.txt" ]; then
+    pip install -r unified_requirements.txt --upgrade 2>/dev/null
+    if [ $? -ne 0 ]; then
+        echo "Warning: Some unified system requirements failed to install, continuing anyway..."
+    fi
+else
+    echo "Warning: unified_requirements.txt not found, skipping..."
+fi
 
-echo "Check All dependencies OK"
+echo ""
+echo "Installing critical packages that might have failed..."
+pip install torch transformers datasets peft safetensors 2>/dev/null
+pip install fastapi uvicorn[standard] websockets 2>/dev/null
+pip install cryptography pycryptodome pyotp fernet 2>/dev/null
+pip install aiohttp aiohttp-socks stem asyncio-mqtt 2>/dev/null
+pip install scikit-learn aiosqlite redis 2>/dev/null
+pip install loguru prometheus-client psutil pandas 2>/dev/null
+pip install flask zeroconf Flask-SocketIO netifaces 2>/dev/null
+pip install pydantic click rich python-dotenv 2>/dev/null
+pip install pypdf python-docx feedparser beautifulsoup4 lxml 2>/dev/null
+pip install pytest-asyncio pytest-cov black flake8 mypy 2>/dev/null
+pip install plotly python-socketio 2>/dev/null
+
+echo ""
+echo "Dependency installation phase complete."
 
 # Start Unified System Coordinator
 echo ""
@@ -83,10 +133,14 @@ echo "            - Node Status Dashboard"
 echo "            - System Performance Metrics"
 echo ""
 
-cd visualization_tools
-python3 robust_realtime_visualizer.py &
-VISUALIZATION_PID=$!
-cd ..
+if [ -d "visualization_tools" ]; then
+    cd visualization_tools
+    python3 robust_realtime_visualizer.py &
+    VISUALIZATION_PID=$!
+    cd ..
+else
+    echo "Warning: visualization_tools directory not found, skipping visualization..."
+fi
 
 echo ""
 echo "========================================================================"
@@ -109,14 +163,18 @@ echo "   /health            - System health check"
 echo ""
 echo "Computer RUNNING PROCESSES:"
 echo "   Unified System Coordinator (PID: $UNIFIED_PID)"
-echo "   Visualization Monitor (PID: $VISUALIZATION_PID)"
+if [ ! -z "$VISUALIZATION_PID" ]; then
+    echo "   Visualization Monitor (PID: $VISUALIZATION_PID)"
+fi
 echo ""
 echo "========================================================================"
 echo ""
 echo "Memo INSTRUCTIONS:"
 echo "   - All components are running in background"
 echo "   - Use 'kill $UNIFIED_PID' to stop unified system"
-echo "   - Use 'kill $VISUALIZATION_PID' to stop visualization"
+if [ ! -z "$VISUALIZATION_PID" ]; then
+    echo "   - Use 'kill $VISUALIZATION_PID' to stop visualization"
+fi
 echo ""
 echo "========================================================================"
 echo ""
@@ -124,7 +182,10 @@ echo "To access the API documentation, visit:"
 echo "   http://localhost:8005/docs"
 echo ""
 echo "To stop the entire system, run:"
-echo "   kill $UNIFIED_PID $VISUALIZATION_PID"
+echo "   kill $UNIFIED_PID"
+if [ ! -z "$VISUALIZATION_PID" ]; then
+    echo "   kill $VISUALIZATION_PID"
+fi
 echo ""
 echo "Press Ctrl+C to return to terminal (components will continue running)..."
 read -p "Press any key to continue..." -n1 -s

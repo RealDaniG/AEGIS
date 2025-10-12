@@ -12,6 +12,12 @@
 
 ---
 
+## 🌐 Opciones de Idioma / Language Options
+
+[Versión en Español](README_ES.md) | [English Version](README.md)
+
+---
+
 🤔TRABAJO EN CURSO ACTUAL:
 PROCESAMIENTO DE PENSAMIENTO Y REFLEXIÓN CUÁNTICO-DIMENSIONAL
 
@@ -63,12 +69,36 @@ La Wiki contiene toda la documentación técnica, guías de usuario y materiales
 
 ## 🚀 Inicio Rápido
 
-### Windows (PowerShell)
+### Inicio del Sistema con Un Solo Comando
+Para iniciar el sistema completo con todos los componentes ejecutándose:
+
+**Windows:**
+```cmd
+run_everything.bat
+```
+
+**Linux/macOS:**
+```bash
+chmod +x run_everything.sh
+./run_everything.sh
+```
+
+Estos scripts realizarán:
+1. Verificación del entorno Python
+2. Instalación/actualización de todas las dependencias requeridas
+3. Inicio del Coordinador del Sistema Unificado (motor de conciencia + marco AGI)
+4. Lanzamiento del monitor de visualización en tiempo real
+5. Visualización de información de conexión y puntos finales API
+
+### Inicio de Componentes Específicos
+Para un control más granular, puede iniciar componentes individuales:
+
+#### Windows (PowerShell)
 ```powershell
 .\quick_run.ps1
 ```
 
-### Linux/macOS (Bash)
+#### Linux/macOS (Bash)
 ```bash
 chmod +x quick_run.sh
 ./quick_run.sh

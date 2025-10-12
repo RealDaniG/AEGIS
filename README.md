@@ -69,12 +69,36 @@ The Wiki contains all technical documentation, user guides, and research materia
 
 ## 🚀 Quick Start
 
-### Windows (PowerShell)
+### One-Command System Launch
+To start the complete system with all components running:
+
+**Windows:**
+```cmd
+run_everything.bat
+```
+
+**Linux/macOS:**
+```bash
+chmod +x run_everything.sh
+./run_everything.sh
+```
+
+These scripts will:
+1. Verify Python environment
+2. Install/update all required dependencies
+3. Start the Unified System Coordinator (consciousness engine + AGI framework)
+4. Launch the real-time visualization monitor
+5. Display connection information and API endpoints
+
+### Component-Specific Startup
+For more granular control, you can start individual components:
+
+#### Windows (PowerShell)
 ```powershell
 .\quick_run.ps1
 ```
 
-### Linux/macOS (Bash)
+#### Linux/macOS (Bash)
 ```bash
 chmod +x quick_run.sh
 ./quick_run.sh

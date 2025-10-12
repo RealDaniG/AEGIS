@@ -32,27 +32,80 @@ echo Check Python environment OK
 echo.
 echo [Step 2/4] Checking and installing all dependencies...
 echo Installing/updating core requirements...
-pip install -r requirements.txt 2>nul
+if exist "requirements.txt" (
+    pip install -r requirements.txt --upgrade 2>nul
+    if errorlevel 1 (
+        echo Warning: Some core requirements failed to install, continuing anyway...
+    )
+) else (
+    echo Warning: requirements.txt not found, skipping...
+)
 
 echo Installing Metatron-ConscienceAI requirements...
-cd Metatron-ConscienceAI
-pip install -r requirements.txt 2>nul
-cd ..
+if exist "Metatron-ConscienceAI\requirements.txt" (
+    cd Metatron-ConscienceAI
+    pip install -r requirements.txt --upgrade 2>nul
+    if errorlevel 1 (
+        echo Warning: Some Metatron-ConscienceAI requirements failed to install, continuing anyway...
+    )
+    cd ..
+) else (
+    echo Warning: Metatron-ConscienceAI\requirements.txt not found, skipping...
+)
 
 echo Installing Open-A.G.I requirements...
-cd Open-A.G.I
-pip install -r requirements.txt 2>nul
-cd ..
+if exist "Open-A.G.I\requirements.txt" (
+    cd Open-A.G.I
+    pip install -r requirements.txt --upgrade 2>nul
+    if errorlevel 1 (
+        echo Warning: Some Open-A.G.I requirements failed to install, continuing anyway...
+    )
+    cd ..
+) else (
+    echo Warning: Open-A.G.I\requirements.txt not found, skipping...
+)
 
 echo Installing aegis-conscience requirements...
-cd aegis-conscience
-pip install -r requirements.txt 2>nul
-cd ..
+if exist "aegis-conscience\requirements.txt" (
+    cd aegis-conscience
+    pip install -r requirements.txt --upgrade 2>nul
+    if errorlevel 1 (
+        echo Warning: Some aegis-conscience requirements failed to install, continuing anyway...
+    )
+    cd ..
+) else (
+    echo Warning: aegis-conscience\requirements.txt not found, skipping...
+)
 
 echo Installing unified system requirements...
-pip install -r unified_requirements.txt 2>nul
+if exist "unified_requirements.txt" (
+    pip install -r unified_requirements.txt --upgrade 2>nul
+    if errorlevel 1 (
+        echo Warning: Some unified system requirements failed to install, continuing anyway...
+    )
+) else (
+    echo Warning: unified_requirements.txt not found, skipping...
+)
 
-echo Check All dependencies OK
+echo Check All dependencies processed
+
+REM Try to install some critical missing packages individually
+echo.
+echo Installing critical packages that might have failed...
+pip install torch transformers datasets peft safetensors 2>nul
+pip install fastapi uvicorn[standard] websockets 2>nul
+pip install cryptography pycryptodome pyotp fernet 2>nul
+pip install aiohttp aiohttp-socks stem asyncio-mqtt 2>nul
+pip install scikit-learn aiosqlite redis 2>nul
+pip install loguru prometheus-client psutil pandas 2>nul
+pip install flask zeroconf Flask-SocketIO netifaces 2>nul
+pip install pydantic click rich python-dotenv 2>nul
+pip install pypdf python-docx feedparser beautifulsoup4 lxml 2>nul
+pip install pytest-asyncio pytest-cov black flake8 mypy 2>nul
+pip install plotly python-socketio 2>nul
+
+echo.
+echo Dependency installation phase complete.
 
 REM Start Unified System Coordinator
 echo.
@@ -87,9 +140,13 @@ echo             - Node Status Dashboard
 echo             - System Performance Metrics
 echo.
 
-cd visualization_tools
-start "Visualization Monitor" cmd /k "title Visualization Monitor & color 0C & python robust_realtime_visualizer.py"
-cd ..
+if exist "visualization_tools" (
+    cd visualization_tools
+    start "Visualization Monitor" cmd /k "title Visualization Monitor & color 0C & python robust_realtime_visualizer.py"
+    cd ..
+) else (
+    echo Warning: visualization_tools directory not found, skipping visualization...
+)
 
 echo.
 echo ========================================================================
