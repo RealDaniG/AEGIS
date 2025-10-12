@@ -1,4 +1,4 @@
-# METATRONV2 - Open A.G.I. system from: https://github.com/KaseMaster/Open-A.G.I
+# METATRON V2.3 - Open A.G.I. system from: https://github.com/KaseMaster/Open-A.G.I
 ## 📅 Updates Log - Evolution from Original Project
 
 ### 🔧 Major Enhancements and Additions
