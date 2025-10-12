@@ -43,6 +43,9 @@ AEGIS represents a groundbreaking fusion of decentralized artificial general int
 ### 💻 Development
 * [Development Guide](DEVELOPMENT_GUIDE) - Contribution guidelines and development practices
 
+### 📋 Version History
+* [Update Changelog](UPDATE_CHANGELOG) - Complete version history and feature evolution
+
 ### 🔒 Security and Privacy
 * [REDACTED](REDACTED) - Redacted information for security purposes
 

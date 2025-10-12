@@ -135,6 +135,10 @@ The integrated web interface at http://localhost:8003 provides:
 - **Network**: Stable internet connection
 - **TOR**: For anonymous communication features
 
+## 📋 Version History
+
+For a detailed history of all updates and improvements, see our [GitHub Wiki Changelog](https://github.com/RealDaniG/AEGIS/wiki/UPDATE_CHANGELOG).
+
 ## 🧪 Testing
 
 ### 🧪 Security Protocol Testing
