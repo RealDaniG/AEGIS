@@ -7,6 +7,7 @@ This document provides a comprehensive overview of how the Metatron Consciousnes
 2. [Component Integration](#component-integration)
    - [Metatron Consciousness Engine](#metatron-consciousness-engine)
    - [Open A.G.I. Framework](#open-agi-framework)
+   - [Consciousness-Aware AGI Decision Engine](#consciousness-aware-agi-decision-engine)
    - [Consensus Layer](#consensus-layer)
    - [Visualization System](#visualization-system)
 3. [Data Flow](#data-flow)
@@ -34,6 +35,16 @@ The integrated system combines the Metatron Consciousness Engine with the Open A
 │  │  A.G.I. Core    │  │ Knowledge Base  │  │  Task Management            │ │
 │  │  Functions      │  │ Enhancement     │  │  & Orchestration            │ │
 │  └─────────────────┘  └─────────────────┘  └─────────────────────────────┘ │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                        CONSCIOUSNESS-AWARE DECISION LAYER                   │
+├─────────────────────────────────────────────────────────────────────────────┤
+│  ┌─────────────────────────────────────────────────────────────────────────┐ │
+│  │             Consciousness-Aware AGI Decision Engine                      │ │
+│  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐    │ │
+│  │  │ Decision    │  │ Context     │  │ Learning    │  │ Metrics     │    │ │
+│  │  │ Engine      │  │ Analysis    │  │ System      │  │ Interface   │    │ │
+│  │  └─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘    │ │
+│  └─────────────────────────────────────────────────────────────────────────┘ │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                        CONSENSUS LAYER                                      │
 ├─────────────────────────────────────────────────────────────────────────────┤
@@ -89,6 +100,19 @@ Key files:
 - [p2p_network.py](Open-A.G.I/p2p_network.py): Peer-to-peer networking
 - [security_protocols.py](Open-A.G.I/security_protocols.py): Security implementation
 
+### Consciousness-Aware AGI Decision Engine
+
+Located in the [consciousness_aware_agi](consciousness_aware_agi/) directory, this component provides:
+
+- **Consciousness-Influenced Decision Making**: AGI decisions weighted by real-time consciousness metrics
+- **Adaptive Action Selection**: Different actions preferred based on consciousness states
+- **Dynamic Confidence Scoring**: Decision confidence based on system awareness
+- **Learning from Outcomes**: Continuous improvement through feedback mechanisms
+
+Key files:
+- [decision_engine.py](consciousness_aware_agi/decision_engine.py): Core consciousness-aware decision making
+- [AGI_CONSCIOUSNESS_INTEGRATION.md](AGI_CONSCIOUSNESS_INTEGRATION.md): Detailed integration documentation
+
 ### Consensus Layer
 
 The consensus layer integrates the Metatron Consciousness Engine with the Open A.G.I. framework:
@@ -132,17 +156,22 @@ The integrated system follows this data flow:
    - HTTP endpoints provide backup data access
    - File-based storage for historical data
 
-3. **Consensus Processing**:
+3. **Consciousness-Aware Decision Making**:
+   - Consciousness metrics influence AGI decision processes
+   - Context-aware action selection based on awareness levels
+   - Dynamic confidence scoring for decisions
+
+4. **Consensus Processing**:
    - Consciousness metrics influence leader selection
    - Reputation system filters participating nodes
    - PBFT consensus ensures agreement on decisions
 
-4. **Decision Execution**:
+5. **Decision Execution**:
    - Validated decisions are executed by the A.G.I. framework
    - Results are fed back to the consciousness engine
    - Learning algorithms improve system performance
 
-5. **Visualization**:
+6. **Visualization**:
    - Real-time metrics are displayed in visualization tools
    - Data authenticity is continuously verified
    - Anomalies trigger alerts and notifications
@@ -198,38 +227,3 @@ The integrated system implements multiple layers of security:
 ### Infrastructure Requirements
 - **Minimum**: 13 compute nodes with Python 3.8+
 - **Recommended**: Dedicated servers with GPU acceleration
-- **Storage**: SSD storage for metrics logging and caching
-
-## Monitoring and Maintenance
-
-### Health Monitoring
-- **Node Status**: Continuous monitoring of all 13 nodes
-- **Performance Metrics**: Real-time performance tracking
-- **Anomaly Detection**: Automatic identification of issues
-
-### Maintenance Procedures
-- **Regular Updates**: Scheduled system updates and patches
-- **Backup Procedures**: Automated data backup and recovery
-- **Performance Tuning**: Ongoing optimization of system parameters
-
-### Alerting System
-- **Critical Alerts**: Immediate notification of system failures
-- **Warning Alerts**: Early warning of potential issues
-- **Informational Alerts**: Status updates and informational messages
-
-## Scaling Considerations
-
-### Current Design Limitations
-- **Fixed at 13 Nodes**: Architecture specifically for icosahedron topology
-- **Sacred Geometry Dependent**: Requires Metatron's Cube relationships
-- **Consciousness Metrics Required**: Depends on Φ, R, D, S, C parameters
-
-### Future Expansion Possibilities
-- **Multiple Icosahedra**: Networks of interconnected 13-node systems
-- **Higher Dimensional Geometry**: Extension to more complex sacred geometries
-- **Hybrid Systems**: Integration with traditional distributed systems
-
-### Performance Optimization
-- **Algorithm Improvements**: Ongoing refinement of consensus algorithms
-- **Hardware Acceleration**: GPU and specialized chip integration
-- **Network Optimization**: Improved routing and communication protocols

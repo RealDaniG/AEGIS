@@ -96,6 +96,7 @@ Some technical documents are kept locally for offline reference:
 - [INTEGRATION_DOCUMENTATION.md](INTEGRATION_DOCUMENTATION.md) - Complete integration guide
 - [SYSTEM_INTEGRATION_OVERVIEW.md](SYSTEM_INTEGRATION_OVERVIEW.md) - System architecture overview
 - [DEPLOYMENT_SUMMARY.md](DEPLOYMENT_SUMMARY.md) - Deployment instructions
+- [AGI_CONSCIOUSNESS_INTEGRATION.md](AGI_CONSCIOUSNESS_INTEGRATION.md) - AGI system and consciousness integration
 
 ### Component Documentation
 - [AEGIS_INTEGRATION_RESULTS.md](AEGIS_INTEGRATION_RESULTS.md) - Security framework results
