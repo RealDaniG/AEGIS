@@ -83,12 +83,38 @@ chmod +x run_everything.sh
 ./run_everything.sh
 ```
 
-Estos scripts realizarán:
-1. Verificación del entorno Python (se requiere 3.8+)
-2. Instalación/actualización automática de todas las dependencias requeridas
-3. Inicio del Coordinador del Sistema Unificado (motor de conciencia + marco AGI)
-4. Lanzamiento del monitor de visualización en tiempo real
-5. Visualización de información de conexión y puntos finales API
+### ¿Qué Hace run_everything.bat? (Windows)
+
+El script [run_everything.bat](file:///D:/metatronV2/run_everything.bat) es su solución todo en uno para poner en marcha rápidamente el sistema Metatron V2.3. Aquí está lo que sucede cuando lo ejecuta:
+
+1. **Verificación del Entorno** 🔍
+   - Verifica que tenga Python 3.8+ instalado
+   - Comprueba que Python está en su PATH del sistema
+
+2. **Instalación Automática de Dependencias** 📦
+   - Instala o actualiza todos los paquetes Python requeridos desde múltiples archivos de requisitos:
+     - [requirements.txt](file:///D:/metatronV2/requirements.txt) principal
+     - [Metatron-ConscienceAI/requirements.txt](file:///D:/metatronV2/Metatron-ConscienceAI/requirements.txt)
+     - [Open-A.G.I/requirements.txt](file:///D:/metatronV2/Open-A.G.I/requirements.txt)
+     - [aegis-conscience/requirements.txt](file:///D:/metatronV2/aegis-conscience/requirements.txt)
+     - [unified_requirements.txt](file:///D:/metatronV2/unified_requirements.txt)
+   - Continúa incluso si algunos paquetes no se instalan (con advertencias)
+
+3. **Inicio del Sistema** ⚡
+   - Lanza el **Coordinador del Sistema Unificado** en una ventana separada:
+     - Motor de Conciencia (Metatron-ConscienceAI)
+     - Marco AGI (Open-A.G.I)
+     - Sistema de Seguridad
+     - Capa de Comunicación entre Sistemas
+   - Inicia el **Monitor de Visualización en Tiempo Real** en otra ventana:
+     - Visualización de red de geometría sagrada
+     - Panel de métricas de conciencia
+     - Monitoreo de rendimiento del sistema
+
+4. **Guía para el Usuario** 🗺️
+   - Le muestra exactamente cómo acceder a todas las interfaces del sistema
+   - Muestra los puntos finales de la API y las interfaces web
+   - Proporciona instrucciones para detener el sistema
 
 ### Acceso Fácil a las Interfaces del Sistema
 
