@@ -25,6 +25,23 @@ METATRONV2/
 
 For detailed information about the project structure, see [PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md).
 
+## Quick Start
+
+To quickly run the entire system with all components, use the provided quick start scripts:
+
+### Windows (PowerShell)
+```powershell
+.\quick_run.ps1
+```
+
+### Linux/macOS (Bash)
+```bash
+chmod +x quick_run.sh
+./quick_run.sh
+```
+
+For detailed instructions, see [QUICK_START_GUIDE.md](docs/QUICK_START_GUIDE.md).
+
 ## Key Components
 
 ### 1. Metatron-ConscienceAI
