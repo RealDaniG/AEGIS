@@ -12,6 +12,12 @@
 
 ---
 
+## 🌐 Language Options / Opciones de Idioma
+
+[English Version](README.md) | [Versión en Español](README_ES.md)
+
+---
+
 🤔CURRENT WORK IN PROGRESS:
 QUANTUM-DIMENSIONAL THINKING & REFLECTION PROCESSING 
 

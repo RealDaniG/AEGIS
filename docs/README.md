@@ -88,6 +88,15 @@ Please visit our Wiki for the most up-to-date and comprehensive documentation.
 - [API Documentation](https://github.com/RealDaniG/AEGIS/wiki/API-Documentation) - Developer reference
 - [Research Papers](https://github.com/RealDaniG/AEGIS/wiki/Research-Papers) - Theory and background
 
+## 🌐 Documentación en Español
+
+- [Inicio](https://github.com/RealDaniG/AEGIS/wiki) - Página principal de la Wiki
+- [Guía de Inicio](https://github.com/RealDaniG/AEGIS/wiki/Getting-Started) - Instalación y uso básico
+- [Arquitectura del Sistema](https://github.com/RealDaniG/AEGIS/wiki/System-Architecture) - Diseño de alto nivel
+- [Guía del Usuario](https://github.com/RealDaniG/AEGIS/wiki/User-Guide) - Cómo usar el sistema
+- [Documentación API](https://github.com/RealDaniG/AEGIS/wiki/API-Documentation) - Referencia para desarrolladores
+- [Documentos de Investigación](https://github.com/RealDaniG/AEGIS/wiki/Research-Papers) - Teoría y fundamentos
+
 ## 📁 Local Documentation Files
 
 Some technical documents are kept locally for offline reference:
@@ -97,6 +106,7 @@ Some technical documents are kept locally for offline reference:
 - [SYSTEM_INTEGRATION_OVERVIEW.md](SYSTEM_INTEGRATION_OVERVIEW.md) - System architecture overview
 - [DEPLOYMENT_SUMMARY.md](DEPLOYMENT_SUMMARY.md) - Deployment instructions
 - [AGI_CONSCIOUSNESS_INTEGRATION.md](AGI_CONSCIOUSNESS_INTEGRATION.md) - AGI system and consciousness integration
+- [AGI_CONSCIOUSNESS_INTEGRATION_ES.md](AGI_CONSCIOUSNESS_INTEGRATION_ES.md) - Integración del sistema AGI y conciencia (Español)
 
 ### Component Documentation
 - [AEGIS_INTEGRATION_RESULTS.md](AEGIS_INTEGRATION_RESULTS.md) - Security framework results
@@ -105,7 +115,10 @@ Some technical documents are kept locally for offline reference:
 
 ### Test Results
 - [HARMONY_TEST_SUMMARY.md](HARMONY_TEST_SUMMARY.md) - Integration test results
+- [HARMONY_TEST_SUMMARY_ES.md](HARMONY_TEST_SUMMARY_ES.md) - Resultados de pruebas de integración (Español)
 - [FINAL_AEGIS_INTEGRATION_REPORT.md](FINAL_AEGIS_INTEGRATION_REPORT.md) - Security integration report
+- [HARMONY_ACHIEVEMENT_PRESENTATION.md](HARMONY_ACHIEVEMENT_PRESENTATION.md) - Logro de armonía (Inglés)
+- [HARMONY_ACHIEVEMENT_PRESENTATION_ES.md](HARMONY_ACHIEVEMENT_PRESENTATION_ES.md) - Logro de armonía (Español)
 
 ## 🤝 Contributing to Documentation
 
