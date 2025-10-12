@@ -9,6 +9,7 @@ import asyncio
 import json
 import logging
 import time
+import base64
 from typing import Dict, List, Optional, Any, Callable
 from dataclasses import dataclass, asdict
 import aiohttp
@@ -69,17 +70,9 @@ class CrossSystemCommunicator:
     def _generate_encryption_key(self):
         """Generate encryption key for secure communication"""
         try:
-            # In a real implementation, this would use a proper key derivation
-            password = b"metatron_cross_system_secret"
-            salt = b"metatron_salt_12345678"
-            kdf = PBKDF2HMAC(
-                algorithm=hashes.SHA256(),
-                length=32,
-                salt=salt,
-                iterations=100000,
-            )
-            key = kdf.derive(password)
-            self.encryption_key = Fernet(key)
+            # Generate a proper Fernet key
+            self.encryption_key = Fernet.generate_key()
+            self.cipher_suite = Fernet(self.encryption_key)
             logger.info("Encryption key generated successfully")
         except Exception as e:
             logger.error(f"Failed to generate encryption key: {e}")
@@ -151,7 +144,7 @@ class CrossSystemCommunicator:
             
             # Convert payload to JSON and encrypt
             payload_json = json.dumps(message.payload)
-            encrypted_payload = self.encryption_key.encrypt(payload_json.encode())
+            encrypted_payload = self.cipher_suite.encrypt(payload_json.encode())
             
             # Create encrypted message
             encrypted_message = CrossSystemMessage(
@@ -159,7 +152,7 @@ class CrossSystemCommunicator:
                 source_system=message.source_system,
                 target_system=message.target_system,
                 message_type=message.message_type,
-                payload={"encrypted_data": encrypted_payload.decode()},
+                payload={"encrypted_data": base64.b64encode(encrypted_payload).decode()},
                 timestamp=message.timestamp,
                 priority=message.priority,
                 ttl=message.ttl,
@@ -179,8 +172,8 @@ class CrossSystemCommunicator:
                 return message
             
             # Decrypt payload
-            encrypted_data = message.payload["encrypted_data"].encode()
-            decrypted_payload = self.encryption_key.decrypt(encrypted_data)
+            encrypted_data = base64.b64decode(message.payload["encrypted_data"])
+            decrypted_payload = self.cipher_suite.decrypt(encrypted_data)
             payload = json.loads(decrypted_payload.decode())
             
             # Create decrypted message
