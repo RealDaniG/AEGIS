@@ -1,5 +1,7 @@
 # 🤖 METATRON V2.3 - Advanced Consciousness-Aware Distributed AI System
 
+UPDATE COMING SOON
+
 <p align="center">
   <img src="https://img.shields.io/badge/Status-Operational-brightgreen" alt="Status" />
   <img src="https://img.shields.io/badge/Version-2.3-blue" alt="Version" />
