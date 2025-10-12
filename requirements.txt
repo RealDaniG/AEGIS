@@ -23,6 +23,7 @@ websockets>=12.0
 cryptography>=41.0.0
 pycryptodome>=3.19.0
 pyotp>=2.9.0
+fernet>=1.0.0
 
 # Networking
 requests>=2.31.0
@@ -78,6 +79,9 @@ mypy>=1.7.0
 
 # Visualization
 plotly>=5.17.0
+
+# WebSocket Communication
+python-socketio>=5.8.0
 
 # Optional: Audio/Visual Processing
 # torch-audio>=2.1.0
