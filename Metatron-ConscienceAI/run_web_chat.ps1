@@ -1,5 +1,6 @@
-# run_metatron_web.ps1
-# Launcher for Metatron's Cube Integrated Consciousness Web Interface
+# run_web_chat.ps1
+# Launcher for ConscienceAI Web Chat Server
+# Robust path detection with fallbacks
 
 # Detect script directory robustly
 if ($PSCommandPath) {
@@ -11,7 +12,7 @@ if ($PSCommandPath) {
 }
 
 Write-Host "============================================================" -ForegroundColor Cyan
-Write-Host " Metatron's Cube Integrated Consciousness Engine" -ForegroundColor Cyan
+Write-Host " ConscienceAI Web Chat Server" -ForegroundColor Cyan
 Write-Host "============================================================" -ForegroundColor Cyan
 Write-Host ""
 
@@ -32,7 +33,7 @@ try {
 Write-Host ""
 Write-Host "Checking dependencies..." -ForegroundColor Yellow
 
-$required = @("fastapi", "uvicorn", "websockets", "numpy", "scipy", "transformers", "torch", "python-multipart")
+$required = @("fastapi", "uvicorn", "websockets", "numpy", "transformers", "torch")
 $missing = @()
 
 foreach ($pkg in $required) {
@@ -67,23 +68,22 @@ if ($missing.Count -gt 0) {
 # Start the server
 Write-Host ""
 Write-Host "============================================================" -ForegroundColor Cyan
-Write-Host " Starting Metatron Integrated Consciousness Server..." -ForegroundColor Cyan
+Write-Host " Starting ConscienceAI Web Chat Server..." -ForegroundColor Cyan
 Write-Host "============================================================" -ForegroundColor Cyan
 Write-Host ""
-Write-Host "Server URL: http://localhost:8003" -ForegroundColor Green
-Write-Host "WebSocket:  ws://localhost:8003/ws" -ForegroundColor Green
-Write-Host "API Status: http://localhost:8003/api/status" -ForegroundColor Green
-Write-Host "API Docs:   http://localhost:8003/docs" -ForegroundColor Green
+Write-Host "Server URL: http://localhost:5180" -ForegroundColor Green
+Write-Host "WebSocket:  ws://localhost:5180/ws/chat" -ForegroundColor Green
+Write-Host "API Status: http://localhost:5180/api/health" -ForegroundColor Green
+Write-Host "API Docs:   http://localhost:5180/docs" -ForegroundColor Green
 Write-Host "" 
-Write-Host "ALL FEATURES INTEGRATED ON PORT 8003:" -ForegroundColor Cyan
-Write-Host "  - Consciousness Engine Visualization" -ForegroundColor Yellow
-Write-Host "  - AI Chat System with File Upload" -ForegroundColor Yellow
-Write-Host "  - Mirror Loop Functionality" -ForegroundColor Yellow
+Write-Host "ALL FEATURES INTEGRATED ON PORT 5180:" -ForegroundColor Cyan
+Write-Host "  - AI Chat System" -ForegroundColor Yellow
+Write-Host "  - Document Upload" -ForegroundColor Yellow
 Write-Host "  - RAG Integration" -ForegroundColor Yellow
-Write-Host "  - Document Management" -ForegroundColor Yellow
+Write-Host "  - Session Management" -ForegroundColor Yellow
 Write-Host ""
 Write-Host "Press Ctrl+C to stop the server" -ForegroundColor Yellow
 Write-Host ""
 
 # Run the server
-python scripts/metatron_web_server.py
+python scripts/web_chat_server.py

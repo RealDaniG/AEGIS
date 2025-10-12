@@ -15,6 +15,7 @@ tqdm
 fastapi
 uvicorn[standard]
 websockets
+python-multipart
 
 # Networking
 requests

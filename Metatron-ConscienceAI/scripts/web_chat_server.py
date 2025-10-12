@@ -67,6 +67,7 @@ app.add_middleware(
 # Repository root for data storage
 REPO_ROOT = Path(__file__).resolve().parent.parent
 CHAT_LOG_DIR = REPO_ROOT / "ai_runs" / "chat_logs"
+WEBUI_DIR = REPO_ROOT / "webui"
 try:
     CHAT_LOG_DIR.mkdir(parents=True, exist_ok=True)
 except (PermissionError, OSError):
@@ -77,6 +78,10 @@ except (PermissionError, OSError):
         CHAT_LOG_DIR.mkdir(parents=True, exist_ok=True)
     except Exception:
         pass
+
+# Mount static files if webui directory exists
+if WEBUI_DIR.exists():
+    app.mount("/static", StaticFiles(directory=str(WEBUI_DIR)), name="static")
 
 # Global chat system instance
 chat_model = None
@@ -120,6 +125,7 @@ async def startup_event():
     print("HTTP POST Endpoint: /api/chat")
     print("WebSocket Endpoint: /ws/chat (with fallback)")
     print("RAG Integration: Available" if RAG_AVAILABLE else "RAG Integration: Not Available")
+    print("Static Files: " + str(WEBUI_DIR) if WEBUI_DIR.exists() else "Static Files: Not Available")
     print("="*60)
     
     # Initialize chat model if available

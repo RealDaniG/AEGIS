@@ -234,7 +234,6 @@ async def root():
             <h1>Metatron's Cube Consciousness Engine</h1>
             <p>WebSocket endpoint: ws://localhost:8003/ws</p>
             <p>Integrated UI: http://localhost:8003</p>
-            <p>Chat Server: http://localhost:5180</p>
             <p>Status: Active</p>
         </body>
     </html>

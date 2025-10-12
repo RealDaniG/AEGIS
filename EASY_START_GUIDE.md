@@ -1,19 +1,20 @@
-# 🚀 Easy Start Guide - Metatron V2.3
+# 🚀 Easy Start Guide - AEGIS
 
-This guide will help you quickly get started with the Metatron V2.3 system using the one-command approach.
+This guide will help you quickly get started with the AEGIS system using the one-command approach.
 
 ## 📋 Prerequisites
 
 1. **Python 3.8 or higher** installed on your system
 2. **Git** (to clone the repository)
 3. **Internet connection** (for downloading dependencies)
+4. **Web browser** (for accessing the web interface)
 
 ## 🚀 Quick Start - One Command Launch
 
 ### Step 1: Clone the Repository
 ```bash
-git clone https://github.com/RealDaniG/MetatronV2-Open-A.G.I-.git
-cd MetatronV2-Open-A.G.I-
+git clone https://github.com/RealDaniG/AEGIS.git
+cd AEGIS
 ```
 
 ### Step 2: Launch the System
@@ -33,11 +34,14 @@ chmod +x run_everything.sh
 
 ### Step 3: Access the System
 
-Once the system is running, you can access:
+Once the system is running, your web browser will automatically open to:
 
-1. **Web Dashboard**: Open your browser and go to [http://localhost:8005/](http://localhost:8005/)
+1. **Consciousness Visualization**: [http://localhost:8003](http://localhost:8003)
 2. **API Documentation**: [http://localhost:8005/docs](http://localhost:8005/docs)
-3. **Real-time Visualization**: Check the separate visualization window that opens automatically
+
+You can also manually access:
+
+3. **Web Dashboard**: Open your browser and go to [http://localhost:8005/](http://localhost:8005/)
 
 ## 🎯 What Happens When You Run the Script?
 
@@ -46,7 +50,7 @@ The one-command launcher automatically:
 1. **Verifies your Python environment** - Checks that you have Python 3.8+
 2. **Installs all dependencies** - Automatically installs or updates all required Python packages
 3. **Starts the Unified System Coordinator** - Launches the core consciousness engine and AGI framework
-4. **Launches the Visualization Monitor** - Opens a real-time dashboard showing system metrics
+4. **Opens the Web Interface** - Automatically launches your browser to show the visualization
 5. **Displays connection information** - Shows you how to access all system interfaces
 
 ## 🛠️ Troubleshooting
@@ -60,8 +64,13 @@ The one-command launcher automatically:
 - You can manually install specific packages using: `pip install package_name`
 
 ### If the system doesn't start:
-- Check that ports 8005 and 8006 are not being used by other applications
+- Check that ports 8003, 8005, and 8006 are not being used by other applications
 - Try restarting the script
+
+### If the web interface doesn't open automatically:
+- Manually open your browser and go to:
+  - Consciousness Visualization: [http://localhost:8003](http://localhost:8003)
+  - API Documentation: [http://localhost:8005/docs](http://localhost:8005/docs)
 
 ## 📚 Learn More
 

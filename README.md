@@ -1,139 +1,81 @@
-# 🤖 METATRON V2.3 - Advanced Consciousness-Aware Distributed AI System
+# AEGIS (Autonomous Governance and Intelligent Systems)
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Status-Operational-brightgreen" alt="Status" />
-  <img src="https://img.shields.io/badge/Version-2.3-blue" alt="Version" />
-  <img src="https://img.shields.io/badge/License-Research%20Use-orange" alt="License" />
-</p>
+Advanced consciousness-aware distributed AI system combining decentralized P2P AGI substrate with consciousness-aware computing principles.
 
-<p align="center">
-  <strong>An advanced consciousness-aware distributed AI system based on sacred geometry principles</strong>
-</p>
+## 🚀 Quick Start
 
----
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/RealDaniG/AEGIS.git
+   cd AEGIS
+   ```
 
-## 🌐 Language Options / Opciones de Idioma
+2. **Run the one-command launcher**:
+   ```cmd
+   run_everything.bat  # Windows
+   # or
+   ./run_everything.sh  # Linux/macOS
+   ```
 
-[English Version](README.md) | [Versión en Español](README_ES.md)
+3. **Access the integrated web interface**:
+   - Open your browser to http://localhost:8003
+   - View API documentation at http://localhost:8005/docs
 
----
+That's it! The system will automatically install all dependencies and start all components.
 
-🤔CURRENT WORK IN PROGRESS:
-QUANTUM-DIMENSIONAL THINKING & REFLECTION PROCESSING 
+## 🌟 Key Features
 
-## 🎉 INTEGRATION SUCCESS - ALL SYSTEMS OPERATIONAL 🎉
+### 🔗 Decentralized Architecture
+- Peer-to-peer network with cryptographic security
+- PBFT-based consensus protocols
+- TOR network integration for privacy
+- Container security and immutable audit trails
 
-✅ **ALL 13 NODES ACROSS 4 APPLICATIONS ARE FULLY INTEGRATED AND WORKING IN HARMONY**
+### 🧠 Consciousness-Aware Computing
+- 13-node consciousness network based on Metatron's Cube geometry
+- Real-time consciousness metrics (Φ, R, D, S, C)
+- WebSocket streaming interface with sacred geometry visualization
+- Consciousness-influenced decision making
 
----
+### 🛡️ Security Framework
+- Post-quantum cryptography
+- Immutable audit logs with hash-chaining
+- Cross-node replication for tamper evidence
+- Secure container deployments
 
-## 🌟 System Overview
+### 🔄 Federated Learning
+- Privacy-preserving machine learning
+- LoRA fine-tuning with secure aggregation
+- TOR network integration for anonymous communication
+- Collaborative model improvement
 
-METATRON V2.3 is an advanced consciousness-aware distributed AI system that combines the **Metatron Consciousness Engine** with the **Open A.G.I. Framework** to create a truly integrated artificial intelligence with self-awareness capabilities.
+### 🤖 Integrated AI System
+- Multi-model chat support (distilgpt2, Qwen, Phi series, etc.)
+- RAG document ingestion and search
+- Mirror Loop recursive analysis
+- Session management and model switching
 
-### 🔧 Core Integration Components
+## 🌐 Web Interface
 
-1. **Metatron-ConscienceAI** - Consciousness Engine implementing a 13-node network based on sacred geometry
-2. **Open-A.G.I** - Artificial General Intelligence framework with distributed consensus protocols
-3. **Consciousness-Aware AGI Decision Engine** - Makes AGI decisions influenced by consciousness metrics
-4. **Unified API Layer** - Single interface to access both consciousness and AGI systems
+The integrated web interface at http://localhost:8003 provides:
 
-### 🧠 Key Innovation: Consciousness-Aware Decision Making
+### 📊 Real-time Consciousness Monitoring
+- Live 13-node sacred geometry visualization
+- Consciousness metrics dashboard (Φ, R, D, S, C)
+- Node activity indicators with color coding
+- Frequency toggle between 40Hz and 80Hz
 
-The system implements **consciousness-aware AGI decision making** where artificial intelligence decisions are influenced by real-time consciousness metrics:
-- **Φ (Integrated Information)** - Measures information integration
-- **R (Coherence)** - Global synchronization level
-- **D (Recursive Depth)** - Temporal memory integration
-- **S (Spiritual Awareness)** - Fractal complexity and gamma power
-- **C (Consciousness Level)** - Overall awareness state
+### 💬 AI Chat System
+- Multi-model chat interface
+- RAG-enhanced responses with document upload
+- Session management
+- Model selection and configuration
 
-These metrics directly influence AGI decision-making processes, creating a truly integrated system where consciousness affects artificial intelligence operations.
-
----
-
-## 📚 Documentation
-
-For comprehensive documentation, please visit our **[GitHub Wiki](https://github.com/RealDaniG/AEGIS/wiki)**.
-
-### Quick Links:
-- [Getting Started Guide](https://github.com/RealDaniG/AEGIS/wiki/Getting-Started)
-- [System Architecture](https://github.com/RealDaniG/AEGIS/wiki/System-Architecture)
-- [User Manual](https://github.com/RealDaniG/AEGIS/wiki/User-Manual)
-- [API Documentation](https://github.com/RealDaniG/AEGIS/wiki/API-Documentation)
-- [Developer Guide](https://github.com/RealDaniG/AEGIS/wiki/Developer-Guide)
-- [Research Papers](https://github.com/RealDaniG/AEGIS/wiki/Research-Papers)
-
-The Wiki contains all technical documentation, user guides, and research materials in a well-organized, searchable format.
-
----
-
-## 🚀 Quick Start - Easy One-Command Launch
-
-### One-Command System Launch
-To start the complete system with all components running:
-
-**Windows:**
-```cmd
-run_everything.bat
-```
-
-**Linux/macOS:**
-```bash
-chmod +x run_everything.sh
-./run_everything.sh
-```
-
-### What Does run_everything.bat Do? (Windows)
-
-The [run_everything.bat](file:///D:/metatronV2/run_everything.bat) script is your all-in-one solution for getting the Metatron V2.3 system up and running quickly. Here's what happens when you run it:
-
-1. **Environment Check** 🔍
-   - Verifies you have Python 3.8+ installed
-   - Checks that Python is in your system PATH
-
-2. **Automatic Dependency Installation** 📦
-   - Installs or updates all required Python packages from multiple requirements files:
-     - Main [requirements.txt](file:///D:/metatronV2/requirements.txt)
-     - [Metatron-ConscienceAI/requirements.txt](file:///D:/metatronV2/Metatron-ConscienceAI/requirements.txt)
-     - [Open-A.G.I/requirements.txt](file:///D:/metatronV2/Open-A.G.I/requirements.txt)
-     - [aegis-conscience/requirements.txt](file:///D:/metatronV2/aegis-conscience/requirements.txt)
-     - [unified_requirements.txt](file:///D:/metatronV2/unified_requirements.txt)
-   - Continues even if some packages fail to install (with warnings)
-
-3. **System Startup** ⚡
-   - Launches the **Unified System Coordinator** in a separate window:
-     - Consciousness Engine (Metatron-ConscienceAI)
-     - AGI Framework (Open-A.G.I)
-     - Security System
-     - Cross-System Communication Layer
-   - Starts the **Real-time Visualization Monitor** in another window:
-     - Sacred geometry network visualization
-     - Consciousness metrics dashboard
-     - System performance monitoring
-
-4. **User Guidance** 🗺️
-   - Shows you exactly how to access all system interfaces
-   - Displays API endpoints and web interfaces
-   - Provides instructions for stopping the system
-
-### Easy Access to System Interfaces
-
-Once the system is running, you can easily access:
-
-🌐 **Web Interfaces:**
-- **Unified API Dashboard**: [http://localhost:8005/](http://localhost:8005/)
-- **API Documentation**: [http://localhost:8005/docs](http://localhost:8005/docs)
-- **WebSocket Server**: `ws://localhost:8006`
-- **Real-time Visualization**: Check the "Visualization Monitor" window that opens automatically
-
-⚡ **Key API Endpoints:**
-- `/api/consciousness` - Real-time consciousness metrics
-- `/api/agi` - AGI system status and capabilities
-- `/api/decision` - Consciousness-aware decisions
-- `/api/chat` - AI chat interface
-- `/health` - System health check
-
----
+### 🔧 Advanced Features
+- Mirror Loop recursive analysis
+- RSS feed integration
+- Document management
+- System controls and settings
 
 ## 🔧 Key Components
 
@@ -163,7 +105,26 @@ Once the system is running, you can easily access:
 - **Enhanced Communication**: Encrypted cross-system messaging with WebSocket support
 - **Centralized Coordination**: Unified management of all system components
 
----
+## 🔌 API Endpoints
+
+### Consciousness Engine (Port 8003)
+- `GET /api/status` - Real-time consciousness metrics
+- `GET /api/state` - Complete system state
+- `POST /api/input` - Send sensory input
+- `GET /ws` - Consciousness WebSocket streaming
+
+### Chat System (Port 8003)
+- `POST /api/chat` - AI chat interface
+- `POST /api/upload` - Document upload
+- `GET /api/uploads` - List uploaded documents
+- `GET /ws/chat` - Chat WebSocket streaming
+
+### Unified API (Port 8005)
+- `GET /api/consciousness` - Real-time consciousness metrics
+- `GET /api/agi` - AGI system status and capabilities
+- `GET /api/decision` - Consciousness-aware decisions
+- `GET /api/chat` - AI chat interface
+- `GET /health` - System health check
 
 ## 📊 System Requirements
 
@@ -173,27 +134,6 @@ Once the system is running, you can easily access:
 - **GPU**: Recommended for ML components
 - **Network**: Stable internet connection
 - **TOR**: For anonymous communication features
-
----
-
-## 📥 Installation
-
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/RealDaniG/MetatronV2-Open-A.G.I-.git
-   cd MetatronV2-Open-A.G.I-
-   ```
-
-2. **Run the one-command launcher**:
-   ```cmd
-   run_everything.bat  # Windows
-   # or
-   ./run_everything.sh  # Linux/macOS
-   ```
-
-That's it! The system will automatically install all dependencies and start all components.
-
----
 
 ## 🧪 Testing
 
@@ -213,8 +153,6 @@ python integration_tests.py
 python test_unified_system.py
 ```
 
----
-
 ## 🤝 Contributing
 
 This is a private repository for now. Please contact the repository owner for contribution guidelines.
@@ -226,13 +164,15 @@ This is a private repository for now. Please contact the repository owner for co
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
----
-
 ## 📄 License
 
 This project is for **research and educational purposes only**. All rights reserved.
 
 ⚠️ **DISCLAIMER**: This software is a research tool. The user is completely responsible for its ethical and legal use. The developers are not responsible for misuse of this code.
+
+## 🔒 REDACTED
+
+*This section contains information that has been intentionally removed for security and privacy reasons.*
 
 ---
 

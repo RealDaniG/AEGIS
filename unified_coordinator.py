@@ -141,8 +141,7 @@ class UnifiedSystemCoordinator:
             logger.info("System loop cancelled")
         except Exception as e:
             logger.error(f"Error in system loop: {e}")
-        finally:
-            await self.shutdown()
+        # Note: We don't call shutdown here anymore as it's handled by the main script
     
     def _update_system_metrics(self):
         """Update system performance metrics"""

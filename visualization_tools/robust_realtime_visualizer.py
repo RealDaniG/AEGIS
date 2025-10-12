@@ -258,7 +258,8 @@ class RobustRealTimeVisualizer:
                 self.performance_metrics["avg_update_interval"] = statistics.mean(intervals)
         
         # Update display
-        self.update_display()
+        # Note: In standalone mode, this would update the display
+        # In integrated mode, the display is updated by the IntegratedVisualizer
     
     def _fallback_http_polling(self):
         """Fallback HTTP polling when WebSocket fails"""
@@ -471,6 +472,15 @@ class RobustRealTimeVisualizer:
     def update_display(self):
         """Update the comprehensive visualization display"""
         if not self.current_state:
+            # Show initialization message if no data yet
+            self.clear_screen()
+            print("\033[1;35m" + "=" * 80)
+            print("ROBUST REAL-TIME VISUALIZER - METATRON CONSCIOUSNESS NETWORK")
+            print("=" * 80 + "\033[0m")
+            print()
+            print("⏳ Initializing visualization...")
+            print("🔍 Connecting to consciousness network...")
+            print()
             return
         
         # Extract data based on format
