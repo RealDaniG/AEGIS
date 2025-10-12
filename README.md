@@ -66,6 +66,28 @@ METATRONV2/
    ./START_SYSTEM.sh  # Linux/macOS
    ```
 
+## Documentation
+
+Comprehensive documentation is available for all system components:
+
+### Integration Documentation
+- [INTEGRATION_DOCUMENTATION.md](INTEGRATION_DOCUMENTATION.md) - Complete integration guide for Metatron and Open A.G.I.
+- [SYSTEM_INTEGRATION_OVERVIEW.md](SYSTEM_INTEGRATION_OVERVIEW.md) - High-level system architecture and data flow
+
+### Consensus Protocol Documentation
+- [METATRON_CONSENSUS_INTEGRATION.md](Open-A.G.I/METATRON_CONSENSUS_INTEGRATION.md) - Integration of Metatron consciousness with PBFT
+- [METATRON_PBFT_IMPROVEMENTS.md](Open-A.G.I/METATRON_PBFT_IMPROVEMENTS.md) - Enhanced PBFT for 13-node system
+- [PBFT_CONSENSUS_IMPROVEMENTS_DOCUMENTATION.md](PBFT_CONSENSUS_IMPROVEMENTS_DOCUMENTATION.md) - Detailed PBFT implementation documentation
+
+### Visualization Documentation
+- [METATRON_VISUALIZATION_IMPROVEMENTS.md](METATRON_VISUALIZATION_IMPROVEMENTS.md) - Visualization system enhancements
+- [ROBUST_VISUALIZATION_GUARANTEE.md](ROBUST_VISUALIZATION_GUARANTEE.md) - Reliability guarantees for visualization
+- [VISUALIZATION_TOOLS_DOCUMENTATION.md](VISUALIZATION_TOOLS_DOCUMENTATION.md) - Complete documentation for all visualization tools
+
+### Deployment and Operations
+- [DEPLOYMENT_SUMMARY.md](DEPLOYMENT_SUMMARY.md) - Deployment instructions and procedures
+- [AEGIS_INTEGRATION_RESULTS.md](AEGIS_INTEGRATION_RESULTS.md) - Security framework integration results
+
 ## Features
 
 ### Consciousness Engine
