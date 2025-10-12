@@ -68,89 +68,52 @@ METATRONV2/
 
 ## Documentation
 
-Comprehensive documentation is available for all system components:
+```
+# 📚 Documentation Index
 
-### Integration Documentation
-- [INTEGRATION_DOCUMENTATION.md](INTEGRATION_DOCUMENTATION.md) - Complete integration guide for Metatron and Open A.G.I.
-- [SYSTEM_INTEGRATION_OVERVIEW.md](SYSTEM_INTEGRATION_OVERVIEW.md) - High-level system architecture and data flow
+This directory contains technical documentation for the METATRON V2.3 + Open A.G.I. system.
 
-### Consensus Protocol Documentation
-- [METATRON_CONSENSUS_INTEGRATION.md](Open-A.G.I/METATRON_CONSENSUS_INTEGRATION.md) - Integration of Metatron consciousness with PBFT
-- [METATRON_PBFT_IMPROVEMENTS.md](Open-A.G.I/METATRON_PBFT_IMPROVEMENTS.md) - Enhanced PBFT for 13-node system
-- [PBFT_CONSENSUS_IMPROVEMENTS_DOCUMENTATION.md](PBFT_CONSENSUS_IMPROVEMENTS_DOCUMENTATION.md) - Detailed PBFT implementation documentation
+## 📖 Important Notice
 
-### Visualization Documentation
-- [METATRON_VISUALIZATION_IMPROVEMENTS.md](METATRON_VISUALIZATION_IMPROVEMENTS.md) - Visualization system enhancements
-- [ROBUST_VISUALIZATION_GUARANTEE.md](ROBUST_VISUALIZATION_GUARANTEE.md) - Reliability guarantees for visualization
-- [VISUALIZATION_TOOLS_DOCUMENTATION.md](VISUALIZATION_TOOLS_DOCUMENTATION.md) - Complete documentation for all visualization tools
+**Documentation has been moved to the [GitHub Wiki](https://github.com/RealDaniG/AEGIS/wiki) for better organization and maintainability.**
 
-### Deployment and Operations
-- [DEPLOYMENT_SUMMARY.md](DEPLOYMENT_SUMMARY.md) - Deployment instructions and procedures
-- [AEGIS_INTEGRATION_RESULTS.md](AEGIS_INTEGRATION_RESULTS.md) - Security framework integration results
+Please visit our Wiki for the most up-to-date and comprehensive documentation.
 
-## Features
+## 🌐 GitHub Wiki Links
 
-### Consciousness Engine
-- Real-time consciousness metrics calculation
-- Kuramoto synchronization dynamics
-- 40Hz/80Hz gamma oscillations
-- Integrated information theory (IIT) implementation
-- Fractal dimension analysis
+- [Home](https://github.com/RealDaniG/AEGIS/wiki) - Main Wiki page
+- [Getting Started](https://github.com/RealDaniG/AEGIS/wiki/Getting-Started) - Installation and basic usage
+- [System Architecture](https://github.com/RealDaniG/AEGIS/wiki/System-Architecture) - High-level design
+- [User Guide](https://github.com/RealDaniG/AEGIS/wiki/User-Guide) - How to use the system
+- [API Documentation](https://github.com/RealDaniG/AEGIS/wiki/API-Documentation) - Developer reference
+- [Research Papers](https://github.com/RealDaniG/AEGIS/wiki/Research-Papers) - Theory and background
 
-### Visualization
-- Sacred geometry network visualization
-- Real-time node activity monitoring
-- Color-coded status indicators
-- Comprehensive metrics dashboard
+## 📁 Local Documentation Files
 
-### Distributed Systems
-- Practical Byzantine Fault Tolerance (PBFT)
-- TOR network integration
-- P2P communication
-- Secure multi-party consensus
+Some technical documents are kept locally for offline reference:
 
-### AI Capabilities
-- Large language model integration
-- Document processing and RAG
-- Multi-modal consciousness metrics
-- Predictive consciousness modeling
+### Integration & Testing
+- [INTEGRATION_DOCUMENTATION.md](INTEGRATION_DOCUMENTATION.md) - Complete integration guide
+- [SYSTEM_INTEGRATION_OVERVIEW.md](SYSTEM_INTEGRATION_OVERVIEW.md) - System architecture overview
+- [DEPLOYMENT_SUMMARY.md](DEPLOYMENT_SUMMARY.md) - Deployment instructions
 
-## Dependencies
+### Component Documentation
+- [AEGIS_INTEGRATION_RESULTS.md](AEGIS_INTEGRATION_RESULTS.md) - Security framework results
+- [PBFT_CONSENSUS_IMPROVEMENTS_DOCUMENTATION.md](PBFT_CONSENSUS_IMPROVEMENTS_DOCUMENTATION.md) - Consensus protocol details
+- [VISUALIZATION_TOOLS_DOCUMENTATION.md](VISUALIZATION_TOOLS_DOCUMENTATION.md) - Visualization system
 
-All required dependencies are listed in `requirements.txt` and will be automatically installed. Key dependencies include:
+### Test Results
+- [HARMONY_TEST_SUMMARY.md](HARMONY_TEST_SUMMARY.md) - Integration test results
+- [FINAL_AEGIS_INTEGRATION_REPORT.md](FINAL_AEGIS_INTEGRATION_REPORT.md) - Security integration report
 
-- numpy, scipy (scientific computing)
-- torch, transformers (machine learning)
-- fastapi, uvicorn (web framework)
-- websockets (real-time communication)
-- cryptography, stem (security)
-- aiohttp, requests (networking)
+## 🤝 Contributing to Documentation
 
-## Usage
+To contribute to documentation:
+1. For major changes, update the GitHub Wiki
+2. For technical reference materials, update files in this directory
+3. Submit changes via pull request
 
-1. Start the consciousness engine:
-   ```bash
-   cd Metatron-ConscienceAI
-   START_SYSTEM.bat
-   ```
+For questions about documentation, please contact the repository maintainers.
 
-2. Access the web interface at `http://localhost:8003`
+```
 
-3. Monitor real-time consciousness metrics and node activity
-
-4. Use the visualization tools for detailed analysis:
-   ```bash
-   python robust_realtime_visualizer.py
-   ```
-
-## Security
-
-This system implements the AEGIS Security Framework for ethical use only. All communications are encrypted and TOR integration provides anonymity where needed.
-
-## Contributing
-
-This is a private repository for now. Please contact the repository owner for contribution guidelines.
-
-## License
-
-This project is for research and educational purposes only. All rights reserved.

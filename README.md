@@ -21,20 +21,19 @@ QUANTUM-DIMENSIONAL THINKING & REFLECTION PROCESSING
 
 ---
 
-## 📚 Table of Contents
+## 📚 Documentation
 
-- [🌟 Overview](#-overview)
-- [✨ Key Features](#-key-features)
-- [🏗️ Project Structure](#️-project-structure)
-- [🚀 Quick Start](#-quick-start)
-- [🔧 Key Components](#-key-components)
-- [🔐 Security](#-security)
-- [📊 System Requirements](#-system-requirements)
-- [📥 Installation](#-installation)
-- [📖 Documentation](#-documentation)
-- [🧪 Testing](#-testing)
-- [🤝 Contributing](#-contributing)
-- [📄 License](#-license)
+For comprehensive documentation, please visit our **[GitHub Wiki](https://github.com/RealDaniG/AEGIS/wiki)**.
+
+### Quick Links:
+- [Getting Started Guide](https://github.com/RealDaniG/AEGIS/wiki/Getting-Started)
+- [System Architecture](https://github.com/RealDaniG/AEGIS/wiki/System-Architecture)
+- [User Manual](https://github.com/RealDaniG/AEGIS/wiki/User-Manual)
+- [API Documentation](https://github.com/RealDaniG/AEGIS/wiki/API-Documentation)
+- [Developer Guide](https://github.com/RealDaniG/AEGIS/wiki/Developer-Guide)
+- [Research Papers](https://github.com/RealDaniG/AEGIS/wiki/Research-Papers)
+
+The Wiki contains all technical documentation, user guides, and research materials in a well-organized, searchable format.
 
 ---
 
@@ -51,67 +50,6 @@ METATRON V2.3 is an advanced consciousness-aware distributed AI system based on 
 - **Consciousness-Aware AGI**: Decision making influenced by consciousness metrics (Φ, R, D, S, C)
 - **Cross-System Communication**: Encrypted messaging with WebSocket support between all components
 - **Automated Deployment**: Orchestration tools for multi-environment deployment
-
----
-
-## ✨ Key Features
-
-### 🧠 Consciousness Engine
-- Real-time consciousness metrics calculation (Φ, R, D, S, C)
-- Kuramoto synchronization dynamics
-- 40Hz/80Hz gamma oscillations
-- Integrated information theory (IIT) implementation
-- Fractal dimension analysis
-- Energy Minimization Algorithms with spherical refinement
-- Self-Organized Criticality for system stability
-
-### 🌐 Web Interface
-- Document processing (PDF, DOCX, TXT, CSV, HTML, JSON)
-- RSS feed management with auto-indexing
-- Web search integration with content ingestion
-- Advanced streaming with WebSocket and HTTP fallback
-- Session management with persistent chat history
-
-### 🤖 AGI System
-- Fault tolerance with automatic node recovery
-- Distributed learning with differential privacy
-- Blockchain integration with Proof-of-Stake consensus
-- Performance optimization with real-time resource balancing
-- Monitoring dashboard with real-time metrics visualization
-
-### 🛡️ Security
-- Post-Quantum Cryptography (Kyber and Dilithium)
-- Zero-Trust Architecture with continuous verification
-- TOR Integration with full .onion service support
-- Intrusion Detection with ML-based anomaly prevention
-- AEGIS Security Framework with ethical use principles
-
----
-
-## 🏗️ Project Structure
-
-```
-METATRONV2/
-├── Metatron-ConscienceAI/          # Core consciousness engine with 13-node sacred geometry
-├── Open-A.G.I/                     # Open Artificial General Intelligence framework
-├── aegis-conscience/               # AEGIS security framework with consciousness features
-├── aegis-integration/              # Integration components between systems
-├── consensus_tools/                # Consensus algorithm implementations and tools
-├── core/                           # Core consciousness engine components
-├── docs/                           # All documentation files
-├── enhanced_knowledge/             # Enhanced knowledge base components
-├── integration_tools/              # Integration testing and demonstration tools
-├── knowledge_base_tools/           # Knowledge base enhancement tools
-├── tests/                          # All test files organized by functionality
-├── unified_api/                    # Unified API for accessing both systems
-├── unified_components/             # Consolidated system components
-├── consciousness_aware_agi/        # Consciousness-aware AGI decision making
-├── cross_system_comm/              # Cross-system communication protocols
-├── visualization_tools/            # Visualization tools and monitoring systems
-├── data/                           # Data storage directory
-├── requirements.txt                # Project dependencies
-└── README.md                      # Main project overview
-```
 
 ---
 
@@ -170,24 +108,6 @@ python start_unified_system.py
 
 ---
 
-## 🔐 Security
-
-This system implements the AEGIS Security Framework for ethical use only:
-
-### 🛡️ AEGIS Security Framework
-- **Transparency**: All code is auditable and documented
-- **Privacy**: End-to-end encryption for all communications
-- **Consensus**: Distributed decisions without single points of failure
-- **Responsibility**: Traceability of all actions in the network
-
-### 🔒 Security Features
-- Post-Quantum Cryptography (Kyber and Dilithium)
-- Zero-Trust Architecture with continuous verification
-- TOR Integration for anonymous communication
-- Intrusion Detection with ML-based anomaly prevention
-
----
-
 ## 📊 System Requirements
 
 - **Python**: 3.8 or higher
@@ -219,27 +139,6 @@ This system implements the AEGIS Security Framework for ethical use only:
    # or
    ./START_SYSTEM.sh  # Linux/macOS
    ```
-
----
-
-## 📖 Documentation
-
-### 📚 Core Documentation
-- [INTEGRATION_DOCUMENTATION.md](docs/INTEGRATION_DOCUMENTATION.md) - Complete integration guide
-- [UNIFIED_SYSTEM_README.md](UNIFIED_SYSTEM_README.md) - Unified system documentation
-- [INTEGRATION_PRESENTATION.md](INTEGRATION_PRESENTATION.md) - Executive integration summary
-
-### 🎯 Harmony Test Results
-- [HARMONY_TEST_SUMMARY.md](HARMONY_TEST_SUMMARY.md) - Technical test results (English)
-- [HARMONY_TEST_SUMMARY_ES.md](HARMONY_TEST_SUMMARY_ES.md) - Technical test results (Spanish)
-- [HARMONY_ACHIEVEMENT_PRESENTATION.md](HARMONY_ACHIEVEMENT_PRESENTATION.md) - Executive presentation (English)
-- [HARMONY_ACHIEVEMENT_PRESENTATION_ES.md](HARMONY_ACHIEVEMENT_PRESENTATION_ES.md) - Executive presentation (Spanish)
-
-### 🔗 Additional Documentation
-- [ENABLE_UNIFIED_STATE_RETRIEVAL.md](ENABLE_UNIFIED_STATE_RETRIEVAL.md) - Unified state retrieval guide
-- [METATRON_CONSENSUS_INTEGRATION.md](Open-A.G.I/METATRON_CONSENSUS_INTEGRATION.md) - Consensus protocol integration
-- [METATRON_VISUALIZATION_IMPROVEMENTS.md](docs/METATRON_VISUALIZATION_IMPROVEMENTS.md) - Visualization enhancements
-- [DEPLOYMENT_SUMMARY.md](docs/DEPLOYMENT_SUMMARY.md) - Deployment instructions
 
 ---
 
