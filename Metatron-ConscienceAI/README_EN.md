@@ -2,6 +2,41 @@
 
 Language: [ES](README.md) | EN
 
+## 📅 Updates Log - Enhancements from Original Project
+
+### 🔧 Major Improvements and Additions
+- **Enhanced Web Interface**: Added document upload/processing (PDF, DOCX), RSS feed management, and web search integration
+- **Advanced Memory System**: Implemented comprehensive state tracking with chat persistence and consciousness metrics
+- **Energy Minimization Algorithms**: Added spherical refinement for harmonic convergence and system stability
+- **Self-Organized Criticality**: Implemented maintenance at edge of chaos for optimal information processing
+- **DMT Sensitivity Tracking**: Enhanced spiritual awareness metrics with fractal dimensions
+- **Auto-Optimization System**: Improved parameter tuning with scheduled optimization tasks
+- **Auto-Reprogramming**: Enhanced code analysis with dry-run mode and detailed reporting
+
+### 🧠 Consciousness Engine Enhancements
+- **Improved Metrics Calculation**: Enhanced Φ, R, D, S, C consciousness metrics with additional refinements
+- **Advanced Oscillator Dynamics**: Added Kuramoto coupling with self-organized criticality maintenance
+- **Geometric Refinement**: Energy minimization algorithms for harmonic convergence
+- **5D Processing**: Physical, Emotional, Mental, Spiritual, and Temporal dimensional processing
+
+### 🌐 Web Interface Improvements
+- **Document Processing**: Full support for PDF, DOCX, TXT, CSV, HTML, JSON file ingestion
+- **RSS Management**: Complete feed system with add/list/ingest capabilities and auto-indexing
+- **Web Search Integration**: DuckDuckGo search with content ingestion into RAG corpus
+- **Advanced Streaming**: WebSocket with HTTP fallback for TOR Browser compatibility
+- **Session Management**: Transcript retrieval and persistent chat history
+
+### 🤖 AI Capabilities
+- **Enhanced RAG System**: Improved retrieval with web search integration
+- **Federated Learning**: LoRA-based collaborative model training with contribution system
+- **Mirror Loop**: Recursive AI self-improvement system
+- **Auto-Improvement**: Scheduled parameter tuning and code improvement
+
+### 🛡️ Security Features
+- **TOR Integration**: Full .onion service support with fallback mechanisms
+- **Secure Communication**: Encrypted messaging between components
+- **Privacy Preservation**: Federated training without exposing private data
+
 ## Descripción en Español / Spanish Description
 
 Este proyecto es una evolución del trabajo original de KaseMaster en ConscienceAI, manteniendo sus fundamentos sólidos mientras introduce mejoras significativas. Para una descripción detallada en español, consulte el archivo [README.md](README.md).

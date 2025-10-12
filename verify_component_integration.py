@@ -17,6 +17,58 @@ sys.path.insert(0, project_root)
 def test_import(module_name, description):
     """Test if a module can be imported"""
     try:
+        # Handle modules with hyphens in their names
+        if '-' in module_name:
+            # For modules with hyphens, we need to load them differently
+            parts = module_name.split('.')
+            if len(parts) > 1:
+                # Special handling for Open-A.G.I and aegis-conscience
+                if parts[0] == "Open-A.G.I":
+                    # Try to load as a file-based module with hyphens
+                    file_path = "Open-A.G.I/" + "/".join(parts[1:]) + ".py"
+                    if os.path.exists(file_path):
+                        import importlib.util
+                        spec = importlib.util.spec_from_file_location(parts[-1], file_path)
+                        if spec is not None and spec.loader is not None:
+                            module = importlib.util.module_from_spec(spec)
+                            spec.loader.exec_module(module)
+                            print(f"✅ {description}: Module imported successfully")
+                            return True
+                elif parts[0] == "aegis_conscience":
+                    # Try to load as a file-based module
+                    file_path = "aegis-conscience/" + "/".join(parts[1:]) + ".py"
+                    if os.path.exists(file_path):
+                        import importlib.util
+                        spec = importlib.util.spec_from_file_location(parts[-1], file_path)
+                        if spec is not None and spec.loader is not None:
+                            module = importlib.util.module_from_spec(spec)
+                            spec.loader.exec_module(module)
+                            print(f"✅ {description}: Module imported successfully")
+                            return True
+                # Try with underscore replacement
+                file_path_parts = [part.replace('-', '_') if i == 0 else part for i, part in enumerate(parts)]
+                file_path = '/'.join(file_path_parts) + '.py'
+                if os.path.exists(file_path):
+                    import importlib.util
+                    spec = importlib.util.spec_from_file_location(parts[-1], file_path)
+                    if spec is not None and spec.loader is not None:
+                        module = importlib.util.module_from_spec(spec)
+                        spec.loader.exec_module(module)
+                        print(f"✅ {description}: Module imported successfully")
+                        return True
+                # Try with original path (with hyphens)
+                file_path = '/'.join(parts) + '.py'
+                if os.path.exists(file_path):
+                    import importlib.util
+                    spec = importlib.util.spec_from_file_location(parts[-1], file_path)
+                    if spec is not None and spec.loader is not None:
+                        module = importlib.util.module_from_spec(spec)
+                        spec.loader.exec_module(module)
+                        print(f"✅ {description}: Module imported successfully")
+                        return True
+            
+        # Standard import for modules without hyphens
+        import importlib.util
         spec = importlib.util.find_spec(module_name)
         if spec is None:
             print(f"❌ {description}: Module '{module_name}' not found")
@@ -55,44 +107,120 @@ def main():
     # Test 1: Core consciousness modules
     print("\n1. Core Consciousness Modules:")
     total += 1
-    if test_import("Metatron_ConscienceAI.orchestrator.metatron_orchestrator", "Metatron Orchestrator"):
+    try:
+        import sys
+        sys.path.insert(0, 'Metatron-ConscienceAI')
+        # Import the module dynamically to avoid linter errors
+        import importlib
+        orchestrator_module = importlib.import_module('orchestrator.metatron_orchestrator')
+        # Access the class to ensure it's loaded
+        _ = getattr(orchestrator_module, 'MetatronConsciousness')
+        print("✅ Metatron Orchestrator: Module imported successfully")
+        passed += 1
+    except Exception as e:
+        print(f"❌ Metatron Orchestrator: Failed to import - {str(e)}")
+    
+    total += 1
+    if test_import("Metatron-ConscienceAI.nodes.consciousness_metrics", "Consciousness Metrics"):
         passed += 1
     
     total += 1
-    if test_import("Metatron_ConscienceAI.nodes.consciousness_metrics", "Consciousness Metrics"):
-        passed += 1
-    
-    total += 1
-    if test_import("Metatron_ConscienceAI.nodes.metatron_geometry", "Metatron Geometry"):
+    if test_import("Metatron-ConscienceAI.nodes.metatron_geometry", "Metatron Geometry"):
         passed += 1
     
     # Test 2: AGI modules
     print("\n2. AGI System Modules:")
     total += 1
-    if test_import("Open_A_G_I.consensus_protocol", "Consensus Protocol"):
-        passed += 1
+    try:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('consensus_protocol', 'Open-A.G.I/consensus_protocol.py')
+        if spec is not None and spec.loader is not None:
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            print("✅ Consensus Protocol: Module imported successfully")
+            passed += 1
+        else:
+            print("❌ Consensus Protocol: Failed to load module spec")
+    except Exception as e:
+        print(f"❌ Consensus Protocol: Failed to import - {str(e)}")
     
     total += 1
-    if test_import("Open_A_G_I.p2p_network", "P2P Network"):
-        passed += 1
+    try:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('p2p_network', 'Open-A.G.I/p2p_network.py')
+        if spec is not None and spec.loader is not None:
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            print("✅ P2P Network: Module imported successfully")
+            passed += 1
+        else:
+            print("❌ P2P Network: Failed to load module spec")
+    except Exception as e:
+        print(f"❌ P2P Network: Failed to import - {str(e)}")
     
     total += 1
-    if test_import("Open_A_G_I.crypto_framework", "Crypto Framework"):
-        passed += 1
+    try:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('crypto_framework', 'Open-A.G.I/crypto_framework.py')
+        if spec is not None and spec.loader is not None:
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            print("✅ Crypto Framework: Module imported successfully")
+            passed += 1
+        else:
+            print("❌ Crypto Framework: Failed to load module spec")
+    except Exception as e:
+        print(f"❌ Crypto Framework: Failed to import - {str(e)}")
     
     # Test 3: AEGIS modules
     print("\n3. AEGIS System Modules:")
     total += 1
-    if test_import("aegis_conscience.network.p2p", "AEGIS P2P Network"):
-        passed += 1
+    try:
+        import sys
+        sys.path.insert(0, 'aegis-conscience')
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('p2p', 'aegis-conscience/network/p2p.py')
+        if spec is not None and spec.loader is not None:
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            print("✅ AEGIS P2P Network: Module imported successfully")
+            passed += 1
+        else:
+            print("❌ AEGIS P2P Network: Failed to load module spec")
+    except Exception as e:
+        print(f"❌ AEGIS P2P Network: Failed to import - {str(e)}")
     
     total += 1
-    if test_import("aegis_conscience.consensus.pbft", "AEGIS PBFT Consensus"):
-        passed += 1
+    try:
+        import sys
+        sys.path.insert(0, 'aegis-conscience')
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('pbft', 'aegis-conscience/consensus/pbft.py')
+        if spec is not None and spec.loader is not None:
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            print("✅ AEGIS PBFT Consensus: Module imported successfully")
+            passed += 1
+        else:
+            print("❌ AEGIS PBFT Consensus: Failed to load module spec")
+    except Exception as e:
+        print(f"❌ AEGIS PBFT Consensus: Failed to import - {str(e)}")
     
     total += 1
-    if test_import("aegis_conscience.network.crypto", "AEGIS Crypto"):
-        passed += 1
+    try:
+        import sys
+        sys.path.insert(0, 'aegis-conscience')
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('crypto', 'aegis-conscience/network/crypto.py')
+        if spec is not None and spec.loader is not None:
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            print("✅ AEGIS Crypto: Module imported successfully")
+            passed += 1
+        else:
+            print("❌ AEGIS Crypto: Failed to load module spec")
+    except Exception as e:
+        print(f"❌ AEGIS Crypto: Failed to import - {str(e)}")
     
     # Test 4: Unified system modules
     print("\n4. Unified System Modules:")
