@@ -5,11 +5,12 @@ Unified API Server for Metatron-ConscienceAI and Open-A.G.I Integration
 import asyncio
 import json
 import logging
+import threading
+import uvicorn
 from typing import Dict, Any, Optional
 from fastapi import FastAPI, WebSocket, HTTPException, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-import uvicorn
 
 from .client import UnifiedAPIClient
 from .models import UnifiedSystemState, UnifiedAPISettings
@@ -40,6 +41,10 @@ settings = UnifiedAPISettings()
 
 # Active WebSocket connections
 active_connections = []
+
+# Server thread reference
+server_thread = None
+server_should_stop = False
 
 
 @app.on_event("startup")
@@ -212,10 +217,37 @@ async def websocket_endpoint(websocket: WebSocket):
         await websocket.close()
 
 
+def _run_server_in_thread(host: str, port: int):
+    """Run the server in a separate thread to avoid event loop conflicts"""
+    global server_should_stop
+    try:
+        config = uvicorn.Config("unified_api.server:app", host=host, port=port, log_level="info")
+        server = uvicorn.Server(config)
+        logger.info(f"Starting Unified API Server on {host}:{port}")
+        server.run()
+    except Exception as e:
+        logger.error(f"Error in API server thread: {e}")
+
+
 def start_server(host: str = "0.0.0.0", port: int = 8005):
-    """Start the unified API server"""
-    logger.info(f"Starting Unified API Server on {host}:{port}")
-    uvicorn.run("unified_api.server:app", host=host, port=port, log_level="info")
+    """Start the unified API server in a separate thread to avoid event loop conflicts"""
+    global server_thread, server_should_stop
+    server_should_stop = False
+    server_thread = threading.Thread(target=_run_server_in_thread, args=(host, port), daemon=True)
+    server_thread.start()
+    logger.info(f"Unified API Server thread started on {host}:{port}")
+
+
+def stop_server():
+    """Stop the unified API server"""
+    global server_thread, server_should_stop
+    server_should_stop = True
+    if server_thread and server_thread.is_alive():
+        logger.info("Stopping Unified API Server thread")
+        # Note: Proper shutdown of uvicorn in a thread is complex, 
+        # in practice you might want to use a more sophisticated approach
+        # For now, we'll just mark it as stopped and let it terminate naturally
+    logger.info("Unified API Server thread stop requested")
 
 
 # Example usage

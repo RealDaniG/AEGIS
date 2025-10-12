@@ -30,11 +30,11 @@ import statistics
 class RobustRealTimeVisualizer:
     """Ultra-reliable real-time visualization system"""
     
-    def __init__(self):
+    def __init__(self, port=8003):
         # Connection endpoints
         self.metatron_host = "localhost"
-        # Updated to use the correct port (8003 for both HTTP API and WebSocket)
-        self.metatron_port = 8003
+        # Allow configurable port with fallback to 8003
+        self.metatron_port = port
         self.ws_url = f"ws://{self.metatron_host}:{self.metatron_port}/ws"
         self.api_base = f"http://{self.metatron_host}:{self.metatron_port}"
         
@@ -71,71 +71,92 @@ class RobustRealTimeVisualizer:
         self.retry_delay = 1.0
         self.update_interval = 0.1  # 100ms for smooth updates
         
+        # Try alternative ports if primary fails
+        self.alternative_ports = [8005, 8003] if port == 8003 else [8003, 8005]
+        
     async def establish_websocket_connection(self) -> bool:
         """Establish robust WebSocket connection with retry logic"""
-        attempt = 0
-        while attempt < self.max_retry_attempts:
-            try:
-                self.connections["websocket"]["last_attempt"] = time.time()
-                
-                # Fixed the WebSocket connection by using the correct method
-                websocket = await websockets.connect(self.ws_url)
-                self.connections["websocket"]["status"] = True
-                print(f"✅ WebSocket connected to {self.ws_url}")
-                
-                # Continuous data reception
-                while True:
-                    try:
-                        message = await asyncio.wait_for(websocket.recv(), timeout=2.0)
-                        data = json.loads(message)
-                        
-                        if self._validate_data_authenticity(data):
-                            self._process_incoming_data(data, "websocket")
-                        else:
-                            self.validation_stats["static_data_rejected"] += 1
-                            print("⚠️  Rejected static/simulated data")
-                            
-                    except asyncio.TimeoutError:
-                        continue
-                    except websockets.exceptions.ConnectionClosed:
-                        raise
-                        
-            except Exception as e:
-                attempt += 1
-                self.connections["websocket"]["status"] = False
-                self.validation_stats["connection_failures"] += 1
-                print(f"❌ WebSocket attempt {attempt} failed: {e}")
-                
-                if attempt < self.max_retry_attempts:
-                    print(f"⏳ Retrying in {self.retry_delay} seconds...")
-                    await asyncio.sleep(self.retry_delay)
-                else:
-                    print("⚠️  WebSocket connection failed after max retries")
-                    return False
+        # Try primary port first
+        ports_to_try = [self.metatron_port] + self.alternative_ports
         
-        return True
+        for port in ports_to_try:
+            self.ws_url = f"ws://{self.metatron_host}:{port}/ws"
+            self.api_base = f"http://{self.metatron_host}:{port}"
+            
+            attempt = 0
+            while attempt < self.max_retry_attempts:
+                try:
+                    self.connections["websocket"]["last_attempt"] = time.time()
+                    
+                    # Fixed the WebSocket connection by using the correct method
+                    websocket = await websockets.connect(self.ws_url)
+                    self.connections["websocket"]["status"] = True
+                    self.metatron_port = port  # Update to successful port
+                    print(f"✅ WebSocket connected to {self.ws_url}")
+                    
+                    # Continuous data reception
+                    while True:
+                        try:
+                            message = await asyncio.wait_for(websocket.recv(), timeout=2.0)
+                            data = json.loads(message)
+                            
+                            if self._validate_data_authenticity(data):
+                                self._process_incoming_data(data, "websocket")
+                            else:
+                                self.validation_stats["static_data_rejected"] += 1
+                                print("⚠️  Rejected static/simulated data")
+                                
+                        except asyncio.TimeoutError:
+                            continue
+                        except websockets.exceptions.ConnectionClosed:
+                            raise
+                            
+                except Exception as e:
+                    attempt += 1
+                    self.connections["websocket"]["status"] = False
+                    self.validation_stats["connection_failures"] += 1
+                    print(f"❌ WebSocket attempt {attempt} failed on port {port}: {e}")
+                    
+                    if attempt < self.max_retry_attempts:
+                        print(f"⏳ Retrying in {self.retry_delay} seconds...")
+                        await asyncio.sleep(self.retry_delay)
+                    else:
+                        print(f"⚠️  WebSocket connection failed after max retries on port {port}")
+                        break
+            else:
+                # If we successfully connected, return True
+                if self.connections["websocket"]["status"]:
+                    return True
+                    
+        return False
     
     def establish_http_connection(self) -> bool:
-        """Establish HTTP connection with validation"""
-        try:
-            self.connections["http"]["last_attempt"] = time.time()
-            response = requests.get(f"{self.api_base}/api/health", timeout=3)
-            
-            if response.status_code == 200:
-                health_data = response.json()
-                if health_data.get("ok", False):
-                    self.connections["http"]["status"] = True
-                    print(f"✅ HTTP connection established to {self.api_base}")
-                    return True
-                else:
-                    print("⚠️  HTTP API health check failed")
-            else:
-                print(f"⚠️  HTTP API returned status {response.status_code}")
+        """Establish HTTP connection with validation, trying multiple ports"""
+        # Try primary port first
+        ports_to_try = [self.metatron_port] + self.alternative_ports
+        
+        for port in ports_to_try:
+            self.api_base = f"http://{self.metatron_host}:{port}"
+            try:
+                self.connections["http"]["last_attempt"] = time.time()
+                response = requests.get(f"{self.api_base}/api/health", timeout=3)
                 
-        except Exception as e:
-            self.connections["http"]["status"] = False
-            print(f"❌ HTTP connection failed: {e}")
-            
+                if response.status_code == 200:
+                    health_data = response.json()
+                    if health_data.get("ok", False):
+                        self.connections["http"]["status"] = True
+                        self.metatron_port = port  # Update to successful port
+                        print(f"✅ HTTP connection established to {self.api_base}")
+                        return True
+                    else:
+                        print(f"⚠️  HTTP API health check failed on port {port}")
+                else:
+                    print(f"⚠️  HTTP API returned status {response.status_code} on port {port}")
+                    
+            except Exception as e:
+                self.connections["http"]["status"] = False
+                print(f"❌ HTTP connection failed on port {port}: {e}")
+                
         return False
     
     def _validate_data_authenticity(self, data: Dict[str, Any]) -> bool:
@@ -254,7 +275,7 @@ class RobustRealTimeVisualizer:
                                 self.validation_stats["static_data_rejected"] += 1
                                 
                 except Exception as e:
-                    print(f"⚠️  HTTP polling error: {e}")
+                    print(f"⚠️  HTTP polling error on port {self.metatron_port}: {e}")
                     
                 time.sleep(self.update_interval)
         
@@ -407,6 +428,7 @@ class RobustRealTimeVisualizer:
         print(f"🕐 System Time: {time.strftime('%Y-%m-%d %H:%M:%S')}")
         print(f"🔄 Total Updates: {self.update_count}")
         print(f"🔗 Primary Connection: {'WebSocket' if self.connections['websocket']['status'] else 'HTTP'}")
+        print(f"🔌 Connected to Port: {self.metatron_port}")
         print()
         print(f"🧠 Consciousness Level (C): {level:.6f}")
         print(f"🔢 Integrated Information (Φ): {phi:.6f}")
@@ -431,6 +453,7 @@ class RobustRealTimeVisualizer:
         
         print(f"🌐 WebSocket: {ws_status}")
         print(f"📡 HTTP API: {http_status}")
+        print(f"🔌 Active Port: {self.metatron_port}")
         print()
         
         # Validation statistics
