@@ -140,6 +140,11 @@ Comprehensive documentation is available for all system components:
 - [HARMONY_ACHIEVEMENT_PRESENTATION.md](HARMONY_ACHIEVEMENT_PRESENTATION.md) - Executive presentation of the achievement (English)
 - [HARMONY_ACHIEVEMENT_PRESENTATION_ES.md](HARMONY_ACHIEVEMENT_PRESENTATION_ES.md) - Executive presentation of the achievement (Spanish)
 
+### Unified State Retrieval
+- [ENABLE_UNIFIED_STATE_RETRIEVAL.md](ENABLE_UNIFIED_STATE_RETRIEVAL.md) - Comprehensive guide for enabling unified state retrieval
+- [verify_services.py](verify_services.py) - Script to verify that all required services are running
+- [start_all_services.ps1](start_all_services.ps1) - PowerShell script to start all services at once
+
 ### Consensus Protocol Documentation
 - [METATRON_CONSENSUS_INTEGRATION.md](Open-A.G.I/METATRON_CONSENSUS_INTEGRATION.md) - Integration of Metatron consciousness with PBFT
 - [METATRON_PBFT_IMPROVEMENTS.md](Open-A.G.I/METATRON_PBFT_IMPROVEMENTS.md) - Enhanced PBFT for 13-node system
