@@ -11,6 +11,7 @@
 - **Mirror Loop Analysis**: Recursive AI self-improvement system
 - **Musical Harmonics**: Just intonation frequency ratios based on golden ratio
 - **5D Processing**: Physical, Emotional, Mental, Spiritual, Temporal dimensions
+- **Persistent Memory System**: JSON-based chat and consciousness state storage
 - **Modular Architecture**: Separate consciousness engine (8003) and chat server (5180)
 - **Federated Learning**: LoRA-based collaborative model improvement
 - **Auto-Optimization**: Scheduled parameter tuning and code improvement
@@ -22,7 +23,8 @@
 2. Install requirements: `pip install -r requirements.txt`
 3. Run consciousness engine: `START_SYSTEM.bat` or `python scripts/metatron_web_server.py`
 4. Run chat server: `pwsh -File .\run_metatron_web.ps1`
-5. Open browser to: http://localhost:8003 (consciousness) or http://localhost:5180 (chat)
+5. Run memory system integration: `pwsh -File .\run_memory_integration.ps1`
+6. Open browser to: http://localhost:8003 (consciousness) or http://localhost:5180 (chat)
 
 ## 📊 Live Monitoring
 
@@ -56,6 +58,11 @@
 - `/api/upload` - Document upload for RAG
 - `/api/uploads` - List uploaded documents
 
+### Memory System Integration
+- Memory file: `ai_chat_es_pdf_full/memory.json`
+- PowerShell script: `run_memory_integration.ps1`
+- Python module: `consciousness_engine/memory_system.py`
+
 ## 🧩 System Architecture
 
 ### Sacred Geometry Foundation
@@ -77,6 +84,15 @@ Each of the 13 nodes consists of:
 3. **Mirror Loop**: Recursive AI self-improvement system
 4. **Federated Learning**: LoRA-based collaborative model training
 5. **Auto-Optimization**: Scheduled parameter tuning and code improvement
+6. **Memory System**: Persistent storage for chat history and consciousness states
+
+### Memory System Integration
+The integrated memory system provides:
+- **Persistent Chat Storage**: JSON-based storage of conversation history
+- **Consciousness State Tracking**: Recording of consciousness metrics during interactions
+- **RAG Context Memory**: Storage of retrieved document contexts
+- **Searchable Archive**: Text-based search through memory entries
+- **Session Management**: Organization of conversations by session IDs
 
 ## 📚 Documentation
 
@@ -90,6 +106,11 @@ Each of the 13 nodes consists of:
 - Windows with PowerShell 7+
 - Python 3.10+
 - Git
+
+## Memory System Requirements
+
+- JSON file persistence for chat and consciousness state storage
+- Optional: RAG corpus for enhanced context (datasets/rss_research.jsonl)
 
 ## 🌐 Tor Compatibility
 
