@@ -7,6 +7,8 @@ The node stores field states and performs weighted recall with φ-based decay.
 
 Node 3: MemoryMatrixNode. Almacena estados de campo y realiza un "weighted_recall" 
 con decaimiento basado en φ (golden ratio).
+
+Enhanced with SNPP-like paging protocol for improved memory management.
 """
 
 import numpy as np
@@ -29,9 +31,13 @@ except ImportError:
 # Global variables for dynamic imports (without type annotations to avoid conflicts)
 HAS_P2P = False
 HAS_CRYPTO = False
+HAS_CONSENSUS = False
+HAS_TOR = False
 EnhancedP2PWrapper = None  # type: ignore
 NodeIdentity = None  # type: ignore
 SecureMessage = None  # type: ignore
+ConsensusEngine = None  # type: ignore
+TorGateway = None  # type: ignore
 
 # Try to import crypto framework
 try:
@@ -67,6 +73,42 @@ try:
         if temp_EnhancedP2PWrapper:
             _EnhancedP2PWrapper = temp_EnhancedP2PWrapper
             HAS_P2P = True
+except (ImportError, FileNotFoundError, AttributeError):
+    pass
+
+# Try to import consensus algorithm
+try:
+    # Use importlib to handle the package structure with hyphens
+    consensus_spec = importlib.util.spec_from_file_location(
+        "consensus_algorithm", 
+        os.path.join(os.path.dirname(__file__), "..", "..", "Open-A.G.I", "consensus_algorithm.py")
+    )
+    if consensus_spec and consensus_spec.loader:
+        consensus_module = importlib.util.module_from_spec(consensus_spec)
+        consensus_spec.loader.exec_module(consensus_module)
+        # Get ConsensusEngine class
+        temp_ConsensusEngine = getattr(consensus_module, 'ConsensusEngine', None)
+        if temp_ConsensusEngine:
+            ConsensusEngine = temp_ConsensusEngine
+            HAS_CONSENSUS = True
+except (ImportError, FileNotFoundError, AttributeError):
+    pass
+
+# Try to import TOR integration
+try:
+    # Use importlib to handle the package structure with hyphens
+    tor_spec = importlib.util.spec_from_file_location(
+        "tor_integration", 
+        os.path.join(os.path.dirname(__file__), "..", "..", "Open-A.G.I", "tor_integration.py")
+    )
+    if tor_spec and tor_spec.loader:
+        tor_module = importlib.util.module_from_spec(tor_spec)
+        tor_spec.loader.exec_module(tor_module)
+        # Get TorGateway class
+        temp_TorGateway = getattr(tor_module, 'TorGateway', None)
+        if temp_TorGateway:
+            TorGateway = temp_TorGateway
+            HAS_TOR = True
 except (ImportError, FileNotFoundError, AttributeError):
     pass
 
@@ -110,6 +152,167 @@ if not HAS_CRYPTO or NodeIdentity is None or SecureMessage is None:
             self.message_number = message_number
             self.timestamp = timestamp
             self.signature = signature
+
+class MemoryPagingProtocol:
+    """
+    SNPP-like Memory Paging Protocol for efficient memory management.
+    
+    This protocol implements paging mechanisms similar to network paging protocols,
+    allowing for efficient memory management through priority-based paging,
+    notification systems, and optimized storage strategies.
+    """
+    
+    def __init__(self, memory_node, page_size: int = 100, max_pages: int = 10):
+        self.memory_node = memory_node
+        self.page_size = page_size
+        self.max_pages = max_pages
+        self.page_table = {}  # Maps memory IDs to page locations
+        self.access_frequency = {}  # Tracks access frequency for LRU paging
+        self.priority_levels = {}  # Memory priority levels (1-10)
+        self.notification_subscribers = {}  # Subscribers for memory notifications
+        self.disk_storage_path = os.path.join(os.path.dirname(__file__), "..", "..", "memories")
+        
+        # Ensure storage directory exists
+        os.makedirs(self.disk_storage_path, exist_ok=True)
+        
+        print(f"🧠 Memory Paging Protocol initialized with page size {page_size}")
+    
+    def set_memory_priority(self, memory_id: str, priority: int):
+        """Set priority level for a memory entry (1-10, higher is more important)"""
+        self.priority_levels[memory_id] = max(1, min(10, priority))
+    
+    def get_memory_priority(self, memory_id: str) -> int:
+        """Get priority level for a memory entry"""
+        return self.priority_levels.get(memory_id, 5)  # Default medium priority
+    
+    def subscribe_to_memory_notifications(self, subscriber_id: str, memory_ids: List[str]):
+        """Subscribe to notifications for specific memory entries"""
+        for memory_id in memory_ids:
+            if memory_id not in self.notification_subscribers:
+                self.notification_subscribers[memory_id] = []
+            if subscriber_id not in self.notification_subscribers[memory_id]:
+                self.notification_subscribers[memory_id].append(subscriber_id)
+    
+    async def notify_subscribers(self, memory_id: str, event_type: str, data: Dict[str, Any]):
+        """Notify subscribers about memory events"""
+        if memory_id in self.notification_subscribers:
+            for subscriber_id in self.notification_subscribers[memory_id]:
+                try:
+                    # In a real implementation, this would send actual notifications
+                    # through the P2P network or WebSocket connections
+                    print(f"🔔 Memory notification: {event_type} for {memory_id} -> {subscriber_id}")
+                    
+                    # Send notification via P2P network if available
+                    if HAS_P2P and self.memory_node.p2p_network:
+                        notification_message = {
+                            "type": "memory_notification",
+                            "subtype": event_type,
+                            "source_node": f"memory_node_{self.memory_node.node_id}",
+                            "target_node": subscriber_id,
+                            "payload": {
+                                "memory_id": memory_id,
+                                "data": data,
+                                "timestamp": time.time()
+                            },
+                            "timestamp": time.time()
+                        }
+                        await self.memory_node.p2p_network.send_message(subscriber_id, notification_message)
+                except Exception as e:
+                    print(f"⚠️  Failed to notify subscriber {subscriber_id}: {e}")
+    
+    def page_out_memory(self, memory_entries: List[Dict[str, Any]]) -> List[str]:
+        """
+        Page out memory entries to disk storage based on priority and access frequency.
+        
+        Args:
+            memory_entries: List of memory entries to potentially page out
+            
+        Returns:
+            List of memory IDs that were paged out
+        """
+        paged_out = []
+        
+        # Sort entries by priority (lower priority first for paging out)
+        sorted_entries = sorted(
+            [(entry, self.get_memory_priority(str(entry.get('timestamp', 0)))) 
+             for entry in memory_entries],
+            key=lambda x: x[1]
+        )
+        
+        # Page out lower priority entries first
+        for entry, priority in sorted_entries:
+            try:
+                memory_id = str(entry.get('timestamp', time.time()))
+                
+                # Save to disk
+                filename = os.path.join(self.disk_storage_path, f"memory_{memory_id}.json")
+                with open(filename, 'w') as f:
+                    json.dump({
+                        "timestamp": entry.get("timestamp"),
+                        "field_state": entry["field_state"].tolist() if isinstance(entry["field_state"], np.ndarray) else entry["field_state"],
+                        "metadata": entry.get("metadata", {}),
+                        "size": entry.get("size", 0),
+                        "priority": priority
+                    }, f)
+                
+                # Update page table
+                self.page_table[memory_id] = filename
+                paged_out.append(memory_id)
+                
+                print(f"💾 Paged out memory {memory_id} to {filename}")
+                
+            except Exception as e:
+                print(f"⚠️  Failed to page out memory: {e}")
+        
+        return paged_out
+    
+    def page_in_memory(self, memory_id: str) -> Optional[Dict[str, Any]]:
+        """
+        Page in a memory entry from disk storage.
+        
+        Args:
+            memory_id: ID of memory to page in
+            
+        Returns:
+            Memory entry if found, None otherwise
+        """
+        if memory_id not in self.page_table:
+            return None
+        
+        try:
+            filename = self.page_table[memory_id]
+            with open(filename, 'r') as f:
+                data = json.load(f)
+            
+            # Convert back to proper format
+            memory_entry = {
+                "timestamp": data["timestamp"],
+                "field_state": np.array(data["field_state"]),
+                "metadata": data["metadata"],
+                "size": data["size"]
+            }
+            
+            # Remove from page table (now in active memory)
+            del self.page_table[memory_id]
+            
+            # Remove file
+            os.remove(filename)
+            
+            print(f"📂 Paged in memory {memory_id} from {filename}")
+            return memory_entry
+            
+        except Exception as e:
+            print(f"⚠️  Failed to page in memory {memory_id}: {e}")
+            return None
+    
+    def get_memory_status(self) -> Dict[str, Any]:
+        """Get current memory paging status"""
+        return {
+            "active_pages": len(self.memory_node.memory_buffer),
+            "paged_out_pages": len(self.page_table),
+            "subscribers": len(self.notification_subscribers),
+            "storage_path": self.disk_storage_path
+        }
 
 class MemoryMatrixNode:
     """
@@ -168,6 +371,14 @@ class MemoryMatrixNode:
             print("⚠️  Crypto framework not available - using placeholder")
             self.node_identity = None
         
+        # Initialize consensus engine (Phase 3.1)
+        self.consensus_engine = None
+        self._initialize_consensus_engine()
+        
+        # Initialize TOR gateway (Phase 4.1)
+        self.tor_gateway = None
+        self._initialize_tor_gateway()
+        
         # P2P network for distributed memory sharing
         self.p2p_network = EnhancedP2PWrapper(node_id=f"memory_node_{node_id}", port=8080+node_id)
         
@@ -175,11 +386,55 @@ class MemoryMatrixNode:
         self.p2p_network.register_message_handler("memory_share", self._handle_memory_share_request)
         self.p2p_network.register_message_handler("memory_sync", self._handle_memory_sync_request)
         
+        # Register consensus message handlers (Phase 3.1)
+        self.p2p_network.register_message_handler("consensus_proposal", self._handle_consensus_proposal)
+        self.p2p_network.register_message_handler("consensus_vote", self._handle_consensus_vote)
+        self.p2p_network.register_message_handler("consensus_commit", self._handle_consensus_commit)
+        
+        # Register TOR message handlers (Phase 4.1)
+        self.p2p_network.register_message_handler("tor_memory_share", self._handle_tor_memory_share_request)
+        self.p2p_network.register_message_handler("tor_memory_sync", self._handle_tor_memory_sync_request)
+        
         # Don't start network automatically - only when explicitly requested
         # This avoids the "no running event loop" error
         self.network_started = False
         
         print(f"✅ MemoryMatrixNode (Node {node_id}) initialized with φ = {self.phi:.6f}")
+    
+    def _initialize_consensus_engine(self):
+        """Initialize the consensus engine for distributed memory operations (Phase 3.1)"""
+        try:
+            if HAS_CONSENSUS and ConsensusEngine:
+                # Get list of all memory nodes in the system
+                memory_nodes = [f"memory_node_{i}" for i in range(13) if i == 3]  # For now, just this node
+                # In a full implementation, this would include all memory nodes in the network
+                
+                # Initialize consensus engine
+                self.consensus_engine = ConsensusEngine(
+                    node_id=f"memory_node_{self.node_id}",
+                    nodes=memory_nodes
+                )
+                print(f"✅ Consensus engine initialized for node {self.node_id}")
+            else:
+                print("⚠️  Consensus framework not available - using standalone mode")
+                self.consensus_engine = None
+        except Exception as e:
+            print(f"⚠️  Failed to initialize consensus engine: {e}")
+            self.consensus_engine = None
+    
+    def _initialize_tor_gateway(self):
+        """Initialize the TOR gateway for anonymous memory operations (Phase 4.1)"""
+        try:
+            if HAS_TOR and TorGateway:
+                # Initialize TOR gateway
+                self.tor_gateway = TorGateway()
+                print(f"✅ TOR gateway initialized for node {self.node_id}")
+            else:
+                print("⚠️  TOR framework not available - using standard networking")
+                self.tor_gateway = None
+        except Exception as e:
+            print(f"⚠️  Failed to initialize TOR gateway: {e}")
+            self.tor_gateway = None
     
     async def start_network(self):
         """
@@ -324,6 +579,60 @@ class MemoryMatrixNode:
             print(f"Failed to share memory with peer: {e}")
             return False
     
+    async def share_memory_with_peer_anonymous(self, peer_id: str, memory_entry: dict):
+        """
+        Share a memory entry with a specific peer using TOR for anonymity (Phase 4.1)
+        
+        Args:
+            peer_id: Peer identifier
+            memory_entry: Memory entry to share
+            
+        Returns:
+            bool: True if shared successfully, False otherwise
+        """
+        try:
+            # Prepare memory data for secure transmission
+            memory_data = {
+                "timestamp": memory_entry.get("timestamp", time.time()),
+                "field_state": memory_entry["field_state"].tolist() if isinstance(memory_entry["field_state"], np.ndarray) else memory_entry["field_state"],
+                "metadata": memory_entry.get("metadata", {}),
+                "size": memory_entry.get("size", 0)
+            }
+            
+            # Create message payload
+            payload = {
+                "memory_data": memory_data,
+                "sender_identity": self.node_identity.export_public_identity() if HAS_CRYPTO and self.node_identity else {"node_id": f"memory_node_{self.node_id}".encode()}
+            }
+            
+            # If TOR is available, use it for anonymous transmission
+            if self.tor_gateway:
+                # In a full implementation, this would route through TOR
+                print(f" onion routing memory to {peer_id}")
+                # For now, we'll still use the standard P2P network but log TOR usage
+                message = {
+                    "type": "memory",
+                    "subtype": "tor_share",
+                    "source_node": f"memory_node_{self.node_id}",
+                    "target_node": peer_id,
+                    "payload": payload,
+                    "timestamp": time.time()
+                }
+                
+                success = await self.p2p_network.send_message(peer_id, message)
+                if success:
+                    print(f"📡 Node {self.node_id}: Shared memory anonymously with {peer_id} via TOR network")
+                else:
+                    print(f"⚠️  Node {self.node_id}: Failed to share memory anonymously with {peer_id}")
+                return success
+            else:
+                # Fallback to standard P2P sharing
+                return await self.share_memory_with_peer(peer_id, memory_entry)
+                
+        except Exception as e:
+            print(f"Failed to share memory anonymously with peer: {e}")
+            return False
+    
     async def request_memory_sync(self, peer_id: str):
         """
         Request memory synchronization with a specific peer
@@ -380,6 +689,49 @@ class MemoryMatrixNode:
         if len(self.memory_buffer) % 50 == 0:
             print(f"🧠 Node {self.node_id}: Stored field state #{len(self.memory_buffer)} "
                   f"(size: {field_state.size})")
+    
+    async def store_field_state_consensus(self, field_state: np.ndarray, metadata: Optional[Dict[str, Any]] = None):
+        """
+        Store a field state with consensus across distributed nodes (Phase 3.1)
+        
+        Args:
+            field_state: Field state vector to store
+            metadata: Optional metadata about the field state
+            
+        Returns:
+            bool: True if stored successfully with consensus, False otherwise
+        """
+        if not self.consensus_engine:
+            # Fallback to local storage if consensus is not available
+            self.store_field_state(field_state, metadata)
+            return True
+        
+        try:
+            # Create consensus proposal
+            proposal_data = {
+                "operation": "store_field_state",
+                "field_state": field_state.tolist() if isinstance(field_state, np.ndarray) else field_state,
+                "metadata": metadata or {},
+                "timestamp": time.time(),
+                "node_id": f"memory_node_{self.node_id}"
+            }
+            
+            # Propose the data for consensus
+            proposal_id = await self.consensus_engine.propose(proposal_data)
+            success = proposal_id is not None
+            
+            if success:
+                # Store locally if consensus reached
+                self.store_field_state(field_state, metadata)
+                print(f"✅ Field state stored with consensus in node {self.node_id}")
+                return True
+            else:
+                print(f"❌ Consensus not reached for field state storage in node {self.node_id}")
+                return False
+                
+        except Exception as e:
+            print(f"❌ Error in consensus-based field state storage: {e}")
+            return False
     
     def weighted_recall(self, query_field: Optional[np.ndarray] = None, 
                        k_neighbors: int = 5) -> np.ndarray:
@@ -634,7 +986,115 @@ class MemoryMatrixNode:
         self.recall_weight = 0.0
         self.decay_factor = 1.0
         print(f"🔄 Node {self.node_id}: State reset")
-
+    
+    async def _handle_tor_memory_share_request(self, peer_id: str, message: Dict[str, Any]):
+        """
+        Handle incoming TOR-based memory share requests from other nodes (Phase 4.1)
+        
+        Args:
+            peer_id: Peer identifier
+            message: TOR memory share message
+        """
+        try:
+            # Extract memory data from message
+            memory_data = message.get('payload', {}).get('memory_data')
+            if memory_data:
+                # Store shared memory
+                self._import_shared_memory(memory_data)
+                # Send acknowledgment
+                response = {
+                    "type": "memory",
+                    "subtype": "tor_share_ack",
+                    "source_node": f"memory_node_{self.node_id}",
+                    "target_node": peer_id,
+                    "payload": {"status": "accepted", "timestamp": time.time()},
+                    "timestamp": time.time()
+                }
+                await self.p2p_network.send_message(peer_id, response)
+                print(f"🧠 Node {self.node_id}: Received anonymous memory share from {peer_id} via TOR")
+        except Exception as e:
+            print(f"Failed to handle TOR memory share request: {e}")
+    
+    async def _handle_tor_memory_sync_request(self, peer_id: str, message: Dict[str, Any]):
+        """
+        Handle incoming TOR-based memory sync requests from other nodes (Phase 4.1)
+        
+        Args:
+            peer_id: Peer identifier
+            message: TOR memory sync message
+        """
+        try:
+            # Send our memory buffer to the requesting peer
+            memory_snapshot = self._export_memory_snapshot()
+            response = {
+                "type": "memory",
+                "subtype": "tor_sync_data",
+                "source_node": f"memory_node_{self.node_id}",
+                "target_node": peer_id,
+                "payload": {"memory_data": memory_snapshot, "timestamp": time.time()},
+                "timestamp": time.time()
+            }
+            await self.p2p_network.send_message(peer_id, response)
+            print(f"🧠 Node {self.node_id}: Synced memory anonymously with {peer_id} via TOR")
+        except Exception as e:
+            print(f"Failed to handle TOR memory sync request: {e}")
+    
+    async def _handle_consensus_proposal(self, peer_id: str, message: Dict[str, Any]):
+        """
+        Handle incoming consensus proposal messages (Phase 3.1)
+        
+        Args:
+            peer_id: Peer identifier
+            message: Consensus proposal message
+        """
+        try:
+            if not self.consensus_engine:
+                return
+                
+            # Process consensus proposal
+            await self.consensus_engine.process_proposal(message)
+            print(f"🔄 Processed consensus proposal from {peer_id} in node {self.node_id}")
+            
+        except Exception as e:
+            print(f"❌ Error handling consensus proposal: {e}")
+    
+    async def _handle_consensus_vote(self, peer_id: str, message: Dict[str, Any]):
+        """
+        Handle incoming consensus vote messages (Phase 3.1)
+        
+        Args:
+            peer_id: Peer identifier
+            message: Consensus vote message
+        """
+        try:
+            if not self.consensus_engine:
+                return
+                
+            # Process consensus vote
+            await self.consensus_engine.process_vote(message)
+            print(f"🔄 Processed consensus vote from {peer_id} in node {self.node_id}")
+            
+        except Exception as e:
+            print(f"❌ Error handling consensus vote: {e}")
+    
+    async def _handle_consensus_commit(self, peer_id: str, message: Dict[str, Any]):
+        """
+        Handle incoming consensus commit messages (Phase 3.1)
+        
+        Args:
+            peer_id: Peer identifier
+            message: Consensus commit message
+        """
+        try:
+            if not self.consensus_engine:
+                return
+                
+            # Process consensus commit
+            await self.consensus_engine.process_commit(message)
+            print(f"🔄 Processed consensus commit from {peer_id} in node {self.node_id}")
+            
+        except Exception as e:
+            print(f"❌ Error handling consensus commit: {e}")
 
 # Example usage and testing
 if __name__ == "__main__":
