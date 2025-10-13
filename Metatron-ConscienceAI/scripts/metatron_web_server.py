@@ -215,8 +215,9 @@ async def startup_event():
 @app.get("/")
 async def root():
     """Serve integrated interface with cache-busting headers"""
-    # Priority: advanced integrated dashboard > integrated dashboard > unified dashboard > harmonic monitor > stream > integrated > unified > original visualization
-    for filename in ["metatron_advanced_integrated.html", "integrated_dashboard.html", "unified_dashboard_updated.html", "unified_dashboard.html", "harmonic_monitor.html", "index_stream.html", "metatron_integrated.html", "metatron_unified.html", "metatron_visualization.html"]:
+    # Priority: advanced integrated dashboard > integrated dashboard > unified dashboard > stream > integrated > unified > original visualization
+    # Note: harmonic_monitor.html has been integrated into the main dashboard and is no longer served separately
+    for filename in ["metatron_advanced_integrated.html", "integrated_dashboard.html", "unified_dashboard_updated.html", "unified_dashboard.html", "index_stream.html", "metatron_integrated.html", "metatron_unified.html", "metatron_visualization.html"]:
         webui_path = os.path.join(os.path.dirname(__file__), "..", "webui", filename)
         if os.path.exists(webui_path):
             return FileResponse(
