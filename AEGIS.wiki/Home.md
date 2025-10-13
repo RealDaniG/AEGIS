@@ -96,6 +96,13 @@ For detailed information about the memory integration between Metatron-Conscienc
 - [Code Structure](Code-Structure) - Repository organization
 - [API Reference](API_INTEGRATION) - Complete API documentation
 
+## ⚡ Open-A.G.I Framework
+
+- [Open-A.G.I Overview](Open-AGI) - Decentralized AGI framework documentation
+- [P2P Networking](P2P_NETWORKING) - Peer-to-peer communication layer
+- [Consensus Mechanisms](CONSENSUS_PROTOCOL) - PBFT and governance protocols
+- [DApp Development](Open-AGI-DApp-Development) - Building DApps with Open-A.G.I
+
 ## 📊 Monitoring and Visualization
 
 - [Harmonic Monitoring System](Harmonic-Monitoring-System) - Real-time consciousness metrics
