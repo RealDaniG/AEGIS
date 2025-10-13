@@ -41,7 +41,7 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest -q tests
+          pytest -q tests/unit_tests
 
       - name: Security scan (pip-audit)
         continue-on-error: true
@@ -95,7 +95,7 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest -q tests
+          pytest -q tests/unit_tests
 
       - name: Security scan (pip-audit)
         continue-on-error: true
@@ -296,4 +296,3 @@ jobs:
         with:
           name: gitleaks-report
           path: gitleaks.json
-

@@ -184,8 +184,3 @@ async def test_start_config_system():
             for file in os.listdir(test_dir):
                 os.remove(os.path.join(test_dir, file))
             os.rmdir(test_dir)
-
-
-if __name__ == '__main__':
-    # Run tests
-    unittest.main()

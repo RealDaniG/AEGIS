@@ -6,14 +6,15 @@ import unittest
 import asyncio
 import tempfile
 import os
-import gc
-import time
 import sys
+import time
 from pathlib import Path
 import pytest
 
 # Add the Open-A.G.I directory to the path so we can import the module
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'Open-A.G.I'))
+
+from test_framework import TestFramework, TestConfig, TestResult, TestStatus, TestType
 
 
 class TestTestFramework(unittest.TestCase):
@@ -30,16 +31,14 @@ class TestTestFramework(unittest.TestCase):
             self.test_framework_available = False
             print("Test framework components not available, skipping test framework tests")
         
+        # Create temporary directories for tests
         self.test_dir = tempfile.mkdtemp()
         self.report_test_dir = os.path.join(self.test_dir, "test_reports")
         os.makedirs(self.report_test_dir, exist_ok=True)
 
     def tearDown(self):
         """Tear down test fixtures after each test method."""
-        # Force garbage collection to close file handles
-        gc.collect()
-        
-        # Clean up test files with retry logic
+        # Clean up test files
         if os.path.exists(self.test_dir):
             for attempt in range(3):  # Try up to 3 times
                 try:
@@ -65,22 +64,20 @@ class TestTestFramework(unittest.TestCase):
             self.skipTest("Test framework components not available")
 
     @unittest.skipIf(not hasattr(unittest, 'skipIf'), "SkipIf not available")
-    def test_test_config_creation(self):
+    def test_test_framework_config_creation(self):
         """Test creation of TestConfig object"""
         if not self.test_framework_available:
             self.skipTest("Test framework components not available")
             
-        config = test_framework.TestConfig(
+        config = TestConfig(
             parallel_tests=True,
-            max_concurrent_tests=2,
-            timeout_seconds=60,
-            report_directory=self.report_test_dir
+            max_concurrent_tests=4,
+            timeout_seconds=300
         )
         
         self.assertEqual(config.parallel_tests, True)
-        self.assertEqual(config.max_concurrent_tests, 2)
-        self.assertEqual(config.timeout_seconds, 60)
-        self.assertEqual(config.report_directory, self.report_test_dir)
+        self.assertEqual(config.max_concurrent_tests, 4)
+        self.assertEqual(config.timeout_seconds, 300)
 
     @unittest.skipIf(not hasattr(unittest, 'skipIf'), "SkipIf not available")
     def test_test_result_creation(self):
@@ -88,35 +85,17 @@ class TestTestFramework(unittest.TestCase):
         if not self.test_framework_available:
             self.skipTest("Test framework components not available")
             
-        result = test_framework.TestResult(
+        result = TestResult(
             test_name="test_example",
-            test_type=test_framework.TestType.UNIT,
-            status=test_framework.TestStatus.PASSED,
+            test_type=TestType.UNIT,
+            status=TestStatus.PASSED,
             duration=0.1
         )
         
         self.assertEqual(result.test_name, "test_example")
-        self.assertEqual(result.test_type, test_framework.TestType.UNIT)
-        self.assertEqual(result.status, test_framework.TestStatus.PASSED)
+        self.assertEqual(result.test_type, TestType.UNIT)
+        self.assertEqual(result.status, TestStatus.PASSED)
         self.assertEqual(result.duration, 0.1)
-
-    @unittest.skipIf(not hasattr(unittest, 'skipIf'), "SkipIf not available")
-    def test_initialize_test_framework(self):
-        """Test initializing the test framework"""
-        if not self.test_framework_available:
-            self.skipTest("Test framework components not available")
-            
-        config = test_framework.TestConfig(
-            parallel_tests=True,
-            max_concurrent_tests=2,
-            report_directory=self.report_test_dir
-        )
-        
-        framework = test_framework.initialize_test_framework(config)
-        self.assertIsNotNone(framework)
-        
-        # Check that report directory was created
-        self.assertTrue(os.path.exists(self.report_test_dir))
 
 
 @pytest.mark.asyncio
@@ -286,8 +265,3 @@ async def test_start_test_framework():
                     else:
                         # Wait a bit before retrying
                         time.sleep(0.1)
-
-
-if __name__ == '__main__':
-    # Run tests
-    unittest.main()

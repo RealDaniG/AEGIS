@@ -8,8 +8,8 @@ import os
 import sys
 import tempfile
 from pathlib import Path
-import pytest
 from unittest.mock import patch, AsyncMock
+import pytest
 
 # Add the Open-A.G.I directory to the path so we can import the module
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'Open-A.G.I'))
@@ -74,8 +74,9 @@ class TestAPIServer(unittest.TestCase):
         self.assertIsNotNone(server)
         
         # Test that we can get the app
-        app = server.get_app()
-        self.assertIsNotNone(app)
+        if server is not None:
+            app = server.get_app()
+            self.assertIsNotNone(app)
 
 
 @pytest.mark.asyncio
@@ -113,8 +114,3 @@ async def test_start_api_server():
         # Check configuration
         assert server.config.host == "127.0.0.1"
         assert server.config.port == 8003
-
-
-if __name__ == '__main__':
-    # Run tests
-    unittest.main()
