@@ -5,9 +5,14 @@ Unit tests for the config_manager module
 import unittest
 import asyncio
 import os
+import sys
 import tempfile
 import json
 from pathlib import Path
+import pytest
+
+# Add the Open-A.G.I directory to the path so we can import the module
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'Open-A.G.I'))
 
 from config_manager import start_config_system, ConfigManagerConfig, initialize_config_manager, get_config_manager
 
@@ -129,7 +134,7 @@ class TestConfigManager(unittest.TestCase):
 
     def test_environment_variable_override(self):
         """Test overriding config with environment variables"""
-        # Set an environment variable
+        # Set an environment variable with the correct prefix
         os.environ["AEGIS_TEST_ENV_VAR"] = "env_value"
         
         config = ConfigManagerConfig(
@@ -139,32 +144,46 @@ class TestConfigManager(unittest.TestCase):
         
         manager = initialize_config_manager(config)
         
-        # Check that environment variable was loaded
-        value = manager.get_value("test_env_var")
+        # Check that environment variable was loaded with the correct nested key path
+        # The environment variable AEGIS_TEST_ENV_VAR becomes test.env.var in the config
+        value = manager.get_value("test.env.var")
         self.assertEqual(value, "env_value")
         
         # Clean up environment variable
         del os.environ["AEGIS_TEST_ENV_VAR"]
 
-    async def test_start_config_system(self):
-        """Test starting the config system as a module"""
+
+@pytest.mark.asyncio
+async def test_start_config_system():
+    """Test starting the config system as a module"""
+    # Create a temporary directory for tests
+    test_dir = tempfile.mkdtemp()
+    config_file = os.path.join(test_dir, "test_config.json")
+    
+    try:
         config = {
-            "config_paths": [self.config_file],
+            "config_paths": [config_file],
             "auto_reload": False
         }
         
         result = await start_config_system(config)
-        self.assertTrue(result)
+        assert result
         
         # Check that we can get the global config manager
         manager = get_config_manager()
-        self.assertIsNotNone(manager)
+        assert manager is not None
         
         # Check that config contains expected structure
         cfg = manager.get_config()
-        self.assertIn("app", cfg)
-        self.assertIn("tor", cfg)
-        self.assertIn("p2p", cfg)
+        assert "app" in cfg
+        assert "tor" in cfg
+        assert "p2p" in cfg
+    finally:
+        # Clean up test files
+        if os.path.exists(test_dir):
+            for file in os.listdir(test_dir):
+                os.remove(os.path.join(test_dir, file))
+            os.rmdir(test_dir)
 
 
 if __name__ == '__main__':

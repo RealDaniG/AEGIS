@@ -6,7 +6,12 @@ import unittest
 import asyncio
 import tempfile
 import os
+import sys
 from pathlib import Path
+import pytest
+
+# Add the Open-A.G.I directory to the path so we can import the module
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'Open-A.G.I'))
 
 
 class TestAlertSystem(unittest.TestCase):
@@ -206,30 +211,35 @@ class TestAlertSystem(unittest.TestCase):
             # Restore the original trigger_alert method
             manager.trigger_alert = original_trigger
 
-    @unittest.skipIf(not hasattr(unittest, 'skipIf'), "SkipIf not available")
-    async def test_start_alert_system(self):
-        """Test starting the alert system as a module"""
-        if not self.alert_system_available:
-            self.skipTest("Alert system components not available")
-            
-        config = {
-            "enable_email_notifications": False,
-            "enable_webhook_notifications": False,
-            "notification_interval": 30
-        }
-        
-        result = await alert_system.start_alert_system(config)
-        self.assertTrue(result)
-        
-        # Check that we can get the global alert manager
-        manager = alert_system.get_alert_manager()
-        self.assertIsNotNone(manager)
-        
-        # Check configuration
-        self.assertEqual(manager.config.notification_interval, 30)
-        self.assertEqual(manager.config.enable_email_notifications, False)
 
-
-if __name__ == '__main__':
-    # Run tests
-    unittest.main()
+@pytest.mark.asyncio
+async def test_start_alert_system():
+    """Test starting the alert system as a module"""
+    # Try to import alert system components
+    try:
+        sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'Open-A.G.I'))
+        import alert_system
+        alert_system_available = True
+    except ImportError:
+        alert_system_available = False
+        pytest.skip("Alert system components not available")
+        
+    if not alert_system_available:
+        pytest.skip("Alert system components not available")
+        
+    config = {
+        "enable_email_notifications": False,
+        "enable_webhook_notifications": False,
+        "notification_interval": 30
+    }
+    
+    result = await alert_system.start_alert_system(config)
+    assert result
+    
+    # Check that we can get the global alert manager
+    manager = alert_system.get_alert_manager()
+    assert manager is not None
+    
+    # Check configuration
+    assert manager.config.notification_interval == 30
+    assert manager.config.enable_email_notifications == False
