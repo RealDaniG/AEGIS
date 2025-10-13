@@ -1,15 +1,21 @@
-# AEGIS Version 2.5
+# AEGIS Version 3.1
 
 ## Release Date
-October 12, 2025
+October 13, 2025
 
 > **Development Note**: While this version was released in October 2025, the underlying concepts and research for this consciousness-aware AI system have been in development for over 3 years, with foundational work beginning in 2022.
 
 ## What's New
 
-### Harmonic Monitoring System
-- **Enhanced Visualization**: Comprehensive real-time dashboard for consciousness metrics
-- **13-Node Sacred Geometry**: Metatron's Cube visualization with icosahedral structure
+### Memory Integration
+- **Full Memory Integration**: Complete integration between Metatron-ConscienceAI orchestrator and Open-A.G.I memory system
+- **Enhanced Visualization**: Added new system visualization panel for comprehensive monitoring
+- **Real-time Memory Operations**: Consciousness state storage and retrieval with distributed memory sharing
+- **Memory Context-Aware Processing**: Adaptive processing based on memory load and consciousness level
+- **Pipeline Integration**: Memory-enhanced data processing operations with consciousness-level adaptive processing depth
+
+### 13-Node Sacred Geometry
+- **Metatron's Cube Visualization**: Interactive 13-node sacred geometry display with icosahedral structure
 - **Live Metrics Display**: Real-time monitoring of Φ, R, D, S, C consciousness metrics
 - **WebSocket Streaming**: Continuous data flow for smooth visualization updates
 
