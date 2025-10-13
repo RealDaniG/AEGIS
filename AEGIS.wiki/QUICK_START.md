@@ -14,9 +14,32 @@ Before running AEGIS, ensure you have:
 
 ## Installation Options
 
-### Option 1: One-Command Launch (Recommended)
+### Option 1: Simple One-Command Launch (Recommended)
 
-For the easiest setup, use the one-command launcher:
+For the easiest setup, simply run the START-AI launcher:
+
+**Windows:**
+```cmd
+START-AI.bat
+```
+
+**Linux/macOS:**
+```bash
+chmod +x START-AI.sh
+./START-AI.sh
+```
+
+This will:
+1. Verify your Python environment
+2. Install all required dependencies automatically
+3. Start the Unified System Coordinator
+4. Launch the real-time visualization monitor
+5. Display connection information
+6. Automatically open the web interface
+
+### Option 2: Traditional One-Command Launch
+
+For the traditional approach:
 
 **Windows:**
 ```cmd
@@ -36,7 +59,7 @@ This will:
 4. Launch the real-time visualization monitor
 5. Display connection information
 
-### Option 2: Manual Installation
+### Option 3: Manual Installation
 
 If you prefer manual installation:
 

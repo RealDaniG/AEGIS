@@ -4,6 +4,33 @@ Advanced consciousness-aware distributed AI system combining decentralized P2P A
 
 ## 🚀 Quick Start
 
+### Option 1: Simple One-Command Launch (Recommended)
+
+For the easiest setup, simply run the START-AI.bat launcher:
+
+**Windows:**
+```cmd
+START-AI.bat
+```
+
+**Linux/macOS:**
+```bash
+chmod +x START-AI.sh
+./START-AI.sh
+```
+
+This will:
+1. Verify your Python environment
+2. Install all required dependencies automatically
+3. Start the Unified System Coordinator
+4. Launch the real-time visualization monitor
+5. Display connection information
+6. Automatically open the web interface
+
+### Option 2: Traditional One-Command Launch
+
+If you prefer the traditional approach:
+
 1. **Clone the repository**:
    ```bash
    git clone https://github.com/RealDaniG/AEGIS.git
@@ -12,9 +39,9 @@ Advanced consciousness-aware distributed AI system combining decentralized P2P A
 
 2. **Run the one-command launcher**:
    ```cmd
-   run_everything.bat  # Windows
+   START-AI.bat  # Windows
    # or
-   ./run_everything.sh  # Linux/macOS
+   ./START-AI.sh  # Linux/macOS (if available)
    ```
 
 3. **Access the integrated web interface**:
