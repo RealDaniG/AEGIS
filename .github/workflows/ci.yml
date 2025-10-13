@@ -29,19 +29,23 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        if [ -f requirements-test.txt ]; then pip install -r requirements-test.txt; fi
+        pip install -r Open-A.G.I/requirements-test.txt
+      shell: bash
+
+    - name: Create necessary directories
+      run: |
+        mkdir -p test_logs test_backups test_reports test_source
       shell: bash
 
     - name: Run unit tests
       run: |
-        python -m pytest tests/ -v --tb=short
+        python -m pytest tests/unit_tests/ -v --tb=short
       shell: bash
 
-    - name: Run Open-A.G.I integration tests
+    - name: Run integration tests
       run: |
-        python -m pytest Open-A.G.I/tests/ -v --tb=short
+        python -m pytest tests/integration_tests/ -v --tb=short
       shell: bash
-      continue-on-error: true
 
   docker-build:
     name: Build Docker Images
