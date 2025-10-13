@@ -153,21 +153,54 @@ The integrated web interface at http://localhost:8003 provides:
 
 For detailed history of all updates and improvements, see our [GitHub Wiki Changelog](https://github.com/RealDaniG/AEGIS/wiki/UPDATE_CHANGELOG).
 
+## 🗺️ Future Roadmap
+
+See our detailed [ROADMAP.md](docs/ROADMAP.md) for a comprehensive view of our strategic direction and planned enhancements.
+
+### Short-term Goals (v3.2 - v3.5)
+- **UI Integration**: Visualize Metatron 13 nodes with real-time status in the web interface
+- **Node Management Controls**: Add controls for node lifecycle management (start/stop/restart)
+- **Consensus Visualization**: Display PBFT consensus health and view of last blocks/rounds
+- **Enhanced Metrics Dashboard**: Expand consciousness metrics with system performance indicators
+- **Orchestration Pipeline**: Visual representation of the 13-node orchestration pipeline
+
+### Medium-term Goals (v4.0 - v4.5)
+- **Kubernetes Support**: Add deployment manifests and operators for Kubernetes environments
+- **Advanced Security Features**: Implement zero-trust architecture and enhanced encryption
+- **Multi-cloud Deployment**: Support for AWS, Azure, and Google Cloud Platform
+- **Mobile Applications**: Native mobile apps for iOS and Android platforms
+- **Voice Interface**: Voice-controlled interaction with the consciousness-aware AGI system
+
+### Long-term Vision (v5.0+)
+- **Quantum Computing Integration**: Leverage quantum processors for consciousness calculations
+- **Neural Interface**: Direct brain-computer interface for consciousness metrics
+- **Interplanetary Network**: Support for space-based node deployment and communication
+- **Artificial General Intelligence**: Full AGI capabilities with self-improving algorithms
+- **Consciousness Expansion**: Enhanced consciousness simulation with multi-dimensional awareness
+
+### Open-A.G.I Integration Roadmap
+- **Phase 3 Completion**: Full UI integration of Open-A.G.I deployment orchestrator with AEGIS unified coordinator
+- **Phase 4 Completion**: Comprehensive testing, security auditing, and artifact signing
+- **SBOM Integration**: Complete software bill of materials generation and verification
+- **Supply Chain Security**: Enhanced security measures for the entire development and deployment pipeline
+
+For a complete roadmap, see our detailed [ROADMAP.md](docs/ROADMAP.md) document.
+
 ## 🧪 Testing
 
 ### 🧪 Security Protocol Testing
-```bash
+```
 cd Open-A.G.I
 python security_test.py
 ```
 
 ### 🧪 Full Integration Testing
-```bash
+```
 python integration_tests.py
 ```
 
 ### 🧪 Unified System Testing
-```bash
+```
 python test_unified_system.py
 ```
 
