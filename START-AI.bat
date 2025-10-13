@@ -120,7 +120,7 @@ pip install python-multipart 2>nul
 
 echo ✅ All dependencies processed
 
-REM Start the consolidated system
+REM Start the consolidated system in the same terminal (no separate window)
 echo.
 echo [Step 3/4] Starting Consolidated AI System...
 echo             - Consciousness Engine (Metatron-ConscienceAI)
@@ -139,36 +139,9 @@ echo.
 echo Press Ctrl+C to stop all components
 echo.
 
-start "🧠 START-AI System Monitor" cmd /k "title START-AI System Monitor & color 0A & python start_consolidated_system.py"
-
-REM Start Open-A.G.I integration components
-if exist "aegis-integration\deploy\deployment_adapter.py" (
-    echo Starting Open-A.G.I deployment adapter...
-    REM The deployment adapter is integrated into the unified system
-)
-
-if exist "cross_system_comm\tor_adapter.py" (
-    echo Starting TOR adapter...
-    REM The TOR adapter is integrated into the unified system
-)
-
-if exist "visualization_tools\metrics_bridge.py" (
-    echo Starting metrics bridge...
-    REM The metrics bridge is integrated into the unified system
-)
-
-echo ⏳ Waiting for system to initialize...
-timeout /t 8 /nobreak > nul
-
-echo.
-echo [Step 4/4] Opening unified web interface...
-start "" "http://localhost:8003"
-
-echo ✅ Browser opened to unified interface
-echo.
-echo If the browser doesn't open automatically, manually navigate to:
-echo    http://localhost:8003/
-echo.
+REM Run the consolidated system directly in this terminal (no separate window)
+echo Starting AEGIS System Coordinator and Web Server...
+python start_consolidated_system.py
 
 REM Status Check
 echo.
@@ -207,9 +180,8 @@ echo.
 echo ========================================================================
 echo.
 echo 📝 INSTRUCTIONS:
-echo    - System is running in separate "START-AI System Monitor" window
-echo    - Close that window OR press Ctrl+C to stop the entire system
-echo    - DO NOT close this window to keep monitoring status
+echo    - System is running in this terminal window
+echo    - Press Ctrl+C to stop the entire system
 echo.
 echo ========================================================================
 echo.
@@ -223,8 +195,7 @@ echo.
 echo For real-time monitoring, visit:
 echo    http://localhost:8003/static/harmonic_monitor.html
 echo.
-echo To stop the system, close the "START-AI System Monitor" command window
-echo or press Ctrl+C in that window.
+echo To stop the system, press Ctrl+C in this window.
 echo.
 echo Press any key to close this launcher window (system will continue running)...
 pause > nul
