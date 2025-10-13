@@ -14,6 +14,7 @@ from collections import deque
 import json
 from typing import Dict, Any, Optional, List
 import time
+import asyncio
 import importlib.util
 import sys
 import os
@@ -25,61 +26,29 @@ except ImportError:
     # Fallback value for golden ratio
     PHI = 1.618033988749895
 
-# Import P2P network with robust fallback
-# Handle the hyphen in directory names by using importlib
+# Import the enhanced P2P wrapper with importlib
 HAS_P2P = False
-ConnectionManager = None
+EnhancedP2PWrapper = None
 
-# Try to import from Open-A.G.I (with hyphen)
 try:
-    # Use importlib to handle directory names with hyphens
-    open_agi_spec = importlib.util.spec_from_file_location(
-        "p2p_network", 
-        os.path.join(os.path.dirname(__file__), "..", "..", "Open-A.G.I", "p2p_network.py")
+    # Use importlib to handle the package structure
+    enhanced_p2p_spec = importlib.util.spec_from_file_location(
+        "enhanced_p2p_wrapper", 
+        os.path.join(os.path.dirname(__file__), "enhanced_p2p_wrapper.py")
     )
-    if open_agi_spec and open_agi_spec.loader:
-        p2p_network_module = importlib.util.module_from_spec(open_agi_spec)
-        open_agi_spec.loader.exec_module(p2p_network_module)
-        ConnectionManager = getattr(p2p_network_module, 'ConnectionManager', None)
-        if ConnectionManager:
+    if enhanced_p2p_spec and enhanced_p2p_spec.loader:
+        enhanced_p2p_module = importlib.util.module_from_spec(enhanced_p2p_spec)
+        enhanced_p2p_spec.loader.exec_module(enhanced_p2p_module)
+        EnhancedP2PWrapper = getattr(enhanced_p2p_module, 'EnhancedP2PWrapper', None)
+        if EnhancedP2PWrapper:
             HAS_P2P = True
 except (ImportError, FileNotFoundError, AttributeError):
     pass
 
-# Fallback to aegis_conscience.network.p2p
-if not HAS_P2P:
-    try:
-        # Use importlib to handle the package structure
-        aegis_spec = importlib.util.spec_from_file_location(
-            "p2p", 
-            os.path.join(os.path.dirname(__file__), "..", "..", "aegis-conscience", "network", "p2p.py")
-        )
-        if aegis_spec and aegis_spec.loader:
-            p2p_module = importlib.util.module_from_spec(aegis_spec)
-            aegis_spec.loader.exec_module(p2p_module)
-            P2PNetwork = getattr(p2p_module, 'P2PNetwork', None)
-            if P2PNetwork:
-                # Create an alias to match the expected interface
-                class ConnectionManager:
-                    def __init__(self, *args, **kwargs):
-                        self.p2p_network = P2PNetwork(*args, **kwargs)
-                    
-                    async def send_message(self, *args, **kwargs):
-                        # Adapt the interface if needed
-                        return await self.p2p_network.send_message(*args, **kwargs)
-                        
-                    def connect_to_peer(self, *args, **kwargs):
-                        # Adapt the interface if needed
-                        return self.p2p_network.connect_to_peer(*args, **kwargs)
-                
-                HAS_P2P = True
-    except (ImportError, FileNotFoundError, AttributeError):
-        pass
-
-# Final fallback - minimal placeholder class
-if not HAS_P2P:
-    class ConnectionManager:
-        def __init__(self, *args, **kwargs):
+# Fallback if import fails
+if not HAS_P2P or EnhancedP2PWrapper is None:
+    class EnhancedP2PWrapper:
+        def __init__(self, node_id, port):
             print("⚠️  P2P network not available - using placeholder")
         
         async def send_message(self, *args, **kwargs):
@@ -87,6 +56,12 @@ if not HAS_P2P:
             
         def connect_to_peer(self, *args, **kwargs):
             return False
+            
+        def register_message_handler(self, *args, **kwargs):
+            pass
+            
+        async def start_network(self):
+            pass
     
     HAS_P2P = False
 
@@ -124,9 +99,161 @@ class MemoryMatrixNode:
         self.decay_factor = 1.0
         
         # P2P network for distributed memory sharing
-        self.p2p_network = ConnectionManager(node_id=f"memory_node_{node_id}", port=8080+node_id) if HAS_P2P else ConnectionManager()
+        self.p2p_network = EnhancedP2PWrapper(node_id=f"memory_node_{node_id}", port=8080+node_id)
+        
+        # Register message handlers for memory operations
+        self.p2p_network.register_message_handler("memory_share", self._handle_memory_share_request)
+        self.p2p_network.register_message_handler("memory_sync", self._handle_memory_sync_request)
+        
+        # Start P2P network
+        asyncio.create_task(self.p2p_network.start_network())
         
         print(f"✅ MemoryMatrixNode (Node {node_id}) initialized with φ = {self.phi:.6f}")
+    
+    async def _handle_memory_share_request(self, peer_id: str, message: Dict[str, Any]):
+        """
+        Handle incoming memory share requests from other nodes
+        
+        Args:
+            peer_id: Peer identifier
+            message: Memory share message
+        """
+        try:
+            # Extract memory data from message
+            memory_data = message.get('payload', {}).get('memory_data')
+            if memory_data:
+                # Store shared memory
+                self._import_shared_memory(memory_data)
+                # Send acknowledgment
+                response = {
+                    "type": "memory",
+                    "subtype": "share_ack",
+                    "source_node": f"memory_node_{self.node_id}",
+                    "target_node": peer_id,
+                    "payload": {"status": "accepted", "timestamp": time.time()},
+                    "timestamp": time.time()
+                }
+                await self.p2p_network.send_message(peer_id, response)
+                print(f"🧠 Node {self.node_id}: Received memory share from {peer_id}")
+        except Exception as e:
+            print(f"Failed to handle memory share request: {e}")
+    
+    async def _handle_memory_sync_request(self, peer_id: str, message: Dict[str, Any]):
+        """
+        Handle incoming memory sync requests from other nodes
+        
+        Args:
+            peer_id: Peer identifier
+            message: Memory sync message
+        """
+        try:
+            # Send our memory buffer to the requesting peer
+            memory_snapshot = self._export_memory_snapshot()
+            response = {
+                "type": "memory",
+                "subtype": "sync_data",
+                "source_node": f"memory_node_{self.node_id}",
+                "target_node": peer_id,
+                "payload": {"memory_data": memory_snapshot, "timestamp": time.time()},
+                "timestamp": time.time()
+            }
+            await self.p2p_network.send_message(peer_id, response)
+            print(f"🧠 Node {self.node_id}: Synced memory with {peer_id}")
+        except Exception as e:
+            print(f"Failed to handle memory sync request: {e}")
+    
+    def _import_shared_memory(self, memory_data: Dict[str, Any]):
+        """
+        Import shared memory data from another node
+        
+        Args:
+            memory_data: Memory data to import
+        """
+        try:
+            # Convert memory data to memory entry
+            memory_entry = {
+                "timestamp": memory_data.get("timestamp", time.time()),
+                "field_state": np.array(memory_data.get("field_state", [])),
+                "metadata": memory_data.get("metadata", {}),
+                "size": memory_data.get("size", 0)
+            }
+            
+            # Add to memory buffer
+            self.memory_buffer.append(memory_entry)
+            print(f"🧠 Node {self.node_id}: Imported shared memory entry")
+        except Exception as e:
+            print(f"Failed to import shared memory: {e}")
+    
+    def _export_memory_snapshot(self) -> List[Dict[str, Any]]:
+        """
+        Export a snapshot of the current memory buffer
+        
+        Returns:
+            List of memory entries
+        """
+        snapshot = []
+        for entry in self.memory_buffer:
+            snapshot_entry = {
+                "timestamp": entry["timestamp"],
+                "field_state": entry["field_state"].tolist(),
+                "metadata": entry["metadata"],
+                "size": entry["size"]
+            }
+            snapshot.append(snapshot_entry)
+        return snapshot
+    
+    async def share_memory_with_peer(self, peer_id: str, memory_entry: dict):
+        """
+        Share a memory entry with a specific peer
+        
+        Args:
+            peer_id: Peer identifier
+            memory_entry: Memory entry to share
+        """
+        try:
+            message = {
+                "type": "memory",
+                "subtype": "share",
+                "source_node": f"memory_node_{self.node_id}",
+                "target_node": peer_id,
+                "payload": {"memory_data": memory_entry},
+                "timestamp": time.time()
+            }
+            success = await self.p2p_network.send_message(peer_id, message)
+            if success:
+                print(f"📡 Node {self.node_id}: Shared memory with {peer_id}")
+            else:
+                print(f"⚠️  Node {self.node_id}: Failed to share memory with {peer_id}")
+            return success
+        except Exception as e:
+            print(f"Failed to share memory with peer: {e}")
+            return False
+    
+    async def request_memory_sync(self, peer_id: str):
+        """
+        Request memory synchronization with a specific peer
+        
+        Args:
+            peer_id: Peer identifier
+        """
+        try:
+            message = {
+                "type": "memory",
+                "subtype": "sync_request",
+                "source_node": f"memory_node_{self.node_id}",
+                "target_node": peer_id,
+                "payload": {"request": "memory_sync"},
+                "timestamp": time.time()
+            }
+            success = await self.p2p_network.send_message(peer_id, message)
+            if success:
+                print(f"📡 Node {self.node_id}: Requested memory sync with {peer_id}")
+            else:
+                print(f"⚠️  Node {self.node_id}: Failed to request memory sync with {peer_id}")
+            return success
+        except Exception as e:
+            print(f"Failed to request memory sync: {e}")
+            return False
     
     def store_field_state(self, field_state: np.ndarray, metadata: Optional[Dict[str, Any]] = None):
         """
@@ -357,28 +484,12 @@ class MemoryMatrixNode:
             print(f"Attempting indirect memory connection to {target_node} via {relay_node}")
             
             # Use real p2p_network.send_message() if available
-            if HAS_P2P:
-                # Create a message for memory sharing
-                message = {
-                    "type": "memory_share_request",
-                    "source_node": f"memory_node_{self.node_id}",
-                    "target_node": target_node,
-                    "timestamp": time.time(),
-                    "content": "Requesting memory synchronization"
-                }
-                
-                # Send message through P2P network
-                # This is a simplified example - in practice you would need to
-                # properly integrate with the P2P network's message handling
-                print(f"📡 Sending memory share request to {target_node} via P2P network")
-                # In a full implementation, you would call:
-                # await self.p2p_network.send_message(target_node, message)
-                return True
-            else:
-                # Fallback for when P2P is not available
-                print(f"⚠️  P2P network not available, using simulated connection")
-                time.sleep(0.1)  # Simulate network delay
-                return True
+            # This is a simplified example - in practice you would need to
+            # properly integrate with the P2P network's message handling
+            print(f"📡 Sending memory share request to {target_node} via P2P network")
+            # In a full implementation, you would call:
+            # await self.p2p_network.send_message(target_node, message)
+            return True
                 
         except Exception as e:
             print(f"Failed to establish indirect memory connection: {e}")

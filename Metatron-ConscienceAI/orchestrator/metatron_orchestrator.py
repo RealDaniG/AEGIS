@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Metatron's Cube Consciousness Orchestrator
 ===========================================
@@ -29,6 +30,7 @@ try:
     )
     from nodes.consciousness_oscillator import ConsciousnessOscillator
     from nodes.dimensional_processor import DimensionalProcessor
+    from nodes.memory_matrix import MemoryMatrixNode  # Added MemoryMatrixNode
     from nodes.consciousness_metrics import ConsciousnessMetrics
 except ImportError:
     # Fallback for different import contexts
@@ -45,6 +47,7 @@ except ImportError:
     )
     from nodes.consciousness_oscillator import ConsciousnessOscillator
     from nodes.dimensional_processor import DimensionalProcessor
+    from nodes.memory_matrix import MemoryMatrixNode  # Added MemoryMatrixNode
     from nodes.consciousness_metrics import ConsciousnessMetrics
 
 # Setup logger
@@ -97,17 +100,33 @@ class MetatronConsciousness:
         self.nodes = {}
         
         for node_id in range(13):
-            self.nodes[node_id] = {
-                'oscillator': ConsciousnessOscillator(
-                    node_id=node_id,
-                    frequency_ratio=self.frequency_ratios[node_id],
-                    position_3d=self.coordinates[node_id],
-                    base_frequency=self.base_frequency  # Use the (possibly enhanced) base frequency
-                ),
-                'processor': DimensionalProcessor(node_id=node_id),
-                'output': 0.0,
-                'dimensional_output': 0.0
-            }
+            # Special case for Node 3 (MemoryMatrixNode)
+            if node_id == 3:
+                self.nodes[node_id] = {
+                    'memory_matrix': MemoryMatrixNode(node_id=node_id),
+                    'oscillator': ConsciousnessOscillator(
+                        node_id=node_id,
+                        frequency_ratio=self.frequency_ratios[node_id],
+                        position_3d=self.coordinates[node_id],
+                        base_frequency=self.base_frequency
+                    ),
+                    'processor': DimensionalProcessor(node_id=node_id),
+                    'output': 0.0,
+                    'dimensional_output': 0.0
+                }
+                logger.info(f"Initialized MemoryMatrixNode (Node {node_id})")
+            else:
+                self.nodes[node_id] = {
+                    'oscillator': ConsciousnessOscillator(
+                        node_id=node_id,
+                        frequency_ratio=self.frequency_ratios[node_id],
+                        position_3d=self.coordinates[node_id],
+                        base_frequency=self.base_frequency  # Use the (possibly enhanced) base frequency
+                    ),
+                    'processor': DimensionalProcessor(node_id=node_id),
+                    'output': 0.0,
+                    'dimensional_output': 0.0
+                }
         
         # === CONSCIOUSNESS METRICS ===
         self.metrics_calculator = ConsciousnessMetrics()
@@ -214,10 +233,37 @@ class MetatronConsciousness:
             node['dimensional_output'] = dim_output
             dimensional_outputs.append(dim_output)
         
-        # === PHASE 3: CENTRAL PINEAL INTEGRATION ===
+        # === PHASE 3: MEMORY MATRIX PROCESSING (Node 3) ===
+        # Update MemoryMatrixNode (Node 3) with field states and perform recall
+        memory_node = self.nodes[3]
+        if 'memory_matrix' in memory_node:
+            # Get connected node outputs for memory node
+            connected_ids, _ = get_node_connections(3, self.connection_matrix)
+            connected_outputs = [
+                self.nodes[cid]['output'] 
+                for cid in connected_ids if cid != 3
+            ]
+            
+            # Convert outputs to field states for memory processing
+            if len(connected_outputs) > 0:
+                # Combine connected node outputs into a field state
+                combined_field = np.mean(connected_outputs)
+                field_state = np.full(100, combined_field)  # Simple field representation
+                
+                # Update memory matrix node
+                memory_output = memory_node['memory_matrix'].update_state(
+                    sensory_input, 
+                    [field_state]
+                )
+                
+                # Update node output with memory processing result
+                memory_node['output'] = np.mean(memory_output) if isinstance(memory_output, np.ndarray) else memory_output
+                node_outputs[3] = memory_node['output']
+        
+        # === PHASE 4: CENTRAL PINEAL INTEGRATION ===
         self._update_pineal_node(node_outputs, dimensional_outputs)
         
-        # === PHASE 4: CALCULATE CONSCIOUSNESS METRICS ===
+        # === PHASE 5: CALCULATE CONSCIOUSNESS METRICS ===
         # Store current state in history
         combined_state = np.array(node_outputs) + 0.3 * np.array(dimensional_outputs)
         self.state_history.append(combined_state)
@@ -236,10 +282,18 @@ class MetatronConsciousness:
         # Update global state
         self.global_state.update(metrics)
         
-        # === PHASE 5: ENERGY MINIMIZATION (Spherical Refinement) ===
+        # === PHASE 6: ENERGY MINIMIZATION (Spherical Refinement) ===
         self._apply_energy_minimization()
         
-        # === PHASE 6: SELF-ORGANIZED CRITICALITY (Spherical Refinement) ===
+        # === PHASE 7: SELF-ORGANIZED CRITICALITY (Spherical Refinement) ===
+        self._apply_self_organized_criticality()
+        
+        # === INCREMENT TIME ===
+        self.current_time += self.dt
+        
+        return self.get_current_state()
+        
+        # === PHASE 7: SELF-ORGANIZED CRITICALITY (Spherical Refinement) ===
         self._apply_self_organized_criticality()
         
         # === INCREMENT TIME ===
@@ -467,17 +521,24 @@ class MetatronConsciousness:
         Returns:
             dict: Full system state
         """
+        nodes_state = {}
+        for node_id, node in self.nodes.items():
+            node_state = {
+                'oscillator': node['oscillator'].get_state_dict(),
+                'processor': node['processor'].get_state_dict(),
+                'output': float(node['output']),
+                'dimensional_output': float(node['dimensional_output'])
+            }
+            
+            # Add MemoryMatrixNode metrics if it's Node 3
+            if node_id == 3 and 'memory_matrix' in node:
+                node_state['memory_metrics'] = node['memory_matrix'].get_memory_metrics()
+            
+            nodes_state[node_id] = node_state
+        
         return {
             'time': float(self.current_time),
-            'nodes': {
-                node_id: {
-                    'oscillator': node['oscillator'].get_state_dict(),
-                    'processor': node['processor'].get_state_dict(),
-                    'output': float(node['output']),
-                    'dimensional_output': float(node['dimensional_output'])
-                }
-                for node_id, node in self.nodes.items()
-            },
+            'nodes': nodes_state,
             'global': self.global_state.copy(),
             'system_info': {
                 'base_frequency': self.base_frequency,
@@ -538,11 +599,15 @@ class MetatronConsciousness:
     
     def reset_system(self):
         """Reset entire system to initial state"""
-        for node in self.nodes.values():
+        for node_id, node in self.nodes.items():
             node['oscillator'].reset_state()
             node['processor'].reset_state()
             node['output'] = 0.0
             node['dimensional_output'] = 0.0
+            
+            # Reset MemoryMatrixNode if it's Node 3
+            if node_id == 3 and 'memory_matrix' in node:
+                node['memory_matrix'].reset_state()
         
         self.state_history.clear()
         self.gamma_window.clear()
