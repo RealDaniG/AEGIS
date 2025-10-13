@@ -1,4 +1,4 @@
-# AEGIS (Autonomous Governance and Intelligent Systems)
+# AEGIS (Autonomous Electronic Governance and Intelligent Systems)
 
 Advanced consciousness-aware distributed AI system combining decentralized P2P AGI substrate with consciousness-aware computing principles.
 
