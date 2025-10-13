@@ -20,12 +20,12 @@ El Consciousness Engine es un prototipo educativo y de investigación que utiliz
 El sistema se organiza en nodos:
 - Node 1: CoreConsciousnessNode. Genera y evoluciona el campo recursivo central (complejo), calcula métricas como entropía y coherencia interna.
 - Node 2: SensoryResonator. Recibe una señal sensorial sintética (seno/coseno) con ruido y fase.
-- Node 3: MemoryMatrixNode. Almacena estados de campo y realiza un “weighted_recall” con decaimiento basado en φ (golden ratio).
+- Node 3: MemoryMatrixNode. Almacena estados de campo y realiza un "weighted_recall" con decaimiento basado en φ (golden ratio).
 - Node 4: EmotionField. Deriva valence y arousal a partir del campo y señales internas.
 - Node 5: DecisionGate. Evalúa umbrales y decide estados binarios.
 - Node 6: MotorProjection. Proyecta un campo motor a partir de la decisión.
-- Node 9: LogicReasoningNode. Evalúa consistencia (coherencia) entre vectores/campos y determina “logical_truth”.
-- Node 10: EmpathyMapperNode. Mide alineación de resonancia y fase entre “self” y “other” (Core vs Memoria).
+- Node 9: LogicReasoningNode. Evalúa consistencia (coherencia) entre vectores/campos y determina "logical_truth".
+- Node 10: EmpathyMapperNode. Mide alineación de resonancia y fase entre "self" y "other" (Core vs Memoria).
 Otros nodos (lingüístico, creativo, intuición) pueden integrarse para ampliar la simulación.
 
 4. Orquestador y CLI

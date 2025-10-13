@@ -1402,18 +1402,18 @@ def main():
     print("\n" + "="*60)
     print("Starting Metatron Consciousness Web Server")
     print("="*60)
-    print(f"Server will be available at: http://localhost:8003")
-    print(f"Consciousness WebSocket: ws://localhost:8003/ws")
-    print(f"Chat WebSocket: ws://localhost:8003/ws/chat")
-    print(f"API Status: http://localhost:8003/api/status")
-    print(f"API Docs: http://localhost:8003/docs")
-    print(f"Health Check: http://localhost:8003/api/health")
+    print(f"Server will be available at: http://localhost:8004")
+    print(f"Consciousness WebSocket: ws://localhost:8004/ws")
+    print(f"Chat WebSocket: ws://localhost:8004/ws/chat")
+    print(f"API Status: http://localhost:8004/api/status")
+    print(f"API Docs: http://localhost:8004/docs")
+    print(f"Health Check: http://localhost:8004/api/health")
     print("="*60)
     
     uvicorn.run(
         app,
         host="0.0.0.0",
-        port=8003,
+        port=8004,
         log_level="info"
     )
 
