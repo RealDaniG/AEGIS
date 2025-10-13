@@ -27,14 +27,29 @@ Before installing AEGIS, ensure you have:
 
 ## ▶️ Running the System
 
-### Option 1: One-Command Launcher (Recommended)
+### Option 1: Simple One-Command Launcher (Recommended)
+```cmd
+START-AI.bat  # Windows
+# or
+./START-AI.sh  # Linux/macOS
+```
+
+This will:
+1. Verify your Python environment
+2. Install all required dependencies automatically
+3. Start the Unified System Coordinator
+4. Launch the real-time visualization monitor
+5. Display connection information
+6. Automatically open the web interface
+
+### Option 2: Traditional One-Command Launcher
 ```cmd
 run_everything.bat  # Windows
 # or
 ./run_everything.sh  # Linux/macOS
 ```
 
-### Option 2: Harmonic System Launcher
+### Option 3: Harmonic System Launcher
 ```bash
 # Windows
 start_harmonic_system.ps1
@@ -43,7 +58,7 @@ start_harmonic_system.ps1
 ./start_harmonic_system.ps1
 ```
 
-### Option 3: Manual Start
+### Option 4: Manual Start
 ```bash
 # Terminal 1: Start the web server
 python Metatron-ConscienceAI/scripts/metatron_web_server.py

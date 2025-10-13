@@ -51,24 +51,24 @@ For detailed information about the memory integration between Metatron-Conscienc
 ## 🚀 Getting Started
 
 - [Quick Start Guide](Quick-Start-Guide) - Get up and running quickly
-- [System Requirements](System-Requirements) - Hardware and software requirements
-- [Installation Guide](Installation-Guide) - Step-by-step installation instructions
+- [System Requirements](SYSTEM_REQUIREMENTS) - Hardware and software requirements
+- [Installation Guide](INSTALLATION) - Step-by-step installation instructions
 
 ## 🧠 Core Components
 
 ### Consciousness Engine
-- [Metatron Consciousness Engine](Metatron-Consciousness-Engine) - Sacred geometry-based consciousness simulation
+- [Metatron Consciousness Engine](CONSCIOUSNESS_ENGINE) - Sacred geometry-based consciousness simulation
 - [Consciousness Metrics](Consciousness-Metrics) - Φ, R, D, S, C metrics explanation
 - [Harmonic Monitoring System](Harmonic-Monitoring-System) - Real-time visualization and monitoring
 
 ### AGI Framework
-- [Open-A.G.I Overview](Open-AGI-Overview) - Decentralized AGI substrate
-- [P2P Networking](P2P-Networking) - Peer-to-peer communication layer
-- [Consensus Mechanisms](Consensus-Mechanisms) - PBFT and governance protocols
+- [Open-A.G.I Overview](AGI_FRAMEWORK) - Decentralized AGI substrate
+- [P2P Networking](P2P_NETWORKING) - Peer-to-peer communication layer
+- [Consensus Mechanisms](CONSENSUS_PROTOCOL) - PBFT and governance protocols
 - [Federated Learning](Federated-Learning) - Collaborative model training
 
 ### Integration Layer
-- [Unified API](Unified-API) - Single interface for all system components
+- [Unified API](UNIFIED-API) - Single interface for all system components
 - [WebSocket Streaming](WebSocket-Streaming) - Real-time data streaming
 - [System Coordinator](System-Coordinator) - Component orchestration
 - [Memory Integration](Memory-Integration) - Consciousness-aware memory system
@@ -76,16 +76,16 @@ For detailed information about the memory integration between Metatron-Conscienc
 ## 🛠️ Technical Documentation
 
 ### Architecture
-- [System Architecture](System-Architecture) - High-level system design
-- [Component Integration](Component-Integration) - How components work together
+- [System Architecture](SYSTEM_OVERVIEW) - High-level system design
+- [Component Integration](SYSTEM_INTEGRATION) - How components work together
 - [Data Flow](Data-Flow) - Information flow through the system
 - [Security Framework](Security-Framework) - Cryptographic security measures
 
 ### Implementation
 - [Code Structure](Code-Structure) - Repository organization
-- [API Reference](API-Reference) - Complete API documentation
+- [API Reference](API_INTEGRATION) - Complete API documentation
 - [Configuration](Configuration) - System configuration options
-- [Testing](Testing) - Unit and integration tests
+- [Testing](TESTING_VERIFICATION) - Unit and integration tests
 
 ## 📊 Monitoring and Visualization
 
@@ -96,7 +96,7 @@ For detailed information about the memory integration between Metatron-Conscienc
 
 ## 🧪 Research and Development
 
-- [Theoretical Foundation](Theoretical-Foundation) - Mathematical and physical principles
+- [Theoretical Foundation](RESEARCH_THEORY) - Mathematical and physical principles
 - [Research Applications](Research-Applications) - Using AEGIS for research
 - [Experimental Features](Experimental-Features) - Cutting-edge capabilities
 - [Future Enhancements](Future-Enhancements) - Planned improvements
