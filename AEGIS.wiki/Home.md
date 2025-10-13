@@ -50,56 +50,65 @@ For detailed information about the memory integration between Metatron-Conscienc
 
 ## 🚀 Getting Started
 
-- [Quick Start Guide](Quick-Start-Guide) - Get up and running quickly
+- [Quick Start Guide](Quick-Start-Guide) - Fast system initialization
 - [System Requirements](SYSTEM_REQUIREMENTS) - Hardware and software requirements
 - [Installation Guide](INSTALLATION) - Step-by-step installation instructions
 
-## 🧠 Core Components
+## 🏗️ System Architecture
 
-### Consciousness Engine
-- [Metatron Consciousness Engine](CONSCIOUSNESS_ENGINE) - Sacred geometry-based consciousness simulation
-- [Consciousness Metrics](Consciousness-Metrics) - Φ, R, D, S, C metrics explanation
-- [Harmonic Monitoring System](Harmonic-Monitoring-System) - Real-time visualization and monitoring
-
-### AGI Framework
-- [Open-A.G.I Overview](AGI_FRAMEWORK) - Decentralized AGI substrate
-- [P2P Networking](P2P_NETWORKING) - Peer-to-peer communication layer
-- [Consensus Mechanisms](CONSENSUS_PROTOCOL) - PBFT and governance protocols
-- [Federated Learning](Federated-Learning) - Collaborative model training
-
-### Integration Layer
-- [Unified API](UNIFIED-API) - Single interface for all system components
-- [WebSocket Streaming](WebSocket-Streaming) - Real-time data streaming
-- [System Coordinator](System-Coordinator) - Component orchestration
-- [Memory Integration](Memory-Integration) - Consciousness-aware memory system
-
-## 🛠️ Technical Documentation
-
-### Architecture
-- [System Architecture](SYSTEM_OVERVIEW) - High-level system design
+- [System Overview](SYSTEM_OVERVIEW) - High-level system design
 - [Component Integration](SYSTEM_INTEGRATION) - How components work together
 - [Data Flow](Data-Flow) - Information flow through the system
 - [Security Framework](Security-Framework) - Cryptographic security measures
 
-### Implementation
+## 🔧 Technical Documentation
+
+- [Code Structure](Code-Structure) - Repository organization
+- [Configuration](Configuration) - System configuration options
+- [Deployment Guide](Deployment-Guide) - Production deployment instructions
+- [Troubleshooting](Troubleshooting) - Common issues and solutions
+
+## 🌐 API Documentation
+
+- [Unified API](UNIFIED-API) - Single interface for all system components
+- [API Integration](API_INTEGRATION) - Complete API documentation
+- [WebSocket Streaming](WebSocket-Streaming) - Real-time data streaming
+- [OpenAPI Specification](OpenAPI) - OpenAPI documentation and usage
+
+## 🧪 Testing and Verification
+
+- [Testing Framework](TESTING_VERIFICATION) - Unit and integration tests
+- [System Verification](System-Verification) - System validation procedures
+- [Performance Testing](Performance-Testing) - Performance benchmarking
+- [Security Testing](Security-Testing) - Security validation procedures
+
+## 🧠 Research and Theory
+
+- [Theoretical Foundation](RESEARCH_THEORY) - Mathematical and physical principles
+- [Consciousness Metrics](Consciousness-Metrics) - Φ, R, D, S, C metrics explanation
+- [Sacred Geometry](FLOWER_OF_LIFE) - Advanced geometric principles and implementation details
+- [Federated Learning](Federated-Learning) - Collaborative model training theory
+
+## 💻 Development
+
+- [Development Guide](DEVELOPMENT_GUIDE) - Development workflow and best practices
+- [Contributing Guide](Contributing-Guide) - How to contribute to the project
 - [Code Structure](Code-Structure) - Repository organization
 - [API Reference](API_INTEGRATION) - Complete API documentation
-- [Configuration](Configuration) - System configuration options
-- [Testing](TESTING_VERIFICATION) - Unit and integration tests
 
 ## 📊 Monitoring and Visualization
 
 - [Harmonic Monitoring System](Harmonic-Monitoring-System) - Real-time consciousness metrics
 - [Dashboard Usage](Dashboard-Usage) - How to use the web interface
 - [Performance Metrics](Performance-Metrics) - System performance monitoring
-- [Troubleshooting](Troubleshooting) - Common issues and solutions
+- [Visualization Integration](VISUALIZATION_INTEGRATION) - Visualization system integration
 
 ## 🧪 Research and Development
 
-- [Theoretical Foundation](RESEARCH_THEORY) - Mathematical and physical principles
 - [Research Applications](Research-Applications) - Using AEGIS for research
 - [Experimental Features](Experimental-Features) - Cutting-edge capabilities
 - [Future Enhancements](Future-Enhancements) - Planned improvements
+- [Academic Partnerships](Academic-Partnerships) - Research collaboration opportunities
 
 ## 📚 Additional Resources
 
@@ -111,6 +120,9 @@ For detailed information about the memory integration between Metatron-Conscienc
 ## 🌺 Sacred Geometry
 
 - [Flower of Life](FLOWER_OF_LIFE) - Advanced geometric principles and implementation details
+- [Metatron's Cube](Metatrons-Cube) - Sacred geometry implementation
+- [Consciousness Network](Consciousness-Network) - 13-node network geometry
+- [Geometric Principles](Geometric-Principles) - Mathematical foundations
 
 ## 🤝 Community
 
