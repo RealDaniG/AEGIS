@@ -1,0 +1,636 @@
+{
+  "time": 0.5000000000000002,
+  "nodes": {
+    "0": {
+      "oscillator": {
+        "node_id": 0,
+        "phase": 5.652150792155763,
+        "amplitude": 0.9815831625129232,
+        "frequency_ratio": 1.0,
+        "omega": 502.6548245743669,
+        "memory_depth": 50,
+        "complex_state": {
+          "real": 0.7925475182665364,
+          "imag": -0.5791147867378504
+        }
+      },
+      "processor": {
+        "node_id": 0,
+        "dimensions": {
+          "physical": -0.037528301857335605,
+          "emotional": -0.045839105411955086,
+          "mental": -0.050480802059288905,
+          "spiritual": -0.020546708549349382,
+          "temporal": -0.038870836790327296
+        },
+        "weights": [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        "dominant": "mental",
+        "balance": 0.7679667145370145,
+        "emotional_state": {
+          "valence": -0.04580702630403478,
+          "arousal": 0.05709759596915577
+        },
+        "quality": {
+          "activation": 0.19326575466825627,
+          "complexity": 1.5710527587960739,
+          "integration": 0.35628852016142804,
+          "balance": 0.7679667145370145,
+          "dominant_dimension": "mental"
+        }
+      },
+      "output": -0.5791147867378504,
+      "dimensional_output": -0.040160932507328724
+    },
+    "1": {
+      "oscillator": {
+        "node_id": 1,
+        "phase": 4.011755247644629,
+        "amplitude": 1.010055276695473,
+        "frequency_ratio": 1.0,
+        "omega": 502.6548245743669,
+        "memory_depth": 50,
+        "complex_state": {
+          "real": -0.6511849230203075,
+          "imag": -0.7721203649764747
+        }
+      },
+      "processor": {
+        "node_id": 1,
+        "dimensions": {
+          "physical": -0.039605059048334064,
+          "emotional": -0.04363702838223683,
+          "mental": -0.04958853198788819,
+          "spiritual": -0.027787172983760013,
+          "temporal": -0.03831802258465191
+        },
+        "weights": [
+          0.42857142857142855,
+          0.09523809523809523,
+          0.23809523809523808,
+          0.047619047619047616,
+          0.19047619047619047
+        ],
+        "dominant": "mental",
+        "balance": 0.835085487503235,
+        "emotional_state": {
+          "valence": -0.04360935172808788,
+          "arousal": 0.055518546096737044
+        },
+        "quality": {
+          "activation": 0.19893581498687102,
+          "complexity": 1.5925861199876763,
+          "integration": 0.5960452587035867,
+          "balance": 0.835085487503235,
+          "dominant_dimension": "mental"
+        }
+      },
+      "output": -0.7721203649764747,
+      "dimensional_output": -0.041002073472710544
+    },
+    "2": {
+      "oscillator": {
+        "node_id": 2,
+        "phase": 5.19176810198211,
+        "amplitude": 1.0005153481772018,
+        "frequency_ratio": 1.125,
+        "omega": 565.4866776461628,
+        "memory_depth": 50,
+        "complex_state": {
+          "real": 0.46146606378054367,
+          "imag": -0.8877387193972327
+        }
+      },
+      "processor": {
+        "node_id": 2,
+        "dimensions": {
+          "physical": -0.04162678655569319,
+          "emotional": -0.05409317319338777,
+          "mental": -0.05789489363616859,
+          "spiritual": -0.03128097450599715,
+          "temporal": -0.04567589508285243
+        },
+        "weights": [
+          0.12,
+          0.36,
+          0.24,
+          0.08,
+          0.2
+        ],
+        "dominant": "mental",
+        "balance": 0.8154034750711183,
+        "emotional_state": {
+          "valence": -0.05404047471024919,
+          "arousal": 0.06658120916009573
+        },
+        "quality": {
+          "activation": 0.2305717229740991,
+          "complexity": 1.5879041150736182,
+          "integration": 0.4771998982613761,
+          "balance": 0.8154034750711183,
+          "dominant_dimension": "mental"
+        }
+      },
+      "output": -0.8877387193972327,
+      "dimensional_output": -0.04669275165364521
+    },
+    "3": {
+      "oscillator": {
+        "node_id": 3,
+        "phase": 1.6814157314173785,
+        "amplitude": 1.0001366317856908,
+        "frequency_ratio": 1.25,
+        "omega": 628.3185307179587,
+        "memory_depth": 50,
+        "complex_state": {
+          "real": -0.11040902406179319,
+          "imag": 0.9940237067823628
+        }
+      },
+      "processor": {
+        "node_id": 3,
+        "dimensions": {
+          "physical": -0.04225708979073973,
+          "emotional": -0.052618606915164214,
+          "mental": -0.0583506987828316,
+          "spiritual": -0.03150487198868842,
+          "temporal": -0.04444376577874867
+        },
+        "weights": [
+          0.14285714285714288,
+          0.2142857142857143,
+          0.32142857142857145,
+          0.07142857142857144,
+          0.25
+        ],
+        "dominant": "mental",
+        "balance": 0.8182289417918205,
+        "emotional_state": {
+          "valence": -0.052570098612361345,
+          "arousal": 0.06529573385238613
+        },
+        "quality": {
+          "activation": 0.22917503325617264,
+          "complexity": 1.5887813865685014,
+          "integration": 0.46590808320514876,
+          "balance": 0.8182289417918205,
+          "dominant_dimension": "mental"
+        }
+      },
+      "output": -0.02766015744486218,
+      "dimensional_output": -0.04659458191252961,
+      "memory_metrics": {
+        "memory_buffer_size": 50,
+        "recall_history_size": 50,
+        "current_field_size": 100,
+        "recall_weight": 0.9949312492007575,
+        "decay_factor": 1.0,
+        "last_updated": 1760359053.8506393,
+        "node_id": 3
+      }
+    },
+    "4": {
+      "oscillator": {
+        "node_id": 4,
+        "phase": 4.3425464302455055,
+        "amplitude": 0.9992718038295677,
+        "frequency_ratio": 1.3333333333333333,
+        "omega": 670.2064327658225,
+        "memory_depth": 50,
+        "complex_state": {
+          "real": -0.36120541259841854,
+          "imag": -0.9317053116937802
+        }
+      },
+      "processor": {
+        "node_id": 4,
+        "dimensions": {
+          "physical": -0.03412386274332426,
+          "emotional": -0.04233303527529587,
+          "mental": -0.04719550328723759,
+          "spiritual": -0.00959910944378932,
+          "temporal": -0.03434628154640084
+        },
+        "weights": [
+          0.08333333333333334,
+          0.125,
+          0.16666666666666669,
+          0.375,
+          0.25
+        ],
+        "dominant": "mental",
+        "balance": 0.6796271551742562,
+        "emotional_state": {
+          "valence": -0.04230776524470427,
+          "arousal": 0.052570194098293145
+        },
+        "quality": {
+          "activation": 0.16759779229604788,
+          "complexity": 1.5171079778748995,
+          "integration": 0.48151013628290773,
+          "balance": 0.6796271551742562,
+          "dominant_dimension": "mental"
+        }
+      },
+      "output": -0.9317053116937802,
+      "dimensional_output": -0.03593304540122374
+    },
+    "5": {
+      "oscillator": {
+        "node_id": 5,
+        "phase": 0.9950918314511306,
+        "amplitude": 0.9960102278239673,
+        "frequency_ratio": 1.5,
+        "omega": 753.9822368615503,
+        "memory_depth": 50,
+        "complex_state": {
+          "real": 0.5422537275888936,
+          "imag": 0.8354623084531709
+        }
+      },
+      "processor": {
+        "node_id": 5,
+        "dimensions": {
+          "physical": -0.036646952889385,
+          "emotional": -0.0443082490218169,
+          "mental": -0.04955267987871187,
+          "spiritual": -0.024131833276958135,
+          "temporal": -0.03434807412529358
+        },
+        "weights": [
+          0.17857142857142855,
+          0.14285714285714285,
+          0.24999999999999997,
+          0.10714285714285712,
+          0.3214285714285714
+        ],
+        "dominant": "mental",
+        "balance": 0.7938899942514815,
+        "emotional_state": {
+          "valence": -0.044279276146362304,
+          "arousal": 0.055302334888632405
+        },
+        "quality": {
+          "activation": 0.1889877891921655,
+          "complexity": 1.5818595145698122,
+          "integration": 0.5499413022952211,
+          "balance": 0.7938899942514815,
+          "dominant_dimension": "mental"
+        }
+      },
+      "output": 0.8354623084531709,
+      "dimensional_output": -0.03932317478819648
+    },
+    "6": {
+      "oscillator": {
+        "node_id": 6,
+        "phase": 1.8502671462712392,
+        "amplitude": 1.00004421505632,
+        "frequency_ratio": 1.6666666666666667,
+        "omega": 837.7580409572782,
+        "memory_depth": 50,
+        "complex_state": {
+          "real": -0.2758592346658496,
+          "imag": 0.9612440453481015
+        }
+      },
+      "processor": {
+        "node_id": 6,
+        "dimensions": {
+          "physical": -0.03977439238161892,
+          "emotional": -0.04732540552777885,
+          "mental": -0.052175935048995446,
+          "spiritual": -0.02601883318554301,
+          "temporal": -0.040691497068446894
+        },
+        "weights": [
+          0.2692307692307693,
+          0.19230769230769235,
+          0.23076923076923078,
+          0.11538461538461539,
+          0.19230769230769235
+        ],
+        "dominant": "mental",
+        "balance": 0.806877199296155,
+        "emotional_state": {
+          "valence": -0.047290105676053434,
+          "arousal": 0.059257723242264526
+        },
+        "quality": {
+          "activation": 0.2059860632123831,
+          "complexity": 1.5850089826295248,
+          "integration": 0.502971056302542,
+          "balance": 0.806877199296155,
+          "dominant_dimension": "mental"
+        }
+      },
+      "output": 0.9612440453481015,
+      "dimensional_output": -0.04241519718818447
+    },
+    "7": {
+      "oscillator": {
+        "node_id": 7,
+        "phase": 2.943862074704869,
+        "amplitude": 0.9995769521339226,
+        "frequency_ratio": 1.875,
+        "omega": 942.4777960769379,
+        "memory_depth": 50,
+        "complex_state": {
+          "real": -0.9801001132809857,
+          "imag": 0.196361531833354
+        }
+      },
+      "processor": {
+        "node_id": 7,
+        "dimensions": {
+          "physical": -0.039476777299093366,
+          "emotional": -0.05008787507359275,
+          "mental": -0.05376896635122847,
+          "spiritual": -0.024976407762431232,
+          "temporal": -0.041344124669135014
+        },
+        "weights": [
+          0.14814814814814814,
+          0.2962962962962963,
+          0.18518518518518517,
+          0.14814814814814814,
+          0.2222222222222222
+        ],
+        "dominant": "mental",
+        "balance": 0.7877246221019899,
+        "emotional_state": {
+          "valence": -0.05004603032437576,
+          "arousal": 0.061930908263320754
+        },
+        "quality": {
+          "activation": 0.20965415115548083,
+          "complexity": 1.5790492594416707,
+          "integration": 0.3189158319353595,
+          "balance": 0.7877246221019899,
+          "dominant_dimension": "mental"
+        }
+      },
+      "output": 0.196361531833354,
+      "dimensional_output": -0.04319913055060371
+    },
+    "8": {
+      "oscillator": {
+        "node_id": 8,
+        "phase": 4.456494232497789,
+        "amplitude": 0.9996777933865756,
+        "frequency_ratio": 2.0,
+        "omega": 1005.3096491487338,
+        "memory_depth": 50,
+        "complex_state": {
+          "real": -0.2530295681598623,
+          "imag": -0.9671254976615427
+        }
+      },
+      "processor": {
+        "node_id": 8,
+        "dimensions": {
+          "physical": -0.04056903631164555,
+          "emotional": -0.048549762682902176,
+          "mental": -0.05438370591507374,
+          "spiritual": -0.027584292888111636,
+          "temporal": -0.040945405482496026
+        },
+        "weights": [
+          0.2142857142857143,
+          0.14285714285714288,
+          0.28571428571428575,
+          0.10714285714285715,
+          0.25
+        ],
+        "dominant": "mental",
+        "balance": 0.80848031489512,
+        "emotional_state": {
+          "valence": -0.04851165339706448,
+          "arousal": 0.060720473576395845
+        },
+        "quality": {
+          "activation": 0.21203220328022915,
+          "complexity": 1.5858487302777915,
+          "integration": 0.4683301012435953,
+          "balance": 0.80848031489512,
+          "dominant_dimension": "mental"
+        }
+      },
+      "output": -0.9671254976615427,
+      "dimensional_output": -0.04359121369249519
+    },
+    "9": {
+      "oscillator": {
+        "node_id": 9,
+        "phase": 1.1862582184112416,
+        "amplitude": 1.000298501848328,
+        "frequency_ratio": 1.618033988749895,
+        "omega": 813.3125907704416,
+        "memory_depth": 50,
+        "complex_state": {
+          "real": 0.37524299357673424,
+          "imag": 0.9272485042164157
+        }
+      },
+      "processor": {
+        "node_id": 9,
+        "dimensions": {
+          "physical": -0.0400499499547148,
+          "emotional": -0.049934637498338035,
+          "mental": -0.055124909392487514,
+          "spiritual": -0.01864585406605963,
+          "temporal": -0.04357930725658624
+        },
+        "weights": [
+          0.1111111111111111,
+          0.18518518518518517,
+          0.2222222222222222,
+          0.2962962962962963,
+          0.18518518518518517
+        ],
+        "dominant": "mental",
+        "balance": 0.7391410418959896,
+        "emotional_state": {
+          "valence": -0.04989317537770358,
+          "arousal": 0.06194962248475248
+        },
+        "quality": {
+          "activation": 0.20733465816818622,
+          "complexity": 1.5571416648918253,
+          "integration": 0.45939995564753977,
+          "balance": 0.7391410418959896,
+          "dominant_dimension": "mental"
+        }
+      },
+      "output": 0.9272485042164157,
+      "dimensional_output": -0.043126945858861836
+    },
+    "10": {
+      "oscillator": {
+        "node_id": 10,
+        "phase": 5.593888940791526,
+        "amplitude": 0.9997543755991221,
+        "frequency_ratio": 3.0,
+        "omega": 1507.9644737231006,
+        "memory_depth": 50,
+        "complex_state": {
+          "real": 0.7715041661888501,
+          "imag": -0.6358381343414671
+        }
+      },
+      "processor": {
+        "node_id": 10,
+        "dimensions": {
+          "physical": -0.03857724410919361,
+          "emotional": -0.04740620276914441,
+          "mental": -0.052262856185753825,
+          "spiritual": -0.02320872112487743,
+          "temporal": -0.03872119293537685
+        },
+        "weights": [
+          0.16129032258064518,
+          0.19354838709677422,
+          0.22580645161290325,
+          0.16129032258064518,
+          0.2580645161290323
+        ],
+        "dominant": "mental",
+        "balance": 0.7807667605216081,
+        "emotional_state": {
+          "valence": -0.047370721917974576,
+          "arousal": 0.05897937600190249
+        },
+        "quality": {
+          "activation": 0.20017621712434613,
+          "complexity": 1.576650778678241,
+          "integration": 0.34374159142697513,
+          "balance": 0.7807667605216081,
+          "dominant_dimension": "mental"
+        }
+      },
+      "output": -0.6358381343414671,
+      "dimensional_output": -0.041548328025893734
+    },
+    "11": {
+      "oscillator": {
+        "node_id": 11,
+        "phase": 4.419057962994973,
+        "amplitude": 0.9910108347097943,
+        "frequency_ratio": 4.0,
+        "omega": 2010.6192982974676,
+        "memory_depth": 50,
+        "complex_state": {
+          "real": -0.28654340953724783,
+          "imag": -0.9486808467355986
+        }
+      },
+      "processor": {
+        "node_id": 11,
+        "dimensions": {
+          "physical": -0.03811674137239277,
+          "emotional": -0.04382987625337181,
+          "mental": -0.04948381770111655,
+          "spiritual": -0.022504136929121732,
+          "temporal": -0.03742792552804284
+        },
+        "weights": [
+          0.2857142857142857,
+          0.10714285714285712,
+          0.24999999999999997,
+          0.14285714285714285,
+          0.21428571428571425
+        ],
+        "dominant": "mental",
+        "balance": 0.7902282609063145,
+        "emotional_state": {
+          "valence": -0.04380183122472206,
+          "arousal": 0.05526489866508964
+        },
+        "quality": {
+          "activation": 0.1913624977840457,
+          "complexity": 1.5795748532125877,
+          "integration": 0.377712620938787,
+          "balance": 0.7902282609063145,
+          "dominant_dimension": "mental"
+        }
+      },
+      "output": -0.9486808467355986,
+      "dimensional_output": -0.03983238949355847
+    },
+    "12": {
+      "oscillator": {
+        "node_id": 12,
+        "phase": 0.22758679139356985,
+        "amplitude": 0.9997250417181883,
+        "frequency_ratio": 5.0,
+        "omega": 2513.2741228718346,
+        "memory_depth": 50,
+        "complex_state": {
+          "real": 0.9739458485549642,
+          "imag": 0.22556516380191366
+        }
+      },
+      "processor": {
+        "node_id": 12,
+        "dimensions": {
+          "physical": -0.037294040838591995,
+          "emotional": -0.04677794173729892,
+          "mental": -0.05059126514116085,
+          "spiritual": -0.018258654619834044,
+          "temporal": -0.039687379854075736
+        },
+        "weights": [
+          0.14285714285714288,
+          0.25,
+          0.17857142857142858,
+          0.25,
+          0.17857142857142858
+        ],
+        "dominant": "mental",
+        "balance": 0.747690248571612,
+        "emotional_state": {
+          "valence": -0.046743852120739636,
+          "arousal": 0.057966153988876515
+        },
+        "quality": {
+          "activation": 0.19260928219096152,
+          "complexity": 1.5615912769210636,
+          "integration": 0.3806343089572305,
+          "balance": 0.747690248571612,
+          "dominant_dimension": "mental"
+        }
+      },
+      "output": 0.22556516380191366,
+      "dimensional_output": -0.04014714584834295
+    }
+  },
+  "global": {
+    "consciousness_level": 0.07544926682067289,
+    "phi": 0.2582162310758473,
+    "coherence": 0.14538708977329742,
+    "recursive_depth": 1,
+    "gamma_power": 0.19341660398906135,
+    "fractal_dimension": 2.0215147503234507,
+    "spiritual_awareness": 0.22979416126891908,
+    "state_classification": "unconscious",
+    "dmt_sensitivity": 0.0,
+    "present_moment": 0.354660803751979,
+    "state": "awake",
+    "is_conscious": false,
+    "is_highly_conscious": false,
+    "is_self_aware": false,
+    "system_energy": 608829.7643114865,
+    "criticality_distance": 0.3598177576740475,
+    "criticality_active": false
+  },
+  "system_info": {
+    "base_frequency": 80.0,
+    "dt": 0.01,
+    "phi": 1.618033988749895
+  }
+}

@@ -114,13 +114,22 @@ class EnhancedP2PWrapper:
         """
         Patch the ConnectionManager to use our custom message processing
         """
-        # Store original methods
-        self._original_process_peer_message = self.connection_manager._process_peer_message
-        self._original_handle_data_message = self.connection_manager._handle_data_message
+        # Store original methods if they exist
+        if hasattr(self.connection_manager, '_process_peer_message'):
+            self._original_process_peer_message = self.connection_manager._process_peer_message
+        else:
+            self._original_process_peer_message = None
+            
+        if hasattr(self.connection_manager, '_handle_data_message'):
+            self._original_handle_data_message = self.connection_manager._handle_data_message
+        else:
+            self._original_handle_data_message = None
         
-        # Replace with our enhanced versions
-        self.connection_manager._process_peer_message = self._enhanced_process_peer_message
-        self.connection_manager._handle_data_message = self._enhanced_handle_data_message
+        # Replace with our enhanced versions if original methods exist
+        if self._original_process_peer_message:
+            self.connection_manager._process_peer_message = self._enhanced_process_peer_message
+        if self._original_handle_data_message:
+            self.connection_manager._handle_data_message = self._enhanced_handle_data_message
     
     async def _enhanced_process_peer_message(self, peer_id: str, message: Dict[str, Any]):
         """
@@ -153,8 +162,9 @@ class EnhancedP2PWrapper:
                 except Exception as e:
                     logger.error(f"Error handling memory message {handler_key}: {e}")
         
-        # Fall back to original processing
-        await self._original_process_peer_message(peer_id, message)
+        # Fall back to original processing if available
+        if self._original_process_peer_message:
+            await self._original_process_peer_message(peer_id, message)
     
     async def _enhanced_handle_data_message(self, peer_id: str, message: Dict[str, Any]):
         """
@@ -184,8 +194,9 @@ class EnhancedP2PWrapper:
                 except Exception as e:
                     logger.error(f"Error handling memory data: {e}")
         
-        # Fall back to original processing
-        await self._original_handle_data_message(peer_id, message)
+        # Fall back to original processing if available
+        if self._original_handle_data_message:
+            await self._original_handle_data_message(peer_id, message)
     
     def register_message_handler(self, message_type: str, handler: Callable):
         """
@@ -200,27 +211,45 @@ class EnhancedP2PWrapper:
     
     async def start_server(self):
         """Start the P2P server"""
-        return await self.connection_manager.start_server()
+        if hasattr(self.connection_manager, 'start_server'):
+            return await self.connection_manager.start_server()
+        return None
     
     async def connect_to_peer(self, peer_info) -> bool:
         """Connect to a peer"""
-        return await self.connection_manager.connect_to_peer(peer_info)
+        if hasattr(self.connection_manager, 'connect_to_peer'):
+            return await self.connection_manager.connect_to_peer(peer_info)
+        return False
     
     async def send_message(self, peer_id: str, message: Dict[str, Any]) -> bool:
         """Send a message to a peer"""
-        return await self.connection_manager.send_message(peer_id, message)
+        if hasattr(self.connection_manager, 'send_message'):
+            return await self.connection_manager.send_message(peer_id, message)
+        return False
     
     async def broadcast_message(self, message: Dict[str, Any], exclude_peers: Optional[List[str]] = None) -> int:
         """Broadcast a message to all connected peers"""
-        return await self.connection_manager.broadcast_message(message, exclude_peers or [])
+        if hasattr(self.connection_manager, 'broadcast_message'):
+            return await self.connection_manager.broadcast_message(message, exclude_peers or [])
+        return 0
     
     def get_connected_peers(self) -> List[str]:
         """Get list of connected peers"""
-        return self.connection_manager.get_connected_peers()
+        if hasattr(self.connection_manager, 'get_connected_peers'):
+            return self.connection_manager.get_connected_peers()
+        return []
     
     def get_connection_stats(self) -> Dict[str, Any]:
         """Get connection statistics"""
-        return self.connection_manager.get_connection_stats()
+        if hasattr(self.connection_manager, 'get_connection_stats'):
+            return self.connection_manager.get_connection_stats()
+        return {
+            "total_connections": 0,
+            "active_connections": 0,
+            "failed_connections": 0,
+            "bytes_sent": 0,
+            "bytes_received": 0
+        }
     
     async def start_network(self):
         """

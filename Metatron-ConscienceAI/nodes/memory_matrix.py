@@ -26,10 +26,34 @@ except ImportError:
     # Fallback value for golden ratio
     PHI = 1.618033988749895
 
-# Import the enhanced P2P wrapper with importlib
+# Global variables for dynamic imports (without type annotations to avoid conflicts)
 HAS_P2P = False
-EnhancedP2PWrapper = None
+HAS_CRYPTO = False
+EnhancedP2PWrapper = None  # type: ignore
+NodeIdentity = None  # type: ignore
+SecureMessage = None  # type: ignore
 
+# Try to import crypto framework
+try:
+    # Use importlib to handle the package structure with hyphens
+    crypto_spec = importlib.util.spec_from_file_location(
+        "crypto_framework", 
+        os.path.join(os.path.dirname(__file__), "..", "..", "Open-A.G.I", "crypto_framework.py")
+    )
+    if crypto_spec and crypto_spec.loader:
+        crypto_module = importlib.util.module_from_spec(crypto_spec)
+        crypto_spec.loader.exec_module(crypto_module)
+        # Get classes dynamically
+        temp_NodeIdentity = getattr(crypto_module, 'NodeIdentity', None)
+        temp_SecureMessage = getattr(crypto_module, 'SecureMessage', None)
+        if temp_NodeIdentity and temp_SecureMessage:
+            _NodeIdentity = temp_NodeIdentity
+            _SecureMessage = temp_SecureMessage
+            HAS_CRYPTO = True
+except (ImportError, FileNotFoundError, AttributeError):
+    pass
+
+# Try to import enhanced P2P wrapper
 try:
     # Use importlib to handle the package structure
     enhanced_p2p_spec = importlib.util.spec_from_file_location(
@@ -39,8 +63,9 @@ try:
     if enhanced_p2p_spec and enhanced_p2p_spec.loader:
         enhanced_p2p_module = importlib.util.module_from_spec(enhanced_p2p_spec)
         enhanced_p2p_spec.loader.exec_module(enhanced_p2p_module)
-        EnhancedP2PWrapper = getattr(enhanced_p2p_module, 'EnhancedP2PWrapper', None)
-        if EnhancedP2PWrapper:
+        temp_EnhancedP2PWrapper = getattr(enhanced_p2p_module, 'EnhancedP2PWrapper', None)
+        if temp_EnhancedP2PWrapper:
+            _EnhancedP2PWrapper = temp_EnhancedP2PWrapper
             HAS_P2P = True
 except (ImportError, FileNotFoundError, AttributeError):
     pass
@@ -65,6 +90,26 @@ if not HAS_P2P or EnhancedP2PWrapper is None:
     
     HAS_P2P = False
 
+if not HAS_CRYPTO or NodeIdentity is None or SecureMessage is None:
+    # Create placeholder classes for crypto
+    class NodeIdentity:
+        def __init__(self, node_id, signing_key=None, encryption_key=None):
+            self.node_id = node_id
+            self.signing_key = signing_key
+            self.encryption_key = encryption_key
+            
+        def export_public_identity(self):
+            return {"node_id": self.node_id.encode()}
+    
+    class SecureMessage:
+        def __init__(self, ciphertext, nonce, sender_id, recipient_id, message_number, timestamp, signature):
+            self.ciphertext = ciphertext
+            self.nonce = nonce
+            self.sender_id = sender_id
+            self.recipient_id = recipient_id
+            self.message_number = message_number
+            self.timestamp = timestamp
+            self.signature = signature
 
 class MemoryMatrixNode:
     """
@@ -98,6 +143,31 @@ class MemoryMatrixNode:
         self.recall_weight = 0.0
         self.decay_factor = 1.0
         
+        # Initialize cryptographic identity (with proper fallback)
+        self.node_identity = None
+        if HAS_CRYPTO and NodeIdentity:
+            try:
+                # Import required crypto modules
+                from cryptography.hazmat.primitives.asymmetric import ed25519, x25519
+                
+                # Generate keys
+                signing_key = ed25519.Ed25519PrivateKey.generate()
+                encryption_key = x25519.X25519PrivateKey.generate()
+                
+                # Create NodeIdentity with required parameters
+                self.node_identity = NodeIdentity(
+                    node_id=f"memory_node_{node_id}",
+                    signing_key=signing_key,
+                    encryption_key=encryption_key
+                )
+                print(f"✅ Crypto identity initialized for node {node_id}")
+            except Exception as e:
+                print(f"⚠️  Failed to initialize crypto identity: {e}")
+                self.node_identity = None
+        else:
+            print("⚠️  Crypto framework not available - using placeholder")
+            self.node_identity = None
+        
         # P2P network for distributed memory sharing
         self.p2p_network = EnhancedP2PWrapper(node_id=f"memory_node_{node_id}", port=8080+node_id)
         
@@ -105,10 +175,20 @@ class MemoryMatrixNode:
         self.p2p_network.register_message_handler("memory_share", self._handle_memory_share_request)
         self.p2p_network.register_message_handler("memory_sync", self._handle_memory_sync_request)
         
-        # Start P2P network
-        asyncio.create_task(self.p2p_network.start_network())
+        # Don't start network automatically - only when explicitly requested
+        # This avoids the "no running event loop" error
+        self.network_started = False
         
         print(f"✅ MemoryMatrixNode (Node {node_id}) initialized with φ = {self.phi:.6f}")
+    
+    async def start_network(self):
+        """
+        Start the P2P network (must be called within an async context)
+        """
+        if not self.network_started:
+            await self.p2p_network.start_network()
+            self.network_started = True
+            print(f"📡 P2P network started for MemoryMatrixNode {self.node_id}")
     
     async def _handle_memory_share_request(self, peer_id: str, message: Dict[str, Any]):
         """
@@ -211,14 +291,29 @@ class MemoryMatrixNode:
             memory_entry: Memory entry to share
         """
         try:
+            # Prepare memory data for secure transmission
+            memory_data = {
+                "timestamp": memory_entry.get("timestamp", time.time()),
+                "field_state": memory_entry["field_state"].tolist() if isinstance(memory_entry["field_state"], np.ndarray) else memory_entry["field_state"],
+                "metadata": memory_entry.get("metadata", {}),
+                "size": memory_entry.get("size", 0)
+            }
+            
+            # Create message payload
+            payload = {
+                "memory_data": memory_data,
+                "sender_identity": self.node_identity.export_public_identity() if HAS_CRYPTO and self.node_identity else {"node_id": f"memory_node_{self.node_id}".encode()}
+            }
+            
             message = {
                 "type": "memory",
                 "subtype": "share",
                 "source_node": f"memory_node_{self.node_id}",
                 "target_node": peer_id,
-                "payload": {"memory_data": memory_entry},
+                "payload": payload,
                 "timestamp": time.time()
             }
+            
             success = await self.p2p_network.send_message(peer_id, message)
             if success:
                 print(f"📡 Node {self.node_id}: Shared memory with {peer_id}")
