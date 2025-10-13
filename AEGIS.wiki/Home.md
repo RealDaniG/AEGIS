@@ -58,43 +58,24 @@ For detailed information about the memory integration between Metatron-Conscienc
 
 - [System Overview](SYSTEM_OVERVIEW) - High-level system design
 - [Component Integration](SYSTEM_INTEGRATION) - How components work together
-- [Data Flow](Data-Flow) - Information flow through the system
-- [Security Framework](Security-Framework) - Cryptographic security measures
 
 ## 🔧 Technical Documentation
 
-- [Code Structure](Code-Structure) - Repository organization
-- [Configuration](Configuration) - System configuration options
-- [Deployment Guide](Deployment-Guide) - Production deployment instructions
-- [Troubleshooting](Troubleshooting) - Common issues and solutions
+- [Development Guide](DEVELOPMENT_GUIDE) - Development workflow and best practices
 
 ## 🌐 API Documentation
 
 - [Unified API](UNIFIED-API) - Single interface for all system components
 - [API Integration](API_INTEGRATION) - Complete API documentation
-- [WebSocket Streaming](WebSocket-Streaming) - Real-time data streaming
-- [OpenAPI Specification](OpenAPI) - OpenAPI documentation and usage
 
 ## 🧪 Testing and Verification
 
 - [Testing Framework](TESTING_VERIFICATION) - Unit and integration tests
-- [System Verification](System-Verification) - System validation procedures
-- [Performance Testing](Performance-Testing) - Performance benchmarking
-- [Security Testing](Security-Testing) - Security validation procedures
 
 ## 🧠 Research and Theory
 
 - [Theoretical Foundation](RESEARCH_THEORY) - Mathematical and physical principles
-- [Consciousness Metrics](Consciousness-Metrics) - Φ, R, D, S, C metrics explanation
 - [Sacred Geometry](FLOWER_OF_LIFE) - Advanced geometric principles and implementation details
-- [Federated Learning](Federated-Learning) - Collaborative model training theory
-
-## 💻 Development
-
-- [Development Guide](DEVELOPMENT_GUIDE) - Development workflow and best practices
-- [Contributing Guide](Contributing-Guide) - How to contribute to the project
-- [Code Structure](Code-Structure) - Repository organization
-- [API Reference](API_INTEGRATION) - Complete API documentation
 
 ## ⚡ Open-A.G.I Framework
 
@@ -106,30 +87,20 @@ For detailed information about the memory integration between Metatron-Conscienc
 ## 📊 Monitoring and Visualization
 
 - [Harmonic Monitoring System](Harmonic-Monitoring-System) - Real-time consciousness metrics
-- [Dashboard Usage](Dashboard-Usage) - How to use the web interface
-- [Performance Metrics](Performance-Metrics) - System performance monitoring
 - [Visualization Integration](VISUALIZATION_INTEGRATION) - Visualization system integration
 
 ## 🧪 Research and Development
 
-- [Research Applications](Research-Applications) - Using AEGIS for research
-- [Experimental Features](Experimental-Features) - Cutting-edge capabilities
 - [Future Enhancements](Future-Enhancements) - Planned improvements
-- [Academic Partnerships](Academic-Partnerships) - Research collaboration opportunities
 
 ## 📚 Additional Resources
 
 - [CHANGELOG](UPDATE_CHANGELOG) - Version history and updates
-- [Technical Wiki](AEGIS-Technical-Wiki) - Comprehensive technical documentation
 - [Deployment Guide](Deployment-Guide) - Production deployment instructions
-- [Contributing Guide](Contributing-Guide) - How to contribute to the project
 
 ## 🌺 Sacred Geometry
 
 - [Flower of Life](FLOWER_OF_LIFE) - Advanced geometric principles and implementation details
-- [Metatron's Cube](Metatrons-Cube) - Sacred geometry implementation
-- [Consciousness Network](Consciousness-Network) - 13-node network geometry
-- [Geometric Principles](Geometric-Principles) - Mathematical foundations
 
 ## 🤝 Community
 
@@ -142,7 +113,6 @@ For detailed information about the memory integration between Metatron-Conscienc
 
 Documentation is available in:
 - English (default)
-- [Español](Home-ES) - Spanish version
 
 ---
 *AEGIS is a research project for educational purposes only. All rights reserved.*
