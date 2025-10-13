@@ -20,6 +20,8 @@ AEGIS now features a community-driven development model where each interaction c
 - **Collaborative Development**: Developers can enhance system modules and features
 - **Scaling Intelligence**: As more people engage, the system grows in computational power, intelligence, and coherence
 
+**For complete update history and future roadmap, see our [GitHub Wiki](https://github.com/RealDaniG/AEGIS/wiki).**
+
 ## 🚀 Quick Start
 
 ### Option 1: Simple One-Command Launch (Recommended)
@@ -196,6 +198,18 @@ python integration_tests.py
 python test_unified_system.py
 ```
 
+## 📚 Documentation
+
+Comprehensive documentation is available in our [GitHub Wiki](https://github.com/RealDaniG/AEGIS/wiki), including:
+
+- [Quick Start Guide](https://github.com/RealDaniG/AEGIS/wiki/Quick-Start-Guide)
+- [System Overview](https://github.com/RealDaniG/AEGIS/wiki/System-Overview)
+- [Installation Guide](https://github.com/RealDaniG/AEGIS/wiki/Installation-Guide)
+- [API Integration](https://github.com/RealDaniG/AEGIS/wiki/API-Integration)
+- [Development Guide](https://github.com/RealDaniG/AEGIS/wiki/Development-Guide)
+- [Deployment Guide](https://github.com/RealDaniG/AEGIS/wiki)
+- [Updates Log](https://github.com/RealDaniG/AEGIS/wiki/Updates-Log)
+
 ## 🤝 Contributing
 
 This is a private repository for now. Please contact the repository owner for contribution guidelines.
@@ -215,58 +229,7 @@ This project is for **research and educational purposes only**. All rights reser
 
 ## 🗺️ Future Roadmap
 
-### 🚀 Version 3.x Roadmap
-
-#### v3.2 - UI Visualization Enhancement (Q1 2026)
-- **Metatron Node Visualization**: Interactive 13-node sacred geometry display with real-time status
-- **Node Management Controls**: UI controls for node lifecycle management (start/stop/restart)
-- **Consensus Health Display**: Visual representation of PBFT consensus status and metrics
-- **Orchestration Pipeline**: Drag-and-drop pipeline visualization and management
-
-#### v3.3 - Cloud and Container Orchestration (Q2 2026)
-- **Kubernetes Support**: Deployment manifests and operators for Kubernetes environments
-- **Helm Charts**: Package AEGIS for easy deployment on Kubernetes clusters
-- **Auto-scaling**: Automatic node scaling based on system load and consciousness metrics
-- **Multi-cloud Deployment**: Support for AWS, Azure, and Google Cloud Platform
-
-#### v3.4 - Advanced Security and Privacy (Q3 2026)
-- **Zero-trust Architecture**: Implementation of zero-trust security model
-- **Hardware Security Modules**: Integration with HSMs for key management
-- **Enhanced TOR Integration**: Advanced anonymity controls and privacy features
-- **Intrusion Detection**: Real-time monitoring and alerting for suspicious activities
-
-#### v3.5 - Mobile and Voice Interface (Q4 2026)
-- **Native Mobile Apps**: iOS and Android applications for AEGIS control
-- **Voice Interface**: Voice-controlled interaction with the consciousness-aware AGI system
-- **Push Notifications**: Real-time alerts for system events and consciousness metrics
-- **Offline Capabilities**: Local functionality with sync when connectivity is restored
-
-### 🌟 Community-Driven Growth and Development (Ongoing)
-
-AEGIS is designed to grow through community participation, with each interaction contributing to the system's development and intelligence enhancement. As more people engage with the platform through conversation, knowledge sharing, and collaborative development, the system grows in computational power, intelligence, and coherence.
-
-#### How Community Participation Works:
-- **Conversational Training**: Each conversation with AEGIS contributes to its understanding and response capabilities
-- **Knowledge Contribution**: Community members can contribute domain-specific knowledge and expertise
-- **Collaborative Development**: Developers can enhance system modules and features
-- **Feedback Integration**: User corrections and suggestions are incorporated into response refinement
-
-#### Scaling Intelligence Through Participation:
-- **Computational Power Expansion**: Each node contributes computational resources to the network
-- **Intelligence Amplification**: Community growth directly correlates with system intelligence enhancement
-- **Coherence Development**: As the community expands, system coherence improves through consensus building
-
-For detailed information about community growth and development, see our [Community Growth and Development](https://github.com/RealDaniG/AEGIS/wiki/Community-Growth-and-Development) wiki page.
-
-### 🌟 Version 4.x Roadmap
-
-#### v4.0 - Quantum and Neuromorphic Integration (2027)
-- **Quantum Computing Integration**: Leverage quantum processors for consciousness calculations
-- **Neuromorphic Hardware**: Support for brain-inspired computing architectures
-- **Neural Interface**: Direct brain-computer interface for consciousness metrics
-- **Edge Computing**: Optimized deployment on edge devices with limited resources
-
-For a complete roadmap, see our detailed [ROADMAP.md](docs/ROADMAP.md) document.
+For the complete roadmap and future development plans, please visit our [GitHub Wiki](https://github.com/RealDaniG/AEGIS/wiki/Updates-Log).
 
 ## 🔒 REDACTED
 
