@@ -42,52 +42,56 @@ Welcome to the AEGIS (Autonomous Governance and Intelligent Systems) Wiki. This 
 - **Security Framework**: Post-quantum cryptography and immutable audit logs
 - **Federated Learning**: Privacy-preserving machine learning with LoRA
 
-For detailed history of all updates and improvements, see our [Complete Updates Log](UPDATES_LOG).
+For detailed history of all updates and improvements, see our [Complete Updates Log](Updates-Log).
 
 ## 🚀 Getting Started
 
 - [Quick Start Guide](Quick-Start-Guide) - Fast system initialization
-- [System Requirements](SYSTEM_REQUIREMENTS) - Hardware and software requirements
-- [Installation Guide](INSTALLATION) - Step-by-step installation instructions
+- [System Requirements](System-Requirements) - Hardware and software requirements
+- [Installation Guide](Installation-Guide) - Step-by-step installation instructions
 
 ## 🏗️ System Architecture
 
-- [System Overview](SYSTEM_OVERVIEW) - High-level system design
-- [Component Integration](SYSTEM_INTEGRATION) - How components work together
+- [System Overview](System-Overview) - High-level system design
+- [Component Integration](System-Integration) - How components work together
+- [System Components](System-Components) - Detailed component architecture
 
 ## 🔧 Technical Documentation
 
-- [Development Guide](DEVELOPMENT_GUIDE) - Development workflow and best practices
+- [Development Guide](Development-Guide) - Development workflow and best practices
+- [System Requirements Detailed](System-Requirements-Detailed) - Comprehensive system requirements
 
 ## 🌐 API Documentation
 
-- [Unified API](UNIFIED-API) - Single interface for all system components
-- [API Integration](API_INTEGRATION) - Complete API documentation
+- [Unified API](Unified-API) - Single interface for all system components
+- [API Integration](API-Integration) - Complete API documentation
 
 ## 🧪 Testing and Verification
 
-- [Testing Framework](TESTING_VERIFICATION) - Unit and integration tests
+- [Testing Framework](Testing-Verification) - Unit and integration tests
 
 ## ⚡ Open-A.G.I Framework
 
 - [Open-A.G.I Overview](Open-AGI) - Decentralized AGI framework documentation
-- [P2P Networking](P2P_NETWORKING) - Peer-to-peer communication layer
-- [Consensus Mechanisms](CONSENSUS_PROTOCOL) - PBFT and governance protocols
+- [Open-A.G.I Framework](Open-AGI-Framework) - Detailed AGI framework implementation
+- [P2P Networking](P2P-Networking) - Peer-to-peer communication layer
+- [Consensus Mechanisms](Consensus-Protocol) - PBFT and governance protocols
 - [DApp Development](Open-AGI-DApp-Development) - Building DApps with Open-A.G.I
 
 ## 📊 Monitoring and Visualization
 
 - [Harmonic Monitoring System](Harmonic-Monitoring-System) - Real-time consciousness metrics
-- [Visualization Integration](VISUALIZATION_INTEGRATION) - Visualization system integration
+- [Visualization Integration](Visualization-Integration) - Visualization system integration
+- [Consciousness Engine](Consciousness-Engine) - Detailed consciousness engine implementation
 
 ## 🧪 Research and Development
 
-- [Theoretical Foundation](RESEARCH_THEORY) - Mathematical and physical principles
+- [Theoretical Foundation](Research-Theory) - Mathematical and physical principles
 - [Future Enhancements](Future-Enhancements) - Planned improvements
 
 ## 📚 Additional Resources
 
-- [CHANGELOG](UPDATE_CHANGELOG) - Version history and updates
+- [CHANGELOG](Update-Changelog) - Version history and updates
 - [Deployment Guide](Deployment-Guide) - Production deployment instructions
 
 ## 🔒 Security and Privacy
@@ -103,7 +107,7 @@ For detailed history of all updates and improvements, see our [Complete Updates 
 
 ## 🌺 Sacred Geometry
 
-- [Flower of Life](FLOWER_OF_LIFE) - Advanced geometric principles and implementation details
+- [Flower of Life](Flower-of-Life) - Advanced geometric principles and implementation details
 
 ## 📖 Language Support
 
