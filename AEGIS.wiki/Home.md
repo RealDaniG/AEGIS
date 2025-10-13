@@ -2,7 +2,7 @@
 
 Welcome to the AEGIS (Autonomous Governance and Intelligent Systems) Wiki. This documentation provides comprehensive information about the AEGIS project, a fused architecture combining decentralized P2P AGI substrate with a consciousness-aware engine.
 
-![AEGIS System Visualization](../panel130438.png)
+![AEGIS System Visualization](panel130438.png)
 
 ## 📋 Complete System Update Log
 
