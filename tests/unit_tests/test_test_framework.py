@@ -6,7 +6,14 @@ import unittest
 import asyncio
 import tempfile
 import os
+import gc
+import time
+import sys
 from pathlib import Path
+import pytest
+
+# Add the Open-A.G.I directory to the path so we can import the module
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'Open-A.G.I'))
 
 
 class TestTestFramework(unittest.TestCase):
@@ -29,11 +36,25 @@ class TestTestFramework(unittest.TestCase):
 
     def tearDown(self):
         """Tear down test fixtures after each test method."""
-        # Clean up test files
+        # Force garbage collection to close file handles
+        gc.collect()
+        
+        # Clean up test files with retry logic
         if os.path.exists(self.test_dir):
-            for file in os.listdir(self.test_dir):
-                os.remove(os.path.join(self.test_dir, file))
-            os.rmdir(self.test_dir)
+            for attempt in range(3):  # Try up to 3 times
+                try:
+                    for file in os.listdir(self.test_dir):
+                        file_path = os.path.join(self.test_dir, file)
+                        if os.path.isfile(file_path):
+                            os.remove(file_path)
+                    os.rmdir(self.test_dir)
+                    break  # Success, break out of retry loop
+                except Exception as e:
+                    if attempt == 2:  # Last attempt
+                        print(f"Warning: Failed to clean up test directory after 3 attempts: {e}")
+                    else:
+                        # Wait a bit before retrying
+                        time.sleep(0.1)
 
     def test_import_test_framework_module(self):
         """Test that the test_framework module can be imported"""
@@ -97,16 +118,31 @@ class TestTestFramework(unittest.TestCase):
         # Check that report directory was created
         self.assertTrue(os.path.exists(self.report_test_dir))
 
-    @unittest.skipIf(not hasattr(unittest, 'skipIf'), "SkipIf not available")
-    async def test_run_single_test(self):
-        """Test running a single test"""
-        if not self.test_framework_available:
-            self.skipTest("Test framework components not available")
-            
+
+@pytest.mark.asyncio
+async def test_run_single_test():
+    """Test running a single test"""
+    # Try to import test framework components
+    try:
+        sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'Open-A.G.I'))
+        import test_framework
+        test_framework_available = True
+    except ImportError:
+        test_framework_available = False
+        pytest.skip("Test framework components not available")
+        
+    if not test_framework_available:
+        pytest.skip("Test framework components not available")
+        
+    test_dir = tempfile.mkdtemp()
+    report_test_dir = os.path.join(test_dir, "test_reports")
+    os.makedirs(report_test_dir, exist_ok=True)
+    
+    try:
         config = test_framework.TestConfig(
             parallel_tests=False,
             max_concurrent_tests=1,
-            report_directory=self.report_test_dir
+            report_directory=report_test_dir
         )
         
         framework = test_framework.initialize_test_framework(config)
@@ -118,20 +154,52 @@ class TestTestFramework(unittest.TestCase):
         # Run the test
         result = await framework._run_test(simple_test)
         
-        self.assertIsNotNone(result)
+        assert result is not None
         if result is not None:
-            self.assertEqual(result.status, test_framework.TestStatus.PASSED)
+            assert result.status == test_framework.TestStatus.PASSED
+    finally:
+        # Clean up
+        if os.path.exists(test_dir):
+            for attempt in range(3):  # Try up to 3 times
+                try:
+                    for file in os.listdir(test_dir):
+                        file_path = os.path.join(test_dir, file)
+                        if os.path.isfile(file_path):
+                            os.remove(file_path)
+                    os.rmdir(test_dir)
+                    break  # Success, break out of retry loop
+                except Exception as e:
+                    if attempt == 2:  # Last attempt
+                        print(f"Warning: Failed to clean up test directory after 3 attempts: {e}")
+                    else:
+                        # Wait a bit before retrying
+                        time.sleep(0.1)
 
-    @unittest.skipIf(not hasattr(unittest, 'skipIf'), "SkipIf not available")
-    async def test_run_failing_test(self):
-        """Test running a failing test"""
-        if not self.test_framework_available:
-            self.skipTest("Test framework components not available")
-            
+
+@pytest.mark.asyncio
+async def test_run_failing_test():
+    """Test running a failing test"""
+    # Try to import test framework components
+    try:
+        sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'Open-A.G.I'))
+        import test_framework
+        test_framework_available = True
+    except ImportError:
+        test_framework_available = False
+        pytest.skip("Test framework components not available")
+        
+    if not test_framework_available:
+        pytest.skip("Test framework components not available")
+        
+    test_dir = tempfile.mkdtemp()
+    report_test_dir = os.path.join(test_dir, "test_reports")
+    os.makedirs(report_test_dir, exist_ok=True)
+    
+    try:
         config = test_framework.TestConfig(
             parallel_tests=False,
             max_concurrent_tests=1,
-            report_directory=self.report_test_dir
+            report_directory=report_test_dir
         )
         
         framework = test_framework.initialize_test_framework(config)
@@ -143,32 +211,81 @@ class TestTestFramework(unittest.TestCase):
         # Run the test
         result = await framework._run_test(failing_test)
         
-        self.assertIsNotNone(result)
+        assert result is not None
         if result is not None:
-            self.assertEqual(result.status, test_framework.TestStatus.FAILED)
+            assert result.status == test_framework.TestStatus.FAILED
+    finally:
+        # Clean up
+        if os.path.exists(test_dir):
+            for attempt in range(3):  # Try up to 3 times
+                try:
+                    for file in os.listdir(test_dir):
+                        file_path = os.path.join(test_dir, file)
+                        if os.path.isfile(file_path):
+                            os.remove(file_path)
+                    os.rmdir(test_dir)
+                    break  # Success, break out of retry loop
+                except Exception as e:
+                    if attempt == 2:  # Last attempt
+                        print(f"Warning: Failed to clean up test directory after 3 attempts: {e}")
+                    else:
+                        # Wait a bit before retrying
+                        time.sleep(0.1)
 
-    @unittest.skipIf(not hasattr(unittest, 'skipIf'), "SkipIf not available")
-    async def test_start_test_framework(self):
-        """Test starting the test framework as a module"""
-        if not self.test_framework_available:
-            self.skipTest("Test framework components not available")
-            
+
+@pytest.mark.asyncio
+async def test_start_test_framework():
+    """Test starting the test framework as a module"""
+    # Try to import test framework components
+    try:
+        sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'Open-A.G.I'))
+        import test_framework
+        test_framework_available = True
+    except ImportError:
+        test_framework_available = False
+        pytest.skip("Test framework components not available")
+        
+    if not test_framework_available:
+        pytest.skip("Test framework components not available")
+        
+    test_dir = tempfile.mkdtemp()
+    report_test_dir = os.path.join(test_dir, "test_reports")
+    os.makedirs(report_test_dir, exist_ok=True)
+    
+    try:
         config = {
             "parallel_tests": False,
             "max_concurrent_tests": 1,
-            "report_directory": self.report_test_dir
+            "report_directory": report_test_dir
         }
         
         result = await test_framework.start_test_framework(config)
-        self.assertTrue(result)
+        assert result
         
         # Check that we can get the global test framework
         framework = test_framework.get_test_framework()
-        self.assertIsNotNone(framework)
+        assert framework is not None
         
         # Check configuration
-        self.assertEqual(framework.config.parallel_tests, False)
-        self.assertEqual(framework.config.max_concurrent_tests, 1)
+        assert framework.config.parallel_tests == False
+        assert framework.config.max_concurrent_tests == 1
+    finally:
+        # Clean up
+        if os.path.exists(test_dir):
+            for attempt in range(3):  # Try up to 3 times
+                try:
+                    for file in os.listdir(test_dir):
+                        file_path = os.path.join(test_dir, file)
+                        if os.path.isfile(file_path):
+                            os.remove(file_path)
+                    os.rmdir(test_dir)
+                    break  # Success, break out of retry loop
+                except Exception as e:
+                    if attempt == 2:  # Last attempt
+                        print(f"Warning: Failed to clean up test directory after 3 attempts: {e}")
+                    else:
+                        # Wait a bit before retrying
+                        time.sleep(0.1)
 
 
 if __name__ == '__main__':

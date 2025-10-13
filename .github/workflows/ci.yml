@@ -50,10 +50,28 @@ jobs:
         github_env = os.environ.get('GITHUB_ENV')
         workspace = os.environ.get('GITHUB_WORKSPACE')
         
+        # Create a comprehensive PYTHONPATH that includes all necessary directories
+        python_paths = [
+            workspace,
+            os.path.join(workspace, 'Open-A.G.I'),
+            os.path.join(workspace, 'integrated_components'),
+            os.path.join(workspace, 'Metatron-ConscienceAI'),
+            os.path.join(workspace, 'Metatron-ConscienceAI', 'orchestrator'),
+            os.path.join(workspace, 'Metatron-ConscienceAI', 'nodes')
+        ]
+        
+        pythonpath = ':'.join(python_paths) if os.name != 'nt' else ';'.join(python_paths)
+        
         with open(github_env, 'a') as f:
-            f.write(f'PYTHONPATH={workspace}\n')
+            f.write(f'PYTHONPATH={pythonpath}\n')
             f.write(f'TEST_LOGS_DIR={workspace}/test_logs\n')
       shell: python
+
+    - name: Verify Python path
+      run: |
+        python -c "import sys; print('Python path:'); [print(p) for p in sys.path]"
+        echo "PYTHONPATH: $PYTHONPATH"
+      shell: bash
 
     - name: Run unit tests
       run: |
