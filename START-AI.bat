@@ -94,6 +94,16 @@ if exist "unified_requirements.txt" (
     echo ⚠️  Warning: unified_requirements.txt not found, skipping...
 )
 
+echo Installing Open-A.G.I integration requirements...
+if exist "requirements-optional.txt" (
+    pip install -r requirements-optional.txt --upgrade 2>nul
+    if errorlevel 1 (
+        echo ⚠️  Warning: Some Open-A.G.I integration requirements failed to install, continuing anyway...
+    )
+) else (
+    echo ⚠️  Warning: requirements-optional.txt not found, skipping...
+)
+
 echo Installing critical packages that might have failed...
 pip install torch transformers datasets peft safetensors 2>nul
 pip install fastapi uvicorn[standard] websockets 2>nul
@@ -120,6 +130,9 @@ echo             - P2P Networking Layer
 echo             - Cross-System Communication
 echo             - Integrated Web Interface
 echo             - Real-time Monitoring Dashboard
+echo             - Open-A.G.I Deployment Orchestration
+echo             - TOR Anonymity Integration
+echo             - Advanced Metrics Collection
 echo.
 echo 🌐 Web UI will auto-open at: http://localhost:8003
 echo.
@@ -127,6 +140,22 @@ echo Press Ctrl+C to stop all components
 echo.
 
 start "🧠 START-AI System Monitor" cmd /k "title START-AI System Monitor & color 0A & python start_consolidated_system.py"
+
+REM Start Open-A.G.I integration components
+if exist "aegis-integration\deploy\deployment_adapter.py" (
+    echo Starting Open-A.G.I deployment adapter...
+    REM The deployment adapter is integrated into the unified system
+)
+
+if exist "cross_system_comm\tor_adapter.py" (
+    echo Starting TOR adapter...
+    REM The TOR adapter is integrated into the unified system
+)
+
+if exist "visualization_tools\metrics_bridge.py" (
+    echo Starting metrics bridge...
+    REM The metrics bridge is integrated into the unified system
+)
 
 echo ⏳ Waiting for system to initialize...
 timeout /t 8 /nobreak > nul
@@ -160,6 +189,9 @@ echo    /api/chat          - AI chat
 echo    /api/upload        - Document upload
 echo    /api/config        - Model management
 echo    /api/health        - System health
+echo    /api/deploy        - Deployment orchestration
+echo    /api/tor           - TOR anonymity controls
+echo    /api/metrics       - Advanced metrics collection
 echo    /docs              - API documentation
 echo.
 echo 🖥️  RUNNING SERVERS:
@@ -168,6 +200,9 @@ echo      - Consciousness Engine
 echo      - AI Chat System
 echo      - Document Management
 echo      - Real-time Visualization
+echo      - Open-A.G.I Deployment Orchestration
+echo      - TOR Anonymity Integration
+echo      - Advanced Metrics Collection
 echo.
 echo ========================================================================
 echo.

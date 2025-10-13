@@ -1,0 +1,44 @@
+# TOR Configuration for AEGIS
+# This file configures TOR for use with the AEGIS network
+
+# SOCKS Port
+SocksPort 9050
+SocksPolicy accept 127.0.0.1
+SocksPolicy accept 192.168.0.0/16
+SocksPolicy accept 172.16.0.0/12
+SocksPolicy accept 10.0.0.0/8
+SocksPolicy reject *
+
+# Control Port
+ControlPort 9051
+CookieAuthentication 1
+CookieAuthFileGroupReadable 1
+
+# Data Directory
+DataDirectory /var/lib/tor
+
+# Logging
+Log notice syslog
+Log notice file /var/log/tor/notices.log
+
+# Hidden Service for P2P Communication
+HiddenServiceDir /var/lib/tor/aegis_hidden_service/
+HiddenServicePort 8080 127.0.0.1:8080
+
+# Bandwidth Settings
+BandwidthRate 1 MBytes
+BandwidthBurst 5 MBytes
+
+# Circuit Build Timeout
+CircuitBuildTimeout 30
+
+# Keepalive Period
+KeepalivePeriod 60
+
+# Safety Hedge
+UseEntryGuards 1
+NumEntryGuards 3
+
+# GeoIP
+GeoIPFile /usr/share/tor/geoip
+GeoIPv6File /usr/share/tor/geoip6

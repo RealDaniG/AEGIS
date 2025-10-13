@@ -1,0 +1,196 @@
+version: '3.8'
+
+services:
+  # Metatron Consciousness Engine (Main Node)
+  metatron-main:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    container_name: metatron-main
+    ports:
+      - "8003:8003"  # Main API
+      - "8081:8081"  # Web UI
+      - "9050:9050"  # TOR SOCKS
+      - "9051:9051"  # TOR Control
+    environment:
+      - NODE_TYPE=main
+      - NODE_ID=metatron-main
+      - TOR_ENABLED=true
+      - P2P_PORT=8080
+      - API_PORT=8003
+      - WEB_PORT=8081
+      - LOG_LEVEL=INFO
+    volumes:
+      - ../data:/app/data
+      - ../logs:/app/logs
+      - ../config:/app/config
+    networks:
+      - aegis-network
+    depends_on:
+      - tor-proxy
+    restart: unless-stopped
+
+  # Metatron Node 1
+  metatron-node-1:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    container_name: metatron-node-1
+    ports:
+      - "8004:8003"  # Main API
+      - "8082:8081"  # Web UI
+    environment:
+      - NODE_TYPE=worker
+      - NODE_ID=metatron-node-1
+      - TOR_ENABLED=true
+      - P2P_PORT=8080
+      - API_PORT=8003
+      - WEB_PORT=8081
+      - MAIN_NODE_ADDRESS=metatron-main:8003
+      - LOG_LEVEL=INFO
+    volumes:
+      - ../data/node1:/app/data
+      - ../logs/node1:/app/logs
+    networks:
+      - aegis-network
+    depends_on:
+      - tor-proxy
+    restart: unless-stopped
+
+  # Metatron Node 2
+  metatron-node-2:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    container_name: metatron-node-2
+    ports:
+      - "8005:8003"  # Main API
+      - "8083:8081"  # Web UI
+    environment:
+      - NODE_TYPE=worker
+      - NODE_ID=metatron-node-2
+      - TOR_ENABLED=true
+      - P2P_PORT=8080
+      - API_PORT=8003
+      - WEB_PORT=8081
+      - MAIN_NODE_ADDRESS=metatron-main:8003
+      - LOG_LEVEL=INFO
+    volumes:
+      - ../data/node2:/app/data
+      - ../logs/node2:/app/logs
+    networks:
+      - aegis-network
+    depends_on:
+      - tor-proxy
+    restart: unless-stopped
+
+  # TOR Proxy Service
+  tor-proxy:
+    image: dperson/torproxy:latest
+    container_name: tor-proxy
+    ports:
+      - "9052:9050"  # SOCKS proxy
+      - "9053:9051"  # Control port
+    environment:
+      - TZ=UTC
+    networks:
+      - aegis-network
+    restart: unless-stopped
+
+  # Redis for Caching and Message Queuing
+  redis:
+    image: redis:7-alpine
+    container_name: aegis-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - aegis-network
+    restart: unless-stopped
+
+  # Prometheus for Metrics Collection
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: aegis-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ../config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    networks:
+      - aegis-network
+    restart: unless-stopped
+
+  # Grafana for Metrics Visualization
+  grafana:
+    image: grafana/grafana-enterprise
+    container_name: aegis-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ../config/grafana:/etc/grafana/provisioning
+    networks:
+      - aegis-network
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+
+  # ELK Stack for Log Aggregation
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+    container_name: aegis-elasticsearch
+    environment:
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    networks:
+      - aegis-network
+    restart: unless-stopped
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.11.0
+    container_name: aegis-kibana
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_HOSTS=["http://elasticsearch:9200"]
+    networks:
+      - aegis-network
+    depends_on:
+      - elasticsearch
+    restart: unless-stopped
+
+  # n8n for Workflow Automation
+  n8n:
+    image: n8n/n8n:latest
+    container_name: aegis-n8n
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=admin
+      - N8N_BASIC_AUTH_PASSWORD=admin
+      - N8N_HOST=localhost
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+    volumes:
+      - ../n8n_data:/home/node/.n8n
+    networks:
+      - aegis-network
+    restart: unless-stopped
+
+networks:
+  aegis-network:
+    driver: bridge
+
+volumes:
+  prometheus_data:
+  grafana_data:
+  elasticsearch_data:
