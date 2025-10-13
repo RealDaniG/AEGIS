@@ -19,7 +19,14 @@ from unified_api.models import UnifiedSystemState, UnifiedAPISettings
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Create FastAPI app
+# Global variables
+api_client: Optional[UnifiedAPIClient] = None
+settings = UnifiedAPISettings()
+active_connections = []
+server_thread = None
+server_should_stop = False
+
+# Create FastAPI app without lifespan events that might conflict with threading
 app = FastAPI(
     title="Unified Metatron-A.G.I API",
     description="Unified API for Metatron Consciousness Engine and Open A.G.I System",
@@ -35,42 +42,39 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Global client instance
-api_client: Optional[UnifiedAPIClient] = None
-settings = UnifiedAPISettings()
 
-# Active WebSocket connections
-active_connections = []
-
-# Server thread reference
-server_thread = None
-server_should_stop = False
-
-
-@app.on_event("startup")
-async def startup_event():
-    """Initialize the unified API client on startup"""
+async def initialize_client():
+    """Initialize the unified API client"""
     global api_client
     try:
-        api_client = UnifiedAPIClient(settings)
-        await api_client.initialize()
-        logger.info("Unified API Server initialized successfully")
+        if api_client is None:
+            api_client = UnifiedAPIClient(settings)
+            await api_client.initialize()
+            logger.info("Unified API Client initialized successfully")
     except Exception as e:
-        logger.error(f"Failed to initialize Unified API Server: {e}")
+        logger.error(f"Failed to initialize Unified API Client: {e}")
 
 
-@app.on_event("shutdown")
-async def shutdown_event():
-    """Clean up resources on shutdown"""
+async def cleanup_client():
+    """Clean up the unified API client"""
     global api_client
-    if api_client:
-        await api_client.close()
-        logger.info("Unified API Client closed")
+    try:
+        if api_client:
+            await api_client.close()
+            logger.info("Unified API Client closed")
+    except Exception as e:
+        logger.error(f"Error closing Unified API Client: {e}")
+    finally:
+        api_client = None
 
 
 @app.get("/")
 async def root():
     """Root endpoint with system information"""
+    # Initialize client if not already done
+    if api_client is None:
+        await initialize_client()
+        
     return {
         "message": "Unified Metatron-A.G.I API",
         "version": "1.0.0",
@@ -89,6 +93,10 @@ async def root():
 @app.get("/health")
 async def health_check():
     """Health check endpoint"""
+    # Initialize client if not already done
+    if api_client is None:
+        await initialize_client()
+        
     if not api_client:
         raise HTTPException(status_code=503, detail="API client not initialized")
     
@@ -106,6 +114,10 @@ async def health_check():
 @app.get("/state")
 async def get_unified_state():
     """Get the unified state of both systems"""
+    # Initialize client if not already done
+    if api_client is None:
+        await initialize_client()
+        
     if not api_client:
         raise HTTPException(status_code=503, detail="API client not initialized")
     
@@ -122,6 +134,10 @@ async def get_unified_state():
 @app.get("/consciousness")
 async def get_consciousness_state():
     """Get consciousness state only"""
+    # Initialize client if not already done
+    if api_client is None:
+        await initialize_client()
+        
     if not api_client:
         raise HTTPException(status_code=503, detail="API client not initialized")
     
@@ -138,6 +154,10 @@ async def get_consciousness_state():
 @app.get("/agi")
 async def get_agi_state():
     """Get AGI state only"""
+    # Initialize client if not already done
+    if api_client is None:
+        await initialize_client()
+        
     if not api_client:
         raise HTTPException(status_code=503, detail="API client not initialized")
     
@@ -154,6 +174,10 @@ async def get_agi_state():
 @app.post("/input")
 async def send_consciousness_input(input_data: Dict[str, float]):
     """Send sensory input to the consciousness system"""
+    # Initialize client if not already done
+    if api_client is None:
+        await initialize_client()
+        
     if not api_client:
         raise HTTPException(status_code=503, detail="API client not initialized")
     
@@ -167,6 +191,10 @@ async def send_consciousness_input(input_data: Dict[str, float]):
 @app.post("/chat")
 async def send_chat_message(message_data: Dict[str, Any]):
     """Send a chat message to the AGI system"""
+    # Initialize client if not already done
+    if api_client is None:
+        await initialize_client()
+        
     if not api_client:
         raise HTTPException(status_code=503, detail="API client not initialized")
     
@@ -189,6 +217,10 @@ async def send_chat_message(message_data: Dict[str, Any]):
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     """WebSocket endpoint for real-time state streaming"""
+    # Initialize client if not already done
+    if api_client is None:
+        await initialize_client()
+        
     await websocket.accept()
     active_connections.append(websocket)
     
@@ -220,13 +252,29 @@ async def websocket_endpoint(websocket: WebSocket):
 def _run_server_in_thread(host: str, port: int):
     """Run the server in a separate thread to avoid event loop conflicts"""
     global server_should_stop
+    loop = None
     try:
-        config = uvicorn.Config("server:app", host=host, port=port, log_level="info")
+        # Create a new event loop for this thread
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        
+        # Initialize the client in this loop
+        loop.run_until_complete(initialize_client())
+        
+        # Run the server
+        config = uvicorn.Config(app, host=host, port=port, log_level="info")
         server = uvicorn.Server(config)
         logger.info(f"Starting Unified API Server on {host}:{port}")
-        server.run()
+        loop.run_until_complete(server.serve())
     except Exception as e:
         logger.error(f"Error in API server thread: {e}")
+    finally:
+        # Clean up
+        if loop:
+            try:
+                loop.run_until_complete(cleanup_client())
+            except:
+                pass
 
 
 def start_server(host: str = "0.0.0.0", port: int = 8005):

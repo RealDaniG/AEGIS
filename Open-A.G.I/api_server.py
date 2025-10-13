@@ -32,17 +32,54 @@ try:
     FASTAPI_AVAILABLE = True
 except ImportError:
     FASTAPI_AVAILABLE = False
-    FastAPI = object
-    HTTPException = Exception
-    Depends = lambda x: x
-    Request = object
-    Response = object
-    JSONResponse = object
-    CORSMiddleware = object
-    HTTPBearer = object
-    HTTPAuthorizationCredentials = object
-    BaseModel = object
-    uvicorn = object
+    # Create dummy classes for when FastAPI is not available
+    class FastAPI:
+        def __init__(self, *args, **kwargs):
+            pass
+            
+    class HTTPException(Exception):
+        def __init__(self, status_code=500, detail=""):
+            self.status_code = status_code
+            self.detail = detail
+            super().__init__(detail)
+            
+    def Depends(x):
+        return x
+        
+    class Request:
+        pass
+        
+    class Response:
+        pass
+        
+    class JSONResponse:
+        def __init__(self, status_code=200, content=None):
+            self.status_code = status_code
+            self.content = content
+            
+    class CORSMiddleware:
+        pass
+        
+    class HTTPBearer:
+        pass
+        
+    class HTTPAuthorizationCredentials:
+        pass
+        
+    class BaseModel:
+        pass
+        
+    class uvicorn:
+        class Config:
+            def __init__(self, app, host, port, log_level):
+                pass
+                
+        class Server:
+            def __init__(self, config):
+                pass
+                
+            async def serve(self):
+                pass
 
 # Try to import loguru, fallback to standard logging
 try:
@@ -354,8 +391,26 @@ class APIServer:
             )
             server = uvicorn.Server(config)
             
-            # Start server
-            await server.serve()
+            # Check if we're running in a thread and handle accordingly
+            try:
+                # Start server
+                await server.serve()
+            except RuntimeError as e:
+                if "loop" in str(e).lower():
+                    # This might happen when running in a thread with an existing event loop
+                    logger.warning("Detected threaded execution, using alternative server start method")
+                    # In this case, we'll just run the server without the full lifespan management
+                    from uvicorn import Server, Config
+                    config = Config(
+                        self.app,
+                        host=self.config.host,
+                        port=self.config.port,
+                        log_level="info"
+                    )
+                    server = Server(config)
+                    await server.serve()
+                else:
+                    raise e
             
             return True
         except Exception as e:
@@ -416,6 +471,10 @@ async def start_api_server(config: Dict[str, Any] = None):
         api_config = APIServerConfig(**config) if config else APIServerConfig()
         server = initialize_api_server(api_config)
         
+        if not server:
+            logger.error("Failed to initialize API server")
+            return False
+        
         logger.info("API server initialized successfully")
         logger.info(f"Host: {api_config.host}")
         logger.info(f"Port: {api_config.port}")
@@ -427,10 +486,11 @@ async def start_api_server(config: Dict[str, Any] = None):
         async def example_endpoint():
             return {"message": "This is an example endpoint"}
         
-        # Start server in background task
-        server_task = asyncio.create_task(server.start_server())
+        # Start server directly instead of creating a task
+        # This avoids issues with lifespan management in separate threads
+        logger.info("Starting API server...")
+        return await server.start_server()
         
-        return True
     except Exception as e:
         logger.error(f"Failed to start API server: {e}")
         return False
