@@ -42,77 +42,48 @@ Welcome to the AEGIS (Autonomous Governance and Intelligent Systems) Wiki. This 
 - **Security Framework**: Post-quantum cryptography and immutable audit logs
 - **Federated Learning**: Privacy-preserving machine learning with LoRA
 
-For detailed history of all updates and improvements, see our [Complete Updates Log](Updates-Log).
+For detailed history of all updates and improvements, see our [[Updates Log]].
 
-## 🚀 Getting Started
+## 🚀 Quick Navigation
 
-- [Quick Start Guide](Quick-Start-Guide) - Fast system initialization
-- [System Requirements](System-Requirements) - Hardware and software requirements
-- [Installation Guide](Installation-Guide) - Step-by-step installation instructions
+### 🏁 Getting Started
+New to AEGIS? Start here:
+- [[Quick Start Guide]] - Fast system initialization
+- [[System Requirements]] - Hardware and software requirements
+- [[Installation Guide]] - Step-by-step installation instructions
 
-## 🏗️ System Architecture
+### 📚 Core Documentation
+Essential documentation for understanding AEGIS:
+- [[System Overview]] - High-level system design
+- [[Development Guide]] - Development workflow and best practices
+- [[API Integration]] - Complete API documentation
 
-- [System Overview](System-Overview) - High-level system design
-- [Component Integration](System-Integration) - How components work together
-- [System Components](System-Components) - Detailed component architecture
+### ⚡ Key Components
+Learn about the core components:
+- [[Open-A.G.I]] - Decentralized AGI framework documentation
+- [[Consciousness Engine]] - Detailed consciousness engine implementation
+- [[Harmonic Monitoring System]] - Real-time consciousness metrics
 
-## 🔧 Technical Documentation
+### 🧪 Research and Development
+Advanced topics and future directions:
+- [[Research Theory]] - Mathematical and physical principles
+- [[Future Enhancements]] - Planned improvements
+- [[Community Growth and Development]] - How community participation drives system intelligence
 
-- [Development Guide](Development-Guide) - Development workflow and best practices
-- [System Requirements Detailed](System-Requirements-Detailed) - Comprehensive system requirements
+## 📖 Browse by Category
 
-## 🌐 API Documentation
+Use the sidebar navigation to explore documentation by category, or visit our [[_Sidebar|complete navigation page]].
 
-- [Unified API](Unified-API) - Single interface for all system components
-- [API Integration](API-Integration) - Complete API documentation
-
-## 🧪 Testing and Verification
-
-- [Testing Framework](Testing-Verification) - Unit and integration tests
-
-## ⚡ Open-A.G.I Framework
-
-- [Open-A.G.I Overview](Open-AGI) - Decentralized AGI framework documentation
-- [Open-A.G.I Framework](Open-AGI-Framework) - Detailed AGI framework implementation
-- [P2P Networking](P2P-Networking) - Peer-to-peer communication layer
-- [Consensus Mechanisms](Consensus-Protocol) - PBFT and governance protocols
-- [DApp Development](Open-AGI-DApp-Development) - Building DApps with Open-A.G.I
-
-## 📊 Monitoring and Visualization
-
-- [Harmonic Monitoring System](Harmonic-Monitoring-System) - Real-time consciousness metrics
-- [Visualization Integration](Visualization-Integration) - Visualization system integration
-- [Consciousness Engine](Consciousness-Engine) - Detailed consciousness engine implementation
-
-## 🧪 Research and Development
-
-- [Theoretical Foundation](Research-Theory) - Mathematical and physical principles
-- [Future Enhancements](Future-Enhancements) - Planned improvements
-
-## 📚 Additional Resources
-
-- [CHANGELOG](Update-Changelog) - Version history and updates
-- [Deployment Guide](Deployment-Guide) - Production deployment instructions
-
-## 🔒 Security and Privacy
-
-- [REDACTED](REDACTED) - Classified information and security protocols
-
-## 🤝 Community
+## 🌐 External Resources
 
 - [GitHub Repository](https://github.com/RealDaniG/AEGIS)
 - [Issue Tracker](https://github.com/RealDaniG/AEGIS/issues)
 - [Discussion Forum](https://github.com/RealDaniG/AEGIS/discussions)
 - [Release Notes](https://github.com/RealDaniG/AEGIS/releases)
 
-## 🌺 Sacred Geometry
+## 📞 Support
 
-- [Flower of Life](Flower-of-Life) - Advanced geometric principles and implementation details
-
-## 📖 Language Support
-
-Documentation is available in:
-- English (default)
+For support, please create an issue on our [GitHub Issues](https://github.com/RealDaniG/AEGIS/issues) page or join our discussions.
 
 ---
 *AEGIS is a research project for educational purposes only. All rights reserved.*
