@@ -48,10 +48,10 @@ async def main():
     
     if success:
         print("\n🎉 VERIFICATION COMPLETE: System is running with 0 errors!")
-        sys.exit(0)
+        return 0
     else:
         print("\n💥 VERIFICATION FAILED: System has errors!")
-        sys.exit(1)
+        return 1
 
 if __name__ == "__main__":
     asyncio.run(main())

@@ -287,13 +287,13 @@ awk '/COMMUNICATION/ {print $2}' /var/log/aegis/integration.log | sort | uniq -c
 #### Health Monitoring
 ```bash
 # Check component status
-curl http://localhost:8005/api/health
+curl http://localhost:8003/api/health
 
 # Monitor data flow
-curl http://localhost:8005/api/metrics/integration
+curl http://localhost:8003/api/metrics/integration
 
 # Check communication links
-curl http://localhost:8005/api/network/status
+curl http://localhost:8003/api/network/status
 ```
 
 ## Future Integration Roadmap

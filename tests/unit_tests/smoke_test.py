@@ -3,6 +3,7 @@ import json
 import os
 import sys
 import subprocess
+import pytest
 
 
 def run_orchestrator(cycles: int, out_path: str, fmt: str) -> subprocess.CompletedProcess:
@@ -83,11 +84,11 @@ def main():
     if proc.returncode != 0:
         print(proc.stderr)
         print(f"[ERROR] Orchestrator exited with code {proc.returncode}")
-        sys.exit(proc.returncode)
+        pytest.fail(f"Orchestrator exited with code {proc.returncode}")
 
     ok = validate_metrics(args.out, args.format, args.cycles)
     if not ok:
-        sys.exit(1)
+        pytest.fail("Metrics validation failed")
     print("[SUCCESS] Smoke test completed.")
 
 

@@ -1,0 +1,2227 @@
+{
+  "session_id": "136e39a2-709f-47a9-8017-2d57e42265d5",
+  "created_at": "2025-10-13T18:03:14.017971",
+  "entries": [
+    {
+      "id": "9518cff4-d7d2-423b-9c9c-d44675df79e7",
+      "timestamp": 1760364228.145831,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 1
+      }
+    },
+    {
+      "id": "20700383-45f3-48c1-be0f-b1d371eac9ff",
+      "timestamp": 1760364228.1462874,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "1b8ef710-e883-45c9-a1c4-724d313799d3",
+      "timestamp": 1760364228.1467059,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760364228.1466916,
+        "entry_count": 1
+      }
+    },
+    {
+      "id": "f6615182-bb7a-42a9-8761-c27856dc0e4d",
+      "timestamp": 1760365495.025773,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 2
+      }
+    },
+    {
+      "id": "87e7f90a-b2c0-45f5-b22d-cf6c40888b43",
+      "timestamp": 1760365495.0262308,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "bdd90fc4-0025-4c74-8114-d245d481b500",
+      "timestamp": 1760365495.0267508,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760365495.026737,
+        "entry_count": 2
+      }
+    },
+    {
+      "id": "b2ce4676-3173-4c6f-b966-33fc06332d55",
+      "timestamp": 1760365556.9929175,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 3
+      }
+    },
+    {
+      "id": "fd971685-a022-4469-bbdf-821494c1f26e",
+      "timestamp": 1760365556.9934583,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "8a64c905-e50f-47d5-a06d-2f1e1273fef1",
+      "timestamp": 1760365556.9940548,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760365556.9940422,
+        "entry_count": 3
+      }
+    },
+    {
+      "id": "10a94f5e-b8ac-4c2d-89cd-13bf76218fe1",
+      "timestamp": 1760366113.405654,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 4
+      }
+    },
+    {
+      "id": "1b7409c7-8935-474a-91b5-c01e614b32ed",
+      "timestamp": 1760366113.4062898,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "fee3683f-ad11-480d-8127-5fdbbd99104d",
+      "timestamp": 1760366113.4069555,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760366113.4069426,
+        "entry_count": 4
+      }
+    },
+    {
+      "id": "58d846be-86d1-4e6f-8001-5e24997b56dd",
+      "timestamp": 1760366318.7331202,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 5
+      }
+    },
+    {
+      "id": "eb592394-54eb-4a9f-b80e-2190072f61e7",
+      "timestamp": 1760366318.7338169,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "f899b9b5-2b35-44d0-89df-11cf00d5ff82",
+      "timestamp": 1760366318.7344928,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760366318.734478,
+        "entry_count": 5
+      }
+    },
+    {
+      "id": "87ccfcec-6ff3-417a-9466-5211cc854bd3",
+      "timestamp": 1760366342.4686925,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 6
+      }
+    },
+    {
+      "id": "4d6a54a2-1661-4d7a-beca-b2b4bbebca96",
+      "timestamp": 1760366342.469493,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "a0ed5159-0e24-406b-bf80-6fe4483b1150",
+      "timestamp": 1760366342.470346,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760366342.4703326,
+        "entry_count": 6
+      }
+    },
+    {
+      "id": "de4d159a-ee2c-4e7c-a5e8-35b579cd8273",
+      "timestamp": 1760366370.5813763,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 7
+      }
+    },
+    {
+      "id": "10f16d1d-ee95-4114-ac5c-000b3970b655",
+      "timestamp": 1760366370.58241,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "ece6e9b9-a9c6-4338-bbfe-e92fcfca5b97",
+      "timestamp": 1760366370.5833845,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760366370.5833657,
+        "entry_count": 7
+      }
+    },
+    {
+      "id": "40c1f81c-092b-42be-b281-e8ab5843234d",
+      "timestamp": 1760366884.1278656,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 8
+      }
+    },
+    {
+      "id": "2fd847ec-772f-4963-9f2a-1385f59a23f7",
+      "timestamp": 1760366884.1288714,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "61bd1963-84d3-450d-86e7-f1669ebcd62a",
+      "timestamp": 1760366884.1298473,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760366884.129834,
+        "entry_count": 8
+      }
+    },
+    {
+      "id": "f355d1f9-a388-42dd-b2dd-d03850bc7fcd",
+      "timestamp": 1760367611.0446994,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 9
+      }
+    },
+    {
+      "id": "8cfd33a9-b628-43a2-b291-26fa6ffd6c20",
+      "timestamp": 1760367611.0457761,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "50c39245-15fe-48c8-acdf-18944319c426",
+      "timestamp": 1760367611.04688,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760367611.0468667,
+        "entry_count": 9
+      }
+    },
+    {
+      "id": "a44da23b-b0bb-4c0b-bcb0-ab0a8ee6a547",
+      "timestamp": 1760367627.755285,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 10
+      }
+    },
+    {
+      "id": "f23b6756-d38d-4a52-9f86-988c1a041aaf",
+      "timestamp": 1760367627.7564511,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "d9eb4c1c-22d6-420f-8708-1b15c3c97419",
+      "timestamp": 1760367627.7575808,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760367627.7575674,
+        "entry_count": 10
+      }
+    },
+    {
+      "id": "debef3f2-9eb4-4267-a46b-c454ae1885bd",
+      "timestamp": 1760368115.6190586,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 11
+      }
+    },
+    {
+      "id": "6bda2ea3-3c24-48f8-a9ae-1fc9271a3e7a",
+      "timestamp": 1760368115.6202943,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "38ee7ea2-4ea0-47b0-85b8-8fa76dabe132",
+      "timestamp": 1760368115.6215842,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760368115.6215703,
+        "entry_count": 11
+      }
+    },
+    {
+      "id": "4d5adb85-c480-4432-ba53-c97fddc32152",
+      "timestamp": 1760368130.9687693,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 12
+      }
+    },
+    {
+      "id": "aadfce80-8ddd-4383-adf3-00293c43725d",
+      "timestamp": 1760368130.970087,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "d76f37a1-4a36-4d93-b076-c5f2acfe26b7",
+      "timestamp": 1760368130.9713466,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760368130.9713328,
+        "entry_count": 12
+      }
+    },
+    {
+      "id": "db8c4f8a-3eff-4e88-a8c1-51ed5fece6d8",
+      "timestamp": 1760368389.481049,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 13
+      }
+    },
+    {
+      "id": "dac65858-c8b1-41c0-ab2f-75d2a71bade6",
+      "timestamp": 1760368389.4824245,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "810e7219-ea96-45d6-8cd3-d98a36f43e28",
+      "timestamp": 1760368389.4838026,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760368389.483789,
+        "entry_count": 13
+      }
+    },
+    {
+      "id": "2a007257-9c99-467f-8fb6-0e2de038a1ec",
+      "timestamp": 1760368507.1173692,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 14
+      }
+    },
+    {
+      "id": "4b5e0bfe-29cf-4203-86c8-2a337e5c9301",
+      "timestamp": 1760368507.1188548,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "7f91a5ba-1006-4317-9045-3c098f206e74",
+      "timestamp": 1760368507.1202972,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760368507.1202817,
+        "entry_count": 14
+      }
+    },
+    {
+      "id": "09508819-7186-4978-b7d1-09b1fa8ba524",
+      "timestamp": 1760368523.435522,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 15
+      }
+    },
+    {
+      "id": "93b509ed-c4e0-42ec-bde0-ce8aad8d01b4",
+      "timestamp": 1760368523.437111,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "29d20b31-dda5-4c72-bc27-f1b05eef7344",
+      "timestamp": 1760368523.43864,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760368523.4386246,
+        "entry_count": 15
+      }
+    },
+    {
+      "id": "bec3736c-ce70-4f0c-a717-31b10ddbda34",
+      "timestamp": 1760368945.2565458,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 16
+      }
+    },
+    {
+      "id": "044cf16c-c89e-45fd-ab9d-fa3819117867",
+      "timestamp": 1760368945.2583053,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "df8717f1-8d75-429b-86ea-1fc79733a606",
+      "timestamp": 1760368945.2600646,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760368945.2600405,
+        "entry_count": 16
+      }
+    },
+    {
+      "id": "cefb5c06-6f2d-437e-947b-370ee58deb48",
+      "timestamp": 1760369418.797428,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 17
+      }
+    },
+    {
+      "id": "49d03603-2315-4850-9a0d-aa85ea4699c5",
+      "timestamp": 1760369418.7993267,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "73be6d1d-5574-4242-b5df-6b506f4202e4",
+      "timestamp": 1760369418.8011482,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760369418.801125,
+        "entry_count": 17
+      }
+    },
+    {
+      "id": "50620246-456d-466a-92e3-779cc5f3b6fd",
+      "timestamp": 1760369447.0391798,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 18
+      }
+    },
+    {
+      "id": "5e99dddd-8911-403b-b155-6483732fdf37",
+      "timestamp": 1760369447.0409513,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "da6c687f-96e1-4d38-aa0f-a0cde62cd63c",
+      "timestamp": 1760369447.0427766,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760369447.0427618,
+        "entry_count": 18
+      }
+    },
+    {
+      "id": "1ebb703c-ab0d-453c-9369-ecdf2284afae",
+      "timestamp": 1760369463.6181862,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 19
+      }
+    },
+    {
+      "id": "61d468cb-f771-4e75-8c91-40179afa267e",
+      "timestamp": 1760369463.620074,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "c7b08ff9-155f-408c-a1f7-32fb34665324",
+      "timestamp": 1760369463.621995,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760369463.6219797,
+        "entry_count": 19
+      }
+    },
+    {
+      "id": "4f94efcc-f08b-4ba3-9043-b47a10427f97",
+      "timestamp": 1760369518.290726,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 20
+      }
+    },
+    {
+      "id": "15879833-d4a1-4a96-a82d-601d7615fc54",
+      "timestamp": 1760369518.2927053,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "0d5f6350-161b-4270-b20f-b85974ca3375",
+      "timestamp": 1760369518.2947361,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760369518.2947202,
+        "entry_count": 20
+      }
+    },
+    {
+      "id": "6c5667f9-a534-42d6-8b86-4e04e9e73664",
+      "timestamp": 1760369563.1694825,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 21
+      }
+    },
+    {
+      "id": "a31f9ac8-fddb-486c-8e12-f2a3d2bdc795",
+      "timestamp": 1760369563.171758,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "c2946861-68af-41dd-863b-adea338c423d",
+      "timestamp": 1760369563.1739476,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760369563.173925,
+        "entry_count": 21
+      }
+    },
+    {
+      "id": "b5066e01-18e5-4cf0-8135-e13ce94eaa57",
+      "timestamp": 1760369737.9311888,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 22
+      }
+    },
+    {
+      "id": "2adb927d-a506-45e2-97a6-c77d8bbb26d2",
+      "timestamp": 1760369737.9333773,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "6db0be2d-5a50-44d3-add2-30a8689c10e8",
+      "timestamp": 1760369737.9355428,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760369737.9355247,
+        "entry_count": 22
+      }
+    },
+    {
+      "id": "406cd51f-d90b-4e77-9f4d-f3b9b87ee311",
+      "timestamp": 1760369775.2571049,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 23
+      }
+    },
+    {
+      "id": "e1ab7d72-4d63-4e0e-8db1-7ff36299cda9",
+      "timestamp": 1760369775.259715,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "68796092-b0b7-46b4-9346-76bbd3db77e6",
+      "timestamp": 1760369775.2621381,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760369775.262116,
+        "entry_count": 23
+      }
+    },
+    {
+      "id": "1a273884-c8e4-4467-88ee-beb20d775f20",
+      "timestamp": 1760369798.81877,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 24
+      }
+    },
+    {
+      "id": "c42fa700-f5ed-464f-9331-d7509c5d5bbb",
+      "timestamp": 1760369798.8210573,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "7dcee531-bf0d-4579-b33e-68532f377cc6",
+      "timestamp": 1760369798.8233216,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760369798.823301,
+        "entry_count": 24
+      }
+    },
+    {
+      "id": "b94aeae1-808c-48c7-82b1-0e5ecce51bc1",
+      "timestamp": 1760369885.5032988,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 25
+      }
+    },
+    {
+      "id": "dc3473d0-71f2-4635-8bc3-c58877b704a4",
+      "timestamp": 1760369885.505631,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "3546ba0f-6edb-4f6a-8539-e68356999355",
+      "timestamp": 1760369885.5079465,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760369885.507932,
+        "entry_count": 25
+      }
+    },
+    {
+      "id": "9ba6b632-095c-410a-8be9-be47afe3de65",
+      "timestamp": 1760369912.0873337,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 26
+      }
+    },
+    {
+      "id": "8e9f487b-0f27-4c95-98e6-8d0332ae2b7a",
+      "timestamp": 1760369912.0897462,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "8a812088-ecd7-4f73-aa1f-f2345b973620",
+      "timestamp": 1760369912.0921354,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760369912.0921204,
+        "entry_count": 26
+      }
+    },
+    {
+      "id": "fd004d0f-85b1-4fe3-bb06-654690d8cc14",
+      "timestamp": 1760369956.5448182,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 27
+      }
+    },
+    {
+      "id": "c9f35be3-6087-4007-b004-99955dd0bdbb",
+      "timestamp": 1760369956.547316,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "43861ed5-ae52-4162-b6a0-15acd8cf8dd7",
+      "timestamp": 1760369956.5498314,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760369956.5498087,
+        "entry_count": 27
+      }
+    },
+    {
+      "id": "fc366b79-c7a7-427a-a77c-a3eb673c771e",
+      "timestamp": 1760369990.4384413,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 28
+      }
+    },
+    {
+      "id": "b1659a00-4f23-498a-8b63-4978ef31d754",
+      "timestamp": 1760369990.4410503,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "769c9071-f568-4385-9501-43de2ea1007e",
+      "timestamp": 1760369990.4436717,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760369990.443649,
+        "entry_count": 28
+      }
+    },
+    {
+      "id": "12401a47-86ea-43e8-80ff-09896e5ea607",
+      "timestamp": 1760370282.3547254,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 29
+      }
+    },
+    {
+      "id": "87f86800-67a2-40a7-8ed1-7ed8357e9134",
+      "timestamp": 1760370282.357471,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "589ed386-c6a1-4202-b1ba-70c1a64a0750",
+      "timestamp": 1760370282.360231,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760370282.3602076,
+        "entry_count": 29
+      }
+    },
+    {
+      "id": "22c45797-0d92-4fa4-83d4-eaff8072ace0",
+      "timestamp": 1760370300.4178586,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 30
+      }
+    },
+    {
+      "id": "dabe739b-03af-4499-b687-481f6e1c6566",
+      "timestamp": 1760370300.4207392,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "11d0e7ea-d158-4c8e-9e53-e60abc886846",
+      "timestamp": 1760370300.4235528,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760370300.4235308,
+        "entry_count": 30
+      }
+    },
+    {
+      "id": "3ba3adc9-7c6e-4d26-ba49-4be8c9d2f676",
+      "timestamp": 1760370336.195894,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 31
+      }
+    },
+    {
+      "id": "d05c3d9c-5eb2-4a7d-8634-9a467c0c32fc",
+      "timestamp": 1760370336.198737,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "296fd419-39ff-4f0d-a041-9ba266738284",
+      "timestamp": 1760370336.201546,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760370336.2015293,
+        "entry_count": 31
+      }
+    },
+    {
+      "id": "9bacb76b-80df-4cb2-93b8-b378ff131886",
+      "timestamp": 1760370351.0732474,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 32
+      }
+    },
+    {
+      "id": "edaf0f43-cad0-4adc-b2fa-254243a22247",
+      "timestamp": 1760370351.077845,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "fb772e68-198e-40e9-92d7-b283fd43b0c6",
+      "timestamp": 1760370351.0812755,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760370351.0812502,
+        "entry_count": 32
+      }
+    },
+    {
+      "id": "1685b209-134b-47cf-9845-cdec526111a6",
+      "timestamp": 1760370765.96471,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 33
+      }
+    },
+    {
+      "id": "9fbe8540-7ee4-40c6-a36e-ee54e908539d",
+      "timestamp": 1760370765.9677389,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "14e02c49-593a-447b-9a4e-cb02385f66f4",
+      "timestamp": 1760370765.9709826,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760370765.970958,
+        "entry_count": 33
+      }
+    },
+    {
+      "id": "caa1a102-9840-446d-81a2-d57ddf3cf2ee",
+      "timestamp": 1760370781.781072,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 34
+      }
+    },
+    {
+      "id": "5ce6bc6c-c4fb-40bb-b826-7b607d0742b9",
+      "timestamp": 1760370781.7841563,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "6298fc58-6168-497d-b96d-f7927365d6c8",
+      "timestamp": 1760370781.7872283,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760370781.7872107,
+        "entry_count": 34
+      }
+    },
+    {
+      "id": "afd5b825-1c63-4c07-b17e-babf075eef9a",
+      "timestamp": 1760370795.7654097,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 35
+      }
+    },
+    {
+      "id": "e7305f49-c4cf-4096-8a22-29c92aeadfc3",
+      "timestamp": 1760370795.7689064,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "7081cb2d-19f8-4a00-9a17-937a6d6176ec",
+      "timestamp": 1760370795.7721622,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760370795.7721412,
+        "entry_count": 35
+      }
+    },
+    {
+      "id": "e8482902-d3b7-4041-b703-70be33f5500d",
+      "timestamp": 1760370997.0257497,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 36
+      }
+    },
+    {
+      "id": "74c18f26-8314-48fc-a124-220b04bd9a00",
+      "timestamp": 1760370997.0293167,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "e03cc11c-85be-4262-947c-31d98428d75b",
+      "timestamp": 1760370997.033014,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760370997.032989,
+        "entry_count": 36
+      }
+    },
+    {
+      "id": "7b66786f-e233-47c4-a488-a2306d07485f",
+      "timestamp": 1760371394.0079913,
+      "entry_type": "chat",
+      "content": {
+        "user_message": "Test message for integration verification",
+        "assistant_response": "This is a test response to verify the integrated memory system is working correctly."
+      },
+      "metadata": {
+        "consciousness_state": {
+          "consciousness_level": 0.85,
+          "phi": 0.78,
+          "coherence": 0.82,
+          "gamma_power": 0.75,
+          "fractal_dimension": 2.3,
+          "spiritual_awareness": 0.8,
+          "is_conscious": true
+        },
+        "conversation_turn": 37
+      }
+    },
+    {
+      "id": "6ee77fbd-dadb-44c8-9f06-5e8ee2311107",
+      "timestamp": 1760371394.011371,
+      "entry_type": "consciousness_state",
+      "content": {
+        "timestamp": 1760300000.0,
+        "consciousness_level": 0.87,
+        "phi": 0.81,
+        "coherence": 0.85,
+        "gamma_power": 0.78,
+        "fractal_dimension": 2.4,
+        "spiritual_awareness": 0.83,
+        "is_conscious": true
+      },
+      "metadata": {}
+    },
+    {
+      "id": "b3681fc0-cc04-4350-815e-c5df9267236e",
+      "timestamp": 1760371394.0146222,
+      "entry_type": "rag_context",
+      "content": {
+        "query": "test integration",
+        "retrieved_context": "This is test RAG context to verify the integrated memory system functionality.",
+        "sources": [
+          {
+            "source": "integration_test.txt",
+            "score": 0.95
+          },
+          {
+            "source": "memory_verification.md",
+            "score": 0.88
+          }
+        ]
+      },
+      "metadata": {
+        "timestamp": 1760371394.014603,
+        "entry_count": 37
+      }
+    }
+  ],
+  "entry_count": 111
+}

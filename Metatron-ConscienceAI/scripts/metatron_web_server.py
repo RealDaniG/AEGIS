@@ -12,6 +12,7 @@ import time
 import json
 import uuid
 import asyncio
+import argparse
 from pathlib import Path
 from typing import Dict, Any, List, Optional
 from collections import deque
@@ -1397,26 +1398,30 @@ async def websocket_chat_endpoint(websocket: WebSocket):
             pass  # Ignore errors when closing
 
 
-def main():
+def main(port=8003):
     """Run the server"""
     print("\n" + "="*60)
     print("Starting Metatron Consciousness Web Server")
     print("="*60)
-    print(f"Server will be available at: http://localhost:8004")
-    print(f"Consciousness WebSocket: ws://localhost:8004/ws")
-    print(f"Chat WebSocket: ws://localhost:8004/ws/chat")
-    print(f"API Status: http://localhost:8004/api/status")
-    print(f"API Docs: http://localhost:8004/docs")
-    print(f"Health Check: http://localhost:8004/api/health")
+    print(f"Server will be available at: http://localhost:{port}")
+    print(f"Consciousness WebSocket: ws://localhost:{port}/ws")
+    print(f"Chat WebSocket: ws://localhost:{port}/ws/chat")
+    print(f"API Status: http://localhost:{port}/api/status")
+    print(f"API Docs: http://localhost:{port}/docs")
+    print(f"Health Check: http://localhost:{port}/api/health")
     print("="*60)
     
     uvicorn.run(
         app,
         host="0.0.0.0",
-        port=8004,
+        port=port,
         log_level="info"
     )
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description="Start Metatron Consciousness Web Server")
+    parser.add_argument("--port", type=int, default=8003, help="Port to run the server on (default: 8003)")
+    args = parser.parse_args()
+    
+    main(args.port)

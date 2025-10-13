@@ -29,9 +29,14 @@ from collections import defaultdict, deque
 import statistics
 import hashlib
 
-# Configuración de logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+# Use the configured logger from main
+try:
+    from main import logger
+except ImportError:
+    # Fallback to standard logging if main logger not available
+    import logging
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    logger = logging.getLogger(__name__)
 
 class ResourceType(Enum):
     """Tipos de recursos computacionales"""
@@ -267,7 +272,7 @@ class ResourceMonitor:
     
     def _detect_capacity(self) -> ResourceCapacity:
         """Detectar capacidades del sistema"""
-        cpu_count = psutil.cpu_count(logical=True)
+        cpu_count = psutil.cpu_count(logical=True) or 1  # Default to 1 if None
         cpu_freq = psutil.cpu_freq()
         memory = psutil.virtual_memory()
         disk = psutil.disk_usage('/')

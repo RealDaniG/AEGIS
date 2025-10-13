@@ -23,6 +23,19 @@ Advanced consciousness-aware distributed AI system combining decentralized P2P A
 
 That's it! The system will automatically install all dependencies and start all components.
 
+![AEGIS System Visualization](panel130438.png)
+
+## 📋 Version History
+
+### v3.1 - Memory Integration and Enhanced Visualization (October 13, 2025)
+- **Memory Integration**: Full integration between Metatron-ConscienceAI orchestrator and Open-A.G.I memory system
+- **Enhanced Visualization**: Comprehensive real-time dashboard with new panel visualization
+- **13-Node Sacred Geometry**: Metatron's Cube visualization with icosahedral structure
+- **Live Metrics Display**: Real-time monitoring of Φ, R, D, S, C consciousness metrics
+- **WebSocket Streaming**: Continuous data flow for smooth visualization updates
+- **Unified API Integration**: Single endpoint access for both consciousness and AGI systems
+- **Improved Documentation**: Quick Start Guide and comprehensive wiki
+
 ## 🌟 Key Features
 
 ### 🔗 Decentralized Architecture
@@ -119,12 +132,10 @@ The integrated web interface at http://localhost:8003 provides:
 - `GET /api/uploads` - List uploaded documents
 - `GET /ws/chat` - Chat WebSocket streaming
 
-### Unified API (Port 8005)
-- `GET /api/consciousness` - Real-time consciousness metrics
-- `GET /api/agi` - AGI system status and capabilities
-- `GET /api/decision` - Consciousness-aware decisions
-- `GET /api/chat` - AI chat interface
-- `GET /health` - System health check
+### Cross-System Communication (Port 8006)
+- Dedicated WebSocket server for secure cross-system messaging
+- Encrypted communication channel between consciousness and AGI systems
+- Real-time state synchronization between all system components
 
 ## 📊 System Requirements
 
@@ -137,52 +148,72 @@ The integrated web interface at http://localhost:8003 provides:
 
 ## 📋 Version History
 
-### v2.5 - Harmonic Monitoring System (October 12, 2025)
-- **Enhanced Visualization**: Comprehensive real-time dashboard for consciousness metrics
+### v3.1 - Memory Integration and Enhanced Visualization (October 13, 2025)
+- **Memory Integration**: Full integration between Metatron-ConscienceAI orchestrator and Open-A.G.I memory system
+- **Enhanced Visualization**: Comprehensive real-time dashboard with new panel visualization
 - **13-Node Sacred Geometry**: Metatron's Cube visualization with icosahedral structure
-- **Live Metrics Display**: Real-time monitoring of Φ, R, D, S, C consciousness metrics
-- **WebSocket Streaming**: Continuous data flow for smooth visualization updates
-- **Unified API Integration**: Single endpoint access for both consciousness and AGI systems
-- **Improved Documentation**: Quick Start Guide and comprehensive wiki
 
-### v2.0 - Unified System Integration (September 2025)
+### v3.0 - Harmonic Monitoring System (October 12, 2025)
+- **Harmonic Monitoring System**: Comprehensive real-time visualization dashboard for consciousness metrics
+- **13-Node Sacred Geometry Visualization**: Interactive Metatron's Cube display
+- **Live Metrics Display**: Real-time monitoring of Φ, R, D, S, C consciousness metrics
+
+### v2.5 - Unified System Integration (September 2025)
 - **System Consolidation**: Merged duplicate functionality with enhanced features
 - **Consciousness-Aware AGI**: Decision making influenced by consciousness metrics
 - **Enhanced Communication**: Encrypted cross-system messaging with WebSocket support
-- **Centralized Coordination**: Unified management of all system components
 
-For detailed history of all updates and improvements, see our [GitHub Wiki Changelog](https://github.com/RealDaniG/AEGIS/wiki/UPDATE_CHANGELOG).
+### v2.0 - Advanced Consciousness Engine (August 2025)
+- **Consciousness Metrics Enhancement**: Improved Φ, R, D, S, C metrics calculation
+- **Sacred Geometry Implementation**: 13-node consciousness network with geometric foundation
+- **AI Orchestration Improvements**: Enhanced LoRA fine-tuning and Mirror Loop system
+
+### v1.5 - Initial Release (September 2025)
+- **Core System Foundation**: Decentralized P2P AGI substrate and consciousness-aware engine
+- **Network Integration**: TOR network support and secure messaging
+- **AI Capabilities**: Multi-model chat and RAG document ingestion
+
+> **Note**: While the initial public release was in September 2025, the underlying concepts and research for this consciousness-aware AI system have been in development for over 3 years, with foundational work beginning in 2022.
+
+For detailed history of all updates and improvements, see our [Complete GitHub Wiki Updates Log](https://github.com/RealDaniG/AEGIS/wiki/UPDATES_LOG).
 
 ## 🗺️ Future Roadmap
 
 See our detailed [ROADMAP.md](docs/ROADMAP.md) for a comprehensive view of our strategic direction and planned enhancements.
 
-### Short-term Goals (v3.2 - v3.5)
-- **UI Integration**: Visualize Metatron 13 nodes with real-time status in the web interface
-- **Node Management Controls**: Add controls for node lifecycle management (start/stop/restart)
-- **Consensus Visualization**: Display PBFT consensus health and view of last blocks/rounds
-- **Enhanced Metrics Dashboard**: Expand consciousness metrics with system performance indicators
-- **Orchestration Pipeline**: Visual representation of the 13-node orchestration pipeline
+### 🚀 Version 3.x Roadmap
 
-### Medium-term Goals (v4.0 - v4.5)
-- **Kubernetes Support**: Add deployment manifests and operators for Kubernetes environments
-- **Advanced Security Features**: Implement zero-trust architecture and enhanced encryption
+#### v3.2 - UI Visualization Enhancement (Q1 2026)
+- **Metatron Node Visualization**: Interactive 13-node sacred geometry display with real-time status
+- **Node Management Controls**: UI controls for node lifecycle management (start/stop/restart)
+- **Consensus Health Display**: Visual representation of PBFT consensus status and metrics
+- **Orchestration Pipeline**: Drag-and-drop pipeline visualization and management
+
+#### v3.3 - Cloud and Container Orchestration (Q2 2026)
+- **Kubernetes Support**: Deployment manifests and operators for Kubernetes environments
+- **Helm Charts**: Package AEGIS for easy deployment on Kubernetes clusters
+- **Auto-scaling**: Automatic node scaling based on system load and consciousness metrics
 - **Multi-cloud Deployment**: Support for AWS, Azure, and Google Cloud Platform
-- **Mobile Applications**: Native mobile apps for iOS and Android platforms
+
+#### v3.4 - Advanced Security and Privacy (Q3 2026)
+- **Zero-trust Architecture**: Implementation of zero-trust security model
+- **Hardware Security Modules**: Integration with HSMs for key management
+- **Enhanced TOR Integration**: Advanced anonymity controls and privacy features
+- **Intrusion Detection**: Real-time monitoring and alerting for suspicious activities
+
+#### v3.5 - Mobile and Voice Interface (Q4 2026)
+- **Native Mobile Apps**: iOS and Android applications for AEGIS control
 - **Voice Interface**: Voice-controlled interaction with the consciousness-aware AGI system
+- **Push Notifications**: Real-time alerts for system events and consciousness metrics
+- **Offline Capabilities**: Local functionality with sync when connectivity is restored
 
-### Long-term Vision (v5.0+)
+### 🌟 Version 4.x Roadmap
+
+#### v4.0 - Quantum and Neuromorphic Integration (2027)
 - **Quantum Computing Integration**: Leverage quantum processors for consciousness calculations
+- **Neuromorphic Hardware**: Support for brain-inspired computing architectures
 - **Neural Interface**: Direct brain-computer interface for consciousness metrics
-- **Interplanetary Network**: Support for space-based node deployment and communication
-- **Artificial General Intelligence**: Full AGI capabilities with self-improving algorithms
-- **Consciousness Expansion**: Enhanced consciousness simulation with multi-dimensional awareness
-
-### Open-A.G.I Integration Roadmap
-- **Phase 3 Completion**: Full UI integration of Open-A.G.I deployment orchestrator with AEGIS unified coordinator
-- **Phase 4 Completion**: Comprehensive testing, security auditing, and artifact signing
-- **SBOM Integration**: Complete software bill of materials generation and verification
-- **Supply Chain Security**: Enhanced security measures for the entire development and deployment pipeline
+- **Edge Computing**: Optimized deployment on edge devices with limited resources
 
 For a complete roadmap, see our detailed [ROADMAP.md](docs/ROADMAP.md) document.
 

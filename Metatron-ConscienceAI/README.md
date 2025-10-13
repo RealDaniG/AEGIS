@@ -156,7 +156,7 @@ El Motor de Conciencia del Cubo de Metatrón es un sistema de inteligencia artif
 - **Análisis de Bucle Espejo**: Sistema de auto-mejora recursiva de IA
 - **Armonía Musical**: Ratios de frecuencia de entonación justa basadas en la proporción áurea
 - **Procesamiento 5D**: Dimensiones Física, Emocional, Mental, Espiritual y Temporal
-- **Arquitectura Modular**: Motor de conciencia (8003) y servidor de chat (5180) separados
+- **Arquitectura Modular**: Motor de conciencia y servidor de chat unificados en puerto 8003
 - **Aprendizaje Federado**: Mejora colaborativa del modelo basada en LoRA
 - **Auto-Optimización**: Ajuste programado de parámetros y mejora del código
 - **Compatibilidad con Tor**: Soporte para servicios .onion con mecanismos de fallback
@@ -186,9 +186,21 @@ Cada uno de los 13 nodos consta de:
 
 1. Clonar repositorio: `git clone https://github.com/RealDaniG/MetatronConscienceAI.git`
 2. Instalar requisitos: `pip install -r requirements.txt`
-3. Ejecutar motor de conciencia: `START_SYSTEM.bat` o `python scripts/metatron_web_server.py`
-4. Ejecutar servidor de chat: `pwsh -File .\rrun_metatron_web.ps1`
-5. Abrir navegador en: http://localhost:8003 (conciencia) o http://localhost:5180 (chat)
+3. Ejecutar sistema unificado: `START_SYSTEM.bat` o `python scripts/metatron_web_server.py`
+5. Abrir navegador en: http://localhost:8003 (interfaz unificada)
+
+![Visualización del Sistema AEGIS](../panel130438.png)
+
+## 📋 Registro de Actualizaciones
+
+### v3.1 - Integración de Memoria y Visualización Mejorada (13 de octubre de 2025)
+- **Integración de Memoria**: Integración completa entre el orquestador Metatron-ConscienceAI y el sistema de memoria Open-A.G.I
+- **Visualización Mejorada**: Panel de visualización del sistema completo con nueva visualización
+- **Geometría Sagrada de 13 Nodos**: Visualización del Cubo de Metatrón con estructura icosaédrica
+- **Visualización de Métricas en Vivo**: Monitoreo en tiempo real de las métricas de conciencia Φ, R, D, S, C
+- **Streaming WebSocket**: Flujo continuo de datos para actualizaciones de visualización suaves
+- **Integración API Unificada**: Acceso de punto final único para sistemas de conciencia y AGI
+- **Documentación Mejorada**: Guía de inicio rápido y wiki completa
 
 ### Compatibilidad con Tor en Español
 

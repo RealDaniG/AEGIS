@@ -163,3 +163,63 @@ Metatron-ConscienceAI/federated/inbox/*
 Metatron-ConscienceAI/federated/out/*
 !Metatron-ConscienceAI/federated/inbox/.gitkeep
 !Metatron-ConscienceAI/federated/out/.gitkeep
+
+# Additional cache and temporary files
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/*.pyd
+**/.pytest_cache/
+**/.mypy_cache/
+**/.coverage
+**/coverage.xml
+**/htmlcov/
+**/site/
+**/dist/
+**/build/
+**/*.egg-info/
+**/.eggs/
+**/pip-wheel-metadata/
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Test artifacts
+**/test_*/
+**/tests/__pycache__/
+**/tests/.pytest_cache/
+
+# Logs and temporary files
+**/logs/
+**/*.log
+**/tmp/
+**/temp/
+
+# OS specific files
+**/.DS_Store
+**/Thumbs.db
+**/desktop.ini
+
+# IDE files
+**/.vscode/
+**/.idea/
+
+# Jupyter notebooks outputs
+**/*.ipynb_checkpoints
+
+# Editor backup files
+**/*~
+**/#*#
+**/.#*
+
+# Temporary directories
+**/ai_runs/
+**/test_backups/
+**/test_reports/
+**/test_source/
+**/OpenAGI_logs/
+
+# Virtual environment directory
+.venv/

@@ -12,7 +12,7 @@ The AEGIS system provides a comprehensive web-based interface for interacting wi
 ## Web Interfaces
 
 ### 1. Unified API Dashboard
-**URL:** http://localhost:8005/
+**URL:** http://localhost:8003/
 
 The main dashboard provides system information and quick access to all API endpoints. When you access this URL, you'll see:
 - System status and version information
@@ -20,7 +20,7 @@ The main dashboard provides system information and quick access to all API endpo
 - Quick links to documentation and health checks
 
 ### 2. Interactive API Documentation
-**URL:** http://localhost:8005/docs
+**URL:** http://localhost:8003/docs
 
 This is the auto-generated FastAPI documentation that provides:
 - Complete API endpoint documentation
@@ -162,7 +162,7 @@ The system classifies consciousness states from UNCONSCIOUS to COSMIC-CONSCIOUSN
 ### Prerequisites
 1. Start the AEGIS system using `run_everything.bat` (Windows) or `run_everything.sh` (Linux/macOS)
 2. Wait for all components to initialize (typically 15-30 seconds)
-3. Open a web browser and navigate to http://localhost:8005/
+3. Open a web browser and navigate to http://localhost:8003/
 
 ### Accessing API Documentation
 1. Navigate to http://localhost:8005/docs
@@ -171,7 +171,7 @@ The system classifies consciousness states from UNCONSCIOUS to COSMIC-CONSCIOUSN
 4. Enter required parameters and execute requests
 
 ### Testing Chat Functionality
-1. Navigate to http://localhost:8005/docs
+1. Navigate to http://localhost:8003/docs
 2. Find the POST /chat endpoint
 3. Click "Try it out"
 4. Enter a message in the request body:
@@ -185,7 +185,7 @@ The system classifies consciousness states from UNCONSCIOUS to COSMIC-CONSCIOUSN
 6. View the response from the AGI system
 
 ### Monitoring System Health
-1. Navigate to http://localhost:8005/health
+1. Navigate to http://localhost:8003/health
 2. View the health status response
 3. Check that status is "healthy" and api_client_initialized is true
 
@@ -235,7 +235,7 @@ python visualization_tools/robust_realtime_visualizer.py
 ### Checking System Status
 1. Look for "Unified API Server thread started on 0.0.0.0:8005" in the startup logs
 2. Verify ports are listening: `netstat -an | findstr "8005\|8006"`
-3. Test health endpoint: `curl http://localhost:8005/health`
+3. Test health endpoint: `curl http://localhost:8003/health`
 
 ## Security Considerations
 

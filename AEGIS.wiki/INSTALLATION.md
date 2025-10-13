@@ -225,11 +225,11 @@ Once the system is running, verify it's working correctly:
 
 1. **Health Check Endpoint**:
    ```bash
-   curl http://localhost:8005/health
+   curl http://localhost:8003/health
    ```
 
 2. **API Documentation**:
-   Open your browser and navigate to: http://localhost:8005/docs
+   Open your browser and navigate to: http://localhost:8003/docs
 
 3. **Visualization Window**:
    Check that the visualization window opens and displays real-time metrics
@@ -238,17 +238,17 @@ Once the system is running, verify it's working correctly:
 
 1. **Consciousness Metrics**:
    ```bash
-   curl http://localhost:8005/api/consciousness
+   curl http://localhost:8003/api/consciousness
    ```
 
 2. **AGI Status**:
    ```bash
-   curl http://localhost:8005/api/agi
+   curl http://localhost:8003/api/agi
    ```
 
 3. **System State**:
    ```bash
-   curl http://localhost:8005/state
+   curl http://localhost:8003/state
    ```
 
 ## Troubleshooting

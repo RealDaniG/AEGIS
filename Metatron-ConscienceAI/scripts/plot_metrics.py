@@ -66,6 +66,7 @@ def plot_with_matplotlib(metrics, out_dir: str, show: bool, selected):
     fig, axs = plt.subplots(rows, cols, figsize=(6 * cols, 3.0 * rows), squeeze=False)
     axs_flat = axs.ravel()
 
+    i = 0
     for i, key in enumerate(keys):
         ax = axs_flat[i]
         series = [m.get(key, 0) for m in metrics]
@@ -144,7 +145,7 @@ def main():
     metrics = load_metrics(args.in_path)
     if not metrics:
         print("[ERROR] No se pudieron cargar métricas del archivo.")
-        sys.exit(1)
+        raise RuntimeError("Failed to load metrics from file")
 
     selected = [m.strip() for m in args.metrics.split(",") if m.strip()] if args.metrics else []
 

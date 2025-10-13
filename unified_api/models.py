@@ -70,9 +70,9 @@ class UnifiedSystemState:
 @dataclass
 class UnifiedAPISettings:
     """Configuration settings for the unified API"""
-    metatron_api_url: str = "http://localhost:8003"
-    agi_api_url: str = "http://localhost:8090"
-    websocket_url: str = "ws://localhost:8003/ws"
+    metatron_api_url: str = "http://localhost:8003"  # Metatron web server runs on port 8003
+    agi_api_url: str = "http://localhost:5000"       # Open-A.G.I monitoring runs on port 5000
+    websocket_url: str = "ws://localhost:8005/ws"
     update_interval: float = 1.0  # seconds
     enable_tls: bool = False
     api_key: Optional[str] = None

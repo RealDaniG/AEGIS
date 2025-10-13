@@ -9,9 +9,12 @@ import os
 import time
 import json
 from pathlib import Path
+import pytest
 
-# Add the current directory to the path so we can import the modules
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+# Add the necessary directories to the path so we can import the modules
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'Open-A.G.I'))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'integrated_components'))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'tests', 'unit_tests'))
 
 def test_module_imports():
     """Test that all modules can be imported"""
@@ -45,12 +48,13 @@ def test_module_imports():
     print("All modules imported successfully!")
     return True
 
+@pytest.mark.asyncio
 async def test_logging_system():
     """Test the logging system"""
     print("Testing logging system...")
     
     try:
-        from logging_system import start_logging_system, LogConfig
+        from logging_system import start_logging_system
         
         # Test with a simple configuration
         config = {
@@ -72,12 +76,13 @@ async def test_logging_system():
         print(f"  ✗ Logging system test failed: {e}")
         return False
 
+@pytest.mark.asyncio
 async def test_config_manager():
     """Test the configuration manager"""
     print("Testing configuration manager...")
     
     try:
-        from config_manager import start_config_system, ConfigManagerConfig
+        from config_manager import start_config_system
         
         # Test with a simple configuration
         config = {
@@ -96,12 +101,13 @@ async def test_config_manager():
         print(f"  ✗ Configuration manager test failed: {e}")
         return False
 
+@pytest.mark.asyncio
 async def test_api_server():
     """Test the API server"""
     print("Testing API server...")
     
     try:
-        from api_server import start_api_server, APIServerConfig
+        from api_server import start_api_server
         
         # Test with a simple configuration
         config = {
@@ -122,12 +128,13 @@ async def test_api_server():
         print(f"  ✗ API server test failed: {e}")
         return False
 
+@pytest.mark.asyncio
 async def test_metrics_collector():
     """Test the metrics collector"""
     print("Testing metrics collector...")
     
     try:
-        from metrics_collector import start_metrics_collector, MetricsCollectorConfig
+        from metrics_collector import start_metrics_collector
         
         # Test with a simple configuration
         config = {
@@ -147,12 +154,13 @@ async def test_metrics_collector():
         print(f"  ✗ Metrics collector test failed: {e}")
         return False
 
+@pytest.mark.asyncio
 async def test_alert_system():
     """Test the alert system"""
     print("Testing alert system...")
     
     try:
-        from alert_system import start_alert_system, AlertSystemConfig
+        from alert_system import start_alert_system
         
         # Test with a simple configuration
         config = {
@@ -172,12 +180,13 @@ async def test_alert_system():
         print(f"  ✗ Alert system test failed: {e}")
         return False
 
+@pytest.mark.asyncio
 async def test_web_dashboard():
     """Test the web dashboard"""
     print("Testing web dashboard...")
     
     try:
-        from web_dashboard import start_web_dashboard, WebDashboardConfig
+        from web_dashboard import start_web_dashboard
         
         # Test with a simple configuration
         config = {
@@ -197,12 +206,13 @@ async def test_web_dashboard():
         print(f"  ✗ Web dashboard test failed: {e}")
         return False
 
+@pytest.mark.asyncio
 async def test_backup_system():
     """Test the backup system"""
     print("Testing backup system...")
     
     try:
-        from backup_system import start_backup_system, BackupConfig
+        from backup_system import start_backup_system
         
         # Test with a simple configuration
         config = {
@@ -225,12 +235,13 @@ async def test_backup_system():
         print(f"  ✗ Backup system test failed: {e}")
         return False
 
+@pytest.mark.asyncio
 async def test_test_framework():
     """Test the test framework"""
     print("Testing test framework...")
     
     try:
-        from test_framework import start_test_framework, TestConfig
+        from test_framework import start_test_framework
         
         # Test with a simple configuration
         config = {

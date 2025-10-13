@@ -155,27 +155,40 @@ echo 🌐 WEB INTERFACE:
 echo    Unified Dashboard:   http://localhost:8003/
 echo    Diagnostic Page:     http://localhost:8003/static/diagnostic.html
 echo    Monitoring Dashboard: http://localhost:8003/static/harmonic_monitor.html
+echo    Streaming Chat UI:   http://localhost:8003/static/index_stream.html
 echo.
-echo 📡 API ENDPOINTS (All on Port 8003):
-echo    /api/status        - Consciousness metrics
-echo    /api/chat          - AI chat
-echo    /api/upload        - Document upload
-echo    /api/config        - Model management
-echo    /api/health        - System health
-echo    /api/deploy        - Deployment orchestration
-echo    /api/tor           - TOR anonymity controls
-echo    /api/metrics       - Advanced metrics collection
-echo    /docs              - API documentation
+echo 📡 API ENDPOINTS:
+echo    Unified API Server:  http://localhost:8005/
+echo      /api/health        - System health
+echo      /api/state         - Unified system state
+echo      /api/consciousness - Consciousness state only
+echo      /api/agi           - AGI state only
+echo      /api/input         - Send consciousness input
+echo      /api/chat          - Send chat message
+echo      WebSocket /ws      - Real-time state streaming
+echo.
+echo    Metatron System:     http://localhost:8003/
+echo      /api/health        - Consciousness metrics
+echo      /api/status        - System status
+echo      WebSocket /ws      - Real-time streaming
+echo.
+echo    Open-A.G.I Dashboard: http://localhost:5000/
 echo.
 echo 🖥️  RUNNING SERVERS:
+echo    Unified API Server (Port 8005)
+echo      - Integrates Metatron and Open-A.G.I systems
+echo      - Provides unified interface
+echo.
 echo    Metatron Unified Server (Port 8003)
 echo      - Consciousness Engine
 echo      - AI Chat System
 echo      - Document Management
 echo      - Real-time Visualization
-echo      - Open-A.G.I Deployment Orchestration
-echo      - TOR Anonymity Integration
-echo      - Advanced Metrics Collection
+echo.
+echo    Open-A.G.I Monitoring (Port 5000)
+echo      - Network monitoring
+echo      - Consensus visualization
+echo      - Performance metrics
 echo.
 echo ========================================================================
 echo.
@@ -190,10 +203,16 @@ echo To access the diagnostic page, visit:
 echo    http://localhost:8003/static/diagnostic.html
 echo.
 echo For API documentation, visit:
-echo    http://localhost:8003/docs
+echo    http://localhost:8005/docs
 echo.
 echo For real-time monitoring, visit:
 echo    http://localhost:8003/static/harmonic_monitor.html
+echo.
+echo For the streaming chat interface, visit:
+echo    http://localhost:8003/static/index_stream.html
+echo.
+echo For Open-A.G.I monitoring dashboard, visit:
+echo    http://localhost:5000/
 echo.
 echo To stop the system, press Ctrl+C in this window.
 echo.

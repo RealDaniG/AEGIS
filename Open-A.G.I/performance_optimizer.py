@@ -28,7 +28,10 @@ from enum import Enum
 import threading
 import queue
 import psutil
-import GPUtil
+try:
+    import GPUtil
+except ImportError:
+    GPUtil = None
 import networkx as nx
 from collections import defaultdict, deque
 import matplotlib.pyplot as plt
@@ -313,24 +316,26 @@ class MetricsCollector:
         node_id = "local"
         
         try:
-            gpus = GPUtil.getGPUs()
-            for i, gpu in enumerate(gpus):
-                metrics.append(PerformanceMetric(
-                    metric_type=MetricType.GPU_USAGE,
-                    value=gpu.load * 100,
-                    timestamp=timestamp,
-                    node_id=node_id,
-                    service_name=f"gpu_{i}",
-                    unit="%",
-                    threshold_warning=80.0,
-                    threshold_critical=95.0,
-                    metadata={
-                        "memory_used": gpu.memoryUsed,
-                        "memory_total": gpu.memoryTotal,
-                        "temperature": gpu.temperature
-                    }
-                ))
-                
+            if GPUtil is not None:
+                gpus = GPUtil.getGPUs()
+                for i, gpu in enumerate(gpus):
+                    metrics.append(PerformanceMetric(
+                        metric_type=MetricType.GPU_USAGE,
+                        value=gpu.load * 100,
+                        timestamp=timestamp,
+                        node_id=node_id,
+                        service_name=f"gpu_{i}",
+                        unit="%",
+                        threshold_warning=80.0,
+                        threshold_critical=95.0,
+                        metadata={
+                            "memory_used": gpu.memoryUsed,
+                            "memory_total": gpu.memoryTotal,
+                            "temperature": gpu.temperature
+                        }
+                    ))
+            else:
+                logger.debug("GPUtil no disponible")
         except Exception as e:
             logger.debug(f"GPU no disponible o error: {e}")
         
@@ -341,8 +346,8 @@ class MetricsCollector:
         key = f"{metric.node_id}_{metric.service_name}_{metric.metric_type.value}"
         self.metrics_history[key].append(metric)
     
-    def get_recent_metrics(self, metric_type: MetricType = None, node_id: str = None, 
-                          service_name: str = None, limit: int = 100) -> List[PerformanceMetric]:
+    def get_recent_metrics(self, metric_type: Optional[MetricType] = None, node_id: Optional[str] = None, 
+                          service_name: Optional[str] = None, limit: int = 100) -> List[PerformanceMetric]:
         """Obtiene métricas recientes"""
         all_metrics = []
         
@@ -362,8 +367,8 @@ class MetricsCollector:
         all_metrics.sort(key=lambda m: m.timestamp, reverse=True)
         return all_metrics[:limit]
     
-    def get_metric_statistics(self, metric_type: MetricType, node_id: str = None, 
-                            service_name: str = None, time_window: int = 3600) -> Dict[str, float]:
+    def get_metric_statistics(self, metric_type: MetricType, node_id: Optional[str] = None, 
+                            service_name: Optional[str] = None, time_window: int = 3600) -> Dict[str, float]:
         """Obtiene estadísticas de métricas"""
         current_time = time.time()
         cutoff_time = current_time - time_window
@@ -379,13 +384,13 @@ class MetricsCollector:
         
         return {
             "count": len(values),
-            "mean": statistics.mean(values),
-            "median": statistics.median(values),
-            "std": statistics.stdev(values) if len(values) > 1 else 0,
-            "min": min(values),
-            "max": max(values),
-            "p95": np.percentile(values, 95),
-            "p99": np.percentile(values, 99)
+            "mean": float(statistics.mean(values)),
+            "median": float(statistics.median(values)),
+            "std": float(statistics.stdev(values) if len(values) > 1 else 0),
+            "min": float(min(values)),
+            "max": float(max(values)),
+            "p95": float(np.percentile(values, 95)),
+            "p99": float(np.percentile(values, 99))
         }
 
 class AnomalyDetector:

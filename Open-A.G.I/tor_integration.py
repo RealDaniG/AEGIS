@@ -1,41 +1,62 @@
 #!/usr/bin/env python3
 """
-TOR Integration Module para IA Distribuida
-Implementación segura de comunicaciones anónimas P2P
+Integración con TOR - AEGIS Framework
+Implementación segura de gateway TOR para anonimato de red.
 
-AEGIS Security Framework - Uso Ético Únicamente
+Características principales:
+- Rotación automática de circuitos TOR
+- Protección contra fingerprinting
+- Integración con sistema criptográfico
+- Manejo seguro de claves y autenticación
+- Protección contra correlación de tráfico
 """
 
 import asyncio
-import hashlib
-import secrets
-import struct
+import json
 import time
-from dataclasses import dataclass
+import os
+from typing import Dict, List, Set, Optional, Tuple, Any, Callable
+from dataclasses import dataclass, asdict
 from enum import Enum
-from typing import Dict, List, Optional, Tuple, Callable, Any
-import logging
+from collections import defaultdict
+import base64
+import hashlib
+from datetime import datetime, timedelta
+import threading
+import subprocess
+import signal
+import secrets
 
-# Dependencias de terceros (instalar con: pip install aiohttp cryptography stem)
-import aiohttp
-from cryptography.hazmat.primitives import hashes, serialization
-from cryptography.hazmat.primitives.asymmetric import ed25519, x25519
-from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
-from cryptography.hazmat.primitives.kdf.hkdf import HKDF
-import stem
-from stem.control import Controller
-from stem import Signal
+# Try to import stem for TOR control
+try:
+    from stem.control import Controller
+    from stem import Signal
+    import stem.control
+    STEM_AVAILABLE = True
+except ImportError:
+    Controller = None
+    Signal = None
+    stem = None
+    STEM_AVAILABLE = False
 
-# Configuración de logging seguro
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler('tor_integration.log'),
-        logging.StreamHandler()
-    ]
-)
-logger = logging.getLogger(__name__)
+# Try to import cryptography libraries
+try:
+    from cryptography.hazmat.primitives.asymmetric import ed25519
+    from cryptography.hazmat.primitives import serialization
+    CRYPTO_AVAILABLE = True
+except ImportError:
+    ed25519 = None
+    serialization = None
+    CRYPTO_AVAILABLE = False
+
+# Use the configured logger from main
+try:
+    from main import logger
+except ImportError:
+    # Fallback to standard logging if main logger not available
+    import logging
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    logger = logging.getLogger(__name__)
 
 class CircuitState(Enum):
     """Estados del circuito TOR"""
@@ -104,7 +125,7 @@ class TorGateway:
     def __init__(self, control_port: int = 9051, socks_port: int = 9050):
         self.control_port = control_port
         self.socks_port = socks_port
-        self.controller: Optional[Controller] = None
+        self.controller = None
         self.circuits: Dict[str, TorCircuit] = {}
         self.onion_services: Dict[str, str] = {}  # service_id -> private_key
         self.security_level = SecurityLevel.HIGH
@@ -117,8 +138,12 @@ class TorGateway:
         
     async def initialize(self) -> bool:
         """Inicializa la conexión con TOR"""
+        if not STEM_AVAILABLE or Controller is None:
+            logger.warning("TOR stem library not available, TOR functionality disabled")
+            return False
+            
         try:
-            self.controller = Controller.from_port(port=self.control_port)
+            self.controller = Controller.from_port(port=str(self.control_port))
             self.controller.authenticate()
             
             # Verificar que TOR esté funcionando
@@ -268,7 +293,7 @@ class TorGateway:
                 circuit.state = CircuitState.CLOSED
                 logger.debug(f"Circuito {circuit_id} cerrado")
     
-    async def create_onion_service(self, port: int, target_port: int = None) -> Optional[str]:
+    async def create_onion_service(self, port: int, target_port: Optional[int] = None) -> Optional[str]:
         """Crea un servicio onion para recibir conexiones"""
         try:
             if target_port is None:
@@ -300,7 +325,7 @@ class TorGateway:
             return None
     
     async def send_message(self, target_onion: str, port: int, message: bytes, 
-                          circuit_id: str = None) -> bool:
+                          circuit_id: Optional[str] = None) -> bool:
         """Envía un mensaje a través de TOR"""
         try:
             # Seleccionar o crear circuito

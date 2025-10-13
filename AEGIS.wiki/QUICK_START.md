@@ -76,8 +76,8 @@ When AEGIS starts, it launches several components:
 Once the system is running, you can access:
 
 ### Web Interfaces
-- **Unified API Dashboard**: http://localhost:8005/
-- **API Documentation**: http://localhost:8005/docs
+- **Unified API Dashboard**: http://localhost:8003/
+- **API Documentation**: http://localhost:8003/docs
 - **WebSocket Server**: ws://localhost:8006
 - **Real-time Visualization**: Check the "Visualization Monitor" window
 
@@ -123,7 +123,7 @@ If the quick start scripts don't work, you can manually start each component:
 
 After successfully starting AEGIS:
 
-1. **Explore the Web Interface**: Visit http://localhost:8005/ to access the API dashboard
+1. **Explore the Web Interface**: Visit http://localhost:8003/ to access the API dashboard
 2. **Monitor Visualization**: Watch the real-time consciousness metrics in the visualization window
 3. **Test API Endpoints**: Try the different API endpoints to understand system capabilities
 4. **Review Documentation**: Check other wiki pages for detailed information about specific components

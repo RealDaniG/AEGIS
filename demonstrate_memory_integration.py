@@ -126,7 +126,10 @@ if __name__ == "__main__":
     
     if success:
         print(f"\n🎉 Integration demonstration completed successfully!")
-        sys.exit(0)
+        exit_code = 0
     else:
         print(f"\n❌ Integration demonstration failed!")
-        sys.exit(1)
+        exit_code = 1
+    
+    # Exit with the appropriate code
+    sys.exit(exit_code)

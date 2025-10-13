@@ -168,6 +168,7 @@ def main():
     args = parser.parse_args()
 
     # Importar orquestador (priorizar import relativo a la raíz del proyecto)
+    run_once = None
     try:
         from orchestrator.harmonic_orchestrator import run_once  # type: ignore
     except Exception as e1:
@@ -176,7 +177,10 @@ def main():
         except Exception as e2:
             print("[ERROR] No se pudo importar el orquestador:", e1 or e2)
             print("       Prueba ejecutar el script desde el directorio raíz del proyecto.")
-            sys.exit(1)
+            raise RuntimeError("Failed to import orchestrator")
+    
+    if run_once is None:
+        raise RuntimeError("Failed to import orchestrator")
 
     # Configurar backend
     AutoTokenizer = AutoModelForCausalLM = None
@@ -185,10 +189,14 @@ def main():
         AutoTokenizer, AutoModelForCausalLM, tf_err = safe_import_transformers()
         if tf_err is not None or AutoTokenizer is None:
             print("[WARN] transformers no disponible:")
-            print(tf_err)
+            if tf_err:
+                print(tf_err)
             print("Instala dependencias con: pip install transformers torch --upgrade")
-            sys.exit(1)
+            raise RuntimeError("Transformers not available")
         PeftModel, PeftConfig, peft_err = safe_import_peft()
+        peft_err = peft_err or None
+        PeftModel = PeftModel or None
+        PeftConfig = PeftConfig or None
 
     # Preparar salida
     os.makedirs(args.out_dir, exist_ok=True)
@@ -212,22 +220,27 @@ def main():
             # Intentar cargar modelo base + adaptador LoRA
             if peft_err is not None:
                 print("[WARN] PEFT no disponible para cargar adaptador LoRA:")
-                print(peft_err)
+                if peft_err:
+                    print(peft_err)
                 print("Instala con: pip install peft")
                 print("[WARN] Se intentará cargar el directorio como modelo normal (puede fallar o generar incoherencias).")
-                tokenizer = AutoTokenizer.from_pretrained(args.model)
-                model = AutoModelForCausalLM.from_pretrained(args.model)
+                if AutoTokenizer is not None and AutoModelForCausalLM is not None:
+                    tokenizer = AutoTokenizer.from_pretrained(args.model)
+                    model = AutoModelForCausalLM.from_pretrained(args.model)
             else:
                 try:
-                    peft_cfg = PeftConfig.from_pretrained(args.model)
-                    base_model_name = peft_cfg.base_model_name_or_path
-                    if isinstance(args.override_base_model, str) and args.override_base_model.strip():
-                        print(f"[INFO] Override base model solicitado: {args.override_base_model} (antes: {base_model_name})")
-                        base_model_name = args.override_base_model.strip()
-                    tokenizer = AutoTokenizer.from_pretrained(base_model_name)
-                    base_model = AutoModelForCausalLM.from_pretrained(base_model_name)
-                    model = PeftModel.from_pretrained(base_model, args.model)
-                    print(f"[INFO] Cargado PEFT LoRA sobre base: {base_model_name}")
+                    if PeftConfig is not None:
+                        peft_cfg = PeftConfig.from_pretrained(args.model)
+                        base_model_name = peft_cfg.base_model_name_or_path
+                        if isinstance(args.override_base_model, str) and args.override_base_model.strip():
+                            print(f"[INFO] Override base model solicitado: {args.override_base_model} (antes: {base_model_name})")
+                            base_model_name = args.override_base_model.strip()
+                        if AutoTokenizer is not None and AutoModelForCausalLM is not None and base_model_name:
+                            tokenizer = AutoTokenizer.from_pretrained(base_model_name)
+                            base_model = AutoModelForCausalLM.from_pretrained(base_model_name)
+                            if PeftModel is not None:
+                                model = PeftModel.from_pretrained(base_model, args.model)
+                            print(f"[INFO] Cargado PEFT LoRA sobre base: {base_model_name}")
                 except Exception as e:
                     print(f"[WARN] Fallo cargando adaptador LoRA, se intenta carga directa: {e}")
                     tokenizer = AutoTokenizer.from_pretrained(args.model)
@@ -240,7 +253,8 @@ def main():
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         print(f"[INFO] Dispositivo de ejecución: {device}")
         try:
-            model.to(device)
+            if model is not None:
+                model.to(device)
         except Exception as e:
             print(f"[WARN] No se pudo mover el modelo a {device}: {e}. Continuando en CPU.")
             device = torch.device("cpu")
@@ -491,7 +505,7 @@ def main():
         # Modo por ciclos con prompt fijo
         if not args.prompt:
             print("[ERROR] --prompt es requerido cuando no se usa --chat")
-            sys.exit(1)
+            raise ValueError("--prompt is required when not using --chat")
         for i in range(args.cycles):
             result = run_once(noise=args.noise, phase=i * args.phase_step)
             if result is None:

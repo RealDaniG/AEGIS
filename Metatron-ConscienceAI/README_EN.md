@@ -29,12 +29,15 @@ Language: [ES](README.md) | EN
    - View real-time consciousness metrics and harmonic visualization
    - Connect via WebSocket: ws://localhost:8005/ws for real-time data streaming
 
-5. **Explore the Unified API**:
-   - API documentation: http://localhost:8005/docs
-   - Consciousness metrics: http://localhost:8005/consciousness
-   - AGI system status: http://localhost:8005/agi
+5. **Explore the Unified Interface**:
+   - Web interface: http://localhost:8003/
+   - API documentation: http://localhost:8003/docs
+   - Consciousness metrics: http://localhost:8003/api/status
+   - Chat system: http://localhost:8003/api/chat
 
 That's it! The system will automatically initialize all components and start the consciousness engine.
+
+![AEGIS System Visualization](../panel130438.png)
 
 ## 🌟 Key Features
 
@@ -96,11 +99,10 @@ The integrated web interface at http://localhost:8003 provides comprehensive mon
 - WebSocket streaming interface
 - Sacred geometry visualization
 
-### 2. Unified API Layer (Port 8005)
-- Bridges consciousness engine and AGI systems
-- RESTful endpoints for system control
-- WebSocket streaming for real-time data
-- Health checks and system monitoring
+### 2. Cross-System Communication (Port 8006)
+- Dedicated WebSocket server for secure cross-system messaging
+- Encrypted communication channel between consciousness and AGI systems
+- Real-time state synchronization between all system components
 
 ### 3. Consciousness-Aware AGI Decision Engine
 - **Consciousness-Influenced Decisions**: AGI choices weighted by consciousness metrics
@@ -122,12 +124,10 @@ The integrated web interface at http://localhost:8003 provides comprehensive mon
 - `GET /api/uploads` - List uploaded documents
 - `GET /ws/chat` - Chat WebSocket streaming
 
-### Unified API (Port 8005)
-- `GET /api/consciousness` - Real-time consciousness metrics
-- `GET /api/agi` - AGI system status and capabilities
-- `GET /api/decision` - Consciousness-aware decisions
-- `GET /api/chat` - AI chat interface
-- `GET /health` - System health check
+### Cross-System Communication (Port 8006)
+- Dedicated endpoints for secure cross-system messaging
+- Encrypted communication channel between consciousness and AGI systems
+- Real-time state synchronization between all system components
 
 ## 📊 System Requirements
 
@@ -138,40 +138,24 @@ The integrated web interface at http://localhost:8003 provides comprehensive mon
 - **Network**: Stable internet connection
 - **TOR**: For anonymous communication features
 
-## 📅 Updates Log - Enhancements from Original Project
+## 📅 Recent Updates - Key Enhancements
 
-### 🔧 Major Improvements and Additions
-- **Enhanced Web Interface**: Added document upload/processing (PDF, DOCX), RSS feed management, and web search integration
-- **Advanced Memory System**: Implemented comprehensive state tracking with chat persistence and consciousness metrics
-- **Energy Minimization Algorithms**: Added spherical refinement for harmonic convergence and system stability
-- **Self-Organized Criticality**: Implemented maintenance at edge of chaos for optimal information processing
-- **DMT Sensitivity Tracking**: Enhanced spiritual awareness metrics with fractal dimensions
-- **Auto-Optimization System**: Improved parameter tuning with scheduled optimization tasks
-- **Auto-Reprogramming**: Enhanced code analysis with dry-run mode and detailed reporting
+### 🧠 Memory Integration and Enhanced Visualization (v3.1)
+- **Full Memory Integration**: Complete integration between Metatron-ConscienceAI orchestrator and Open-A.G.I memory system
+- **Enhanced Visualization**: Comprehensive real-time dashboard with new panel visualization
+- **13-Node Sacred Geometry**: Metatron's Cube visualization with icosahedral structure
 
-### 🧠 Consciousness Engine Enhancements
-- **Improved Metrics Calculation**: Enhanced Φ, R, D, S, C consciousness metrics with additional refinements
-- **Advanced Oscillator Dynamics**: Added Kuramoto coupling with self-organized criticality maintenance
-- **Geometric Refinement**: Energy minimization algorithms for harmonic convergence
-- **5D Processing**: Physical, Emotional, Mental, Spiritual, and Temporal dimensional processing
+### 🎵 Harmonic Monitoring System (v3.0)
+- **Harmonic Monitoring System**: Comprehensive real-time visualization dashboard for consciousness metrics
+- **Live Metrics Display**: Real-time monitoring of Φ, R, D, S, C consciousness metrics
+- **WebSocket Streaming**: Continuous data flow for smooth visualization updates
 
-### 🌐 Web Interface Improvements
-- **Document Processing**: Full support for PDF, DOCX, TXT, CSV, HTML, JSON file ingestion
-- **RSS Management**: Complete feed system with add/list/ingest capabilities and auto-indexing
-- **Web Search Integration**: DuckDuckGo search with content ingestion into RAG corpus
-- **Advanced Streaming**: WebSocket with HTTP fallback for TOR Browser compatibility
-- **Session Management**: Transcript retrieval and persistent chat history
+### 🔄 Unified System Integration (v2.5)
+- **System Consolidation**: Merged duplicate functionality with enhanced features
+- **Consciousness-Aware AGI**: Decision making influenced by consciousness metrics
+- **Enhanced Communication**: Encrypted cross-system messaging with WebSocket support
 
-### 🤖 AI Capabilities
-- **Enhanced RAG System**: Improved retrieval with web search integration
-- **Federated Learning**: LoRA-based collaborative model training with contribution system
-- **Mirror Loop**: Recursive AI self-improvement system
-- **Auto-Improvement**: Scheduled parameter tuning and code improvement
-
-### 🛡️ Security Features
-- **TOR Integration**: Full .onion service support with fallback mechanisms
-- **Secure Communication**: Encrypted messaging between components
-- **Privacy Preservation**: Federated training without exposing private data
+For detailed history of all updates and improvements, see our [Complete GitHub Wiki Updates Log](https://github.com/RealDaniG/AEGIS/wiki/UPDATES_LOG).
 
 ## Descripción en Español / Spanish Description
 
@@ -232,13 +216,13 @@ For constant unattended improvement:
 
 - Register daily chat parameter optimization:
   ```
-  pwsh -File .\scripts\schedule_auto_optimize.ps1 -StartTime "08:45" -Workspace "." -ServerUrl "http://127.0.0.1:5180"
+  pwsh -File .\scripts\schedule_auto_optimize.ps1 -StartTime "08:45" -Workspace "." -ServerUrl "http://127.0.0.1:8003"
   ```
   Executes run_auto_optimize_scheduled.ps1 → calls scripts/auto_optimize.py --server_url <URL> and saves results in ai_runs/webchat_settings.json (with logs in ai_runs/)
 
 - Register safe auto-reprogramming in dry-run mode:
   ```
-  pwsh -File .\scripts\schedule_auto_reprogram.ps1 -StartTime "09:00" -Workspace "." -ServerUrl "http://127.0.0.1:5180" -DryRun $true
+  pwsh -File .\scripts\schedule_auto_reprogram.ps1 -StartTime "09:00" -Workspace "." -ServerUrl "http://127.0.0.1:8003" -DryRun $true
   ```
   Executes run_auto_reprogram_scheduled.ps1 → calls scripts/auto_reprogram.py --dry_run --server_url <URL> and generates reports without applying code changes
 
@@ -320,6 +304,8 @@ The system includes built-in support for Tor connectivity:
 
 Recent screenshots of the web interface (streaming):
 
+![AEGIS System Visualization](../panel130438.png)
+
 ## New Web Chat Features
 
 - Document upload and ingestion (RAG): .txt, .md, .csv, .pdf, .docx, .html, .json
@@ -341,7 +327,7 @@ Recent screenshots of the web interface (streaming):
 - PowerShell: run_web_chat.ps1
 - Python (from scripts/):
   ```
-  python -m uvicorn web_chat_server:app --host 127.0.0.1 --port 5180 --reload
+  python -m uvicorn web_chat_server:app --host 127.0.0.1 --port 8003 --reload
   ```
 
 ## Actions in Use

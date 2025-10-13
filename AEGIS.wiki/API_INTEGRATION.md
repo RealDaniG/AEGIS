@@ -35,7 +35,7 @@ The AEGIS system exposes a unified API layer that provides access to all system 
 ### Communication Protocols
 
 #### RESTful API
-- **Base URL**: http://localhost:8005/api/
+- **Base URL**: http://localhost:8003/api/
 - **Authentication**: JWT Bearer tokens
 - **Content Type**: application/json
 - **Error Format**: Standard HTTP status codes with JSON error bodies
@@ -60,7 +60,7 @@ API keys can be generated through the administrative interface or configuration 
 
 ```bash
 # Generate new API key
-curl -X POST http://localhost:8005/api/auth/key \
+curl -X POST http://localhost:8003/api/auth/key \
   -H "Content-Type: application/json" \
   -d '{
     "name": "My Application",
@@ -74,7 +74,7 @@ Include the API key in the Authorization header:
 
 ```bash
 curl -H "Authorization: Bearer YOUR_API_KEY" \
-     http://localhost:8005/api/consciousness
+     http://localhost:8003/api/consciousness
 ```
 
 ### JWT Token Authentication
@@ -100,7 +100,7 @@ def generate_token(user_id, permissions, secret_key):
 ```bash
 # Include token in Authorization header
 curl -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." \
-     http://localhost:8005/api/state
+     http://localhost:8003/api/state
 ```
 
 ### OAuth 2.0 Integration (Future)
@@ -108,7 +108,7 @@ For third-party applications, OAuth 2.0 integration will be available:
 
 ```bash
 # OAuth 2.0 authorization endpoint
-GET http://localhost:8005/oauth/authorize?
+GET http://localhost:8003/oauth/authorize?
     response_type=code&
     client_id=YOUR_CLIENT_ID&
     redirect_uri=YOUR_REDIRECT_URI&
@@ -609,7 +609,7 @@ class AEGISClient:
 
 # Usage example
 async def main():
-    client = AEGISClient('http://localhost:8005', 'your_api_key')
+    client = AEGISClient('http://localhost:8003', 'your_api_key')
     
     # Get consciousness state
     consciousness = await client.get_consciousness_state()
@@ -690,7 +690,7 @@ class AEGISClient {
 }
 
 // Usage example
-const client = new AEGISClient('http://localhost:8005', 'your_api_key');
+const client = new AEGISClient('http://localhost:8003', 'your_api_key');
 
 // Get consciousness state
 client.getConsciousnessState()

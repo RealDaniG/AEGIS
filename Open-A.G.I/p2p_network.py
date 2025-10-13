@@ -1,31 +1,42 @@
 #!/usr/bin/env python3
 """
-Red P2P Distribuida - AEGIS Framework
-Implementación de red peer-to-peer con descubrimiento automático de nodos,
-gestión de topología dinámica y comunicación resiliente.
+Red P2P Segura - AEGIS Framework
+Implementación de red peer-to-peer con enfoque en privacidad, seguridad y anonimato.
 
 Características principales:
-- Descubrimiento automático de peers
-- Topología de red adaptativa
-- Enrutamiento inteligente de mensajes
-- Balanceado de carga distribuido
-- Recuperación automática de conexiones
+- Descubrimiento de nodos zeroconf/mDNS
+- Comunicación cifrada punto a punto
+- Integración con TOR para anonimato
+- Balanceo de carga distribuido
+- Tolerancia a fallos y auto-reparación
+- Firewall inteligente y protección DDoS
 """
 
 import asyncio
-import time
 import json
+import time
 import socket
 import logging
-from typing import Dict, List, Set, Any
+import ipaddress
+from typing import Dict, List, Set, Optional, Tuple, Any, Callable
 from dataclasses import dataclass, asdict
 from enum import Enum
 from collections import defaultdict, deque
-import ipaddress
+import hashlib
+import base64
+from datetime import datetime, timedelta
+import threading
+import queue
 
-# Configuración de logging temprana para permitir avisos durante imports opcionales
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+# Use the configured logger from main
+try:
+    from main import logger
+except ImportError:
+    # Fallback to standard logging if main logger not available
+    import logging
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    logger = logging.getLogger(__name__)
+
 # Dependencias opcionales: algunas pueden no estar disponibles en CI/Windows
 try:
     import aiohttp  # type: ignore
@@ -188,15 +199,14 @@ class PeerDiscoveryService:
 
     async def _setup_zeroconf(self):
         """Configura el servicio Zeroconf/mDNS"""
+        if not HAS_ZEROCONF or not HAS_NETIFACES:
+            logger.debug("Zeroconf or netifaces not available, skipping mDNS setup")
+            return
+            
         try:
-            if not (HAS_ZEROCONF and HAS_NETIFACES):
-                logger.warning("Saltando configuración Zeroconf: dependencias no disponibles.")
-                return
             # Obtener IP local
             local_ip = self._get_local_ip()
-
-            # Crear información del servicio
-            service_name = f"{self.node_id}.{self.service_type}"
+            service_name = f"aegis-node-{self.node_id}.{self.service_type}"
 
             # Propiedades del servicio
             properties = {
@@ -207,17 +217,20 @@ class PeerDiscoveryService:
             }
 
             # Crear ServiceInfo
-            self.service_info = ServiceInfo(
-                self.service_type,
-                service_name,
-                addresses=[socket.inet_aton(local_ip)],
-                port=self.port,
-                properties=properties
-            )
+            if ServiceInfo is not None:
+                self.service_info = ServiceInfo(
+                    self.service_type,
+                    service_name,
+                    addresses=[socket.inet_aton(local_ip)],
+                    port=self.port,
+                    properties=properties
+                )
 
             # Registrar servicio
-            self.zeroconf = Zeroconf()
-            self.zeroconf.register_service(self.service_info)
+            if Zeroconf is not None:
+                self.zeroconf = Zeroconf()
+                if self.zeroconf is not None and self.service_info is not None:
+                    self.zeroconf.register_service(self.service_info)
 
             logger.info(f"📡 Servicio mDNS registrado: {service_name}")
 
@@ -227,7 +240,7 @@ class PeerDiscoveryService:
     def _get_local_ip(self) -> str:
         """Obtiene la IP local del nodo"""
         try:
-            if HAS_NETIFACES:
+            if HAS_NETIFACES and netifaces is not None:
                 # Intentar obtener IP de interfaces de red
                 interfaces = netifaces.interfaces()
 
@@ -249,15 +262,25 @@ class PeerDiscoveryService:
             return "127.0.0.1"
 
     async def _mdns_discovery(self):
-        """Descubrimiento usando mDNS/Zeroconf"""
+        """Descubrimiento usando Zeroconf/mDNS"""
+        if not HAS_ZEROCONF or self.zeroconf is None or ServiceListener is None or ServiceBrowser is None:
+            logger.debug("mDNS discovery not available, skipping")
+            return
+            
+        # Only proceed if all required components are available
+        if ServiceInfo is None or Zeroconf is None or ServiceListener is None or ServiceBrowser is None:
+            logger.debug("mDNS components not available, skipping")
+            return
+
         class AegisServiceListener(ServiceListener):
             def __init__(self, discovery_service):
                 self.discovery_service = discovery_service
 
-            def add_service(self, zc: Zeroconf, type_: str, name: str):
+            def add_service(self, zc, type_: str, name: str):
+                # Schedule async processing
                 asyncio.create_task(self._handle_service_added(zc, type_, name))
 
-            async def _handle_service_added(self, zc: Zeroconf, type_: str, name: str):
+            async def _handle_service_added(self, zc, type_: str, name: str):
                 try:
                     info = zc.get_service_info(type_, name)
                     if info and info.properties:
@@ -342,11 +365,17 @@ class PeerDiscoveryService:
 
     async def _query_bootstrap_node(self, host: str, port: int):
         """Consulta un nodo bootstrap por peers conocidos"""
+        if not HAS_AIOHTTP or aiohttp is None:
+            logger.debug("aiohttp not available, skipping bootstrap query")
+            return
+            
         try:
             async with aiohttp.ClientSession() as session:
                 url = f"http://{host}:{port}/api/peers"
 
-                async with session.get(url, timeout=5) as response:
+                # Use proper timeout
+                timeout = aiohttp.ClientTimeout(total=5)
+                async with session.get(url, timeout=timeout) as response:
                     if response.status == 200:
                         peers_data = await response.json()
 
@@ -547,7 +576,18 @@ class ConnectionManager:
         try:
             # Leer mensaje inicial
             data = await asyncio.wait_for(reader.readline(), timeout=10)
-            message = json.loads(data.decode().strip())
+            
+            # Verificar que los datos no estén vacíos
+            if not data or not data.strip():
+                logger.debug("📥 Conexión entrante sin datos")
+                return
+            
+            # Intentar parsear JSON
+            try:
+                message = json.loads(data.decode().strip())
+            except json.JSONDecodeError as je:
+                logger.warning(f"⚠️ Datos JSON inválidos en conexión entrante: {je}")
+                return
 
             # Procesar según tipo de mensaje
             if message.get('type') == 'discovery':
@@ -557,6 +597,8 @@ class ConnectionManager:
             else:
                 logger.warning(f"⚠️ Tipo de mensaje desconocido: {message.get('type')}")
 
+        except asyncio.TimeoutError:
+            logger.warning("⏰ Timeout leyendo mensaje inicial de conexión entrante")
         except Exception as e:
             logger.error(f"❌ Error manejando conexión entrante: {e}")
         finally:
@@ -787,7 +829,7 @@ class ConnectionManager:
             await self._disconnect_peer(peer_id)
             return False
 
-    async def broadcast_message(self, message: Dict[str, Any], exclude_peers: List[str] = None) -> int:
+    async def broadcast_message(self, message: Dict[str, Any], exclude_peers: Optional[List[str]] = None) -> int:
         """Envía mensaje broadcast a todos los peers conectados"""
         exclude_peers = exclude_peers or []
         sent_count = 0

@@ -3,6 +3,8 @@
 ## Release Date
 October 12, 2025
 
+> **Development Note**: While this version was released in October 2025, the underlying concepts and research for this consciousness-aware AI system have been in development for over 3 years, with foundational work beginning in 2022.
+
 ## What's New
 
 ### Harmonic Monitoring System

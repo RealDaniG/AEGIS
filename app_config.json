@@ -1,0 +1,77 @@
+{
+  "app": {
+    "log_level": "INFO",
+    "enable": {
+      "tor": true,
+      "p2p": true,
+      "crypto": true,
+      "consensus": true,
+      "monitoring": true,
+      "resource_manager": true,
+      "performance_optimizer": true,
+      "logging_system": true,
+      "config_manager": true,
+      "api_server": true,
+      "metrics_collector": true,
+      "alert_system": true,
+      "web_dashboard": true,
+      "backup_system": true,
+      "test_framework": true,
+      "model": true
+    }
+  },
+  "tor": {
+    "enabled": true,
+    "socks_port": 9050,
+    "control_port": 9051,
+    "onion_routing": true
+  },
+  "p2p": {
+    "discovery": "zeroconf",
+    "heartbeat_interval_sec": 30
+  },
+  "crypto": {
+    "rotate_interval_hours": 24,
+    "hash": "blake3",
+    "symmetric": "chacha20-poly1305"
+  },
+  "consensus": {
+    "algorithm": "PoC+PBFT"
+  },
+  "monitoring": {
+    "dashboard_port": 8080,
+    "enable_socketio": true
+  },
+  "security": {
+    "rate_limit_per_minute": 120,
+    "validate_peer_input": true
+  },
+  "config_manager": {
+    "auto_reload": true,
+    "reload_interval": 30
+  },
+  "api_server": {
+    "port": 8000,
+    "host": "0.0.0.0",
+    "enable_cors": true
+  },
+  "web_dashboard": {
+    "port": 8080,
+    "host": "0.0.0.0"
+  },
+  "backup_system": {
+    "enabled": true,
+    "interval_hours": 24,
+    "retention_days": 30
+  },
+  "test_framework": {
+    "enabled": true,
+    "parallel_tests": true
+  },
+  "model": {
+    "model_type": "dummy",
+    "input_size": 768,
+    "hidden_size": 256,
+    "output_size": 128
+  }
+}

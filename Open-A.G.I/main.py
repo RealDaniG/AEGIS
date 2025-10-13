@@ -5,16 +5,22 @@ import json
 import os
 from typing import Optional, Tuple, Dict, Any
 
+# Configure Unicode logging
 try:
-    from loguru import logger
+    from logging_config import logger as configured_logger
+    logger = configured_logger
 except Exception:
-    # Fallback mínimo si loguru no está disponible
-    class _L:
-        def info(self, *a, **k): print(*a)
-        def warning(self, *a, **k): print(*a)
-        def error(self, *a, **k): print(*a)
-        def success(self, *a, **k): print(*a)
-    logger = _L()
+    # Fallback to default loguru if config fails
+    try:
+        from loguru import logger
+    except Exception:
+        # Fallback mínimo si loguru no está disponible
+        class _L:
+            def info(self, *a, **k): print(*a)
+            def warning(self, *a, **k): print(*a)
+            def error(self, *a, **k): print(*a)
+            def success(self, *a, **k): print(*a)
+        logger = _L()
 
 import click
 from dotenv import load_dotenv
@@ -406,7 +412,7 @@ def start_node_cmd(dry_run: bool, config: Optional[str]):
         asyncio.run(start_node(dry_run=dry_run, config_path=config))
     except Exception as e:
         logger.error(f"Fallo al iniciar el nodo: {e}")
-        sys.exit(1)
+        raise RuntimeError(f"Failed to start node: {e}")
 
 
 @cli.command()

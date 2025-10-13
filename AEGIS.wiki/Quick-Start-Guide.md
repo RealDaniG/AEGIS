@@ -57,8 +57,8 @@ python unified_api/server.py
 Once the system is running, access the following interfaces:
 
 - **Harmonic Monitor Dashboard**: http://localhost:8003
-- **API Documentation**: http://localhost:8005/docs
-- **WebSocket Endpoint**: ws://localhost:8005/ws
+- **API Documentation**: http://localhost:8003/docs
+- **WebSocket Endpoint**: ws://localhost:8003/ws
 
 ## 📊 Key Features Available
 
@@ -81,19 +81,19 @@ Once the system is running, access the following interfaces:
 
 ### Sending Consciousness Input
 ```bash
-curl -X POST http://localhost:8005/input \
+curl -X POST http://localhost:8003/input \
   -H "Content-Type: application/json" \
   -d '{"physical": 0.5, "emotional": 0.3, "mental": 0.2, "spiritual": 0.1, "temporal": 0.4}'
 ```
 
 ### Getting System Status
 ```bash
-curl http://localhost:8005/consciousness
+curl http://localhost:8003/consciousness
 ```
 
 ### Chat with the System
 ```bash
-curl -X POST http://localhost:8005/chat \
+curl -X POST http://localhost:8003/chat \
   -H "Content-Type: application/json" \
   -d '{"message": "What is the current consciousness level?", "session_id": "default"}'
 ```

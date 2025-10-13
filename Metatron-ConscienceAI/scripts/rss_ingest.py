@@ -37,7 +37,7 @@ try:
     import feedparser  # type: ignore
 except Exception:
     print("ERROR: Falta la dependencia 'feedparser'. Instala con: python -m pip install feedparser", file=sys.stderr)
-    sys.exit(1)
+    raise RuntimeError("Missing feedparser dependency")
 
 
 def load_json(path: Path, default):

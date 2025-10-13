@@ -15,15 +15,19 @@ import asyncio
 import time
 import json
 import hashlib
-import logging
 from typing import Dict, List, Set, Optional, Tuple, Any, Callable
 from dataclasses import dataclass, asdict
 from enum import Enum
 from collections import defaultdict, Counter
 
-# Configuración de logging temprana para usar logger en imports opcionales
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+# Use the configured logger from main
+try:
+    from main import logger
+except ImportError:
+    # Fallback to standard logging if main logger not available
+    import logging
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    logger = logging.getLogger(__name__)
 
 # aiohttp es opcional para permitir pruebas en entornos mínimos (p.ej. Windows CI)
 try:

@@ -27,7 +27,7 @@ class ConsolidatedLauncher:
         print("\n\n🛑 Shutting down AEGIS system...")
         self.running = False
         self.terminate_processes()
-        sys.exit(0)
+        # Don't exit here as this is a signal handler
         
     def terminate_processes(self):
         """Terminate all child processes"""

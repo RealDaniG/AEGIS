@@ -1,7 +1,7 @@
 Param(
   [switch]$WithoutTor,
   [int]$Port = 8090,
-  [string]$TorExe = "C:\\ProgramData\\chocolatey\\bin\\tor.exe",
+  [string]$TorExe = "$env:USERPROFILE\\Desktop\\Tor Browser\\Browser\\TorBrowser\\Tor\\tor.exe",
   [string]$TorrcPath = "$PSScriptRoot\\torrc"
 )
 

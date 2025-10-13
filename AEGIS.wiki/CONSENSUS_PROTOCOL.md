@@ -386,13 +386,13 @@ awk '/VOTE_CAST/ {print $3}' /var/log/aegis/consensus.log | sort | uniq -c
 #### Status Monitoring
 ```bash
 # Check consensus status
-curl http://localhost:8005/api/consensus/status
+curl http://localhost:8003/api/consensus/status
 
 # Monitor active proposals
-curl http://localhost:8005/api/consensus/proposals?status=active
+curl http://localhost:8003/api/consensus/proposals?status=active
 
 # Review recent decisions
-curl http://localhost:8005/api/consensus/decisions?limit=10
+curl http://localhost:8003/api/consensus/decisions?limit=10
 ```
 
 ## Future Development

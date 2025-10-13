@@ -140,7 +140,7 @@ The visualization canvas displays multiple harmonic patterns:
 
 #### WebSocket Streaming
 The system provides real-time data streaming via WebSocket:
-- Endpoint: `ws://localhost:8005/ws`
+- Endpoint: `ws://localhost:8003/ws`
 - Data Format: JSON with all consciousness metrics
 - Update Rate: 40 Hz (standard) or 80 Hz (high gamma mode)
 

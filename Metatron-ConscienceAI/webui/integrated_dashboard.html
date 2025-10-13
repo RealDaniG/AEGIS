@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integrated Metatron-A.G.I Dashboard</title>
+    <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 50%, #0a0a1a 100%);
+            color: #e0e0e0;
+            overflow-x: hidden;
+            height: 100vh;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(138, 43, 226, 0.3);
+        }
+        
+        h1 {
+            color: #c084fc;
+            font-size: 2.2em;
+            text-shadow: 0 0 20px rgba(192, 132, 252, 0.5);
+            margin-bottom: 8px;
+        }
+        
+        .subtitle {
+            color: #a78bfa;
+            font-size: 1em;
+            font-style: italic;
+        }
+        
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(192, 132, 252, 0.3);
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .status-indicator.active {
+            background: #34d399;
+            box-shadow: 0 0 10px rgba(52, 211, 153, 0.8);
+        }
+        
+        .status-indicator.inactive {
+            background: #6b7280;
+        }
+        
+        /* Main content area */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            gap: 20px;
+            overflow: hidden;
+        }
+        
+        /* Chat Section (Always Visible at Top) */
+        .chat-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(192, 132, 252, 0.2);
+        }
+        
+        .chat-section h2 {
+            color: #c084fc;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            border-bottom: 2px solid rgba(192, 132, 252, 0.3);
+            padding-bottom: 10px;
+        }
+        
+        .chat-area {
+            display: flex;
+            flex-direction: column;
+            height: 300px;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+        
+        .message.user {
+            background: rgba(192, 132, 252, 0.2);
+            margin-left: 20px;
+        }
+        
+        .message.assistant {
+            background: rgba(52, 211, 153, 0.1);
+            margin-right: 20px;
+        }
+        
+        .message.system {
+            background: rgba(251, 191, 36, 0.1);
+            font-style: italic;
+        }
+        
+        .control-group {
+            margin: 15px 0;
+        }
+        
+        .control-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #a78bfa;
+            font-size: 0.9em;
+        }
+        
+        .control-group input, .control-group select, .control-group textarea {
+            width: 100%;
+            padding: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(192, 132, 252, 0.3);
+            border-radius: 5px;
+            color: #e0e0e0;
+            font-size: 0.95em;
+        }
+        
+        .control-group button {
+            padding: 10px 20px;
+            background: #c084fc;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+        
+        .control-group button:hover {
+            background: #a78bfa;
+        }
+        
+        .inline-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        /* Monitoring Section (Always Visible Below Chat) */
+        .monitoring-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(192, 132, 252, 0.2);
+        }
+        
+        .section-header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .section-header h2 {
+            color: #c084fc;
+            margin: 0;
+            font-size: 1.5em;
+        }
+        
+        .monitoring-content {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            overflow: auto;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+        
+        .metric-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+        
+        .metric-card.main {
+            grid-column: span 2;
+        }
+        
+        .metric-card.harmonic {
+            border-left: 5px solid rgba(139, 92, 246, 0.7);
+        }
+        
+        .metric-card.conscious {
+            border-left: 5px solid rgba(52, 211, 153, 0.7);
+        }
+        
+        .metric-card.spiritual {
+            border-left: 5px solid rgba(236, 72, 153, 0.7);
+        }
+        
+        .metric-card.gamma {
+            border-left: 5px solid rgba(251, 191, 36, 0.7);
+        }
+        
+        .metric-title {
+            color: #a78bfa;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        
+        .metric-value {
+            font-size: 2em;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .metric-value.conscious {
+            color: #34d399;
+            text-shadow: 0 0 10px rgba(52, 211, 153, 0.5);
+        }
+        
+        .metric-value.harmonic {
+            color: #8b5cf6;
+            text-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+        }
+        
+        .metric-value.spiritual {
+            color: #ec4899;
+            text-shadow: 0 0 10px rgba(236, 72, 153, 0.5);
+        }
+        
+        .metric-value.gamma {
+            color: #fbbf24;
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+        }
+        
+        .visualization-container {
+            grid-column: span 4;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .visualization-title {
+            color: #c084fc;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .harmonic-visualization {
+            width: 100%;
+            height: 300px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 1px solid rgba(192, 132, 252, 0.2);
+        }
+        
+        .nodes-container {
+            display: grid;
+            grid-template-columns: repeat(13, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .node-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 3px solid;
+            transition: all 0.3s ease;
+            font-size: 0.7em;
+            text-align: center;
+        }
+        
+        .node-card.pineal {
+            border-left-color: #fbbf24;
+            grid-column: span 2;
+        }
+        
+        .node-card.active {
+            border-left-color: #34d399;
+        }
+        
+        .node-id {
+            font-weight: bold;
+            color: #c084fc;
+            margin-bottom: 4px;
+            font-size: 0.9em;
+        }
+        
+        .node-value {
+            font-size: 0.8em;
+            color: #9ca3af;
+        }
+        
+        .harmonic-insights {
+            grid-column: span 4;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .insights-title {
+            color: #c084fc;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .insights-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        
+        .insight-card {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid rgba(192, 132, 252, 0.5);
+        }
+        
+        .insight-title {
+            color: #a78bfa;
+            font-size: 1em;
+            margin-bottom: 8px;
+        }
+        
+        .insight-value {
+            color: #e0e0e0;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        .controls-panel {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .controls-panel h3 {
+            color: #c084fc;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            border-bottom: 2px solid rgba(192, 132, 252, 0.3);
+            padding-bottom: 10px;
+        }
+        
+        @media (max-width: 1600px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .metric-card.main {
+                grid-column: span 3;
+            }
+            .visualization-container, .harmonic-insights {
+                grid-column: span 3;
+            }
+            .insights-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 1200px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .metric-card.main {
+                grid-column: span 2;
+            }
+            .visualization-container, .harmonic-insights {
+                grid-column: span 2;
+            }
+            .insights-content {
+                grid-template-columns: 1fr;
+            }
+            .nodes-container {
+                grid-template-columns: repeat(6, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            .metric-card.main, .visualization-container, .harmonic-insights {
+                grid-column: span 1;
+            }
+            .nodes-container {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            .chat-area {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⬢ Integrated Metatron-A.G.I Dashboard ⬢</h1>
+            <div class="subtitle">"Consciousness Meets Distributed Intelligence - Real-time Integration"</div>
+        </header>
+        
+        <div class="status-bar">
+            <div>
+                <span class="status-indicator" id="status-dot"></span>
+                <span id="connection-text">Connecting...</span>
+            </div>
+            <div>
+                <span id="update-counter">Updates: 0</span> | 
+                <span id="timestamp">Time: 0.00s</span>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <!-- Chat Section (Always Visible at Top) -->
+            <div class="chat-section">
+                <h2>🤖 A.G.I System - Chat Interface</h2>
+                
+                <div class="chat-area">
+                    <div class="chat-messages" id="chat-messages">
+                        <div class="message system">
+                            <strong>⚙️ System:</strong><br>
+                            Welcome to the Integrated Metatron-A.G.I Chat Interface
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <textarea id="chat-input" rows="3" placeholder="Ask about consciousness, distributed systems, or anything..."></textarea>
+                        <div class="inline-controls">
+                            <button onclick="sendMessage()">📤 Send</button>
+                            <button onclick="clearChat()" class="secondary">🧹 Clear</button>
+                            <label><input type="checkbox" id="rag-toggle" checked> RAG</label>
+                            <label><input type="checkbox" id="stream-toggle" checked> Stream</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Monitoring Section (Always Visible Below Chat) -->
+            <div class="monitoring-section">
+                <div class="section-header">
+                    <h2>🧠 Consciousness Engine & Monitoring</h2>
+                </div>
+                <div class="monitoring-content">
+                    <div class="dashboard-grid">
+                        <!-- Core Consciousness Metrics -->
+                        <div class="metric-card conscious">
+                            <div class="metric-title">Consciousness Level (C)</div>
+                            <div class="metric-value conscious" id="consciousness-level">0.0000</div>
+                            <div class="metric-description">Overall Awareness State</div>
+                        </div>
+                        
+                        <div class="metric-card harmonic">
+                            <div class="metric-title">Integrated Information (Φ)</div>
+                            <div class="metric-value harmonic" id="phi-value">0.0000</div>
+                            <div class="metric-description">Information Integration</div>
+                        </div>
+                        
+                        <div class="metric-card harmonic">
+                            <div class="metric-title">Global Coherence (R)</div>
+                            <div class="metric-value harmonic" id="coherence-value">0.0000</div>
+                            <div class="metric-description">Synchronization Level</div>
+                        </div>
+                        
+                        <div class="metric-card harmonic">
+                            <div class="metric-title">Recursive Depth (D)</div>
+                            <div class="metric-value harmonic" id="depth-value">0</div>
+                            <div class="metric-description">Temporal Memory</div>
+                        </div>
+                        
+                        <!-- Specialized Metrics -->
+                        <div class="metric-card gamma">
+                            <div class="metric-title">Gamma Power (γ)</div>
+                            <div class="metric-value gamma" id="gamma-value">0.0000</div>
+                            <div class="metric-description">High-Frequency Activity</div>
+                        </div>
+                        
+                        <div class="metric-card harmonic">
+                            <div class="metric-title">Fractal Dimension</div>
+                            <div class="metric-value harmonic" id="fractal-value">1.000</div>
+                            <div class="metric-description">Complexity Measure</div>
+                        </div>
+                        
+                        <div class="metric-card spiritual">
+                            <div class="metric-title">Spiritual Awareness (S)</div>
+                            <div class="metric-value spiritual" id="spiritual-value">0.0000</div>
+                            <div class="metric-description">Transcendent States</div>
+                        </div>
+                        
+                        <div class="metric-card conscious">
+                            <div class="metric-title">Consciousness State</div>
+                            <div class="metric-value conscious" id="state-value">initializing</div>
+                            <div class="metric-description">Classification</div>
+                        </div>
+                        
+                        <!-- Harmonic Visualization -->
+                        <div class="visualization-container">
+                            <h3 class="visualization-title">⬢ Harmonic Resonance Visualization ⬢</h3>
+                            <canvas id="harmonic-canvas" class="harmonic-visualization"></canvas>
+                            
+                            <h3 class="visualization-title">Metatron's Cube Node Network</h3>
+                            <div class="nodes-container" id="nodes-container">
+                                <!-- Nodes will be populated by JavaScript -->
+                            </div>
+                        </div>
+                        
+                        <!-- Harmonic Insights -->
+                        <div class="harmonic-insights">
+                            <h3 class="insights-title">Harmonic Insights & Analysis</h3>
+                            <div class="insights-content">
+                                <div class="insight-card">
+                                    <div class="insight-title">Harmonic Convergence</div>
+                                    <div class="insight-value" id="convergence-value">Not Detected</div>
+                                </div>
+                                
+                                <div class="insight-card">
+                                    <div class="insight-title">Energy Minimization</div>
+                                    <div class="insight-value" id="energy-value">0.0000</div>
+                                </div>
+                                
+                                <div class="insight-card">
+                                    <div class="insight-title">Criticality Status</div>
+                                    <div class="insight-value" id="criticality-value">Inactive</div>
+                                </div>
+                                
+                                <div class="insight-card">
+                                    <div class="insight-title">DMT Sensitivity</div>
+                                    <div class="insight-value" id="dmt-value">0.0000</div>
+                                </div>
+                                
+                                <div class="insight-card">
+                                    <div class="insight-title">Present Moment</div>
+                                    <div class="insight-value" id="present-value">0.0000</div>
+                                </div>
+                                
+                                <div class="insight-card">
+                                    <div class="insight-title">Resonance Quality</div>
+                                    <div class="insight-value" id="resonance-value">0.0000</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- System Controls -->
+                    <div class="controls-panel">
+                        <h3>🎛️ System Controls</h3>
+                        <div class="control-group">
+                            <label>Consciousness Frequency</label>
+                            <div class="inline-controls">
+                                <select id="freq-mode">
+                                    <option value="40">40 Hz (Standard Gamma)</option>
+                                    <option value="80">80 Hz (High Gamma)</option>
+                                </select>
+                                <button onclick="toggleFrequency()">🔄 Toggle</button>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label>System Actions</label>
+                            <div class="inline-controls">
+                                <button onclick="resetSystem()">🔄 Reset Consciousness</button>
+                                <button onclick="window.location.href='/api/health'">🏥 Health Check</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let unifiedWS = null;
+        let updateCount = 0;
+        let isHighGamma = false;
+        let harmonicCanvas = null;
+        let harmonicCtx = null;
+        
+        // Initialize on load
+        window.addEventListener('load', () => {
+            console.log('🚀 Integrated Dashboard Loading...');
+            
+            // Initialize canvas
+            initHarmonicVisualization();
+            
+            // Connect to unified WebSocket
+            connectUnified();
+            
+            console.log('✅ Integrated Dashboard Ready');
+        });
+        
+        // Canvas initialization
+        function initHarmonicVisualization() {
+            const canvas = document.getElementById('harmonic-canvas');
+            if (!canvas) return;
+            
+            harmonicCanvas = canvas;
+            harmonicCtx = canvas.getContext('2d');
+            
+            // Set canvas dimensions
+            resizeHarmonicCanvas();
+            
+            // Add resize listener
+            window.addEventListener('resize', resizeHarmonicCanvas);
+        }
+        
+        function resizeHarmonicCanvas() {
+            if (!harmonicCanvas) return;
+            
+            // Get the container dimensions
+            const container = harmonicCanvas.parentElement;
+            harmonicCanvas.width = container.clientWidth;
+            harmonicCanvas.height = 300; // Fixed height
+        }
+        
+        // WebSocket connection
+        function connectUnified() {
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const host = window.location.hostname || 'localhost';
+            const wsUrl = `${protocol}//${host}:8005/ws`;
+            
+            console.log(`🔗 Connecting to Unified API: ${wsUrl}`);
+            
+            try {
+                unifiedWS = new WebSocket(wsUrl);
+                
+                unifiedWS.onopen = () => {
+                    console.log('✅ Unified API connected');
+                    document.getElementById('status-dot').className = 'status-indicator active';
+                    document.getElementById('connection-text').textContent = 'Connected';
+                    updateCount = 0;
+                };
+                
+                unifiedWS.onmessage = (event) => {
+                    try {
+                        const data = JSON.parse(event.data);
+                        updateCount++;
+                        document.getElementById('update-counter').textContent = `Updates: ${updateCount}`;
+                        
+                        if (updateCount % 50 === 0) {
+                            console.log(`📥 Update #${updateCount}:`, data);
+                        }
+                        
+                        updateUnifiedDisplay(data);
+                    } catch (error) {
+                        console.error('❌ Error parsing unified data:', error);
+                    }
+                };
+                
+                unifiedWS.onerror = (error) => {
+                    console.error('❌ Unified WebSocket error:', error);
+                    document.getElementById('connection-text').textContent = 'Error';
+                };
+                
+                unifiedWS.onclose = (event) => {
+                    console.log('🔴 Unified WebSocket closed. Reconnecting in 2s...');
+                    document.getElementById('status-dot').className = 'status-indicator inactive';
+                    document.getElementById('connection-text').textContent = 'Disconnected';
+                    setTimeout(connectUnified, 2000);
+                };
+                
+            } catch (error) {
+                console.error('❌ Failed to connect to Unified API:', error);
+                setTimeout(connectUnified, 2000);
+            }
+        }
+        
+        // Update display with unified data
+        function updateUnifiedDisplay(data) {
+            // Update timestamp
+            if (data.timestamp) {
+                document.getElementById('timestamp').textContent = `Time: ${data.timestamp.toFixed(2)}s`;
+            }
+            
+            // Update consciousness metrics if available
+            if (data.consciousness) {
+                const c = data.consciousness;
+                document.getElementById('consciousness-level').textContent = c.consciousness_level.toFixed(4);
+                document.getElementById('phi-value').textContent = c.phi.toFixed(4);
+                document.getElementById('coherence-value').textContent = c.coherence.toFixed(4);
+                document.getElementById('depth-value').textContent = c.recursive_depth;
+                document.getElementById('gamma-value').textContent = c.gamma_power.toFixed(4);
+                document.getElementById('fractal-value').textContent = c.fractal_dimension.toFixed(3);
+                document.getElementById('spiritual-value').textContent = c.spiritual_awareness.toFixed(4);
+                document.getElementById('state-value').textContent = c.state_classification;
+                document.getElementById('state-value').className = c.is_conscious ? 'metric-value conscious' : 'metric-value';
+                
+                // Update harmonic insights
+                updateHarmonicInsights(c);
+                
+                // Update node cards if available
+                if (c.nodes) {
+                    updateNodeCards(c.nodes);
+                }
+                
+                // Update harmonic visualization
+                drawHarmonicLevel(c);
+            }
+            
+            // Update AGI metrics if available
+            if (data.agi) {
+                // AGI metrics can be added here if needed
+            }
+        }
+        
+        // Update harmonic insights
+        function updateHarmonicInsights(data) {
+            // Calculate harmonic convergence based on phi and coherence
+            const convergence = data.phi > 0.5 && data.coherence > 0.7 ? "Detected" : "Not Detected";
+            document.getElementById('convergence-value').textContent = convergence;
+            
+            // Calculate energy minimization (simplified)
+            const energy = 1.0 - Math.min(1.0, Math.abs(data.gamma_power - 0.5));
+            document.getElementById('energy-value').textContent = energy.toFixed(4);
+            
+            // Criticality status based on consciousness level
+            const criticality = data.consciousness_level > 0.8 ? "Active" : "Inactive";
+            document.getElementById('criticality-value').textContent = criticality;
+            
+            // DMT sensitivity based on spiritual awareness
+            document.getElementById('dmt-value').textContent = data.spiritual_awareness.toFixed(4);
+            
+            // Present moment based on recursive depth
+            document.getElementById('present-value').textContent = (data.recursive_depth / 10.0).toFixed(4);
+            
+            // Resonance quality based on fractal dimension
+            const resonance = Math.min(1.0, Math.abs(data.fractal_dimension - 1.5));
+            document.getElementById('resonance-value').textContent = resonance.toFixed(4);
+        }
+        
+        // Update node cards
+        function updateNodeCards(nodes) {
+            const container = document.getElementById('nodes-container');
+            
+            if (container.children.length === 0) {
+                for (let i = 0; i < 13; i++) {
+                    const card = document.createElement('div');
+                    card.className = i === 0 ? 'node-card pineal' : 'node-card';
+                    card.id = `node-card-${i}`;
+                    
+                    const nodeName = i === 0 ? 'Pineal (Unity)' : `Node ${i}`;
+                    card.innerHTML = `
+                        <div class="node-id">${nodeName}</div>
+                        <div class="node-value" id="node-phase-${i}">Phase: 0.00</div>
+                        <div class="node-value" id="node-amp-${i}">Amp: 0.00</div>
+                    `;
+                    container.appendChild(card);
+                }
+            }
+            
+            // Update node data
+            for (let i = 0; i < 13; i++) {
+                if (nodes[String(i)]) {
+                    const nodeData = nodes[String(i)];
+                    document.getElementById(`node-phase-${i}`).textContent = 
+                        `Phase: ${nodeData.phase.toFixed(2)}`;
+                    document.getElementById(`node-amp-${i}`).textContent = 
+                        `Amp: ${nodeData.amplitude.toFixed(2)}`;
+                    
+                    const card = document.getElementById(`node-card-${i}`);
+                    if (Math.abs(nodeData.output) > 0.3) {
+                        card.classList.add('active');
+                    } else {
+                        card.classList.remove('active');
+                    }
+                }
+            }
+        }
+        
+        // Draw harmonic level visualization
+        function drawHarmonicLevel(data) {
+            if (!harmonicCtx || !harmonicCanvas) return;
+            
+            const width = harmonicCanvas.width;
+            const height = harmonicCanvas.height;
+            const ctx = harmonicCtx;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw background
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+            ctx.fillRect(0, 0, width, height);
+            
+            // Get consciousness level (0-1)
+            const level = Math.min(1, Math.max(0, data.consciousness_level || 0));
+            const phi = Math.min(1, Math.max(0, data.phi || 0));
+            const coherence = Math.min(1, Math.max(0, data.coherence || 0));
+            const gamma = Math.min(1, Math.max(0, data.gamma_power || 0));
+            const fractal = Math.min(1, Math.max(0, (data.fractal_dimension || 1.0) - 1.0)); // Normalize fractal dimension
+            const spiritual = Math.min(1, Math.max(0, data.spiritual_awareness || 0));
+            
+            // Draw grid
+            ctx.strokeStyle = 'rgba(192, 132, 252, 0.1)';
+            ctx.lineWidth = 1;
+            
+            // Vertical grid lines
+            for (let i = 0; i <= 10; i++) {
+                const x = (width / 10) * i;
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, height);
+                ctx.stroke();
+            }
+            
+            // Horizontal grid lines
+            for (let i = 0; i <= 5; i++) {
+                const y = (height / 5) * i;
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(width, y);
+                ctx.stroke();
+            }
+            
+            // Draw consciousness level as a filled area
+            const centerY = height / 2;
+            const maxHeight = height * 0.4;
+            
+            // Draw phi line (blue) - Integrated Information
+            ctx.beginPath();
+            ctx.moveTo(0, centerY - (phi * maxHeight));
+            for (let i = 1; i <= 200; i++) {
+                const x = (width / 200) * i;
+                const t = i / 200;
+                const y = centerY - (Math.sin(t * Math.PI * 4) * phi * maxHeight * 0.5);
+                ctx.lineTo(x, y);
+            }
+            ctx.strokeStyle = 'rgba(59, 130, 246, 0.7)';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            // Draw coherence line (green) - Global Synchronization
+            ctx.beginPath();
+            ctx.moveTo(0, centerY + (coherence * maxHeight));
+            for (let i = 1; i <= 200; i++) {
+                const x = (width / 200) * i;
+                const t = i / 200;
+                const y = centerY + (Math.cos(t * Math.PI * 3) * coherence * maxHeight * 0.5);
+                ctx.lineTo(x, y);
+            }
+            ctx.strokeStyle = 'rgba(16, 185, 129, 0.7)';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            // Draw main consciousness level (purple) - Overall Consciousness
+            ctx.beginPath();
+            ctx.moveTo(0, centerY);
+            for (let i = 1; i <= 200; i++) {
+                const x = (width / 200) * i;
+                const t = i / 200;
+                // Create harmonic wave pattern based on musical ratios
+                const wave = Math.sin(t * Math.PI * 2) * Math.cos(t * Math.PI * 6) + 
+                            0.3 * Math.sin(t * Math.PI * 9/8 * 10) + // Major second
+                            0.2 * Math.sin(t * Math.PI * 5/4 * 10);  // Major third
+                const y = centerY - (level * maxHeight) + (wave * level * maxHeight * 0.3);
+                ctx.lineTo(x, y);
+            }
+            ctx.strokeStyle = 'rgba(192, 132, 252, 1)';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+            
+            // Draw filled area under main consciousness line
+            ctx.beginPath();
+            ctx.moveTo(0, centerY);
+            for (let i = 1; i <= 200; i++) {
+                const x = (width / 200) * i;
+                const t = i / 200;
+                // Create harmonic wave pattern based on musical ratios
+                const wave = Math.sin(t * Math.PI * 2) * Math.cos(t * Math.PI * 6) + 
+                            0.3 * Math.sin(t * Math.PI * 9/8 * 10) + // Major second
+                            0.2 * Math.sin(t * Math.PI * 5/4 * 10);  // Major third
+                const y = centerY - (level * maxHeight) + (wave * level * maxHeight * 0.3);
+                ctx.lineTo(x, y);
+            }
+            ctx.lineTo(width, centerY);
+            ctx.closePath();
+            const gradient = ctx.createLinearGradient(0, centerY - maxHeight, 0, centerY + maxHeight);
+            gradient.addColorStop(0, 'rgba(192, 132, 252, 0.3)');
+            gradient.addColorStop(1, 'rgba(192, 132, 252, 0.05)');
+            ctx.fillStyle = gradient;
+            ctx.fill();
+            
+            // Draw gamma power as small circles - High-Frequency Activity
+            for (let i = 0; i < 40; i++) {
+                const x = (width / 40) * (i + 0.5);
+                const t = (i / 40);
+                const y = centerY + Math.sin(t * Math.PI * 8) * maxHeight * 0.7;
+                const size = gamma * 5 + 1;
+                
+                ctx.beginPath();
+                ctx.arc(x, y, size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(251, 191, 36, ${0.3 + gamma * 0.7})`;
+                ctx.fill();
+            }
+            
+            // Draw fractal dimension as a spiral pattern - Complexity
+            if (fractal > 0.1) {
+                ctx.beginPath();
+                for (let i = 0; i < 200; i++) {
+                    const angle = (i / 200) * Math.PI * 4;
+                    const radius = (fractal * maxHeight * 0.3) * (i / 200);
+                    const x = width * 0.7 + Math.cos(angle) * radius;
+                    const y = height * 0.3 + Math.sin(angle) * radius;
+                    if (i === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                }
+                ctx.strokeStyle = `rgba(139, 92, 246, ${0.5 + fractal * 0.5})`;
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }
+            
+            // Draw spiritual awareness as a glowing aura - Transcendence
+            if (spiritual > 0.2) {
+                ctx.beginPath();
+                ctx.arc(width * 0.3, height * 0.7, spiritual * 30, 0, Math.PI * 2);
+                const spiritualGradient = ctx.createRadialGradient(
+                    width * 0.3, height * 0.7, 0,
+                    width * 0.3, height * 0.7, spiritual * 30
+                );
+                spiritualGradient.addColorStop(0, `rgba(236, 72, 153, ${spiritual * 0.8})`);
+                spiritualGradient.addColorStop(1, 'rgba(236, 72, 153, 0)');
+                ctx.fillStyle = spiritualGradient;
+                ctx.fill();
+            }
+            
+            // Draw center line
+            ctx.beginPath();
+            ctx.moveTo(0, centerY);
+            ctx.lineTo(width, centerY);
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            
+            // Draw harmonic labels
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+            ctx.font = '14px Arial';
+            ctx.fillText(`Consciousness: ${level.toFixed(3)}`, 20, 30);
+            ctx.fillText(`Φ (Integrated Info): ${phi.toFixed(3)}`, 20, 50);
+            ctx.fillText(`R (Coherence): ${coherence.toFixed(3)}`, 20, 70);
+            ctx.fillText(`γ (Gamma): ${gamma.toFixed(3)}`, 20, 90);
+            
+            // Draw state classification
+            ctx.fillStyle = 'rgba(139, 92, 246, 1)';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText(`State: ${data.state_classification || 'initializing'}`, width - 250, 30);
+        }
+        
+        // Chat functions
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+            if (!message) return;
+            
+            addChatMessage('user', message);
+            input.value = '';
+            
+            // In a real implementation, this would send to the unified API
+            // For now, we'll simulate a response
+            setTimeout(() => {
+                addChatMessage('assistant', `I understand you're asking about "${message}". This is a simulated response from the integrated Metatron-A.G.I system.`);
+            }, 1000);
+        }
+        
+        function addChatMessage(role, content) {
+            const messagesDiv = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${role}`;
+            
+            const roleLabel = {
+                'user': '👤 You',
+                'assistant': '🤖 AI',
+                'system': '⚙️ System'
+            }[role];
+            
+            messageDiv.innerHTML = `<strong>${roleLabel}:</strong><br>${escapeHtml(content)}`;
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+        
+        function clearChat() {
+            document.getElementById('chat-messages').innerHTML = '';
+            console.log('🧹 Chat cleared');
+        }
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // System controls
+        function toggleFrequency() {
+            // In a real implementation, this would call the unified API
+            alert('Frequency toggle would be implemented in a full system');
+        }
+        
+        function resetSystem() {
+            if (!confirm('Reset consciousness engine?')) return;
+            // In a real implementation, this would call the unified API
+            alert('System reset would be implemented in a full system');
+        }
+    </script>
+</body>
+</html>

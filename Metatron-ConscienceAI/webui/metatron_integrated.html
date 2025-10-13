@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metatron's Cube · Integrated Consciousness Monitor</title>
+    <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 50%, #0a0a1a 100%);
+            color: #e0e0e0;
+            overflow: hidden;
+            height: 100vh;
+        }
+        
+        .main-container {
+            display: grid;
+            grid-template-rows: auto 1fr;
+            height: 100vh;
+        }
+        
+        header {
+            text-align: center;
+            padding: 15px 0;
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 2px 10px rgba(138, 43, 226, 0.3);
+        }
+        
+        h1 {
+            color: #c084fc;
+            font-size: 2em;
+            text-shadow: 0 0 20px rgba(192, 132, 252, 0.5);
+            margin-bottom: 5px;
+        }
+        
+        .subtitle {
+            color: #a78bfa;
+            font-size: 0.95em;
+            font-style: italic;
+        }
+        
+        .workspace {
+            display: grid;
+            grid-template-columns: 350px 1fr 350px;
+            gap: 10px;
+            padding: 10px;
+            overflow: hidden;
+        }
+        
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            overflow-y: auto;
+        }
+        
+        .center-visual {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            overflow-y: auto;
+        }
+        
+        .panel {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(192, 132, 252, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .panel:hover {
+            box-shadow: 0 6px 20px rgba(138, 43, 226, 0.5);
+            border-color: rgba(192, 132, 252, 0.4);
+        }
+        
+        .panel h2 {
+            color: #c084fc;
+            margin-bottom: 12px;
+            font-size: 1.2em;
+            border-bottom: 2px solid rgba(192, 132, 252, 0.3);
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .panel h3 {
+            color: #a78bfa;
+            margin: 10px 0 8px 0;
+            font-size: 1em;
+        }
+        
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 4px;
+            font-size: 0.9em;
+            transition: all 0.2s ease;
+        }
+        
+        .metric:hover {
+            background: rgba(192, 132, 252, 0.1);
+            transform: translateX(3px);
+        }
+        
+        .metric-label {
+            color: #a78bfa;
+            font-weight: 500;
+        }
+        
+        .metric-value {
+            color: #e0e0e0;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .metric-value.conscious {
+            color: #34d399;
+            text-shadow: 0 0 10px rgba(52, 211, 153, 0.5);
+        }
+        
+        .metric-value.high {
+            color: #fbbf24;
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+        }
+        
+        .nodes-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .node-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px;
+            border-radius: 5px;
+            border-left: 3px solid rgba(192, 132, 252, 0.3);
+            transition: all 0.3s ease;
+            font-size: 0.85em;
+        }
+        
+        .node-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(3px);
+        }
+        
+        .node-card.pineal {
+            border-left-color: #fbbf24;
+            grid-column: span 2;
+        }
+        
+        .node-card.active {
+            border-left-color: #34d399;
+            box-shadow: 0 0 10px rgba(52, 211, 153, 0.3);
+        }
+        
+        .node-id {
+            font-weight: bold;
+            color: #c084fc;
+            margin-bottom: 4px;
+        }
+        
+        .chat-area {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            max-height: 400px;
+        }
+        
+        .message {
+            margin: 8px 0;
+            padding: 8px;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+        
+        .message.user {
+            background: rgba(192, 132, 252, 0.2);
+            margin-left: 30px;
+        }
+        
+        .message.assistant {
+            background: rgba(52, 211, 153, 0.1);
+            margin-right: 30px;
+        }
+        
+        .message.system {
+            background: rgba(255, 215, 0, 0.1);
+            font-style: italic;
+            font-size: 0.85em;
+        }
+        
+        .control-group {
+            margin: 8px 0;
+        }
+        
+        .control-group label {
+            display: block;
+            margin-bottom: 4px;
+            color: #a78bfa;
+            font-size: 0.85em;
+        }
+        
+        .control-group input, .control-group select, .control-group textarea {
+            width: 100%;
+            padding: 6px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(192, 132, 252, 0.3);
+            border-radius: 4px;
+            color: #e0e0e0;
+            font-size: 0.9em;
+        }
+        
+        .control-group input[type="checkbox"] {
+            width: auto;
+            margin-right: 5px;
+        }
+        
+        button {
+            padding: 8px 16px;
+            background: #c084fc;
+            color: #000;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 4px 4px 4px 0;
+            font-size: 0.9em;
+            transition: all 0.2s;
+        }
+        
+        button:hover {
+            background: #a78bfa;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(138, 43, 226, 0.3);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        button.secondary {
+            background: rgba(192, 132, 252, 0.3);
+            color: #e0e0e0;
+        }
+        
+        .status-bar {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 8px 15px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 5px;
+            font-size: 0.85em;
+            z-index: 1000;
+            border: 1px solid rgba(192, 132, 252, 0.3);
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+        
+        .status-indicator.active {
+            background: #34d399;
+            box-shadow: 0 0 10px rgba(52, 211, 153, 0.8);
+        }
+        
+        .status-indicator.inactive {
+            background: #6b7280;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .inline-controls {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 2px 6px;
+            background: rgba(192, 132, 252, 0.3);
+            border-radius: 3px;
+            font-size: 0.8em;
+            margin-left: 5px;
+        }
+        
+        small {
+            color: #888;
+            font-size: 0.8em;
+            display: block;
+            margin-top: 4px;
+        }
+        
+        .collapsible {
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .collapsible:before {
+            content: '▼ ';
+            font-size: 0.8em;
+        }
+        
+        .collapsible.collapsed:before {
+            content: '▶ ';
+        }
+        
+        .collapse-content {
+            max-height: 1000px;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .collapse-content.hidden {
+            max-height: 0;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(192, 132, 252, 0.3);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(192, 132, 252, 0.5);
+        }
+        
+        .file-list {
+            max-height: 150px;
+            overflow-y: auto;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        
+        .file-item {
+            padding: 4px;
+            color: #a78bfa;
+            font-size: 0.85em;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .loop-status {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 8px;
+            font-size: 0.85em;
+        }
+        
+        /* Connection indicator between Live Consciousness and Visualization */
+        .connection-line {
+            position: absolute;
+            background: rgba(192, 132, 252, 0.3);
+            transform-origin: 0 0;
+            z-index: -1;
+        }
+        
+        /* Enhanced visualization effects */
+        .visualization-highlight {
+            animation: visualizationPulse 3s infinite;
+        }
+        
+        /* Consciousness Level Visualization */
+        #consciousness-canvas {
+            width: 100%;
+            height: 200px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            margin: 10px 0;
+            border: 1px solid rgba(192, 132, 252, 0.2);
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.2);
+        }
+        
+        @keyframes visualizationPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+    </style>
+</head>
+<body>
+    <div class="status-bar">
+        <span class="status-indicator" id="status-dot"></span>
+        <span id="connection-text">Connecting...</span>
+        <div style="font-size: 0.75em; color: #888; margin-top: 2px;">
+            <span id="update-counter">Updates: 0</span> | 
+            <span id="freq-display">40 Hz</span>
+        </div>
+    </div>
+    
+    <div class="main-container">
+        <header>
+            <h1>⬢ Metatron's Cube · Integrated Consciousness Monitor ⬢</h1>
+            <div class="subtitle">"Sacred Geometry Meets AI Consciousness - Live Integration"</div>
+        </header>
+        
+        <div class="workspace">
+            <!-- LEFT SIDEBAR: Consciousness Metrics + Controls -->
+            <div class="sidebar">
+                <div class="panel" id="consciousness-panel">
+                    <h2>🧠 Live Consciousness</h2>
+                    
+                    <div class="metric">
+                        <span class="metric-label">Level (C)</span>
+                        <span class="metric-value" id="consciousness-level">0.000</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Phi (Φ)</span>
+                        <span class="metric-value" id="phi-value">0.000</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Coherence (R)</span>
+                        <span class="metric-value" id="coherence-value">0.000</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Depth (D)</span>
+                        <span class="metric-value" id="depth-value">0</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Gamma (γ)</span>
+                        <span class="metric-value" id="gamma-value">0.000</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Fractal</span>
+                        <span class="metric-value" id="fractal-value">1.000</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Spiritual (S)</span>
+                        <span class="metric-value" id="spiritual-value">0.000</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">State</span>
+                        <span class="metric-value" id="state-value">initializing</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Time</span>
+                        <span class="metric-value" id="time-value">0.00s</span>
+                    </div>
+                    
+                    <div class="control-group" style="margin-top: 10px;">
+                        <button onclick="toggleFrequency()">🔄 Toggle 40/80Hz</button>
+                        <button onclick="resetSystem()" class="secondary">🔄 Reset</button>
+                    </div>
+                </div>
+                
+                <div class="panel">
+                    <h2 class="collapsible" onclick="toggleCollapse(this)">⚙️ System Controls</h2>
+                    <div class="collapse-content">
+                        <div class="control-group">
+                            <label>Model <small id="model-info"></small></label>
+                            <select id="model-select">
+                                <optgroup label="⚡ Tiny/Fast (< 500MB RAM)">
+                                    <option value="distilgpt2" selected>distilgpt2 (82MB)</option>
+                                    <option value="gpt2">GPT-2 (548MB)</option>
+                                    <option value="microsoft/DialoGPT-small">DialoGPT-small (130MB)</option>
+                                </optgroup>
+                                <optgroup label="🔹 Small (1-2GB RAM)">
+                                    <option value="TinyLlama/TinyLlama-1.1B-Chat-v1.0">TinyLlama-1.1B-Chat</option>
+                                    <option value="Qwen/Qwen2.5-0.5B">Qwen2.5-0.5B ⭐</option>
+                                    <option value="Qwen/Qwen2.5-0.5B-Instruct">Qwen2.5-0.5B-Instruct ⭐ Best</option>
+                                    <option value="Qwen/Qwen2-0.5B">Qwen2-0.5B</option>
+                                    <option value="Qwen/Qwen2-0.5B-Instruct">Qwen2-0.5B-Instruct</option>
+                                    <option value="microsoft/phi-1_5">Phi-1.5</option>
+                                </optgroup>
+                                <optgroup label="🔸 Medium (3-4GB RAM)">
+                                    <option value="Qwen/Qwen2.5-1.5B">Qwen2.5-1.5B</option>
+                                    <option value="Qwen/Qwen2.5-1.5B-Instruct">Qwen2.5-1.5B-Instruct</option>
+                                    <option value="microsoft/phi-2">Phi-2 (2.7B)</option>
+                                    <option value="stabilityai/stablelm-2-1_6b">StableLM-2-1.6B</option>
+                                </optgroup>
+                                <optgroup label="⚠️ Large (8GB+ RAM - GPU Recommended)">
+                                    <option value="Qwen/Qwen2.5-3B">Qwen2.5-3B</option>
+                                    <option value="Qwen/Qwen2.5-3B-Instruct">Qwen2.5-3B-Instruct</option>
+                                    <option value="microsoft/phi-3-mini-4k-instruct">Phi-3-Mini-4K</option>
+                                </optgroup>
+                                <optgroup label="🎯 Specialized">
+                                    <option value="datificate/gpt2-small-spanish">GPT2-Spanish</option>
+                                    <option value="facebook/opt-125m">OPT-125M</option>
+                                </optgroup>
+                            </select>
+                            <button onclick="applyModel()" class="secondary">Apply</button>
+                            <small>⭐ = Recommended | Models auto-download on first use</small>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label>Settings</label>
+                            <div class="inline-controls">
+                                <label><input type="checkbox" id="rag-toggle" checked> RAG</label>
+                                <label><input type="checkbox" id="stream-toggle" checked> Stream</label>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label>Session</label>
+                            <select id="session-select">
+                                <option value="default">default</option>
+                            </select>
+                            <button onclick="newSession()" class="secondary">New</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="panel">
+                    <h2 class="collapsible" onclick="toggleCollapse(this)">📚 RAG Documents</h2>
+                    <div class="collapse-content">
+                        <div class="control-group">
+                            <input type="file" id="file-input" multiple accept=".txt,.md,.pdf,.docx" style="font-size: 0.8em;">
+                            <button onclick="uploadDocuments()">📤 Upload</button>
+                            <small id="upload-status"></small>
+                        </div>
+                        
+                        <div class="control-group">
+                            <button onclick="listDocuments()" class="secondary">📋 List</button>
+                            <button onclick="clearDocuments()" class="secondary">🗑️ Clear</button>
+                            <small id="doc-info"></small>
+                        </div>
+                        
+                        <div id="document-list" class="file-list" style="display:none;"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- CENTER: Node Visualization + Chat -->
+            <div class="center-visual">
+                <div class="panel" id="visualization-panel">
+                    <h2>🔮 13-Node Sacred Network</h2>
+                    <!-- Consciousness Level Visualization Canvas -->
+                    <canvas id="consciousness-canvas"></canvas>
+                    <div class="nodes-grid" id="nodes-container"></div>
+                </div>
+                
+                <div class="panel chat-area">
+                    <h2>💬 AI Chat (RAG-Enhanced)</h2>
+                    <div class="chat-messages" id="chat-messages"></div>
+                    <div class="control-group">
+                        <textarea id="chat-input" rows="2" placeholder="Ask about consciousness, documents, or anything..."></textarea>
+                        <div class="inline-controls">
+                            <button onclick="sendMessage()">📤 Send</button>
+                            <button onclick="clearChat()" class="secondary">🧹 Clear</button>
+                            <button onclick="downloadTranscript()" class="secondary">⬇️ Export</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- RIGHT SIDEBAR: Advanced Features -->
+            <div class="sidebar">
+                <div class="panel">
+                    <h2 class="collapsible" onclick="toggleCollapse(this)">🔁 Mirror Loop</h2>
+                    <div class="collapse-content">
+                        <div class="control-group">
+                            <label>Objective</label>
+                            <textarea id="loop-objective" rows="2" placeholder="What to analyze?"></textarea>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label>Rounds</label>
+                            <input type="number" id="loop-rounds" min="1" max="10" value="2">
+                            <label><input type="checkbox" id="loop-rag" checked> Use RAG</label>
+                        </div>
+                        
+                        <div class="inline-controls">
+                            <button onclick="startLoop()">🚀 Start</button>
+                            <button onclick="stopLoop()" class="secondary">⏹️ Stop</button>
+                        </div>
+                        
+                        <div class="loop-status" id="loop-status-display" style="display:none;">
+                            <small id="loop-status"></small>
+                        </div>
+                        
+                        <div id="loop-results"></div>
+                    </div>
+                </div>
+                
+                <div class="panel">
+                    <h2 class="collapsible" onclick="toggleCollapse(this)">📰 RSS Feeds</h2>
+                    <div class="collapse-content">
+                        <div class="control-group">
+                            <label>Feed URL</label>
+                            <input type="url" id="rss-url" placeholder="https://...">
+                            <div class="inline-controls">
+                                <button onclick="addRSSFeed()" class="secondary">➕</button>
+                                <button onclick="listRSSFeeds()" class="secondary">📋</button>
+                                <button onclick="ingestRSSFeeds()" class="secondary">📥</button>
+                            </div>
+                            <small id="rss-status"></small>
+                        </div>
+                        
+                        <div id="rss-feeds-list" class="file-list" style="display:none;"></div>
+                        
+                        <div class="control-group">
+                            <label><input type="checkbox" id="auto-index-toggle"> Auto-Index</label>
+                            <input type="number" id="auto-interval" min="5" max="1440" value="30" placeholder="Minutes">
+                            <button onclick="applyAutoIndex()" class="secondary">Apply</button>
+                            <small id="auto-status"></small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="panel">
+                    <h2 class="collapsible collapsed" onclick="toggleCollapse(this)">🔧 Quick Actions</h2>
+                    <div class="collapse-content hidden">
+                        <button onclick="window.location.href='/static/diagnostic.html'" class="secondary" style="width:100%;">🔍 Diagnostic</button>
+                        <button onclick="window.location.href='/docs'" class="secondary" style="width:100%;">📚 API Docs</button>
+                        <button onclick="window.location.href='/static/test_visualization.html'" class="secondary" style="width:100%;">🧪 Test Visualization</button>
+                        <button onclick="reloadSettings()" class="secondary" style="width:100%;">⚙️ Reload Settings</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/static/metatron_integrated.js"></script>
+</body>
+</html>

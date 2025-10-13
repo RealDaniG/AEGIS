@@ -8,7 +8,7 @@ The Unified API is built using FastAPI and provides RESTful endpoints for access
 
 ### Base URL
 ```
-http://localhost:8005
+http://localhost:8003
 ```
 
 ### WebSocket URL
@@ -23,7 +23,7 @@ Currently, the API does not require authentication for local development. For pr
 ### API Key Authentication
 ```bash
 # Example with API key
-curl -H "Authorization: Bearer YOUR_API_KEY" http://localhost:8005/api/consciousness
+curl -H "Authorization: Bearer YOUR_API_KEY" http://localhost:8003/api/consciousness
 ```
 
 ## Core Endpoints
@@ -257,7 +257,7 @@ Exceeding rate limits will result in a `429 Too Many Requests` response.
 import requests
 
 # Get consciousness state
-response = requests.get('http://localhost:8005/api/consciousness')
+response = requests.get('http://localhost:8003/api/consciousness')
 consciousness_data = response.json()
 
 # Send chat message
@@ -271,13 +271,13 @@ response = requests.post('http://localhost:8005/api/chat', json=chat_data)
 ### JavaScript Client
 ```javascript
 // Get AGI state
-fetch('http://localhost:8005/api/agi')
+fetch('http://localhost:8003/api/agi')
   .then(response => response.json())
   .then(data => console.log(data));
 
 // Send consciousness input
 const inputData = { visual: 0.8, auditory: 0.6 };
-fetch('http://localhost:8005/api/input', {
+fetch('http://localhost:8003/api/input', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify(inputData)
@@ -289,8 +289,8 @@ fetch('http://localhost:8005/api/input', {
 The current API version is 1.0.0. Future versions will be accessible through versioned endpoints:
 
 ```
-http://localhost:8005/v1/endpoint
-http://localhost:8005/v2/endpoint
+http://localhost:8003/v1/endpoint
+http://localhost:8003/v2/endpoint
 ```
 
 ## Documentation
@@ -298,12 +298,12 @@ http://localhost:8005/v2/endpoint
 ### Interactive API Documentation
 The API includes interactive documentation powered by Swagger UI:
 
-**URL**: http://localhost:8005/docs
+**URL**: http://localhost:8003/docs
 
 ### OpenAPI Specification
 Machine-readable API specification is available:
 
-**URL**: http://localhost:8005/openapi.json
+**URL**: http://localhost:8003/openapi.json
 
 ## Examples
 
@@ -316,7 +316,7 @@ def monitor_system():
     while True:
         try:
             # Get system state
-            response = requests.get('http://localhost:8005/state')
+            response = requests.get('http://localhost:8003/state')
             if response.status_code == 200:
                 state = response.json()
                 
@@ -416,7 +416,7 @@ import requests
 from datetime import datetime
 
 class AEGISIntegration:
-    def __init__(self, base_url="http://localhost:8005"):
+    def __init__(self, base_url="http://localhost:8003"):
         self.base_url = base_url
         
     def get_consciousness_level(self):

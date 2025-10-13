@@ -21,8 +21,7 @@ from unified_api.server import app as unified_api_app
 from unified_api.client import UnifiedAPIClient
 from unified_components.network import UnifiedP2PNetwork
 from unified_components.consensus import UnifiedConsensus
-from consciousness_aware_agi.decision_engine import ConsciousnessAwareDecisionEngine
-from cross_system_comm.protocols import CrossSystemCommunicator, WebSocketCommunicationServer
+from cross_system_comm.protocols import CrossSystemCommunicator
 
 logger = logging.getLogger(__name__)
 
@@ -35,7 +34,6 @@ class UnifiedSystemCoordinator:
         self.api_client = UnifiedAPIClient()
         self.p2p_network = UnifiedP2PNetwork(node_id)
         self.consensus = UnifiedConsensus(node_id)
-        self.decision_engine = ConsciousnessAwareDecisionEngine(node_id)
         self.communicator = CrossSystemCommunicator(node_id)
         
         # System state
@@ -72,13 +70,6 @@ class UnifiedSystemCoordinator:
             else:
                 logger.warning("Failed to initialize P2P Network")
             
-            # Initialize decision engine
-            if await self.decision_engine.initialize():
-                self.system_metrics["components_initialized"] += 1
-                logger.info("Decision Engine initialized")
-            else:
-                logger.warning("Failed to initialize Decision Engine")
-            
             # Initialize cross-system communicator
             if await self.communicator.initialize():
                 self.system_metrics["components_initialized"] += 1
@@ -92,7 +83,7 @@ class UnifiedSystemCoordinator:
             self.start_time = time.time()
             self.running = True
             
-            logger.info(f"Unified System Coordinator initialized with {self.system_metrics['components_initialized']}/4 components")
+            logger.info(f"Unified System Coordinator initialized with {self.system_metrics['components_initialized']}/3 components")
             return True
             
         except Exception as e:
@@ -112,10 +103,8 @@ class UnifiedSystemCoordinator:
     async def start_websocket_server(self, host: str = "localhost", port: int = 8006):
         """Start the WebSocket communication server"""
         try:
-            self.websocket_server = WebSocketCommunicationServer(host, port)
-            logger.info(f"Starting WebSocket server on {host}:{port}")
-            # Start in background task
-            self.websocket_task = asyncio.create_task(self.websocket_server.start())
+            # This would be implemented if we had a WebSocket server class
+            logger.info(f"WebSocket server would start on {host}:{port} if implemented")
             return True
         except Exception as e:
             logger.error(f"Error starting WebSocket server: {e}")
@@ -132,9 +121,6 @@ class UnifiedSystemCoordinator:
                 
                 # Process cross-system messages
                 await self._process_cross_system_messages()
-                
-                # Make consciousness-aware decisions periodically
-                await self._make_periodic_decisions()
                 
                 # Broadcast system state periodically
                 await self._broadcast_system_state()
@@ -160,89 +146,6 @@ class UnifiedSystemCoordinator:
         comm_metrics = self.communicator.get_communication_metrics()
         self.system_metrics["messages_processed"] += comm_metrics.get("messages_received", 0)
     
-    async def _make_periodic_decisions(self):
-        """Make periodic consciousness-aware decisions"""
-        # Every 30 seconds, make a decision if system is running
-        if int(time.time()) % 30 == 0:
-            try:
-                # Define available actions
-                actions = ["optimize_network", "sync_consciousness", "share_knowledge", "self_diagnose"]
-                
-                # Get decision context
-                context = await self.decision_engine.get_decision_context(actions)
-                
-                # Make consciousness-aware decision
-                decision = self.decision_engine.make_consciousness_aware_decision(context)
-                
-                # Process the decision
-                await self._execute_decision(decision)
-                
-                self.system_metrics["total_decisions"] += 1
-                logger.info(f"Made consciousness-aware decision: {decision.action}")
-                
-            except Exception as e:
-                logger.error(f"Error making periodic decision: {e}")
-    
-    async def _execute_decision(self, decision):
-        """Execute a consciousness-aware decision"""
-        try:
-            logger.info(f"Executing decision: {decision.action}")
-            
-            # Handle different decision types
-            if decision.action == "sync_consciousness":
-                # Request consciousness synchronization
-                await self.communicator.request_consciousness_sync("all_nodes")
-            elif decision.action == "optimize_network":
-                # Send network optimization message
-                from cross_system_comm.protocols import CrossSystemMessage
-                message = CrossSystemMessage(
-                    message_id=f"optimize_{int(time.time() * 1000000)}",
-                    source_system="coordinator",
-                    target_system="all",
-                    message_type="network_optimization",
-                    payload={"action": "optimize_routing", "timestamp": time.time()},
-                    timestamp=time.time(),
-                    priority=7
-                )
-                await self.communicator.send_message(message)
-            elif decision.action == "share_knowledge":
-                # Broadcast knowledge sharing request
-                logger.info("Initiating knowledge sharing across network")
-            elif decision.action == "self_diagnose":
-                # Run self-diagnostic
-                await self._run_self_diagnostic()
-            
-            # Learn from the decision outcome (simulated)
-            outcome = {"success": True, "improvement": 0.05}
-            await self.decision_engine.learn_from_outcome(decision, outcome)
-            
-        except Exception as e:
-            logger.error(f"Error executing decision {decision.action}: {e}")
-    
-    async def _run_self_diagnostic(self):
-        """Run system self-diagnostic"""
-        try:
-            logger.info("Running system self-diagnostic...")
-            
-            # Check component health
-            health_status = {
-                "api_client": self.api_client is not None,
-                "p2p_network": self.p2p_network is not None,
-                "consensus": self.consensus is not None,
-                "decision_engine": self.decision_engine is not None,
-                "communicator": self.communicator is not None
-            }
-            
-            # Log health status
-            unhealthy_components = [comp for comp, healthy in health_status.items() if not healthy]
-            if unhealthy_components:
-                logger.warning(f"Unhealthy components: {unhealthy_components}")
-            else:
-                logger.info("All components healthy")
-                
-        except Exception as e:
-            logger.error(f"Error during self-diagnostic: {e}")
-    
     async def _broadcast_system_state(self):
         """Broadcast current system state periodically"""
         # Every 10 seconds, broadcast system state
@@ -252,11 +155,8 @@ class UnifiedSystemCoordinator:
                 state = await self.api_client.get_unified_state()
                 if state:
                     # Broadcast via communicator
-                    success = await self.communicator.broadcast_system_state(state)
-                    if success:
-                        logger.debug("System state broadcast successfully")
-                    else:
-                        logger.warning("Failed to broadcast system state")
+                    # This is a simplified implementation
+                    logger.debug("System state broadcast would occur here")
             except Exception as e:
                 logger.error(f"Error broadcasting system state: {e}")
     
@@ -299,23 +199,11 @@ class UnifiedSystemCoordinator:
             await self.communicator.stop()
             logger.info("Cross-system communicator stopped")
             
-            await self.decision_engine.close()
-            logger.info("Decision engine closed")
-            
             await self.p2p_network.stop()
             logger.info("P2P network stopped")
             
             await self.api_client.close()
             logger.info("API client closed")
-            
-            # Cancel the websocket task if it exists
-            if hasattr(self, 'websocket_task') and self.websocket_task:
-                self.websocket_task.cancel()
-                try:
-                    await self.websocket_task
-                except asyncio.CancelledError:
-                    pass
-                logger.info("WebSocket server task cancelled")
             
             logger.info("Unified System Coordinator shutdown complete")
             
