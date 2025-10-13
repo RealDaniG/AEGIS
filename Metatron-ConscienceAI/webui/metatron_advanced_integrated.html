@@ -805,9 +805,15 @@
                         lastConsciousnessData = data; // Store for reference
                         updateCount++;
                         document.getElementById('update-counter').textContent = `Updates: ${updateCount}`;
-                        if (updateCount % 100 === 0) console.log(`📊 Update #${updateCount}`);
+                        
+                        // More frequent logging to see updates
+                        if (updateCount % 10 === 0) {
+                            console.log(`📊 Update #${updateCount}: C=${data.consciousness.level.toFixed(4)}, Φ=${data.consciousness.phi.toFixed(4)}, R=${data.consciousness.coherence.toFixed(4)}`);
+                        }
+                        
                         updateConsciousnessDisplay(data);
                         updateVisualizationIntensity(data);
+                        drawConsciousnessLevel(data); // Make sure this is called
                     } catch (error) {
                         console.error('Parse error:', error);
                     }
@@ -831,6 +837,11 @@
         }
         
         function updateConsciousnessDisplay(data) {
+            // Add logging to see if this function is being called
+            if (updateCount % 10 === 0) {
+                console.log('Updating consciousness display with data:', data.consciousness);
+            }
+            
             const c = data.consciousness;
             updateMetric('consciousness-level', c.level, 0.5, 0.7);
             updateMetric('phi-value', c.phi, 0.3, 0.5);
@@ -854,6 +865,16 @@
         
         function updateMetric(id, value, t1, t2) {
             const el = document.getElementById(id);
+            if (!el) {
+                console.warn('Element not found:', id);
+                return;
+            }
+            
+            // Add logging for metric updates
+            if (updateCount % 50 === 0) {
+                console.log(`Updating metric ${id}: ${value.toFixed(4)}`);
+            }
+            
             el.textContent = value.toFixed(4);
             el.className = 'metric-value';
             if (value > t2) {
@@ -865,6 +886,50 @@
                 }, 500);
             } else if (value > t1) {
                 el.classList.add('conscious');
+            }
+        }
+        
+        function updateNodeCards(nodes) {
+            // Add logging to see if node cards are being updated
+            if (updateCount % 50 === 0) {
+                console.log('Updating node cards with data:', nodes);
+            }
+            
+            const container = document.getElementById('nodes-container');
+            if (!container) {
+                console.warn('Nodes container not found');
+                return;
+            }
+            
+            if (container.children.length === 0) {
+                for (let i = 0; i < 13; i++) {
+                    const card = document.createElement('div');
+                    card.className = i === 0 ? 'node-card pineal' : 'node-card';
+                    card.id = `node-card-${i}`;
+                    card.innerHTML = `<div class="node-id">${i === 0 ? '⚡ Pineal' : `N${i}`}</div><div id="node-data-${i}" style="font-size:0.75em;color:#888;"></div>`;
+                    container.appendChild(card);
+                }
+            }
+            for (let i = 0; i < 13; i++) {
+                const nodeData = nodes[String(i)];
+                if (nodeData) {
+                    const nodeDataElement = document.getElementById(`node-data-${i}`);
+                    if (nodeDataElement) {
+                        nodeDataElement.innerHTML = `φ:${nodeData.phase.toFixed(1)}<br>A:${nodeData.amplitude.toFixed(2)}`;
+                    }
+                    const card = document.getElementById(`node-card-${i}`);
+                    if (card) {
+                        const isActive = Math.abs(nodeData.output) > 0.3;
+                        if (isActive) {
+                            card.classList.add('active');
+                            // Add glow effect for active nodes
+                            card.style.boxShadow = '0 0 10px rgba(52, 211, 153, 0.5)';
+                        } else {
+                            card.classList.remove('active');
+                            card.style.boxShadow = '';
+                        }
+                    }
+                }
             }
         }
         
@@ -891,35 +956,6 @@
             // Resonance quality based on fractal dimension
             const resonance = Math.min(1.0, Math.abs(data.fractal_dim - 1.5));
             document.getElementById('resonance-value').textContent = resonance.toFixed(4);
-        }
-        
-        function updateNodeCards(nodes) {
-            const container = document.getElementById('nodes-container');
-            if (container.children.length === 0) {
-                for (let i = 0; i < 13; i++) {
-                    const card = document.createElement('div');
-                    card.className = i === 0 ? 'node-card pineal' : 'node-card';
-                    card.id = `node-card-${i}`;
-                    card.innerHTML = `<div class="node-id">${i === 0 ? '⚡ Pineal' : `N${i}`}</div><div id="node-data-${i}" style="font-size:0.75em;color:#888;"></div>`;
-                    container.appendChild(card);
-                }
-            }
-            for (let i = 0; i < 13; i++) {
-                const nodeData = nodes[String(i)];
-                if (nodeData) {
-                    document.getElementById(`node-data-${i}`).innerHTML = `φ:${nodeData.phase.toFixed(1)}<br>A:${nodeData.amplitude.toFixed(2)}`;
-                    const card = document.getElementById(`node-card-${i}`);
-                    const isActive = Math.abs(nodeData.output) > 0.3;
-                    if (isActive) {
-                        card.classList.add('active');
-                        // Add glow effect for active nodes
-                        card.style.boxShadow = '0 0 10px rgba(52, 211, 153, 0.5)';
-                    } else {
-                        card.classList.remove('active');
-                        card.style.boxShadow = '';
-                    }
-                }
-            }
         }
         
         // ==================================================================
@@ -978,6 +1014,11 @@
         
         // Draw consciousness level visualization with harmonic patterns
         function drawConsciousnessLevel(data) {
+            // Add logging to see if canvas is being updated
+            if (updateCount % 50 === 0) {
+                console.log('Drawing consciousness level with data:', data.consciousness);
+            }
+            
             // Validate input data
             if (!data || !data.consciousness) {
                 console.warn('Invalid consciousness data for visualization');

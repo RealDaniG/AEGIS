@@ -489,9 +489,9 @@ async def websocket_endpoint(websocket: WebSocket):
             performance_metrics['total_updates'] += 1
             performance_metrics['last_update_time'] = time.time()
             
-            # Debug logging
-            if performance_metrics['total_updates'] % 100 == 0:
-                print(f"Update #{performance_metrics['total_updates']}: C={state['global']['consciousness_level']:.4f}, Φ={state['global']['phi']:.4f}")
+            # Debug logging - more frequent to see if updates are happening
+            if performance_metrics['total_updates'] % 10 == 0:  # Changed from 100 to 10
+                print(f"Update #{performance_metrics['total_updates']}: C={state['global']['consciousness_level']:.4f}, Φ={state['global']['phi']:.4f}, R={state['global']['coherence']:.4f}")
             
             # Prepare data for sending (convert numpy types to native Python)
             websocket_data = {
@@ -526,7 +526,8 @@ async def websocket_endpoint(websocket: WebSocket):
             connection_metadata[connection_id]['updates_sent'] += 1
             
             # Wait before next update (40 Hz = 25ms, or 80 Hz = 12.5ms for high gamma)
-            update_interval = 0.0125 if consciousness_system.base_frequency >= 80 else 0.025
+            # Make sure we're using a consistent update interval
+            update_interval = 0.025  # Always use 25ms (40Hz) for consistent updates
             await asyncio.sleep(update_interval)
             
     except WebSocketDisconnect:
