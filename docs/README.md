@@ -12,6 +12,7 @@ This directory contains supplementary documentation that complements the wiki:
 - **System Integration Reports** - Detailed integration test results and summaries
 - **Technical Specifications** - In-depth technical implementation details
 - **Research Papers** - Theoretical foundations and research findings
+- **Logging Optimization Update** - Recent improvements to reduce verbose logging ([Logging-Optimization-Update.md](Logging-Optimization-Update.md))
 
 ## 🔄 Documentation Policy
 

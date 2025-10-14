@@ -82,7 +82,7 @@ class MatrixVisualizer:
                     print(f"{'●':<15}", end="")
                 elif col_node in self.connection_matrix.get(row_node, set()):
                     # Connected
-                    print(f"{'✓':<15}", end="")
+                    print(f"{'[OK]':<15}", end="")
                 else:
                     # Not connected
                     print(f"{'✗':<15}", end="")
@@ -92,7 +92,7 @@ class MatrixVisualizer:
         print("\n" + "-"*50)
         print("Node Status Legend:")
         print("● = Self")
-        print("✓ = Connected")
+        print("[OK] = Connected")
         print("✗ = Not Connected")
         
         # Print detailed node information

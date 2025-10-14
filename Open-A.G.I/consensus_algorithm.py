@@ -241,7 +241,7 @@ class ConsensusEngine:
         
         # Solo el líder puede proponer
         if self.node_id != self.current_leader:
-            logger.warning(f"⚠️ Solo el líder {self.current_leader} puede proponer")
+            logger.warning(f"[WARN] Solo el líder {self.current_leader} puede proponer")
             return None
         
         # Crear propuesta
@@ -413,7 +413,7 @@ class ConsensusEngine:
         """Maneja mensaje de propuesta"""
         # Solo procesar si viene del líder actual
         if message.sender_id != self.current_leader:
-            logger.warning(f"⚠️ Propuesta de nodo no líder: {message.sender_id}")
+            logger.warning(f"[WARN] Propuesta de nodo no líder: {message.sender_id}")
             self.byzantine_detector.record_behavior(
                 message.sender_id,
                 "invalid_proposal",

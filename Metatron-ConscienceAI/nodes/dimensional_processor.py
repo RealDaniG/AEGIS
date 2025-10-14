@@ -341,4 +341,4 @@ if __name__ == "__main__":
         else:
             print(f"  {k}: {v}")
     
-    print("\n✓ Dimensional processor tests passed!")
+    print("\n[OK] Dimensional processor tests passed!")

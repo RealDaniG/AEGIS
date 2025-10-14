@@ -328,4 +328,4 @@ if __name__ == "__main__":
     sync = osc1.synchronization_index(osc2)
     print(f"After 20 steps, synchronization index: {sync:.4f}")
     
-    print("\n✓ Oscillator tests passed!")
+    print("\n[OK] Oscillator tests passed!")

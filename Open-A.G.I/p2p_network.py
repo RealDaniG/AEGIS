@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 """
 Red P2P Segura - AEGIS Framework
-Implementación de red peer-to-peer con enfoque en privacidad, seguridad y anonimato.
+Implementacion de red peer-to-peer con enfoque en privacidad, seguridad y anonimato.
 
-Características principales:
+Caracteristicas principales:
 - Descubrimiento de nodos zeroconf/mDNS
-- Comunicación cifrada punto a punto
-- Integración con TOR para anonimato
+- Comunicacion cifrada punto a punto
+- Integracion con TOR para anonimato
 - Balanceo de carga distribuido
-- Tolerancia a fallos y auto-reparación
-- Firewall inteligente y protección DDoS
+- Tolerancia a fallos y auto-reparacion
+- Firewall inteligente y proteccion DDoS
 """
 
 import asyncio
@@ -174,7 +174,7 @@ class PeerDiscoveryService:
         """Inicia el servicio de descubrimiento"""
         try:
             self.discovery_active = True
-            logger.info(f"🔍 Iniciando descubrimiento de peers para nodo {self.node_id}")
+            logger.info(f"[DISCOVERY] Iniciando descubrimiento de peers para nodo {self.node_id}")
 
             # Configurar Zeroconf si disponible
             if HAS_ZEROCONF and HAS_NETIFACES:
@@ -195,7 +195,7 @@ class PeerDiscoveryService:
             await asyncio.gather(*tasks)
 
         except Exception as e:
-            logger.error(f"❌ Error iniciando descubrimiento: {e}")
+            logger.error(f"[ERROR] Error iniciando descubrimiento: {e}")
 
     async def _setup_zeroconf(self):
         """Configura el servicio Zeroconf/mDNS"""
@@ -258,7 +258,7 @@ class PeerDiscoveryService:
                 return s.getsockname()[0]
 
         except Exception as e:
-            logger.warning(f"⚠️ Error obteniendo IP local: {e}")
+            logger.warning(f"[WARN] Error obteniendo IP local: {e}")
             return "127.0.0.1"
 
     async def _mdns_discovery(self):
@@ -383,7 +383,7 @@ class PeerDiscoveryService:
                             await self._process_bootstrap_peer(peer_data)
 
         except Exception as e:
-            logger.debug(f"⚠️ Error consultando bootstrap {host}:{port}: {e}")
+            logger.debug(f"[WARN] Error consultando bootstrap {host}:{port}: {e}")
 
     async def _process_bootstrap_peer(self, peer_data: Dict[str, Any]):
         """Procesa información de peer desde nodo bootstrap"""
@@ -586,7 +586,7 @@ class ConnectionManager:
             try:
                 message = json.loads(data.decode().strip())
             except json.JSONDecodeError as je:
-                logger.warning(f"⚠️ Datos JSON inválidos en conexión entrante: {je}")
+                logger.warning(f"[WARN] Datos JSON inválidos en conexión entrante: {je}")
                 return
 
             # Procesar según tipo de mensaje
@@ -595,7 +595,7 @@ class ConnectionManager:
             elif message.get('type') == 'handshake':
                 await self._handle_handshake_request(reader, writer, message)
             else:
-                logger.warning(f"⚠️ Tipo de mensaje desconocido: {message.get('type')}")
+                logger.warning(f"[WARN] Tipo de mensaje desconocido: {message.get('type')}")
 
         except asyncio.TimeoutError:
             logger.warning("⏰ Timeout leyendo mensaje inicial de conexión entrante")
@@ -680,7 +680,7 @@ class ConnectionManager:
         """Conecta a un peer específico"""
         try:
             if peer_info.peer_id in self.active_connections:
-                logger.debug(f"⚠️ Ya conectado a {peer_info.peer_id}")
+                logger.debug(f"[WARN] Ya conectado a {peer_info.peer_id}")
                 return True
 
             logger.info(f"🔗 Conectando a peer {peer_info.peer_id} ({peer_info.ip_address}:{peer_info.port})")

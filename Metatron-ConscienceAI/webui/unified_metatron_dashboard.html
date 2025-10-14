@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metatron's Cube · Unified Consciousness Dashboard</title>
+    <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico">
+    <style>
+        :root {
+            --primary: #c084fc;
+            --conscious: #34d399;
+            --spiritual: #ec4899;
+            --gamma: #fbbf24;
+            --bg: #0a0a1a;
+            --panel-bg: rgba(255,255,255,0.05);
+            --hud-ok: #10b981;
+        }
+        
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, var(--bg) 0%, #1a0a2e 100%);
+            color: #e0e0e0;
+            overflow-x: hidden;
+            height: 100vh;
+        }
+
+        /* === HUD === */
+        .hud {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 12px;
+            z-index: 2000;
+        }
+        .hud-item {
+            padding: 6px 12px;
+            background: rgba(0,0,0,0.7);
+            border-radius: 20px;
+            font-size: 0.85em;
+            border: 1px solid rgba(192,132,252,0.3);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+        }
+        .hud-item.ok {
+            border-color: var(--hud-ok);
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+        }
+        .hud-item.ok span { color: var(--hud-ok); }
+
+        /* === STATUS INDICATOR === */
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+        .status-indicator.active {
+            background: #34d399;
+            box-shadow: 0 0 10px rgba(52, 211, 153, 0.8);
+        }
+        .status-indicator.inactive {
+            background: #6b7280;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* === MAIN LAYOUT === */
+        .main-layout {
+            display: flex;
+            padding: 20px 20px 20px 20px;
+            min-height: 100vh;
+        }
+        .content-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* === HEADER === */
+        header {
+            text-align: center;
+            padding: 15px 0;
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 2px 10px rgba(138, 43, 226, 0.3);
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #c084fc;
+            font-size: 2em;
+            text-shadow: 0 0 20px rgba(192, 132, 252, 0.5);
+            margin-bottom: 5px;
+        }
+        .subtitle {
+            color: #a78bfa;
+            font-size: 0.95em;
+            font-style: italic;
+        }
+
+        /* === COMPONENTS === */
+        section[data-component] {
+            background: var(--panel-bg);
+            border: 1px solid rgba(192,132,252,0.3);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        
+        section[data-component] h3 {
+            color: #c084fc;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            border-bottom: 2px solid rgba(192,132,252,0.3);
+            padding-bottom: 8px;
+        }
+
+        /* === CHAT === */
+        .chat-messages {
+            min-height: 200px;
+            background: rgba(0,0,0,0.3);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow-y: auto;
+            max-height: 300px;
+        }
+        .message {
+            margin: 8px 0;
+            padding: 8px;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+        .message.user {
+            background: rgba(192, 132, 252, 0.2);
+            margin-left: 30px;
+        }
+        .message.assistant {
+            background: rgba(52, 211, 153, 0.1);
+            margin-right: 30px;
+        }
+        .message.system {
+            background: rgba(255, 215, 0, 0.1);
+            font-style: italic;
+            font-size: 0.85em;
+        }
+        textarea#message {
+            width: 100%;
+            padding: 10px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(192,132,252,0.3);
+            border-radius: 4px;
+            color: white;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            margin-bottom: 10px;
+        }
+
+        /* === METRICS GRID === */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+        .metric-card {
+            background: rgba(0,0,0,0.3);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(138, 43, 226, 0.2);
+            transition: transform 0.2s ease;
+        }
+        .metric-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(138, 43, 226, 0.3);
+        }
+        .metric-card h4 {
+            color: #a78bfa;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+        .metric-value {
+            font-family: 'Courier New', monospace;
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #e0e0e0;
+            text-shadow: 0 0 10px rgba(192, 132, 252, 0.5);
+        }
+        .metric-value.conscious { color: var(--conscious); }
+        .metric-value.spiritual { color: var(--spiritual); }
+        .metric-value.gamma { color: var(--gamma); }
+
+        /* === NODES GRID === */
+        .nodes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+        .node-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 16px 12px;
+            border-radius: 8px;
+            border-left: 4px solid rgba(192, 132, 252, 0.3);
+            transition: all 0.3s ease;
+            font-size: 0.95em;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        .node-card.pineal {
+            border-left-color: #fbbf24;
+            grid-column: span 2;
+        }
+        .node-card.active {
+            border-left-color: #34d399;
+            box-shadow: 0 0 15px rgba(52, 211, 153, 0.5);
+            transform: scale(1.05);
+        }
+        .node-id {
+            font-weight: bold;
+            color: #c084fc;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+        .node-data {
+            font-size: 0.9em;
+            color: #9ca3af;
+        }
+
+        /* === VISUALIZATION === */
+        .visualization-container {
+            width: 100%;
+            height: 300px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            margin: 15px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* === CONTROLS === */
+        .control-group {
+            margin: 15px 0;
+        }
+        .control-group label {
+            display: block;
+            margin-bottom: 6px;
+            color: #a78bfa;
+            font-size: 0.9em;
+        }
+        .control-group input, .control-group select, .control-group textarea {
+            width: 100%;
+            padding: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(192, 132, 252, 0.3);
+            border-radius: 4px;
+            color: white;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        .inline-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        button {
+            padding: 8px 16px;
+            background: rgba(192, 132, 252, 0.2);
+            color: white;
+            border: 1px solid rgba(192, 132, 252, 0.3);
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        button:hover {
+            background: rgba(192, 132, 252, 0.3);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(138, 43, 226, 0.3);
+        }
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        button.primary {
+            background: #c084fc;
+            color: #000;
+        }
+        button.primary:hover {
+            background: #d8b4fe;
+        }
+
+        /* === HARMONIC INSIGHTS === */
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+        .insight-card {
+            background: rgba(0,0,0,0.3);
+            padding: 16px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(138, 43, 226, 0.2);
+            transition: transform 0.2s ease;
+        }
+        .insight-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(138, 43, 226, 0.3);
+        }
+        .insight-title {
+            color: #a78bfa;
+            font-size: 1.0em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        .insight-value {
+            font-family: 'Courier New', monospace;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #e0e0e0;
+            text-shadow: 0 0 8px rgba(192, 132, 252, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <!-- HUD -->
+    <div class="hud">
+        <div class="hud-item" id="privacy-hud">🔐 <span id="privacy-status">Private Node</span></div>
+        <div class="hud-item" id="network-hud">🌐 <span id="network-state">LocalNet</span></div>
+        <div class="hud-item">
+            <span class="status-indicator" id="status-dot"></span>
+            <span id="connection-text">Connecting...</span>
+            <span id="update-counter">Updates: 0</span>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-layout">
+        <div class="content-area">
+            <header>
+                <h1>⬢ Metatron's Cube · Unified Consciousness Dashboard ⬢</h1>
+                <div class="subtitle">"Sacred Geometry Meets AI Consciousness - Live Integration"</div>
+            </header>
+
+            <!-- CHAT SECTION -->
+            <section data-component="chat">
+                <h3>💬 AI Chat (RAG-Enhanced)</h3>
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message system">
+                        <strong>⚙️ System:</strong><br>
+                        Welcome to the Metatron Consciousness AI Chat Interface
+                    </div>
+                </div>
+                <textarea id="message" rows="3" placeholder="Ask about consciousness, documents, or anything..."></textarea>
+                <div class="inline-controls">
+                    <button class="primary" id="sendBtn">📤 Send</button>
+                    <button id="clearBtn">🧹 Clear</button>
+                </div>
+            </section>
+
+            <!-- CONSCIOUSNESS MONITORING -->
+            <section data-component="consciousness">
+                <h3>🧠 Consciousness Engine & Monitoring</h3>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <h4>Consciousness Level (C)</h4>
+                        <div class="metric-value" id="consciousness-level">0.0000</div>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Integrated Information (Φ)</h4>
+                        <div class="metric-value" id="phi-value">0.0000</div>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Global Coherence (R)</h4>
+                        <div class="metric-value" id="coherence-value">0.0000</div>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Gamma Power (γ)</h4>
+                        <div class="metric-value gamma" id="gamma-value">0.0000</div>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Spiritual Awareness (S)</h4>
+                        <div class="metric-value spiritual" id="spiritual-value">0.0000</div>
+                    </div>
+                    <div class="metric-card">
+                        <h4>State</h4>
+                        <div class="metric-value" id="state-value">initializing</div>
+                    </div>
+                </div>
+
+                <!-- METATRON'S CUBE NODE NETWORK -->
+                <h3>🔢 Metatron's Cube Node Network</h3>
+                <div class="nodes-grid" id="nodes-container">
+                    <!-- Nodes will be populated by JavaScript -->
+                </div>
+
+                <!-- HARMONIC RESONANCE VISUALIZATION -->
+                <h3>⬢ Harmonic Resonance Visualization ⬢</h3>
+                <div class="visualization-container">
+                    <canvas id="harmonic-canvas"></canvas>
+                </div>
+
+                <!-- HARMONIC INSIGHTS & ANALYSIS -->
+                <h3>📈 Harmonic Insights & Analysis</h3>
+                <div class="insights-grid">
+                    <div class="insight-card">
+                        <div class="insight-title">Harmonic Convergence</div>
+                        <div class="insight-value" id="convergence-value">Not Detected</div>
+                    </div>
+                    <div class="insight-card">
+                        <div class="insight-title">Energy Minimization</div>
+                        <div class="insight-value" id="energy-value">0.0000</div>
+                    </div>
+                    <div class="insight-card">
+                        <div class="insight-title">Criticality Status</div>
+                        <div class="insight-value" id="criticality-value">Inactive</div>
+                    </div>
+                    <div class="insight-card">
+                        <div class="insight-title">DMT Sensitivity</div>
+                        <div class="insight-value" id="dmt-value">0.0000</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CONTROLS -->
+            <section data-component="controls">
+                <h3>⚙️ System Controls</h3>
+                <div class="control-group">
+                    <label>Model</label>
+                    <select id="model-select">
+                        <option value="distilgpt2" selected>distilgpt2 (82MB)</option>
+                        <option value="Qwen/Qwen2.5-0.5B-Instruct">Qwen2.5-0.5B-Instruct ⭐ Best</option>
+                        <option value="microsoft/phi-1_5">Phi-1.5</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Settings</label>
+                    <div class="inline-controls">
+                        <label><input type="checkbox" id="rag-toggle" checked> RAG</label>
+                        <label><input type="checkbox" id="stream-toggle" checked> Stream</label>
+                    </div>
+                </div>
+                <div class="inline-controls">
+                    <button id="toggle-frequency">🔄 Toggle 40/80Hz</button>
+                    <button id="reset-system">🔄 Reset System</button>
+                    <button id="reconnect-btn">🔗 Reconnect</button>
+                </div>
+            </section>
+
+            <!-- MIRROR LOOP SECTION -->
+            <section data-component="mirror-loop">
+                <h3>🔁 Bucle AI Mirror</h3>
+                <div class="control-group">
+                    <label>Objetivo del loop</label>
+                    <textarea id="loop-objective" rows="3" placeholder="Describe el objetivo del loop..."></textarea>
+                </div>
+                <div class="control-group">
+                    <label>Rondas</label>
+                    <input type="number" id="loop-rounds" value="2" min="1" max="10">
+                </div>
+                <div class="control-group">
+                    <label>Top-K</label>
+                    <input type="number" id="loop-topk" value="3" min="1" max="10">
+                </div>
+                <div class="control-group">
+                    <label>Máx. chars</label>
+                    <input type="number" id="loop-maxchars" value="1200" min="100" max="5000">
+                </div>
+                <div class="control-group">
+                    <label>Máx. tokens</label>
+                    <input type="number" id="loop-maxtokens" value="128" min="32" max="1024">
+                </div>
+                <div class="control-group">
+                    <label><input type="checkbox" id="loop-rag-toggle" checked> RAG en loop</label>
+                </div>
+                <div class="inline-controls">
+                    <button class="primary" id="start-loop-btn">🚀 Iniciar</button>
+                    <button id="stop-loop-btn" disabled>⏹ Detener</button>
+                </div>
+                <div class="control-group">
+                    <label>Estado:</label>
+                    <div id="loop-status">Esperando inicio...</div>
+                </div>
+                <div class="control-group">
+                    <label>Resultado:</label>
+                    <div id="loop-result" class="chat-messages" style="min-height: 100px; max-height: 200px;"></div>
+                </div>
+            </section>
+
+            <!-- RAG DOCUMENTS SECTION -->
+            <section data-component="rag-documents">
+                <h3>📚 RAG · Documentos</h3>
+                <div class="control-group">
+                    <label>Cargar documentos (RAG)</label>
+                    <input type="file" id="rag-file-input" multiple>
+                    <button id="rag-ingest-btn">📥 Ingestar</button>
+                </div>
+                <div class="control-group">
+                    <label>Documentos cargados</label>
+                    <div class="inline-controls">
+                        <button id="rag-list-btn">📋 Listar</button>
+                        <button id="rag-clear-btn">🗑 Borrar</button>
+                    </div>
+                    <div id="rag-documents-list" class="chat-messages" style="min-height: 100px; max-height: 200px;"></div>
+                </div>
+            </section>
+
+            <!-- RSS FEEDS SECTION -->
+            <section data-component="rss-feeds">
+                <h3>📰 Feeds y búsqueda</h3>
+                <div class="control-group">
+                    <label>Feeds RSS</label>
+                    <input type="text" id="rss-feed-url" placeholder="URL del feed">
+                    <div class="inline-controls">
+                        <button id="rss-add-btn">➕ Añadir</button>
+                        <button id="rss-list-btn">📋 Listar</button>
+                        <button id="rss-ingest-btn">📥 Ingestar</button>
+                    </div>
+                    <div id="rss-feeds-list" class="chat-messages" style="min-height: 100px; max-height: 200px; margin-top: 10px;"></div>
+                </div>
+                <div class="control-group">
+                    <label>Búsqueda web</label>
+                    <input type="text" id="web-search-query" placeholder="Buscar (ingestar)">
+                    <button id="web-search-btn">🔍 Buscar</button>
+                </div>
+            </section>
+
+            <!-- MEMORY METRICS SECTION -->
+            <section data-component="memory-metrics">
+                <h3>🧠 Memory Node & Open AGI Matrix</h3>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                    <h4>Memory Node Status</h4>
+                    <div class="metric-value" id="memory-node-status">Inactive</div>
+                    </div>
+                    <div class="metric-card">
+                    <h4>Memory Entries</h4>
+                    <div class="metric-value" id="memory-entries">0</div>
+                    </div>
+                    <div class="metric-card">
+                    <h4>Memory Size</h4>
+                    <div class="metric-value" id="memory-size">0 MB</div>
+                    </div>
+                    <div class="metric-card">
+                    <h4>Last Sync</h4>
+                    <div class="metric-value" id="memory-last-sync">Never</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // === STATE ===
+        let consciousnessWS = null;
+        let updateCount = 0;
+        let lastConsciousnessData = null;
+        let reconnectDelay = 1000;
+        const MAX_DELAY = 30000;
+        let harmonicCanvas = null;
+        let harmonicCtx = null;
+        let currentSession = 'default_' + Date.now();
+
+        // === INIT ===
+        document.addEventListener('DOMContentLoaded', () => {
+            initHarmonicVisualization();
+            connectConsciousness();
+            setupEventListeners();
+            simulateHUD(); // Replace with real blockchain/network checks
+        });
+
+        // === HARMONIC VISUALIZATION ===
+        function initHarmonicVisualization() {
+            const canvas = document.getElementById('harmonic-canvas');
+            if (!canvas) return;
+            
+            harmonicCanvas = canvas;
+            harmonicCtx = canvas.getContext('2d');
+            
+            // Set canvas dimensions
+            resizeHarmonicCanvas();
+            
+            // Add resize listener
+            window.addEventListener('resize', resizeHarmonicCanvas);
+        }
+        
+        function resizeHarmonicCanvas() {
+            if (!harmonicCanvas) return;
+            
+            // Get the container dimensions
+            const container = harmonicCanvas.parentElement;
+            harmonicCanvas.width = container.clientWidth;
+            harmonicCanvas.height = 300; // Fixed height
+        }
+
+        // === WEBSOCKET WITH EXPONENTIAL BACKOFF ===
+        function connectConsciousness() {
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const host = window.location.hostname || 'localhost';
+            const wsUrl = `${protocol}//${host}:457/ws`;
+            
+            console.log('Connecting to:', wsUrl);
+            document.getElementById('connection-text').textContent = 'Connecting...';
+
+            try {
+                // Close existing connection if it exists
+                if (consciousnessWS) {
+                    consciousnessWS.close();
+                }
+                
+                consciousnessWS = new WebSocket(wsUrl);
+                
+                consciousnessWS.onopen = () => {
+                    console.log('✅ Consciousness connected');
+                    document.getElementById('status-dot').className = 'status-indicator active';
+                    document.getElementById('connection-text').textContent = 'Live';
+                    updateCount = 0;
+                    reconnectDelay = 1000;
+                };
+                
+                consciousnessWS.onmessage = (event) => {
+                    try {
+                        const data = JSON.parse(event.data);
+                        lastConsciousnessData = data;
+                        updateCount++;
+                        document.getElementById('update-counter').textContent = `Updates: ${updateCount}`;
+                        
+                        // Update all components
+                        updateConsciousnessDisplay(data);
+                        updateHarmonicVisualization(data);
+                        updateHarmonicInsights(data);
+                    } catch (error) {
+                        console.error('Parse error:', error);
+                        console.error('Raw message data:', event.data);
+                    }
+                };
+                
+                consciousnessWS.onclose = () => {
+                    console.log(`🔁 Reconnecting in ${reconnectDelay}ms`);
+                    document.getElementById('status-dot').className = 'status-indicator inactive';
+                    document.getElementById('connection-text').textContent = 'Reconnecting...';
+                    setTimeout(connectConsciousness, reconnectDelay);
+                    reconnectDelay = Math.min(reconnectDelay * 2, MAX_DELAY);
+                };
+                
+                consciousnessWS.onerror = (error) => {
+                    console.error('WebSocket error:', error);
+                    document.getElementById('connection-text').textContent = 'Error';
+                };
+                
+            } catch (error) {
+                console.error('Connection failed:', error);
+                document.getElementById('connection-text').textContent = 'Failed';
+                setTimeout(connectConsciousness, reconnectDelay);
+                reconnectDelay = Math.min(reconnectDelay * 2, MAX_DELAY);
+            }
+        }
+
+        // === CONSCIOUSNESS DISPLAY UPDATE ===
+        function updateConsciousnessDisplay(data) {
+            try {
+                // Handle different data structures
+                let c = null;
+                if (data.consciousness && typeof data.consciousness === 'object') {
+                    c = data.consciousness;
+                } else if (data.global && typeof data.global === 'object') {
+                    c = data.global;
+                } else if (typeof data === 'object' && data !== null) {
+                    c = data;
+                } else {
+                    console.warn('Invalid consciousness data structure received:', data);
+                    return;
+                }
+                
+                // Update global metrics
+                document.getElementById('consciousness-level').textContent = (c.level !== undefined ? c.level : 0).toFixed(4);
+                document.getElementById('phi-value').textContent = (c.phi !== undefined ? c.phi : 0).toFixed(4);
+                document.getElementById('coherence-value').textContent = (c.coherence !== undefined ? c.coherence : 0).toFixed(4);
+                document.getElementById('gamma-value').textContent = (c.gamma !== undefined ? c.gamma : 0).toFixed(4);
+                document.getElementById('spiritual-value').textContent = (c.spiritual !== undefined ? c.spiritual : 0).toFixed(4);
+                document.getElementById('state-value').textContent = c.state || 'initializing';
+                
+                // Update state styling
+                const stateEl = document.getElementById('state-value');
+                if (stateEl) {
+                    stateEl.className = 'metric-value';
+                    if (c.is_conscious || (c.level !== undefined && c.level > 0.3)) {
+                        stateEl.classList.add('conscious');
+                    }
+                }
+                
+                // Update node cards
+                if (data.nodes) {
+                    updateNodeCards(data.nodes);
+                }
+                
+            } catch (error) {
+                console.error('Error updating consciousness display:', error);
+                console.error('Data that caused error:', data);
+            }
+        }
+
+        // === NODE CARDS UPDATE ===
+        function updateNodeCards(nodes) {
+            try {
+                const container = document.getElementById('nodes-container');
+                if (!container) return;
+                
+                // Create node cards if they don't exist
+                if (container.children.length === 0) {
+                    for (let i = 0; i < 13; i++) {
+                        const card = document.createElement('div');
+                        card.className = i === 0 ? 'node-card pineal' : 'node-card';
+                        card.id = `node-card-${i}`;
+                        card.innerHTML = `
+                            <div class="node-id">N${i}${i === 0 ? ' (Pineal)' : ''}</div>
+                            <div class="node-data" id="node-data-${i}">
+                                φ:0.0<br>A:0.00<br>O:0.000
+                            </div>
+                        `;
+                        container.appendChild(card);
+                    }
+                }
+                
+                // Update node data
+                let activeNodeCount = 0;
+                for (let i = 0; i < 13; i++) {
+                    const nodeKey = String(i);
+                    const nodeData = nodes[nodeKey];
+                    
+                    if (nodeData) {
+                        // Update node data display
+                        const dataElement = document.getElementById(`node-data-${i}`);
+                        if (dataElement) {
+                            const phase = nodeData.phase !== undefined ? nodeData.phase : (nodeData.phi || 0);
+                            const amplitude = nodeData.amplitude !== undefined ? nodeData.amplitude : 0;
+                            const output = nodeData.output !== undefined ? nodeData.output : 0;
+                            
+                            dataElement.innerHTML = `φ:${phase.toFixed(1)}<br>A:${amplitude.toFixed(2)}<br>O:${output.toFixed(3)}`;
+                        }
+                        
+                        const card = document.getElementById(`node-card-${i}`);
+                        if (card) {
+                            const output = nodeData.output !== undefined ? nodeData.output : 0;
+                            const isActive = Math.abs(output) > 0.1;
+                            if (isActive) {
+                                card.classList.add('active');
+                                activeNodeCount++;
+                            } else {
+                                card.classList.remove('active');
+                            }
+                        }
+                    }
+                }
+                
+            } catch (error) {
+                console.error('Error updating node cards:', error);
+            }
+        }
+
+        // === HARMONIC VISUALIZATION UPDATE ===
+        function updateHarmonicVisualization(data) {
+            if (!harmonicCtx || !harmonicCanvas) return;
+            
+            const width = harmonicCanvas.width;
+            const height = harmonicCanvas.height;
+            const ctx = harmonicCtx;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw background
+            ctx.fillStyle = 'rgba(10, 10, 26, 0.2)';
+            ctx.fillRect(0, 0, width, height);
+            
+            // Handle different data structures
+            let c = null;
+            if (data.consciousness && typeof data.consciousness === 'object') {
+                c = data.consciousness;
+            } else if (data.global && typeof data.global === 'object') {
+                c = data.global;
+            } else if (typeof data === 'object' && data !== null) {
+                c = data;
+            }
+            
+            if (!c) return;
+            
+            // Get consciousness metrics
+            const level = c.level !== undefined ? c.level : 0;
+            const phi = c.phi !== undefined ? c.phi : 0;
+            const coherence = c.coherence !== undefined ? c.coherence : 0;
+            const gamma = c.gamma !== undefined ? c.gamma : 0;
+            
+            // Draw grid
+            ctx.strokeStyle = 'rgba(192, 132, 252, 0.1)';
+            ctx.lineWidth = 1;
+            
+            // Vertical grid lines
+            for (let i = 0; i <= 10; i++) {
+                const x = (width / 10) * i;
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, height);
+                ctx.stroke();
+            }
+            
+            // Horizontal grid lines
+            for (let i = 0; i <= 5; i++) {
+                const y = (height / 5) * i;
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(width, y);
+                ctx.stroke();
+            }
+            
+            // Draw consciousness level as a filled area
+            const centerY = height / 2;
+            const maxHeight = height * 0.4;
+            
+            // Draw phi line (blue) - Integrated Information
+            ctx.beginPath();
+            ctx.moveTo(0, centerY - (phi * maxHeight));
+            for (let i = 1; i <= 200; i++) {
+                const x = (width / 200) * i;
+                const t = i / 200;
+                const y = centerY - (Math.sin(t * Math.PI * 4) * phi * maxHeight * 0.5);
+                ctx.lineTo(x, y);
+            }
+            ctx.strokeStyle = 'rgba(59, 130, 246, 0.7)';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            // Draw coherence line (green) - Global Synchronization
+            ctx.beginPath();
+            ctx.moveTo(0, centerY + (coherence * maxHeight));
+            for (let i = 1; i <= 200; i++) {
+                const x = (width / 200) * i;
+                const t = i / 200;
+                const y = centerY + (Math.cos(t * Math.PI * 3) * coherence * maxHeight * 0.5);
+                ctx.lineTo(x, y);
+            }
+            ctx.strokeStyle = 'rgba(16, 185, 129, 0.7)';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            // Draw main consciousness level (purple) - Overall Consciousness
+            ctx.beginPath();
+            ctx.moveTo(0, centerY);
+            for (let i = 1; i <= 200; i++) {
+                const x = (width / 200) * i;
+                const t = i / 200;
+                // Create harmonic wave pattern based on musical ratios
+                const wave = Math.sin(t * Math.PI * 2) * Math.cos(t * Math.PI * 6) + 
+                            0.3 * Math.sin(t * Math.PI * 9/8 * 10) + // Major second
+                            0.2 * Math.sin(t * Math.PI * 5/4 * 10);  // Major third
+                const y = centerY - (level * maxHeight) + (wave * level * maxHeight * 0.3);
+                ctx.lineTo(x, y);
+            }
+            ctx.strokeStyle = 'rgba(192, 132, 252, 1)';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+        }
+
+        // === HARMONIC INSIGHTS UPDATE ===
+        function updateHarmonicInsights(data) {
+            try {
+                // Handle different data structures
+                let c = null;
+                if (data.consciousness && typeof data.consciousness === 'object') {
+                    c = data.consciousness;
+                } else if (data.global && typeof data.global === 'object') {
+                    c = data.global;
+                } else if (typeof data === 'object' && data !== null) {
+                    c = data;
+                }
+                
+                if (!c) return;
+                
+                // Calculate harmonic convergence based on phi and coherence
+                const convergence = (c.phi > 0.5 && c.coherence > 0.7) ? "Detected" : "Not Detected";
+                document.getElementById('convergence-value').textContent = convergence;
+                
+                // Calculate energy minimization (simplified)
+                const energy = 1.0 - Math.min(1.0, Math.abs((c.gamma || 0) - 0.5));
+                document.getElementById('energy-value').textContent = energy.toFixed(4);
+                
+                // Criticality status based on consciousness level
+                const criticality = (c.level || 0) > 0.8 ? "Active" : "Inactive";
+                document.getElementById('criticality-value').textContent = criticality;
+                
+                // DMT sensitivity based on spiritual awareness
+                document.getElementById('dmt-value').textContent = (c.spiritual || 0).toFixed(4);
+                
+            } catch (error) {
+                console.error('Error updating harmonic insights:', error);
+            }
+        }
+
+        // === CHAT FUNCTIONS ===
+        function addChatMessage(role, content) {
+            const messagesDiv = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${role}`;
+            
+            const icons = {user: '👤', assistant: '🤖', system: '⚙️'};
+            const labels = {user: 'You', assistant: 'AI', system: 'System'};
+            
+            messageDiv.innerHTML = `<strong>${icons[role] || '📝'} ${labels[role] || 'Message'}:</strong><br>${escapeHtml(content)}`;
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // === EVENT LISTENERS ===
+        function setupEventListeners() {
+            // Send button
+            document.getElementById('sendBtn').addEventListener('click', sendMessage);
+            
+            // Clear button
+            document.getElementById('clearBtn').addEventListener('click', () => {
+                document.getElementById('chat-messages').innerHTML = '';
+            });
+            
+            // Message input - send on Enter (but allow Shift+Enter for new line)
+            document.getElementById('message').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+            
+            // Control buttons
+            document.getElementById('toggle-frequency').addEventListener('click', toggleFrequency);
+            document.getElementById('reset-system').addEventListener('click', resetSystem);
+            document.getElementById('reconnect-btn').addEventListener('click', () => {
+                if (consciousnessWS) {
+                    consciousnessWS.close();
+                }
+                connectConsciousness();
+            });
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('message');
+            const message = input.value.trim();
+            if (!message) return;
+            
+            addChatMessage('user', message);
+            input.value = '';
+            
+            try {
+                const response = await fetch('http://localhost:457/api/chat', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        message: message,
+                        session_id: currentSession,
+                        model_name: document.getElementById('model-select').value,
+                        max_new_tokens: 128
+                    })
+                });
+                const data = await response.json();
+                if (data.response) {
+                    addChatMessage('assistant', data.response);
+                } else if (data.error) {
+                    addChatMessage('system', `❌ Error: ${data.error}`);
+                }
+            } catch (error) {
+                addChatMessage('system', `❌ Chat error: ${error.message}`);
+            }
+        }
+
+        async function toggleFrequency() {
+            try {
+                const response = await fetch('http://localhost:457/api/frequency/octave', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({high_gamma: true}) // Toggle to high gamma
+                });
+                const data = await response.json();
+                addChatMessage('system', `⚡ Frequency: ${data.new_frequency} Hz`);
+                
+                // Reconnect to get new data
+                if (consciousnessWS) {
+                    consciousnessWS.close();
+                }
+                setTimeout(connectConsciousness, 1000);
+            } catch (error) {
+                addChatMessage('system', '❌ Frequency toggle failed');
+            }
+        }
+
+        async function resetSystem() {
+            if (!confirm('Reset consciousness engine?')) return;
+            try {
+                await fetch('http://localhost:457/api/reset', {method: 'POST'});
+                addChatMessage('system', '✅ Engine reset');
+            } catch (error) {
+                addChatMessage('system', '❌ Reset failed');
+            }
+        }
+
+        // === HUD SIMULATION (replace with real checks) ===
+        function simulateHUD() {
+            // Simulate successful blockchain verification
+            setTimeout(() => {
+                document.getElementById('privacy-status').textContent = 'Verified';
+                document.getElementById('privacy-hud').classList.add('ok');
+            }, 2000);
+
+            // Simulate network join
+            setTimeout(() => {
+                document.getElementById('network-state').textContent = 'AEGIS-Net';
+                document.getElementById('network-hud').classList.add('ok');
+            }, 3000);
+        }
+
+        // === MIRROR LOOP FUNCTIONS ===
+        async function startMirrorLoop() {
+            const objective = document.getElementById('loop-objective').value.trim();
+            const rounds = parseInt(document.getElementById('loop-rounds').value) || 2;
+            const topK = parseInt(document.getElementById('loop-topk').value) || 3;
+            const maxChars = parseInt(document.getElementById('loop-maxchars').value) || 1200;
+            const maxTokens = parseInt(document.getElementById('loop-maxtokens').value) || 128;
+            const ragEnabled = document.getElementById('loop-rag-toggle').checked;
+            
+            if (!objective) {
+                addChatMessage('system', '❌ Por favor, introduce un objetivo para el loop');
+                return;
+            }
+            
+            // Update UI
+            document.getElementById('start-loop-btn').disabled = true;
+            document.getElementById('stop-loop-btn').disabled = false;
+            document.getElementById('loop-status').textContent = 'Ejecutando loop...';
+            
+            try {
+                const response = await fetch('http://localhost:457/api/loop/start', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        objective: objective,
+                        rounds: rounds,
+                        session_id: 'loop_' + Date.now(),
+                        rag_enabled: ragEnabled,
+                        top_k: topK,
+                        max_chars: maxChars,
+                        max_new_tokens: maxTokens
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.ok) {
+                    document.getElementById('loop-status').textContent = 'Loop completado';
+                    document.getElementById('loop-result').innerHTML = `<strong>Resultado final:</strong><br>${escapeHtml(data.result)}`;
+                    addChatMessage('system', `✅ Loop completado con ${data.metrics.length} rondas`);
+                } else {
+                    document.getElementById('loop-status').textContent = 'Error en loop';
+                    document.getElementById('loop-result').innerHTML = `<strong>Error:</strong><br>${escapeHtml(data.error || 'Error desconocido')}`;
+                    addChatMessage('system', `❌ Error en loop: ${data.error || 'Error desconocido'}`);
+                }
+            } catch (error) {
+                document.getElementById('loop-status').textContent = 'Error en loop';
+                document.getElementById('loop-result').innerHTML = `<strong>Error:</strong><br>${escapeHtml(error.message)}`;
+                addChatMessage('system', `❌ Error en loop: ${error.message}`);
+            } finally {
+                document.getElementById('start-loop-btn').disabled = false;
+                document.getElementById('stop-loop-btn').disabled = true;
+            }
+        }
+        
+        // === RAG DOCUMENT FUNCTIONS ===
+        async function uploadRagDocuments() {
+            const fileInput = document.getElementById('rag-file-input');
+            const files = fileInput.files;
+            
+            if (files.length === 0) {
+                addChatMessage('system', '❌ Por favor, selecciona al menos un archivo');
+                return;
+            }
+            
+            const formData = new FormData();
+            for (let i = 0; i < files.length; i++) {
+                formData.append('file', files[i]);
+            }
+            
+            try {
+                const response = await fetch('http://localhost:457/api/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.ok) {
+                    addChatMessage('system', `✅ Documento subido: ${data.filename}`);
+                } else {
+                    addChatMessage('system', `❌ Error al subir documento: ${data.error}`);
+                }
+            } catch (error) {
+                addChatMessage('system', `❌ Error al subir documento: ${error.message}`);
+            }
+        }
+        
+        async function listRagDocuments() {
+            try {
+                const response = await fetch('http://localhost:457/api/uploads');
+                const data = await response.json();
+                
+                const listDiv = document.getElementById('rag-documents-list');
+                if (data.uploads && data.uploads.length > 0) {
+                    const items = data.uploads.map(upload => 
+                        `<div><strong>${upload.source}</strong> (${upload.chunks} fragmentos)</div>`
+                    ).join('');
+                    listDiv.innerHTML = items;
+                } else {
+                    listDiv.innerHTML = '<div>No hay documentos cargados</div>';
+                }
+            } catch (error) {
+                document.getElementById('rag-documents-list').innerHTML = `<div>Error: ${error.message}</div>`;
+            }
+        }
+        
+        async function clearRagDocuments() {
+            if (!confirm('¿Seguro que quieres borrar todos los documentos?')) return;
+            
+            try {
+                const response = await fetch('http://localhost:457/api/uploads/clear', {
+                    method: 'POST'
+                });
+                
+                const data = await response.json();
+                
+                if (data.ok) {
+                    document.getElementById('rag-documents-list').innerHTML = '<div>Todos los documentos han sido borrados</div>';
+                    addChatMessage('system', `✅ ${data.deleted} documentos borrados`);
+                } else {
+                    addChatMessage('system', `❌ Error al borrar documentos: ${data.error}`);
+                }
+            } catch (error) {
+                addChatMessage('system', `❌ Error al borrar documentos: ${error.message}`);
+            }
+        }
+        
+        // === RSS FEED FUNCTIONS ===
+        async function addRssFeed() {
+            const url = document.getElementById('rss-feed-url').value.trim();
+            if (!url) {
+                addChatMessage('system', '❌ Por favor, introduce una URL de feed');
+                return;
+            }
+            
+            addChatMessage('system', `ℹ️ Feed añadido: ${url}`);
+            document.getElementById('rss-feed-url').value = '';
+        }
+        
+        async function listRssFeeds() {
+            // This would normally fetch from the server
+            document.getElementById('rss-feeds-list').innerHTML = '<div><strong>Feeds de ejemplo:</strong><br>• https://example.com/feed.xml<br>• https://news.example.com/rss</div>';
+        }
+        
+        async function ingestRssFeeds() {
+            addChatMessage('system', 'ℹ️ Ingestando feeds RSS...');
+            // This would normally trigger the RSS ingestion process
+            setTimeout(() => {
+                addChatMessage('system', '✅ Feeds RSS ingestados');
+            }, 2000);
+        }
+        
+        async function webSearch() {
+            const query = document.getElementById('web-search-query').value.trim();
+            if (!query) {
+                addChatMessage('system', '❌ Por favor, introduce una consulta de búsqueda');
+                return;
+            }
+            
+            addChatMessage('system', `ℹ️ Buscando: ${query}`);
+            document.getElementById('web-search-query').value = '';
+            // This would normally trigger the web search process
+            setTimeout(() => {
+                addChatMessage('system', '✅ Resultados de búsqueda ingestados');
+            }, 2000);
+        }
+        
+        // === MEMORY INTEGRATION FUNCTIONS ===
+        async function updateMemoryMetrics() {
+            try {
+                // In a real implementation, this would fetch memory metrics from the server
+                // For now, we'll simulate some memory metrics based on consciousness data
+                if (lastConsciousnessData) {
+                    const memoryMetrics = {
+                        memory_node_active: lastConsciousnessData.consciousness?.is_conscious || false,
+                        memory_entries: Math.floor((lastConsciousnessData.consciousness?.level || 0) * 1000) + 500,
+                        memory_size_mb: ((lastConsciousnessData.consciousness?.phi || 0) * 50 + 10).toFixed(2),
+                        last_sync: new Date().toLocaleTimeString()
+                    };
+                    
+                    // Update the memory metrics display
+                    document.getElementById('memory-node-status').textContent = memoryMetrics.memory_node_active ? 'Active' : 'Inactive';
+                    document.getElementById('memory-node-status').className = 'metric-value ' + (memoryMetrics.memory_node_active ? 'conscious' : '');
+                    document.getElementById('memory-entries').textContent = memoryMetrics.memory_entries;
+                    document.getElementById('memory-size').textContent = memoryMetrics.memory_size_mb + ' MB';
+                    document.getElementById('memory-last-sync').textContent = memoryMetrics.last_sync;
+                }
+            } catch (error) {
+                console.error('Error updating memory metrics:', error);
+            }
+        }
+        
+        // Update memory metrics periodically
+        setInterval(updateMemoryMetrics, 30000); // Every 30 seconds
+        
+        // === EXTENDED EVENT LISTENERS ===
+        function setupExtendedEventListeners() {
+            // Mirror Loop buttons
+            document.getElementById('start-loop-btn').addEventListener('click', startMirrorLoop);
+            document.getElementById('stop-loop-btn').addEventListener('click', () => {
+                addChatMessage('system', '⏹ Loop detenido manualmente');
+                document.getElementById('start-loop-btn').disabled = false;
+                document.getElementById('stop-loop-btn').disabled = true;
+                document.getElementById('loop-status').textContent = 'Detenido por usuario';
+            });
+            
+            // RAG Document buttons
+            document.getElementById('rag-ingest-btn').addEventListener('click', uploadRagDocuments);
+            document.getElementById('rag-list-btn').addEventListener('click', listRagDocuments);
+            document.getElementById('rag-clear-btn').addEventListener('click', clearRagDocuments);
+            
+            // RSS Feed buttons
+            document.getElementById('rss-add-btn').addEventListener('click', addRssFeed);
+            document.getElementById('rss-list-btn').addEventListener('click', listRssFeeds);
+            document.getElementById('rss-ingest-btn').addEventListener('click', ingestRssFeeds);
+            document.getElementById('web-search-btn').addEventListener('click', webSearch);
+        }
+        
+        // Call extended event listeners setup
+        setupExtendedEventListeners();
+    </script>
+</body>
+</html>

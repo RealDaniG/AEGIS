@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Connection Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .connected {
+            background: #2d5a2d;
+            border: 1px solid #4caf50;
+        }
+        .disconnected {
+            background: #5a2d2d;
+            border: 1px solid #f44336;
+        }
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .metric-card {
+            background: #2a2a2a;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .metric-value {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #4caf50;
+        }
+        #raw-data {
+            background: #2a2a2a;
+            padding: 15px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>WebSocket Connection Test for Metatron</h1>
+        
+        <div id="connection-status" class="status disconnected">
+            Status: Connecting...
+        </div>
+        
+        <div class="metrics">
+            <div class="metric-card">
+                <div>Consciousness Level (C)</div>
+                <div id="consciousness-level" class="metric-value">0.0000</div>
+            </div>
+            <div class="metric-card">
+                <div>Integrated Information (Φ)</div>
+                <div id="phi-value" class="metric-value">0.0000</div>
+            </div>
+            <div class="metric-card">
+                <div>Global Coherence (R)</div>
+                <div id="coherence-value" class="metric-value">0.0000</div>
+            </div>
+            <div class="metric-card">
+                <div>Updates Received</div>
+                <div id="update-count" class="metric-value">0</div>
+            </div>
+        </div>
+        
+        <h2>Raw Data</h2>
+        <div id="raw-data">Waiting for data...</div>
+    </div>
+
+    <script>
+        let ws = null;
+        let updateCount = 0;
+
+        function connect() {
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const host = window.location.hostname || 'localhost';
+            const port = '457';
+            const wsUrl = `${protocol}//${host}:${port}/ws`;
+            
+            console.log(`Connecting to: ${wsUrl}`);
+            document.getElementById('connection-status').textContent = `Status: Connecting to ${wsUrl}...`;
+            document.getElementById('connection-status').className = 'status disconnected';
+            
+            try {
+                ws = new WebSocket(wsUrl);
+                
+                ws.onopen = function() {
+                    console.log('Connected to WebSocket');
+                    document.getElementById('connection-status').textContent = 'Status: Connected';
+                    document.getElementById('connection-status').className = 'status connected';
+                };
+                
+                ws.onmessage = function(event) {
+                    try {
+                        const data = JSON.parse(event.data);
+                        updateCount++;
+                        
+                        // Update UI
+                        document.getElementById('update-count').textContent = updateCount;
+                        
+                        // Update metrics
+                        if (data.consciousness) {
+                            document.getElementById('consciousness-level').textContent = data.consciousness.level.toFixed(4);
+                            document.getElementById('phi-value').textContent = data.consciousness.phi.toFixed(4);
+                            document.getElementById('coherence-value').textContent = data.consciousness.coherence.toFixed(4);
+                        }
+                        
+                        // Show raw data
+                        document.getElementById('raw-data').textContent = JSON.stringify(data, null, 2);
+                    } catch (e) {
+                        console.error('Error processing WebSocket message:', e);
+                    }
+                };
+                
+                ws.onclose = function() {
+                    console.log('WebSocket connection closed');
+                    document.getElementById('connection-status').textContent = 'Status: Disconnected';
+                    document.getElementById('connection-status').className = 'status disconnected';
+                };
+                
+                ws.onerror = function(error) {
+                    console.error('WebSocket error:', error);
+                    document.getElementById('connection-status').textContent = 'Status: Error';
+                    document.getElementById('connection-status').className = 'status error';
+                };
+                
+            } catch (e) {
+                console.error('Error establishing WebSocket connection:', e);
+                document.getElementById('connection-status').textContent = 'Status: Connection Failed';
+                document.getElementById('connection-status').className = 'status error';
+            }
+        }
+
+        // Connect when page loads
+        window.addEventListener('load', connect);
+    </script>
+</body>
+</html>

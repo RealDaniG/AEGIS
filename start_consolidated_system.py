@@ -12,19 +12,21 @@ import signal
 import webbrowser
 import subprocess
 import threading
+import argparse
 
 # Add the project root to the Python path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 class ConsolidatedLauncher:
-    def __init__(self):
+    def __init__(self, open_stream_ui=False):
         self.running = True
         self.unified_process = None
         self.web_server_process = None
+        self.open_stream_ui = open_stream_ui
         
     def signal_handler(self, signum, frame):
         """Handle Ctrl+C gracefully"""
-        print("\n\n🛑 Shutting down AEGIS system...")
+        print("\n\n[SHUTDOWN] Shutting down AEGIS system...")
         self.running = False
         self.terminate_processes()
         # Don't exit here as this is a signal handler
@@ -54,7 +56,7 @@ class ConsolidatedLauncher:
     def start_unified_system(self):
         """Start the unified system coordinator"""
         try:
-            print("\n🚀 Starting AEGIS System Coordinator...")
+            print("\n[START] Starting AEGIS System Coordinator...")
             self.unified_process = subprocess.Popen(
                 [sys.executable, "unified_coordinator.py"],
                 cwd=".",
@@ -62,27 +64,27 @@ class ConsolidatedLauncher:
                 stderr=subprocess.PIPE,
                 text=True
             )
-            print(f"✅ AEGIS System Coordinator started (PID: {self.unified_process.pid})")
+            print(f"[OK] AEGIS System Coordinator started (PID: {self.unified_process.pid})")
             return True
         except Exception as e:
-            print(f"❌ Error starting AEGIS System Coordinator: {e}")
+            print(f"[ERROR] Error starting AEGIS System Coordinator: {e}")
             return False
             
     def start_web_server(self):
         """Start the Metatron web server"""
         try:
-            print("\n🚀 Starting Metatron Integrated Web Server...")
+            print("\n[START] Starting Metatron Integrated Web Server...")
             self.web_server_process = subprocess.Popen(
-                [sys.executable, "Metatron-ConscienceAI/scripts/metatron_web_server.py", "--port", "8003"],
+                [sys.executable, "Metatron-ConscienceAI/scripts/metatron_web_server.py", "--port", "457"],
                 cwd=".",
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 text=True
             )
-            print(f"✅ Metatron Web Server started (PID: {self.web_server_process.pid})")
+            print(f"[OK] Metatron Web Server started (PID: {self.web_server_process.pid})")
             return True
         except Exception as e:
-            print(f"❌ Error starting Metatron Web Server: {e}")
+            print(f"[ERROR] Error starting Metatron Web Server: {e}")
             return False
             
     def launch_web_ui(self):
@@ -90,11 +92,19 @@ class ConsolidatedLauncher:
         def open_browser():
             time.sleep(8)  # Wait for servers to start (reduced from 15 seconds)
             try:
-                webbrowser.open("http://localhost:8003")
-                print("🌐 Web UI opened in default browser: http://localhost:8003")
+                # Open the streaming UI if requested, otherwise the main dashboard
+                if self.open_stream_ui:
+                    webbrowser.open("http://localhost:457/static/index_stream.html")
+                    print("[WEB] Streaming Chat UI opened in default browser: http://localhost:457/static/index_stream.html")
+                else:
+                    webbrowser.open("http://localhost:457")
+                    print("[WEB] Web UI opened in default browser: http://localhost:457")
             except Exception as e:
-                print(f"⚠️  Could not auto-open browser: {e}")
-                print("   Please manually open: http://localhost:8003")
+                print(f"[WARN] Could not auto-open browser: {e}")
+                if self.open_stream_ui:
+                    print("   Please manually open: http://localhost:457/static/index_stream.html")
+                else:
+                    print("   Please manually open: http://localhost:457")
                 
         browser_thread = threading.Thread(target=open_browser)
         browser_thread.daemon = True
@@ -152,8 +162,8 @@ class ConsolidatedLauncher:
     def run(self):
         """Main execution method"""
         print("=" * 80)
-        print("🤖 AEGIS - Autonomous Governance and Intelligent Systems")
-        print("🔄 Starting consolidated system with single terminal interface")
+        print("AEGIS - Autonomous Governance and Intelligent Systems")
+        print("Starting consolidated system with single terminal interface")
         print("=" * 80)
         
         # Set up signal handler for graceful shutdown
@@ -164,19 +174,19 @@ class ConsolidatedLauncher:
         try:
             # Start the unified system coordinator
             if not self.start_unified_system():
-                print("❌ Failed to start AEGIS System Coordinator")
+                print("[ERROR] Failed to start AEGIS System Coordinator")
                 return
                 
             # Start the Metatron web server
             if not self.start_web_server():
-                print("❌ Failed to start Metatron Web Server")
+                print("[ERROR] Failed to start Metatron Web Server")
                 return
             
             # Launch web UI
             self.launch_web_ui()
             
             # Monitor processes
-            print("\n📊 System is running. Press Ctrl+C to stop all components.\n")
+            print("\n[STATUS] System is running. Press Ctrl+C to stop all components.\n")
             
             # Start monitoring threads
             monitor_threads = self.monitor_processes()
@@ -187,32 +197,39 @@ class ConsolidatedLauncher:
                 
                 # Check if any process has died
                 if self.unified_process and self.unified_process.poll() is not None and self.running:
-                    print(f"⚠️  AEGIS Coordinator process has terminated unexpectedly (PID: {self.unified_process.pid})")
+                    print(f"[WARN] AEGIS Coordinator process has terminated unexpectedly (PID: {self.unified_process.pid})")
                     self.running = False
                     break
                     
                 if self.web_server_process and self.web_server_process.poll() is not None and self.running:
-                    print(f"⚠️  Metatron Web Server process has terminated unexpectedly (PID: {self.web_server_process.pid})")
+                    print(f"[WARN] Metatron Web Server process has terminated unexpectedly (PID: {self.web_server_process.pid})")
                     self.running = False
                     break
                         
         except KeyboardInterrupt:
             pass
         except Exception as e:
-            print(f"❌ Error running system: {e}")
+            print(f"[ERROR] Error running system: {e}")
         finally:
             self.terminate_processes()
-            print("\n👋 AEGIS system shutdown complete.")
+            print("\n[SHUTDOWN] AEGIS system shutdown complete.")
 
 def main():
     """Main entry point"""
-    launcher = ConsolidatedLauncher()
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(description='Start the consolidated AEGIS system')
+    parser.add_argument('--open-stream-ui', action='store_true', 
+                        help='Open the streaming chat UI instead of the main dashboard')
+    
+    args = parser.parse_args()
+    
+    launcher = ConsolidatedLauncher(open_stream_ui=args.open_stream_ui)
     try:
         launcher.run()
     except KeyboardInterrupt:
-        print("\n🛑 System interrupted by user")
+        print("\n[SHUTDOWN] System interrupted by user")
     except Exception as e:
-        print(f"❌ Unhandled error: {e}")
+        print(f"[ERROR] Unhandled error: {e}")
 
 if __name__ == "__main__":
     main()

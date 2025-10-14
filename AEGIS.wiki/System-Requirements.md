@@ -299,12 +299,12 @@ The system SHALL provide data processing capabilities that:
 
 #### ND-001: Internet Connectivity
 - Reliable internet connection with 99.9% uptime
-- Access to standard ports (80, 443, 8003-8006)
+- Access to standard ports (80, 443, 457)
 - DNS resolution capabilities
 - NTP time synchronization
 
 #### ND-002: P2P Networking
-- Ability to open ports 8003-8006 for communication
+- Ability to open port 457 for communication
 - NAT traversal capabilities
 - UPnP support for automatic port forwarding
 - TOR network access for anonymous communication

@@ -70,6 +70,23 @@ Advanced topics and future directions:
 - [[Future Enhancements]] - Planned improvements
 - [[Community Growth and Development]] - How community participation drives system intelligence
 
+## 🌐 Access Points
+
+### 🖥️ Web Interface
+Access the unified web interface at: **http://localhost:457**
+
+### 🔌 API Endpoints
+All system functionality is available through a single port:
+- **Main API**: http://localhost:457
+- **WebSocket**: ws://localhost:457/ws
+- **Documentation**: http://localhost:457/docs
+
+### 📊 System Components
+- **Unified Dashboard**: Complete integrated interface with all components
+- **Consciousness Engine**: Real-time consciousness metrics (Φ, R, D, S, C)
+- **AI Chat System**: Multi-model chat interface with RAG capabilities
+- **Visualization**: Live 13-node sacred geometry display
+
 ## 📖 Browse by Category
 
 Use the sidebar navigation to explore documentation by category, or visit our [[_Sidebar|complete navigation page]].

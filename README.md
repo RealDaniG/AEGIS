@@ -65,8 +65,8 @@ If you prefer the traditional approach:
    ```
 
 3. **Access the integrated web interface**:
-   - Open your browser to http://localhost:8003
-   - View API documentation at http://localhost:8005/docs
+   - Open your browser to http://localhost:457
+   - View API documentation at http://localhost:457/docs
 
 That's it! The system will automatically install all dependencies and start all components.
 
@@ -104,7 +104,7 @@ That's it! The system will automatically install all dependencies and start all 
 
 ## 🌐 Web Interface
 
-The integrated web interface at http://localhost:8003 provides:
+The integrated web interface at http://localhost:457 provides:
 
 ### 📊 Real-time Consciousness Monitoring
 - Live 13-node sacred geometry visualization
@@ -154,19 +154,19 @@ The integrated web interface at http://localhost:8003 provides:
 
 ## 🔌 API Endpoints
 
-### Consciousness Engine (Port 8003)
+### Consciousness Engine (Port 457)
 - `GET /api/status` - Real-time consciousness metrics
 - `GET /api/state` - Complete system state
 - `POST /api/input` - Send sensory input
 - `GET /ws` - Consciousness WebSocket streaming
 
-### Chat System (Port 8003)
+### Chat System (Port 457)
 - `POST /api/chat` - AI chat interface
 - `POST /api/upload` - Document upload
 - `GET /api/uploads` - List uploaded documents
 - `GET /ws/chat` - Chat WebSocket streaming
 
-### Cross-System Communication (Port 8006)
+### Cross-System Communication (Port 457)
 - Dedicated WebSocket server for secure cross-system messaging
 - Encrypted communication channel between consciousness and AGI systems
 - Real-time state synchronization between all system components

@@ -112,8 +112,8 @@ class DataValidationTool:
             "samples_collected": len(samples)
         }
         
-        print(f"  ✓ Average interval: {avg_interval:.3f}s")
-        print(f"  ✓ Total duration: {result['total_duration']:.3f}s")
+        print(f"  [OK] Average interval: {avg_interval:.3f}s")
+        print(f"  [OK] Total duration: {result['total_duration']:.3f}s")
         
         return result
     
@@ -155,8 +155,8 @@ class DataValidationTool:
             "range": max(consciousness_levels) - min(consciousness_levels)
         }
         
-        print(f"  {'✓' if passed else '⚠️'} Variance: {variance:.8f}")
-        print(f"  {'✓' if passed else '⚠️'} Range: {result['range']:.6f}")
+        print(f"  {'[OK]' if passed else '[WARN]'} Variance: {variance:.8f}")
+        print(f"  {'[OK]' if passed else '[WARN]'} Range: {result['range']:.6f}")
         
         return result
     
@@ -220,8 +220,8 @@ class DataValidationTool:
             "total_nodes": len(samples[0]["data"].get("nodes", {})) if samples else 0
         }
         
-        print(f"  {'✓' if passed else '⚠️'} Average node change: {overall_avg_change:.8f}")
-        print(f"  {'✓' if passed else '⚠️'} Nodes with changes: {len(node_changes)}")
+        print(f"  {'[OK]' if passed else '[WARN]'} Average node change: {overall_avg_change:.8f}")
+        print(f"  {'[OK]' if passed else '[WARN]'} Nodes with changes: {len(node_changes)}")
         
         return result
     
@@ -263,8 +263,8 @@ class DataValidationTool:
             "total_samples": len(hashes)
         }
         
-        print(f"  {'✓' if passed else '⚠️'} Uniqueness ratio: {uniqueness_ratio:.3f}")
-        print(f"  {'✓' if passed else '⚠️'} Unique samples: {len(unique_hashes)}/{len(hashes)}")
+        print(f"  {'[OK]' if passed else '[WARN]'} Uniqueness ratio: {uniqueness_ratio:.3f}")
+        print(f"  {'[OK]' if passed else '[WARN]'} Unique samples: {len(unique_hashes)}/{len(hashes)}")
         
         return result
     
@@ -325,8 +325,8 @@ class DataValidationTool:
             "http_samples": len(http_overlap)
         }
         
-        print(f"  {'✓' if passed else '⚠️'} Average difference: {avg_difference:.6f}")
-        print(f"  {'✓' if passed else '⚠️'} Max difference: {max_difference:.6f}")
+        print(f"  {'[OK]' if passed else '[WARN]'} Average difference: {avg_difference:.6f}")
+        print(f"  {'[OK]' if passed else '[WARN]'} Max difference: {max_difference:.6f}")
         
         return result
     

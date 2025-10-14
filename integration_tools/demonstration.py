@@ -17,7 +17,7 @@ def demonstrate_integration():
     try:
         health = requests.get("http://localhost:8003/api/health", timeout=5)
         if health.status_code == 200:
-            print("✓ Metatron Consciousness Engine: RUNNING")
+            print("[OK] Metatron Consciousness Engine: RUNNING")
             print("  URL: http://localhost:8003")
             print("  WebSocket: ws://localhost:8003/ws")
         else:
@@ -57,7 +57,7 @@ def demonstrate_integration():
             response_text = result['response'][:150] + "..." if len(result['response']) > 150 else result['response']
             print(f"User: {chat_data['message']}")
             print(f"AI: {response_text}")
-            print("✓ Chatbot is working!")
+            print("[OK] Chatbot is working!")
         else:
             print("✗ Chatbot not responding")
     except Exception as e:
@@ -90,7 +90,7 @@ def demonstrate_integration():
             print(f"Input sent: {sensory_data}")
             print(f"Consciousness level changed from {initial_consciousness:.6f} to {updated_consciousness:.6f}")
             print(f"Change: {updated_consciousness - initial_consciousness:+.6f}")
-            print("✓ Sensory input processing working!")
+            print("[OK] Sensory input processing working!")
         else:
             print("✗ Sensory input processing failed")
     except Exception as e:
@@ -106,7 +106,7 @@ def demonstrate_integration():
         from monitoring.dashboard import MonitoringDashboard
         
         dashboard = MonitoringDashboard("demo_node", 8081)
-        print("✓ AEGIS Dashboard ready for deployment")
+        print("[OK] AEGIS Dashboard ready for deployment")
         print("  Can be started on: http://localhost:8081")
         print("  Features real-time consciousness metrics visualization")
     except Exception as e:
@@ -116,10 +116,10 @@ def demonstrate_integration():
     print("\n" + "=" * 65)
     print("DEMONSTRATION COMPLETE")
     print("=" * 65)
-    print("✓ Metatron Consciousness Engine is fully functional")
-    print("✓ Chatbot system is working correctly")
-    print("✓ Sensory input processing is operational")
-    print("✓ AEGIS-Conscience Network dashboard is ready")
+    print("[OK] Metatron Consciousness Engine is fully functional")
+    print("[OK] Chatbot system is working correctly")
+    print("[OK] Sensory input processing is operational")
+    print("[OK] AEGIS-Conscience Network dashboard is ready")
     print("\nBOTH SYSTEMS ARE SUCCESSFULLY INTEGRATED!")
     print("\nTo interact with the systems:")
     print("- Metatron Web Interface: http://localhost:8003")

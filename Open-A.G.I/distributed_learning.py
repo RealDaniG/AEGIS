@@ -184,7 +184,7 @@ class ByzantineRobustAggregator:
         clean_updates = self._filter_byzantine_updates(updates)
         
         if not clean_updates:
-            logger.warning("⚠️ Todas las actualizaciones fueron filtradas como bizantinas")
+            logger.warning("[WARN] Todas las actualizaciones fueron filtradas como bizantinas")
             return {}
         
         # Usar mediana geométrica para robustez
@@ -201,9 +201,9 @@ class ByzantineRobustAggregator:
                 if self._is_update_consistent(update):
                     clean_updates.append(update)
                 else:
-                    logger.warning(f"⚠️ Actualización inconsistente de {update.node_id}")
+                    logger.warning(f"[WARN] Actualización inconsistente de {update.node_id}")
             else:
-                logger.warning(f"⚠️ Gradientes anómalos detectados en {update.node_id}")
+                logger.warning(f"[WARN] Gradientes anómalos detectados en {update.node_id}")
         
         return clean_updates
     
@@ -440,7 +440,7 @@ class DistributedLearningCoordinator:
     async def start_training_round(self, aggregation_method: AggregationMethod = AggregationMethod.FEDERATED_AVERAGING) -> str:
         """Inicia una nueva ronda de entrenamiento"""
         if self.current_round and self.current_round.end_time is None:
-            logger.warning("⚠️ Ya hay una ronda de entrenamiento en progreso")
+            logger.warning("[WARN] Ya hay una ronda de entrenamiento en progreso")
             return None
         
         # Seleccionar participantes
@@ -554,11 +554,11 @@ class DistributedLearningCoordinator:
     async def receive_model_update(self, update: ModelUpdate) -> bool:
         """Recibe actualización de modelo de un nodo"""
         if not self.current_round:
-            logger.warning("⚠️ No hay ronda activa para recibir actualizaciones")
+            logger.warning("[WARN] No hay ronda activa para recibir actualizaciones")
             return False
         
         if update.node_id not in self.current_round.participating_nodes:
-            logger.warning(f"⚠️ Nodo {update.node_id} no está participando en la ronda actual")
+            logger.warning(f"[WARN] Nodo {update.node_id} no está participando en la ronda actual")
             return False
         
         # Detectar ataques
@@ -789,7 +789,7 @@ class DistributedLearningCoordinator:
                 # Remover nodos inactivos
                 for node_id in inactive_nodes:
                     self.active_nodes.discard(node_id)
-                    logger.warning(f"⚠️ Nodo {node_id} removido por baja confiabilidad")
+                    logger.warning(f"[WARN] Nodo {node_id} removido por baja confiabilidad")
                 
                 await asyncio.sleep(60)  # Verificar cada minuto
                 

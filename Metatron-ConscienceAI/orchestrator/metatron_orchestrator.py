@@ -80,7 +80,7 @@ class MetatronConsciousness:
         if high_gamma:
             self.base_frequency = 80.0  # One octave higher
             self.gamma_mode = "high_gamma_80hz"
-            logger.info("🚀 HIGH GAMMA MODE: Enhanced 80Hz processing enabled")
+            logger.info("[HIGH GAMMA] Enhanced 80Hz processing enabled")
         else:
             self.base_frequency = base_frequency
             self.gamma_mode = "standard_gamma_40hz"
@@ -655,7 +655,7 @@ def run_demo():
     print(f"\nFull state exported to: {output_file}")
     
     print("\n" + "="*60)
-    print("✓ Demonstration complete!")
+    print("[OK] Demonstration complete!")
     print("="*60)
 
 

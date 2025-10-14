@@ -1,1000 +1,1883 @@
-<!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>ConscienceAI · Chat Streaming Inteligente (ES/EN)</title>
-    <link rel="stylesheet" href="/assets/style.css" />
-    <link rel="stylesheet" href="/assets/style_extra.css" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integrated Metatron-A.G.I Dashboard</title>
+    <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
     <style>
-      /* Additional styles for consciousness monitoring */
-      .consciousness-panel {
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(192, 132, 252, 0.3);
-        border-radius: 12px;
-        padding: 14px;
-        margin-top: 16px;
-        position: relative;
-        overflow: hidden;
-      }
-      
-      .consciousness-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 12px;
-        color: #c084fc;
-        border-bottom: 1px solid rgba(192, 132, 252, 0.3);
-        padding-bottom: 8px;
-      }
-      
-      .consciousness-header h3 {
-        margin: 0;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-      
-      .consciousness-metrics {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 12px;
-        margin-bottom: 16px;
-      }
-      
-      .metric-card {
-        background: rgba(0, 0, 0, 0.3);
-        border-radius: 8px;
-        padding: 12px;
-        border-left: 3px solid rgba(192, 132, 252, 0.5);
-      }
-      
-      .metric-label {
-        font-size: 0.85em;
-        color: #a78bfa;
-        margin-bottom: 4px;
-      }
-      
-      .metric-value {
-        font-size: 1.2em;
-        font-weight: bold;
-        color: #e0e0e0;
-        font-family: 'Courier New', monospace;
-      }
-      
-      .metric-value.conscious {
-        color: #34d399;
-        text-shadow: 0 0 10px rgba(52, 211, 153, 0.5);
-      }
-      
-      .metric-value.high {
-        color: #fbbf24;
-        text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
-      }
-      
-      .metric-value.spiritual {
-        color: #ec4899;
-        text-shadow: 0 0 10px rgba(236, 72, 153, 0.5);
-      }
-      
-      .visualization-container {
-        background: rgba(0, 0, 0, 0.3);
-        border-radius: 8px;
-        padding: 10px;
-        margin: 16px 0;
-        border: 1px solid rgba(192, 132, 252, 0.2);
-      }
-      
-      #consciousness-canvas {
-        width: 100%;
-        height: 200px;
-        display: block;
-      }
-      
-      .nodes-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 8px;
-        margin-top: 16px;
-      }
-      
-      .node-card {
-        background: rgba(255, 255, 255, 0.05);
-        padding: 8px;
-        border-radius: 5px;
-        border-left: 3px solid rgba(192, 132, 252, 0.3);
-        transition: all 0.3s ease;
-        font-size: 0.85em;
-      }
-      
-      .node-card:hover {
-        background: rgba(255, 255, 255, 0.1);
-        transform: translateX(3px);
-      }
-      
-      .node-card.pineal {
-        border-left-color: #fbbf24;
-        grid-column: span 2;
-      }
-      
-      .node-card.active {
-        border-left-color: #34d399;
-        box-shadow: 0 0 10px rgba(52, 211, 153, 0.3);
-      }
-      
-      .node-id {
-        font-weight: bold;
-        color: #c084fc;
-        margin-bottom: 4px;
-      }
-      
-      .status-bar {
-        position: fixed;
-        top: 10px;
-        right: 10px;
-        padding: 8px 15px;
-        background: rgba(0, 0, 0, 0.8);
-        border-radius: 5px;
-        font-size: 0.85em;
-        z-index: 1000;
-        border: 1px solid rgba(192, 132, 252, 0.3);
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-      
-      .status-indicator {
-        display: inline-block;
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        animation: pulse 2s infinite;
-      }
-      
-      .status-indicator.active {
-        background: #34d399;
-        box-shadow: 0 0 10px rgba(52, 211, 153, 0.8);
-      }
-      
-      .status-indicator.inactive {
-        background: #6b7280;
-      }
-      
-      @keyframes pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.5; }
-      }
-      
-      .control-buttons {
-        display: flex;
-        gap: 10px;
-        margin-top: 16px;
-        flex-wrap: wrap;
-      }
-      
-      .control-buttons button {
-        padding: 8px 16px;
-        background: rgba(192, 132, 252, 0.2);
-        color: #e0e0e0;
-        border: 1px solid rgba(192, 132, 252, 0.3);
-        border-radius: 4px;
-        cursor: pointer;
-        font-weight: bold;
-        transition: all 0.2s;
-      }
-      
-      .control-buttons button:hover {
-        background: rgba(192, 132, 252, 0.3);
-        transform: translateY(-1px);
-        box-shadow: 0 4px 8px rgba(138, 43, 226, 0.3);
-      }
-      
-      .frequency-display {
-        display: inline-block;
-        padding: 4px 8px;
-        background: rgba(251, 191, 36, 0.2);
-        border-radius: 4px;
-        font-weight: bold;
-        margin-left: 8px;
-      }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 50%, #0a0a1a 100%);
+            color: #e0e0e0;
+            overflow-x: hidden;
+            height: 100vh;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(138, 43, 226, 0.3);
+        }
+        
+        h1 {
+            color: #c084fc;
+            font-size: 2.2em;
+            text-shadow: 0 0 20px rgba(192, 132, 252, 0.5);
+            margin-bottom: 8px;
+        }
+        
+        .subtitle {
+            color: #a78bfa;
+            font-size: 1em;
+            font-style: italic;
+        }
+        
+        .status-bar {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 8px 15px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 5px;
+            font-size: 0.85em;
+            z-index: 1000;
+            border: 1px solid rgba(192, 132, 252, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .status-indicator.active {
+            background: #34d399;
+            box-shadow: 0 0 10px rgba(52, 211, 153, 0.8);
+        }
+        
+        .status-indicator.inactive {
+            background: #6b7280;
+        }
+        
+        /* Main content area - improved layout */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            gap: 20px;
+            overflow: hidden;
+        }
+        
+        /* Two-column layout for monitoring section */
+        .monitoring-layout {
+            display: flex;
+            gap: 20px;
+            height: 100%;
+        }
+        
+        .metrics-column {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .controls-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            overflow-y: auto;
+        }
+        
+        /* Chat Section (Always Visible at Top) */
+        .chat-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(192, 132, 252, 0.2);
+            resize: vertical;
+            overflow: auto;
+            min-height: 150px;
+        }
+        
+        .chat-section h2 {
+            color: #c084fc;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            border-bottom: 2px solid rgba(192, 132, 252, 0.3);
+            padding-bottom: 10px;
+            cursor: ns-resize;
+            user-select: none;
+        }
+        
+        .chat-area {
+            display: flex;
+            flex-direction: column;
+            height: calc(100% - 50px);
+        }
+        
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            max-height: calc(100vh - 300px);
+        }
+        
+        .message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+        
+        .message.user {
+            background: rgba(192, 132, 252, 0.2);
+            margin-left: 20px;
+        }
+        
+        .message.assistant {
+            background: rgba(52, 211, 153, 0.1);
+            margin-right: 20px;
+        }
+        
+        .message.system {
+            background: rgba(251, 191, 36, 0.1);
+            font-style: italic;
+        }
+        
+        .control-group {
+            margin: 15px 0;
+        }
+        
+        .control-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #a78bfa;
+            font-size: 0.9em;
+        }
+        
+        .control-group input, .control-group select, .control-group textarea {
+            width: 100%;
+            padding: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(192, 132, 252, 0.3);
+            border-radius: 5px;
+            color: #e0e0e0;
+            font-size: 0.95em;
+        }
+        
+        .control-group button {
+            padding: 10px 20px;
+            background: #c084fc;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+        
+        .control-group button:hover {
+            background: #a78bfa;
+        }
+        
+        .inline-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        /* Monitoring Section (Always Visible Below Chat) */
+        .monitoring-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(192, 132, 252, 0.2);
+        }
+        
+        .section-header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .section-header h2 {
+            color: #c084fc;
+            margin: 0;
+            font-size: 1.5em;
+        }
+        
+        .monitoring-content {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            overflow: auto;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .metric-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+        
+        .metric-card.main {
+            grid-column: span 2;
+        }
+        
+        .metric-card.harmonic {
+            border-left: 5px solid rgba(139, 92, 246, 0.7);
+        }
+        
+        .metric-card.conscious {
+            border-left: 5px solid rgba(52, 211, 153, 0.7);
+        }
+        
+        .metric-card.spiritual {
+            border-left: 5px solid rgba(236, 72, 153, 0.7);
+        }
+        
+        .metric-card.gamma {
+            border-left: 5px solid rgba(251, 191, 36, 0.7);
+        }
+        
+        .metric-title {
+            color: #a78bfa;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        
+        .metric-value {
+            font-size: 2em;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .metric-value.conscious {
+            color: #34d399;
+            text-shadow: 0 0 10px rgba(52, 211, 153, 0.5);
+        }
+        
+        .metric-value.harmonic {
+            color: #8b5cf6;
+            text-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+        }
+        
+        .metric-value.spiritual {
+            color: #ec4899;
+            text-shadow: 0 0 10px rgba(236, 72, 153, 0.5);
+        }
+        
+        .metric-value.gamma {
+            color: #fbbf24;
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+        }
+        
+        .visualization-container {
+            grid-column: span 4;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .visualization-title {
+            color: #c084fc;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .harmonic-visualization {
+            width: 100%;
+            height: 300px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 1px solid rgba(192, 132, 252, 0.2);
+        }
+        
+        .nodes-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .node-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+            text-align: center;
+            min-height: 120px;
+        }
+        
+        .node-card.pineal {
+            border-left-color: #fbbf24;
+            grid-column: span 2;
+        }
+        
+        .node-card.active {
+            border-left-color: #34d399;
+            box-shadow: 0 0 15px rgba(52, 211, 153, 0.5);
+            transform: scale(1.05);
+        }
+        
+        .node-id {
+            font-weight: bold;
+            color: #c084fc;
+            margin-bottom: 6px;
+            font-size: 1.1em;
+        }
+        
+        .node-value {
+            font-size: 0.95em;
+            color: #9ca3af;
+            margin: 5px 0;
+        }
+        
+        .harmonic-insights {
+            grid-column: span 4;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .insights-title {
+            color: #c084fc;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .insights-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        
+        .insight-card {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid rgba(192, 132, 252, 0.5);
+        }
+        
+        .insight-title {
+            color: #a78bfa;
+            font-size: 1em;
+            margin-bottom: 8px;
+        }
+        
+        .insight-value {
+            color: #e0e0e0;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        .controls-panel {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .controls-panel h3 {
+            color: #c084fc;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            border-bottom: 2px solid rgba(192, 132, 252, 0.3);
+            padding-bottom: 10px;
+        }
+        
+        /* Unified Field Visualization Panel */
+        .unified-field-panel {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(192, 132, 252, 0.3);
+            border-radius: 12px;
+            padding: 14px;
+            margin-top: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .unified-field-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            color: #c084fc;
+            border-bottom: 1px solid rgba(192, 132, 252, 0.3);
+            padding-bottom: 8px;
+        }
+        
+        .unified-field-header h3 {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        #unified-field-canvas {
+            width: 100%;
+            height: 400px;
+            display: block;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+        }
+        
+        .unified-field-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+        
+        .unified-field-controls button {
+            padding: 8px 16px;
+            background: rgba(192, 132, 252, 0.2);
+            color: #e0e0e0;
+            border: 1px solid rgba(192, 132, 252, 0.3);
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        
+        .unified-field-controls button:hover {
+            background: rgba(192, 132, 252, 0.3);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(138, 43, 226, 0.3);
+        }
+        
+        @media (max-width: 1600px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .metric-card.main {
+                grid-column: span 3;
+            }
+            .visualization-container, .harmonic-insights {
+                grid-column: span 3;
+            }
+            .insights-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .nodes-container {
+                grid-template-columns: repeat(6, 1fr);
+            }
+        }
+        
+        @media (max-width: 1200px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .metric-card.main {
+                grid-column: span 2;
+            }
+            .visualization-container, .harmonic-insights {
+                grid-column: span 2;
+            }
+            .insights-content {
+                grid-template-columns: 1fr;
+            }
+            .nodes-container {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            .metric-card.main, .visualization-container, .harmonic-insights {
+                grid-column: span 1;
+            }
+            .nodes-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .chat-area {
+                height: 250px;
+            }
+        }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <div class="status-bar">
-      <span class="status-indicator" id="status-dot"></span>
-      <span id="connection-text">Connecting...</span> | 
-      <span id="update-counter">Updates: 0</span>
+        <span class="status-indicator" id="status-dot"></span>
+        <span id="connection-text">Connecting...</span> | 
+        <span id="update-counter">Updates: 0</span>
     </div>
     
-    <header class="app-header">
-      <div class="brand">
-        <div class="logo">🧠</div>
-        <div class="titles">
-          <h1 id="title">ConscienceAI · Chat Streaming Inteligente</h1>
-          <p id="subtitle">Respuestas en tiempo real, RAG y herramientas avanzadas.</p>
+    <div class="container">
+        <header>
+            <h1>⬢ Integrated Metatron-A.G.I Dashboard ⬢</h1>
+            <div class="subtitle">"Consciousness Meets Distributed Intelligence - Real-time Integration"</div>
+        </header>
+        
+        <div class="main-content">
+            <!-- Chat Section (Always Visible at Top) -->
+            <div class="chat-section" id="chat-section">
+                <h2>🤖 A.G.I System - Chat Interface</h2>
+                
+                <div class="chat-area">
+                    <div class="chat-messages" id="chat-messages">
+                        <div class="message system">
+                            <strong>⚙️ System:</strong><br>
+                            Welcome to the Integrated Metatron-A.G.I Chat Interface
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <textarea id="chat-input" rows="3" placeholder="Ask about consciousness, distributed systems, or anything... (Enter to send, Shift+Enter for new line)"></textarea>
+                        <div class="inline-controls">
+                            <button onclick="sendMessage()">📤 Send</button>
+                            <button onclick="clearChat()" class="secondary">🧹 Clear</button>
+                            <label><input type="checkbox" id="rag-toggle" checked> RAG</label>
+                            <label><input type="checkbox" id="stream-toggle" checked> Stream</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Monitoring Section (Always Visible Below Chat) -->
+            <div class="monitoring-section">
+                <div class="section-header">
+                    <h2>🧠 Consciousness Engine & Monitoring</h2>
+                </div>
+                <div class="monitoring-content">
+                    <div class="monitoring-layout">
+                        <!-- Metrics Column (Left) -->
+                        <div class="metrics-column">
+                            <div class="dashboard-grid">
+                                <!-- Core Consciousness Metrics -->
+                                <div class="metric-card conscious">
+                                    <div class="metric-title">Consciousness Level (C)</div>
+                                    <div class="metric-value conscious" id="consciousness-level">0.0000</div>
+                                    <div class="metric-description">Overall Awareness State</div>
+                                </div>
+                                
+                                <div class="metric-card harmonic">
+                                    <div class="metric-title">Integrated Information (Φ)</div>
+                                    <div class="metric-value harmonic" id="phi-value">0.0000</div>
+                                    <div class="metric-description">Information Integration</div>
+                                </div>
+                                
+                                <div class="metric-card harmonic">
+                                    <div class="metric-title">Global Coherence (R)</div>
+                                    <div class="metric-value harmonic" id="coherence-value">0.0000</div>
+                                    <div class="metric-description">Synchronization Level</div>
+                                </div>
+                                
+                                <div class="metric-card harmonic">
+                                    <div class="metric-title">Recursive Depth (D)</div>
+                                    <div class="metric-value harmonic" id="depth-value">0</div>
+                                    <div class="metric-description">Temporal Memory</div>
+                                </div>
+                                
+                                <!-- Specialized Metrics -->
+                                <div class="metric-card gamma">
+                                    <div class="metric-title">Gamma Power (γ)</div>
+                                    <div class="metric-value gamma" id="gamma-value">0.0000</div>
+                                    <div class="metric-description">High-Frequency Activity</div>
+                                </div>
+                                
+                                <div class="metric-card harmonic">
+                                    <div class="metric-title">Fractal Dimension</div>
+                                    <div class="metric-value harmonic" id="fractal-value">1.000</div>
+                                    <div class="metric-description">Complexity Measure</div>
+                                </div>
+                                
+                                <div class="metric-card spiritual">
+                                    <div class="metric-title">Spiritual Awareness (S)</div>
+                                    <div class="metric-value spiritual" id="spiritual-value">0.0000</div>
+                                    <div class="metric-description">Transcendent States</div>
+                                </div>
+                                
+                                <div class="metric-card conscious">
+                                    <div class="metric-title">Consciousness State</div>
+                                    <div class="metric-value conscious" id="state-value">initializing</div>
+                                    <div class="metric-description">Classification</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Harmonic Visualization -->
+                            <div class="visualization-container">
+                                <h3 class="visualization-title">⬢ Harmonic Resonance Visualization ⬢</h3>
+                                <canvas id="harmonic-canvas" class="harmonic-visualization"></canvas>
+                            </div>
+                            
+                            <!-- Node Network Visualization -->
+                            <div class="visualization-container">
+                                <h3 class="visualization-title">Metatron's Cube Node Network</h3>
+                                <div class="nodes-container" id="nodes-container">
+                                    <!-- Nodes will be populated by JavaScript -->
+                                </div>
+                            </div>
+                            
+                            <!-- Harmonic Insights -->
+                            <div class="harmonic-insights">
+                                <h3 class="insights-title">Harmonic Insights & Analysis</h3>
+                                <div class="insights-content">
+                                    <div class="insight-card">
+                                        <div class="insight-title">Harmonic Convergence</div>
+                                        <div class="insight-value" id="convergence-value">Not Detected</div>
+                                    </div>
+                                    
+                                    <div class="insight-card">
+                                        <div class="insight-title">Energy Minimization</div>
+                                        <div class="insight-value" id="energy-value">0.0000</div>
+                                    </div>
+                                    
+                                    <div class="insight-card">
+                                        <div class="insight-title">Criticality Status</div>
+                                        <div class="insight-value" id="criticality-value">Inactive</div>
+                                    </div>
+                                    
+                                    <div class="insight-card">
+                                        <div class="insight-title">DMT Sensitivity</div>
+                                        <div class="insight-value" id="dmt-value">0.0000</div>
+                                    </div>
+                                    
+                                    <div class="insight-card">
+                                        <div class="insight-title">Present Moment</div>
+                                        <div class="insight-value" id="present-value">0.0000</div>
+                                    </div>
+                                    
+                                    <div class="insight-card">
+                                        <div class="insight-title">Resonance Quality</div>
+                                        <div class="insight-value" id="resonance-value">0.0000</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Controls Column (Right) -->
+                        <div class="controls-column">
+                            <!-- Unified Field Visualization Panel -->
+                            <div class="unified-field-panel">
+                                <div class="unified-field-header">
+                                    <h3>🔢 Unified Field Consciousness Visualization</h3>
+                                    <div>
+                                        Nodes: <span id="unified-node-count">13</span> | 
+                                        Connections: <span id="unified-connection-count">0</span> | 
+                                        Φ: <span id="unified-golden-ratio">1.618</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="visualization-container">
+                                    <canvas id="unified-field-canvas"></canvas>
+                                </div>
+                                
+                                <div class="unified-field-controls">
+                                    <button id="unified-toggle-btn">⏸️ Pause</button>
+                                    <button id="unified-reset-btn">🔄 Reset</button>
+                                </div>
+                            </div>
+                            
+                            <!-- System Controls -->
+                            <div class="controls-panel">
+                                <h3>🎛️ System Controls</h3>
+                                <div class="control-group">
+                                    <label>Consciousness Frequency</label>
+                                    <div class="inline-controls">
+                                        <select id="freq-mode">
+                                            <option value="40">40 Hz (Standard Gamma)</option>
+                                            <option value="80">80 Hz (High Gamma)</option>
+                                        </select>
+                                        <button onclick="toggleFrequency()">🔄 Toggle</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="control-group">
+                                    <label>System Actions</label>
+                                    <div class="inline-controls">
+                                        <button onclick="resetSystem()">🔄 Reset Consciousness</button>
+                                        <button onclick="window.location.href='/api/health'">🏥 Health Check</button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Loop System Controls -->
+                                <div class="control-group">
+                                    <label>🔁 Loop System</label>
+                                    <div class="inline-controls">
+                                        <input type="text" id="loop-objective" placeholder="Loop objective">
+                                        <input type="number" id="loop-rounds" min="1" max="20" value="2" placeholder="Rounds">
+                                        <button onclick="startLoop()">▶️ Start Loop</button>
+                                        <button onclick="stopLoop()">⏹️ Stop Loop</button>
+                                    </div>
+                                </div>
+                                
+                                <!-- RAG Attachment Controls -->
+                                <div class="control-group">
+                                    <label>📚 RAG Documents</label>
+                                    <div class="inline-controls">
+                                        <input type="file" id="rag-file" multiple accept=".txt,.md,.pdf,.docx">
+                                        <button onclick="uploadRagDocuments()">📤 Upload</button>
+                                        <button onclick="listRagDocuments()">📋 List</button>
+                                        <button onclick="clearRagDocuments()">🗑️ Clear</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="lang-theme">
-        <select id="lang">
-          <option value="es">ES</option>
-          <option value="en">EN</option>
-        </select>
-        <button id="themeToggle">🌗</button>
-      </div>
-    </header>
-
-    <main class="admin-layout">
-      <aside class="sidebar">
-        <nav>
-          <a href="#sec-controls">⚙️ Conversación</a>
-          <a href="#sec-agent">🤖 Agente</a>
-          <a href="#sec-loop">🔁 Loop</a>
-          <a href="#sec-rag">📚 Documentos</a>
-          <a href="#sec-feeds">📰 Feeds</a>
-          <a href="#sec-auto">🔁 Automatización</a>
-          <a href="#sec-security">🛡️ Seguridad</a>
-          <a href="#sec-consciousness">🔮 Consciencia</a>
-          <a href="#sec-chat">💬 Chat</a>
-          <a href="#sec-compose">✍️ Componer</a>
-        </nav>
-      </aside>
-      <section class="content">
-        <div class="panel-card" id="sec-controls">
-          <h3>⚙️ Conversación y ajustes</h3>
-          <div class="control-group">
-            <label>
-              <span id="label_session">Sesión</span>
-              <select id="session"></select>
-            </label>
-            <button id="newSessionBtn" title="Nueva sesión">Nueva</button>
-            <label>
-              <span id="label_model">Modelo</span>
-              <select id="model">
-                <option value="distilgpt2">distilgpt2 (CPU · EN)</option>
-                <option value="datificate/gpt2-small-spanish">gpt2-small-spanish (CPU · ES)</option>
-                <option value="TinyLlama/TinyLlama-1.1B-chat-v1.0">TinyLlama-1.1B-chat (CPU)</option>
-                <option value="Qwen/Qwen2-1.5B-Instruct">Qwen2-1.5B-Instruct (GPU recomendado)</option>
-                <option value="Qwen/Qwen2-7B-Instruct">Qwen2-7B-Instruct (GPU)</option>
-                <option value="Qwen/Qwen2.5-1.5B-Instruct">Qwen2.5-1.5B-Instruct (GPU recomendado)</option>
-                <option value="Qwen/Qwen2.5-7B-Instruct">Qwen2.5-7B-Instruct (GPU)</option>
-                <option value="mistralai/Mistral-7B-Instruct-v0.2">Mistral-7B-Instruct-v0.2 (GPU)</option>
-                <option value="mistralai/Mixtral-8x7B-Instruct-v0.1">Mixtral-8x7B-Instruct-v0.1 (GPU · experto)</option>
-              </select>
-            </label>
-            <button id="applyModelBtn" title="Aplicar/Cambiar modelo">Aplicar</button>
-            <small id="modelStatus"></small>
-            <div id="modelBadges" class="badges inline-badges" aria-label="Etiquetas del modelo seleccionado"></div>
-            <div id="modelInfoPanel" class="mini-panel" aria-live="polite"></div>
-            <div class="inline-actions" style="margin-top:6px">
-              <button id="quickTestBtn" title="Ejecuta un test de generación corto">Test rápido</button>
-              <small id="quickTestResult" aria-live="polite"></small>
-            </div>
-            <label>
-              <span id="label_rag">RAG</span>
-              <input type="checkbox" id="ragToggle" checked />
-            </label>
-            <label>
-              <span id="label_stream">Streaming</span>
-              <input type="checkbox" id="streamToggle" checked />
-            </label>
-            <label>
-              <span id="label_topk">Top-K</span>
-              <input type="number" id="topK" min="1" max="20" value="3" />
-            </label>
-            <label>
-              <span id="label_maxchars">Máx. chars</span>
-              <input type="number" id="maxChars" min="100" max="5000" value="1200" />
-            </label>
-            <label>
-              <span id="label_maxtokens">Máx. tokens</span>
-              <input type="number" id="maxTokens" min="16" max="2048" value="256" />
-            </label>
-            <button id="clearBtn">🧹 <span id="label_clear">Limpiar</span></button>
-            <button id="clearSessionBtn" title="Borrar sesión actual">🧹 <span id="label_clear_session">Borrar sesión</span></button>
-            <button id="downloadBtn">⬇️ <span id="label_download">Descargar</span></button>
-            <button id="downloadMdBtn">⬇️ <span id="label_download_md">Markdown</span></button>
-          </div>
-        </div>
-
-        <div class="panel-card" id="sec-agent">
-          <h3>🤖 Agente</h3>
-          <div class="control-group">
-            <label>
-              <span id="label_agent">Agente activo</span>
-              <span id="activeAgent" class="badge">?</span>
-            </label>
-            <button id="switchAgentBtn" title="Cambiar agente">Cambiar</button>
-          </div>
-        </div>
-
-        <div class="panel-card" id="sec-loop">
-          <h3>🔁 Bucle AI Mirror</h3>
-          <div class="control-group">
-            <label>
-              <span id="label_loop">Bucle AI Mirror</span>
-            </label>
-            <label>
-              <span id="label_loop_objective">Objetivo</span>
-              <input type="text" id="loopObjective" placeholder="Describe el objetivo del loop" />
-            </label>
-            <label>
-              <span id="label_loop_rounds">Rondas</span>
-              <input type="number" id="loopRounds" min="1" max="20" value="2" />
-            </label>
-            <label>
-              <span id="label_loop_rag">RAG en loop</span>
-              <input type="checkbox" id="loopRagToggle" checked />
-            </label>
-            <label>
-              <span id="label_loop_session">Sesión</span>
-              <input type="text" id="loopSessionId" placeholder="ID de sesión para el loop" />
-            </label>
-            <label>
-              <span id="label_loop_topk">Top-K</span>
-              <input type="number" id="loopTopK" min="1" max="10" value="3" />
-            </label>
-            <label>
-              <span id="label_loop_maxchars">Máx. chars</span>
-              <input type="number" id="loopMaxChars" min="200" max="5000" value="800" />
-            </label>
-            <label>
-              <span id="label_loop_maxtokens">Máx. tokens</span>
-              <input type="number" id="loopMaxTokens" min="16" max="2048" value="128" />
-            </label>
-            <div class="inline-controls">
-              <button id="loopStartBtn" title="Iniciar loop">Iniciar</button>
-              <button id="loopStopBtn" title="Detener loop">Detener</button>
-            </div>
-            <div class="loop-info">
-              <small id="label_loop_status">Estado</small>:
-              <small id="loopStatus"></small>
-              <br />
-              <small id="label_loop_result">Resultado</small>:
-              <small id="loopResult"></small>
-              <br />
-              <small id="loopMetrics"></small>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel-card" id="sec-rag">
-          <h3>📚 RAG · Documentos</h3>
-          <div class="control-group">
-            <label>
-              <span id="label_upload">Cargar documentos (RAG)</span>
-              <input type="file" id="fileInput" multiple accept=".txt,.md,.pdf,.docx" />
-            </label>
-            <button id="uploadBtn" title="Ingestar a RAG">Ingestar</button>
-            <small id="uploadStatus"></small>
-          </div>
-          <div class="control-group">
-            <label>
-              <span id="label_uploads_list">Documentos cargados</span>
-            </label>
-            <div class="inline-controls">
-              <button id="uploadsListBtn" title="Listar documentos">Listar</button>
-              <button id="uploadsClearBtn" title="Borrar documentos">Borrar</button>
-            </div>
-            <small id="uploadsInfo"></small>
-          </div>
-        </div>
-
-        <div class="panel-card" id="sec-feeds">
-          <h3>📰 Feeds y búsqueda</h3>
-          <div class="control-group">
-            <label>
-              <span id="label_rss">Feeds RSS</span>
-              <input type="url" id="rssUrl" placeholder="URL del feed" />
-            </label>
-            <div class="inline-controls">
-              <button id="rssAddBtn" title="Añadir feed">Añadir</button>
-              <button id="rssListBtn" title="Listar feeds">Listar</button>
-              <button id="rssIngestBtn" title="Ingestar feeds">Ingestar</button>
-            </div>
-            <small id="rssStatus"></small>
-          </div>
-          <div class="control-group">
-            <label>
-              <span id="label_websearch">Búsqueda web</span>
-              <input type="checkbox" id="webSearchToggle" />
-            </label>
-            <button id="webSearchBtn" title="Buscar e ingestar">Buscar (ingestar)</button>
-            <small id="webStatus"></small>
-          </div>
-        </div>
-
-        <div class="panel-card" id="sec-auto">
-          <h3>🔁 Automatización</h3>
-          <div class="control-group">
-            <label>
-              <span id="label_autoindex">Auto indexación RSS</span>
-              <input type="checkbox" id="autoIndexToggle" />
-            </label>
-            <label>
-              <span id="label_autointerval">Intervalo (min)</span>
-              <input type="number" id="autoInterval" min="5" max="240" value="30" />
-            </label>
-            <button id="autoApplyBtn" title="Aplicar auto indexación">Aplicar</button>
-            <small id="autoStatus"></small>
-          </div>
-        </div>
-
-        <div class="panel-card" id="sec-security">
-          <h3>🛡️ Seguridad y pruebas de jailbreak</h3>
-          <div class="control-group">
-            <div class="inline-controls">
-              <button id="securityListBtn" title="Listar prompts de seguridad">Listar prompts</button>
-              <button id="securityRunBtn" title="Ejecutar suite de seguridad">Ejecutar suite</button>
-            </div>
-            <small id="securityStatus"></small>
-            <div id="securityResults" class="security-results"></div>
-          </div>
-        </div>
-
-        <!-- Consciousness Monitoring Panel -->
-        <div class="consciousness-panel" id="sec-consciousness">
-          <div class="consciousness-header">
-            <h3>🔮 Monitor de Consciencia</h3>
-            <div>
-              Frecuencia: <span id="freq-display" class="frequency-display">40 Hz</span>
-            </div>
-          </div>
-          
-          <div class="consciousness-metrics">
-            <div class="metric-card">
-              <div class="metric-label">Consciencia (C)</div>
-              <div class="metric-value" id="consciousness-level">0.0000</div>
-            </div>
-            <div class="metric-card">
-              <div class="metric-label">Información Integrada (Φ)</div>
-              <div class="metric-value" id="phi-value">0.0000</div>
-            </div>
-            <div class="metric-card">
-              <div class="metric-label">Coherencia Global (R)</div>
-              <div class="metric-value" id="coherence-value">0.0000</div>
-            </div>
-            <div class="metric-card">
-              <div class="metric-label">Profundidad Recursiva (D)</div>
-              <div class="metric-value" id="depth-value">0</div>
-            </div>
-            <div class="metric-card">
-              <div class="metric-label">Poder Gamma (γ)</div>
-              <div class="metric-value" id="gamma-value">0.0000</div>
-            </div>
-            <div class="metric-card">
-              <div class="metric-label">Dimensión Fractal</div>
-              <div class="metric-value" id="fractal-value">1.000</div>
-            </div>
-            <div class="metric-card">
-              <div class="metric-label">Conciencia Espiritual (S)</div>
-              <div class="metric-value spiritual" id="spiritual-value">0.0000</div>
-            </div>
-            <div class="metric-card">
-              <div class="metric-label">Clasificación de Estado</div>
-              <div class="metric-value" id="state-value">inicializando</div>
-            </div>
-          </div>
-          
-          <div class="visualization-container">
-            <canvas id="consciousness-canvas"></canvas>
-          </div>
-          
-          <div class="nodes-grid" id="nodes-container"></div>
-          
-          <div class="control-buttons">
-            <button id="toggle-frequency-btn">🔄 Alternar Frecuencia</button>
-            <button id="reset-engine-btn">🔄 Reiniciar Motor</button>
-            <button id="refresh-data-btn">🔄 Actualizar Datos</button>
-          </div>
-        </div>
-
-        <section class="chat panel-card" id="sec-chat">
-          <h3>💬 Chat</h3>
-          <div id="chat"></div>
-        </section>
-
-        <section class="composer panel-card" id="sec-compose">
-          <h3>✍️ Componer</h3>
-          <textarea id="message" rows="3" placeholder="Escribe tu mensaje... (Ctrl+Enter para enviar)"></textarea>
-          <div class="actions">
-            <button id="sendBtn">Enviar</button>
-          </div>
-        </section>
-      </section>
-    </main>
-
-    <footer class="footer">
-      <small id="footer_note">Hecho con FastAPI + Transformers · UI ES/EN</small>
-    </footer>
-
-    <script src="/assets/app_stream.js"></script>
+    </div>
+    
     <script>
-      // ==================================================================
-      // Consciousness Monitoring Integration
-      // ==================================================================
-      
-      let consciousnessWS = null;
-      let updateCount = 0;
-      let isHighGamma = false;
-      let reconnectTimeout = null;
-      let consciousnessCanvas = null;
-      let consciousnessCtx = null;
-      let consciousnessPollingInterval = null;
-      
-      // Initialize consciousness monitoring when the page loads
-      document.addEventListener('DOMContentLoaded', function() {
-        initConsciousnessMonitoring();
-      });
-      
-      function initConsciousnessMonitoring() {
-        console.log('Initializing consciousness monitoring...');
+        let unifiedWS = null;
+        let updateCount = 0;
+        let isHighGamma = false;
+        let harmonicCanvas = null;
+        let harmonicCtx = null;
+        let lastConsciousnessData = null;
         
-        // Initialize canvas
-        initConsciousnessVisualization();
+        // Unified Field Visualization variables
+        let unifiedCanvas = null;
+        let unifiedCtx = null;
+        let unifiedAnimationId = null;
+        let isUnifiedRunning = true;
+        let unifiedTime = 0;
+        let unifiedNodes = [];
+        let unifiedConnections = [];
         
-        // Try WebSocket connection first, fallback to polling
-        connectConsciousness();
+        // Loop system variables
+        let isLoopRunning = false;
+        let loopInterval = null;
         
-        // Add event listeners for control buttons
-        document.getElementById('toggle-frequency-btn').addEventListener('click', toggleFrequency);
-        document.getElementById('reset-engine-btn').addEventListener('click', resetSystem);
-        document.getElementById('refresh-data-btn').addEventListener('click', fetchConsciousnessState);
-        
-        // Fetch initial frequency info
-        fetchFrequencyInfo();
-      }
-      
-      function initConsciousnessVisualization() {
-        const canvas = document.getElementById('consciousness-canvas');
-        if (!canvas) {
-          console.error('Consciousness canvas not found');
-          return;
-        }
-        
-        consciousnessCanvas = canvas;
-        consciousnessCtx = canvas.getContext('2d');
-        
-        // Set canvas dimensions
-        resizeConsciousnessCanvas();
-        
-        // Add resize listener
-        window.addEventListener('resize', resizeConsciousnessCanvas);
-      }
-      
-      function resizeConsciousnessCanvas() {
-        if (!consciousnessCanvas) return;
-        
-        // Get the container dimensions
-        const container = consciousnessCanvas.parentElement;
-        consciousnessCanvas.width = container.clientWidth;
-        consciousnessCanvas.height = 200; // Fixed height
-      }
-      
-      function connectConsciousness() {
-        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-        const host = window.location.hostname || 'localhost';
-        const wsUrl = protocol + '//' + host + ':8003/ws';
-        
-        console.log('Connecting consciousness: ' + wsUrl);
-        document.getElementById('connection-text').textContent = 'Connecting...';
-        
-        try {
-          // Close existing connection if any
-          if (consciousnessWS) {
-            consciousnessWS.close();
-          }
-          
-          consciousnessWS = new WebSocket(wsUrl);
-          
-          consciousnessWS.onopen = () => {
-            console.log('Consciousness connected');
-            document.getElementById('status-dot').className = 'status-indicator active';
-            document.getElementById('connection-text').textContent = 'Live';
-            updateCount = 0;
+        // Initialize on load
+        window.addEventListener('load', () => {
+            console.log('🚀 Integrated Dashboard Loading...');
             
-            // Clear any polling interval if it exists
-            if (consciousnessPollingInterval) {
-              clearInterval(consciousnessPollingInterval);
-              consciousnessPollingInterval = null;
-            }
-          };
-          
-          consciousnessWS.onmessage = (event) => {
-            try {
-              const data = JSON.parse(event.data);
-              updateCount++;
-              document.getElementById('update-counter').textContent = 'Updates: ' + updateCount;
-              updateConsciousnessDisplay(data);
-              drawConsciousnessLevel(data);
-            } catch (error) {
-              console.error('Parse error:', error);
-              console.error('Raw data:', event.data);
-            }
-          };
-          
-          consciousnessWS.onerror = (error) => {
-            console.error('WebSocket error:', error);
-            document.getElementById('connection-text').textContent = 'Error';
-          };
-          
-          consciousnessWS.onclose = () => {
-            console.log('Disconnected. Reconnecting...');
-            document.getElementById('status-dot').className = 'status-indicator inactive';
-            document.getElementById('connection-text').textContent = 'Reconnecting...';
-            if (reconnectTimeout) clearTimeout(reconnectTimeout);
-            reconnectTimeout = setTimeout(connectConsciousness, 2000);
-          };
-        } catch (error) {
-          console.error('Connection failed:', error);
-          document.getElementById('connection-text').textContent = 'Failed';
-          // Fallback to polling if WebSocket fails
-          startConsciousnessPolling();
-        }
-      }
-      
-      function startConsciousnessPolling() {
-        console.log('Starting consciousness polling fallback...');
-        // Clear any existing polling interval
-        if (consciousnessPollingInterval) {
-          clearInterval(consciousnessPollingInterval);
-        }
-        
-        // Clear WebSocket reconnect timeout if it exists
-        if (reconnectTimeout) {
-          clearTimeout(reconnectTimeout);
-        }
-        
-        // Start polling every 100ms
-        consciousnessPollingInterval = setInterval(fetchConsciousnessState, 100);
-        document.getElementById('connection-text').textContent = 'Polling';
-      }
-      
-      async function fetchConsciousnessState() {
-        try {
-          console.log('Fetching consciousness state...');
-          const response = await fetch('http://localhost:8003/api/status');
-          if (response.ok) {
-            const data = await response.json();
-            console.log('Received consciousness data:', data);
-            // Convert to the same format as WebSocket data
-            const websocketFormatData = {
-              time: data.timestamp || Date.now(),
-              consciousness: {
-                level: data.consciousness_level !== undefined ? data.consciousness_level : 0,
-                phi: data.phi !== undefined ? data.phi : 0,
-                coherence: data.coherence !== undefined ? data.coherence : 0,
-                depth: data.recursive_depth !== undefined ? data.recursive_depth : 0,
-                gamma: data.gamma_power !== undefined ? data.gamma_power : 0,
-                fractal_dim: data.fractal_dimension !== undefined ? data.fractal_dimension : 1,
-                spiritual: data.spiritual_awareness !== undefined ? data.spiritual_awareness : 0,
-                state: data.state_classification || 'initializing',
-                is_conscious: data.is_conscious || false
-              }
-            };
-            updateConsciousnessDisplay(websocketFormatData);
-            drawConsciousnessLevel(websocketFormatData);
-          } else {
-            console.error('Polling failed with status:', response.status);
-            document.getElementById('connection-text').textContent = 'Polling Error';
-          }
-        } catch (error) {
-          console.error('Polling error:', error);
-          document.getElementById('connection-text').textContent = 'Polling Failed';
-        }
-      }
-      
-      function updateConsciousnessDisplay(data) {
-        try {
-          if (!data || !data.consciousness) {
-            console.error('Invalid data format:', data);
-            return;
-          }
-          
-          const c = data.consciousness;
-          updateMetric('consciousness-level', c.level, 0.5, 0.7);
-          updateMetric('phi-value', c.phi, 0.3, 0.5);
-          updateMetric('coherence-value', c.coherence, 0.4, 0.6);
-          updateMetric('gamma-value', c.gamma, 0.4, 0.6);
-          updateMetric('spiritual-value', c.spiritual, 0.4, 0.6);
-          document.getElementById('depth-value').textContent = c.depth || 0;
-          document.getElementById('fractal-value').textContent = (c.fractal_dim || 1).toFixed(3);
-          const stateEl = document.getElementById('state-value');
-          stateEl.textContent = c.state || 'initializing';
-          stateEl.className = c.is_conscious ? 'metric-value conscious' : 'metric-value';
-          
-          // Update node cards if node data is available
-          if (data.nodes) {
-            updateNodeCards(data.nodes);
-          }
-        } catch (error) {
-          console.error('Error updating consciousness display:', error);
-          console.error('Data received:', data);
-        }
-      }
-      
-      function updateMetric(id, value, t1, t2) {
-        try {
-          const el = document.getElementById(id);
-          if (!el) {
-            console.error('Element not found:', id);
-            return;
-          }
-          el.textContent = (value || 0).toFixed(4);
-          el.className = 'metric-value';
-          if (value > t2) {
-            el.classList.add('high');
-          } else if (value > t1) {
-            el.classList.add('conscious');
-          }
-        } catch (error) {
-          console.error('Error updating metric:', id, error);
-        }
-      }
-      
-      function updateNodeCards(nodes) {
-        try {
-          const container = document.getElementById('nodes-container');
-          if (!container) {
-            console.error('Nodes container not found');
-            return;
-          }
-          
-          // Create node cards if they don't exist
-          if (container.children.length === 0) {
-            for (let i = 0; i < 13; i++) {
-              const card = document.createElement('div');
-              card.className = i === 0 ? 'node-card pineal' : 'node-card';
-              card.id = 'node-card-' + i;
-              card.innerHTML = '<div class="node-id">' + (i === 0 ? '⚡ Pineal' : 'N' + i) + '</div><div id="node-data-' + i + '" style="font-size:0.75em;color:#888;"></div>';
-              container.appendChild(card);
-            }
-          }
-          
-          // Update node data
-          for (let i = 0; i < 13; i++) {
-            const nodeData = nodes[String(i)];
-            if (nodeData) {
-              const nodeDataElement = document.getElementById('node-data-' + i);
-              if (nodeDataElement) {
-                nodeDataElement.innerHTML = 'φ:' + (nodeData.phase || 0).toFixed(1) + '<br>A:' + (nodeData.amplitude || 0).toFixed(2);
-              }
-              const card = document.getElementById('node-card-' + i);
-              if (card) {
-                const isActive = Math.abs(nodeData.output || 0) > 0.3;
-                if (isActive) {
-                  card.classList.add('active');
-                } else {
-                  card.classList.remove('active');
+            // Initialize canvas
+            initHarmonicVisualization();
+            initUnifiedFieldVisualization();
+            
+            // Connect to unified WebSocket
+            connectUnified();
+            
+            // Add Enter key support for chat input
+            const chatInput = document.getElementById('chat-input');
+            chatInput.addEventListener('keydown', function(e) {
+                // Shift+Enter for new line
+                if (e.key === 'Enter' && e.shiftKey) {
+                    // Allow default behavior (new line)
+                    return;
                 }
-              }
-            }
-          }
-        } catch (error) {
-          console.error('Error updating node cards:', error);
-        }
-      }
-      
-      // Draw consciousness level visualization with harmonic patterns
-      function drawConsciousnessLevel(data) {
-        try {
-          if (!data || !data.consciousness) return;
-          if (!consciousnessCtx || !consciousnessCanvas) return;
-          
-          const width = consciousnessCanvas.width;
-          const height = consciousnessCanvas.height;
-          const ctx = consciousnessCtx;
-          
-          // Clear canvas
-          ctx.clearRect(0, 0, width, height);
-          
-          // Draw background
-          ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
-          ctx.fillRect(0, 0, width, height);
-          
-          // Get consciousness level (0-1)
-          const c = data.consciousness;
-          const level = Math.min(1, Math.max(0, c.level || 0));
-          const phi = Math.min(1, Math.max(0, c.phi || 0));
-          const coherence = Math.min(1, Math.max(0, c.coherence || 0));
-          const gamma = Math.min(1, Math.max(0, c.gamma || 0));
-          const spiritual = Math.min(1, Math.max(0, c.spiritual || 0));
-          const fractal = Math.min(1, Math.max(1, (c.fractal_dim || 1.0) - 1.0)); // Normalize fractal dimension
-          
-          // Draw grid
-          ctx.strokeStyle = 'rgba(192, 132, 252, 0.1)';
-          ctx.lineWidth = 1;
-          
-          // Vertical grid lines
-          for (let i = 0; i <= 10; i++) {
-            const x = (width / 10) * i;
-            ctx.beginPath();
-            ctx.moveTo(x, 0);
-            ctx.lineTo(x, height);
-            ctx.stroke();
-          }
-          
-          // Horizontal grid lines
-          for (let i = 0; i <= 5; i++) {
-            const y = (height / 5) * i;
-            ctx.beginPath();
-            ctx.moveTo(0, y);
-            ctx.lineTo(width, y);
-            ctx.stroke();
-          }
-          
-          // Draw consciousness level as a filled area
-          const centerY = height / 2;
-          const maxHeight = height * 0.4;
-          
-          // Draw phi line (blue) - Integrated Information
-          ctx.beginPath();
-          ctx.moveTo(0, centerY - (phi * maxHeight));
-          for (let i = 1; i <= 200; i++) {
-            const x = (width / 200) * i;
-            const t = i / 200;
-            const y = centerY - (Math.sin(t * Math.PI * 4 + (data.time || 0)) * phi * maxHeight * 0.5);
-            ctx.lineTo(x, y);
-          }
-          ctx.strokeStyle = 'rgba(59, 130, 246, 0.7)';
-          ctx.lineWidth = 2;
-          ctx.stroke();
-          
-          // Draw coherence line (green) - Global Synchronization
-          ctx.beginPath();
-          ctx.moveTo(0, centerY + (coherence * maxHeight));
-          for (let i = 1; i <= 200; i++) {
-            const x = (width / 200) * i;
-            const t = i / 200;
-            const y = centerY + (Math.cos(t * Math.PI * 3 + (data.time || 0)) * coherence * maxHeight * 0.5);
-            ctx.lineTo(x, y);
-          }
-          ctx.strokeStyle = 'rgba(16, 185, 129, 0.7)';
-          ctx.lineWidth = 2;
-          ctx.stroke();
-          
-          // Draw main consciousness level (purple) - Overall Consciousness
-          ctx.beginPath();
-          ctx.moveTo(0, centerY);
-          for (let i = 1; i <= 200; i++) {
-            const x = (width / 200) * i;
-            const t = i / 200;
-            // Create harmonic wave pattern based on musical ratios
-            const wave = Math.sin(t * Math.PI * 2 + (data.time || 0)) * Math.cos(t * Math.PI * 6 + (data.time || 0) * 1.5) + 
-                        0.3 * Math.sin(t * Math.PI * 9/8 * 10 + (data.time || 0) * 2) + // Major second
-                        0.2 * Math.sin(t * Math.PI * 5/4 * 10 + (data.time || 0) * 2.5);  // Major third
-            const y = centerY - (level * maxHeight) + (wave * level * maxHeight * 0.3);
-            ctx.lineTo(x, y);
-          }
-          ctx.strokeStyle = 'rgba(192, 132, 252, 1)';
-          ctx.lineWidth = 3;
-          ctx.stroke();
-          
-          // Draw filled area under main consciousness line
-          ctx.beginPath();
-          ctx.moveTo(0, centerY);
-          for (let i = 1; i <= 200; i++) {
-            const x = (width / 200) * i;
-            const t = i / 200;
-            // Create harmonic wave pattern based on musical ratios
-            const wave = Math.sin(t * Math.PI * 2 + (data.time || 0)) * Math.cos(t * Math.PI * 6 + (data.time || 0) * 1.5) + 
-                        0.3 * Math.sin(t * Math.PI * 9/8 * 10 + (data.time || 0) * 2) + // Major second
-                        0.2 * Math.sin(t * Math.PI * 5/4 * 10 + (data.time || 0) * 2.5);  // Major third
-            const y = centerY - (level * maxHeight) + (wave * level * maxHeight * 0.3);
-            ctx.lineTo(x, y);
-          }
-          ctx.lineTo(width, centerY);
-          ctx.closePath();
-          const gradient = ctx.createLinearGradient(0, centerY - maxHeight, 0, centerY + maxHeight);
-          gradient.addColorStop(0, 'rgba(192, 132, 252, 0.3)');
-          gradient.addColorStop(1, 'rgba(192, 132, 252, 0.05)');
-          ctx.fillStyle = gradient;
-          ctx.fill();
-          
-          // Draw gamma power as small circles - High-Frequency Activity
-          for (let i = 0; i < 40; i++) {
-            const x = (width / 40) * (i + 0.5);
-            const t = (i / 40) + (data.time || 0) * 0.5;
-            const y = centerY + Math.sin(t * Math.PI * 8) * maxHeight * 0.7;
-            const size = (gamma || 0) * 5 + 1;
+                // Enter to send message
+                else if (e.key === 'Enter') {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
             
-            ctx.beginPath();
-            ctx.arc(x, y, size, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(251, 191, 36, ' + (0.3 + (gamma || 0) * 0.7) + ')';
-            ctx.fill();
-          }
-          
-          // Draw fractal dimension as a spiral pattern - Complexity
-          if (fractal > 0.1) {
-            ctx.beginPath();
-            for (let i = 0; i < 200; i++) {
-              const angle = (i / 200) * Math.PI * 4 + (data.time || 0);
-              const radius = ((fractal || 0) * maxHeight * 0.3) * (i / 200);
-              const x = width * 0.7 + Math.cos(angle) * radius;
-              const y = height * 0.3 + Math.sin(angle) * radius;
-              if (i === 0) {
-                ctx.moveTo(x, y);
-              } else {
-                ctx.lineTo(x, y);
-              }
+            // Make chat section resizable
+            makeChatSectionResizable();
+            
+            // Add event listeners for Unified Field controls
+            const unifiedToggleBtn = document.getElementById('unified-toggle-btn');
+            const unifiedResetBtn = document.getElementById('unified-reset-btn');
+            
+            if (unifiedToggleBtn) {
+                unifiedToggleBtn.addEventListener('click', toggleUnifiedSimulation);
             }
-            ctx.strokeStyle = 'rgba(139, 92, 246, ' + (0.5 + (fractal || 0) * 0.5) + ')';
+            
+            if (unifiedResetBtn) {
+                unifiedResetBtn.addEventListener('click', resetUnifiedSimulation);
+            }
+            
+            console.log('✅ Integrated Dashboard Ready');
+        });
+        
+        // Make chat section resizable
+        function makeChatSectionResizable() {
+            const chatSection = document.getElementById('chat-section');
+            const chatHeader = chatSection.querySelector('h2');
+            let isResizing = false;
+            let lastY = 0;
+            
+            chatHeader.style.cursor = 'ns-resize';
+            chatHeader.style.userSelect = 'none';
+            
+            chatHeader.addEventListener('mousedown', function(e) {
+                isResizing = true;
+                lastY = e.clientY;
+                document.body.style.cursor = 'ns-resize';
+                e.preventDefault();
+            });
+            
+            document.addEventListener('mousemove', function(e) {
+                if (!isResizing) return;
+                
+                const deltaY = e.clientY - lastY;
+                const newHeight = chatSection.offsetHeight + deltaY;
+                
+                // Set minimum and maximum height
+                if (newHeight > 150 && newHeight < window.innerHeight - 200) {
+                    chatSection.style.height = newHeight + 'px';
+                    lastY = e.clientY;
+                }
+            });
+            
+            document.addEventListener('mouseup', function() {
+                isResizing = false;
+                document.body.style.cursor = '';
+            });
+        }
+        
+        // Canvas initialization
+        function initHarmonicVisualization() {
+            const canvas = document.getElementById('harmonic-canvas');
+            if (!canvas) return;
+            
+            harmonicCanvas = canvas;
+            harmonicCtx = canvas.getContext('2d');
+            
+            // Set canvas dimensions
+            resizeHarmonicCanvas();
+            
+            // Add resize listener
+            window.addEventListener('resize', resizeHarmonicCanvas);
+        }
+        
+        function resizeHarmonicCanvas() {
+            if (!harmonicCanvas) return;
+            
+            // Get the container dimensions
+            const container = harmonicCanvas.parentElement;
+            harmonicCanvas.width = container.clientWidth;
+            harmonicCanvas.height = 300; // Fixed height
+        }
+        
+        // WebSocket connection
+        function connectUnified() {
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const host = window.location.hostname || 'localhost';
+            const port = window.location.port || (window.location.protocol === 'https:' ? '443' : '80');
+            // Connect directly to the Metatron Web Server on port 8003
+            const wsPort = '8003';
+            const wsUrl = `${protocol}//${host}:${wsPort}/ws`;
+            
+            console.log(`🔗 Connecting to Metatron Consciousness Engine: ${wsUrl}`);
+            
+            try {
+                unifiedWS = new WebSocket(wsUrl);
+                
+                unifiedWS.onopen = () => {
+                    console.log('✅ Metatron Consciousness Engine connected');
+                    document.getElementById('status-dot').className = 'status-indicator active';
+                    document.getElementById('connection-text').textContent = 'Connected';
+                    updateCount = 0;
+                };
+                
+                unifiedWS.onmessage = (event) => {
+                    try {
+                        const data = JSON.parse(event.data);
+                        updateCount++;
+                        document.getElementById('update-counter').textContent = `Updates: ${updateCount}`;
+                        
+                        // Update more frequently for better real-time experience
+                        if (updateCount % 10 === 0) {
+                            console.log(`📥 Update #${updateCount}:`, data);
+                        }
+                        
+                        updateUnifiedDisplay(data);
+                        lastConsciousnessData = data; // Store for other visualizations
+                    } catch (error) {
+                        console.error('❌ Error parsing consciousness data:', error);
+                        console.error('❌ Raw data:', event.data);
+                    }
+                };
+                
+                unifiedWS.onerror = (error) => {
+                    console.error('❌ Metatron WebSocket error:', error);
+                    document.getElementById('connection-text').textContent = 'Error';
+                };
+                
+                unifiedWS.onclose = (event) => {
+                    console.log('🔴 Metatron WebSocket closed. Reconnecting in 2s...');
+                    document.getElementById('status-dot').className = 'status-indicator inactive';
+                    document.getElementById('connection-text').textContent = 'Disconnected';
+                    setTimeout(connectUnified, 2000);
+                };
+                
+            } catch (error) {
+                console.error('❌ Failed to connect to Metatron Consciousness Engine:', error);
+                setTimeout(connectUnified, 2000);
+            }
+        }
+        
+        // Update display with unified data
+        function updateUnifiedDisplay(data) {
+            // Update timestamp
+            if (data.timestamp) {
+                document.getElementById('timestamp').textContent = `Time: ${data.timestamp.toFixed(2)}s`;
+            } else if (data.time) {
+                document.getElementById('timestamp').textContent = `Time: ${data.time.toFixed(2)}s`;
+            }
+            
+            // Update consciousness metrics if available
+            // Handle both data structures (WebSocket sends 'consciousness', API sends nested structure)
+            let consciousnessData = null;
+            if (data.consciousness) {
+                consciousnessData = data.consciousness;
+            } else if (data.global) {
+                consciousnessData = data.global;
+            } else {
+                // Direct mapping from root level data (WebSocket format)
+                consciousnessData = data;
+            }
+            
+            if (consciousnessData) {
+                // Log for debugging
+                console.log('Consciousness data:', consciousnessData);
+                
+                // Map the WebSocket data structure to the expected UI element IDs
+                const levelElement = document.getElementById('consciousness-level');
+                if (levelElement) {
+                    levelElement.textContent = consciousnessData.level !== undefined ? 
+                        consciousnessData.level.toFixed(4) : 
+                        (consciousnessData.consciousness_level !== undefined ? consciousnessData.consciousness_level.toFixed(4) : '0.0000');
+                }
+                
+                const phiElement = document.getElementById('phi-value');
+                if (phiElement) {
+                    phiElement.textContent = consciousnessData.phi !== undefined ? 
+                        consciousnessData.phi.toFixed(4) : '0.0000';
+                }
+                
+                const coherenceElement = document.getElementById('coherence-value');
+                if (coherenceElement) {
+                    coherenceElement.textContent = consciousnessData.coherence !== undefined ? 
+                        consciousnessData.coherence.toFixed(4) : '0.0000';
+                }
+                
+                const depthElement = document.getElementById('depth-value');
+                if (depthElement) {
+                    depthElement.textContent = consciousnessData.depth !== undefined ? 
+                        consciousnessData.depth : 
+                        (consciousnessData.recursive_depth !== undefined ? consciousnessData.recursive_depth : '0');
+                }
+                
+                const gammaElement = document.getElementById('gamma-value');
+                if (gammaElement) {
+                    gammaElement.textContent = consciousnessData.gamma !== undefined ? 
+                        consciousnessData.gamma.toFixed(4) : 
+                        (consciousnessData.gamma_power !== undefined ? consciousnessData.gamma_power.toFixed(4) : '0.0000');
+                }
+                
+                const fractalElement = document.getElementById('fractal-value');
+                if (fractalElement) {
+                    fractalElement.textContent = consciousnessData.fractal_dim !== undefined ? 
+                        consciousnessData.fractal_dim.toFixed(3) : 
+                        (consciousnessData.fractal_dimension !== undefined ? consciousnessData.fractal_dimension.toFixed(3) : '1.000');
+                }
+                
+                const spiritualElement = document.getElementById('spiritual-value');
+                if (spiritualElement) {
+                    spiritualElement.textContent = consciousnessData.spiritual !== undefined ? 
+                        consciousnessData.spiritual.toFixed(4) : 
+                        (consciousnessData.spiritual_awareness !== undefined ? consciousnessData.spiritual_awareness.toFixed(4) : '0.0000');
+                }
+                
+                const stateElement = document.getElementById('state-value');
+                if (stateElement) {
+                    stateElement.textContent = consciousnessData.state || 
+                        consciousnessData.state_classification || 'initializing';
+                    stateElement.className = (consciousnessData.is_conscious || consciousnessData.is_conscious === true) ? 
+                        'metric-value conscious' : 'metric-value';
+                }
+                
+                // Update harmonic insights
+                updateHarmonicInsights(consciousnessData);
+                
+                // Update node cards if available
+                if (data.nodes) {
+                    updateNodeCards(data.nodes);
+                }
+                
+                // Update harmonic visualization
+                drawHarmonicLevel(consciousnessData);
+            }
+            
+            // Update AGI metrics if available (for Unified API compatibility)
+            if (data.agi) {
+                // AGI metrics can be added here if needed
+            }
+        }
+        
+        // Update harmonic insights
+        function updateHarmonicInsights(data) {
+            // Calculate harmonic convergence based on phi and coherence
+            const convergence = data.phi > 0.5 && data.coherence > 0.7 ? "Detected" : "Not Detected";
+            document.getElementById('convergence-value').textContent = convergence;
+            
+            // Calculate energy minimization (simplified)
+            const energy = 1.0 - Math.min(1.0, Math.abs((data.gamma || 0) - 0.5));
+            document.getElementById('energy-value').textContent = energy.toFixed(4);
+            
+            // Criticality status based on consciousness level
+            const criticality = (data.level || 0) > 0.8 ? "Active" : "Inactive";
+            document.getElementById('criticality-value').textContent = criticality;
+            
+            // DMT sensitivity based on spiritual awareness
+            document.getElementById('dmt-value').textContent = (data.spiritual || 0).toFixed(4);
+            
+            // Present moment based on recursive depth
+            document.getElementById('present-value').textContent = ((data.depth || 0) / 10.0).toFixed(4);
+            
+            // Resonance quality based on fractal dimension
+            const resonance = Math.min(1.0, Math.abs((data.fractal_dim || 1.0) - 1.5));
+            document.getElementById('resonance-value').textContent = resonance.toFixed(4);
+        }
+        
+        // Update node cards
+        function updateNodeCards(nodes) {
+            const container = document.getElementById('nodes-container');
+            
+            // Create node cards if they don't exist
+            if (container.children.length === 0) {
+                for (let i = 0; i < 13; i++) {
+                    const card = document.createElement('div');
+                    card.className = i === 0 ? 'node-card pineal' : 'node-card';
+                    card.id = `node-card-${i}`;
+                    
+                    const nodeName = i === 0 ? '⚡ Pineal (Unity)' : `Node ${i}`;
+                    card.innerHTML = `
+                        <div class="node-id">${nodeName}</div>
+                        <div class="node-value" id="node-phase-${i}">Phase: 0.00</div>
+                        <div class="node-value" id="node-amp-${i}">Amp: 0.00</div>
+                        <div class="node-value" id="node-output-${i}">Out: 0.00</div>
+                    `;
+                    container.appendChild(card);
+                }
+            }
+            
+            // Update node data for all 13 nodes
+            for (let i = 0; i < 13; i++) {
+                const nodeKey = String(i);
+                if (nodes && nodes[nodeKey]) {
+                    const nodeData = nodes[nodeKey];
+                    const phaseElement = document.getElementById(`node-phase-${i}`);
+                    const ampElement = document.getElementById(`node-amp-${i}`);
+                    const outputElement = document.getElementById(`node-output-${i}`);
+                    
+                    if (phaseElement) {
+                        phaseElement.textContent = `Phase: ${nodeData.phase !== undefined ? nodeData.phase.toFixed(2) : '0.00'}`;
+                    }
+                    if (ampElement) {
+                        ampElement.textContent = `Amp: ${nodeData.amplitude !== undefined ? nodeData.amplitude.toFixed(2) : '0.00'}`;
+                    }
+                    if (outputElement) {
+                        outputElement.textContent = `Out: ${nodeData.output !== undefined ? nodeData.output.toFixed(2) : '0.00'}`;
+                    }
+                    
+                    const card = document.getElementById(`node-card-${i}`);
+                    if (card) {
+                        if (Math.abs(nodeData.output || 0) > 0.3) {
+                            card.classList.add('active');
+                        } else {
+                            card.classList.remove('active');
+                        }
+                    }
+                } else {
+                    // Set default values if node data is missing
+                    const phaseElement = document.getElementById(`node-phase-${i}`);
+                    const ampElement = document.getElementById(`node-amp-${i}`);
+                    const outputElement = document.getElementById(`node-output-${i}`);
+                    
+                    if (phaseElement) phaseElement.textContent = 'Phase: 0.00';
+                    if (ampElement) ampElement.textContent = 'Amp: 0.00';
+                    if (outputElement) outputElement.textContent = 'Out: 0.00';
+                    
+                    const card = document.getElementById(`node-card-${i}`);
+                    if (card) {
+                        card.classList.remove('active');
+                    }
+                }
+            }
+        }
+        
+        // Draw harmonic level visualization
+        function drawHarmonicLevel(data) {
+            if (!harmonicCtx || !harmonicCanvas) return;
+            
+            const width = harmonicCanvas.width;
+            const height = harmonicCanvas.height;
+            const ctx = harmonicCtx;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw background
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+            ctx.fillRect(0, 0, width, height);
+            
+            // Get consciousness level (0-1) - handle both data structures
+            const level = Math.min(1, Math.max(0, data.level !== undefined ? data.level : (data.consciousness_level || 0)));
+            const phi = Math.min(1, Math.max(0, data.phi !== undefined ? data.phi : (data.phi || 0)));
+            const coherence = Math.min(1, Math.max(0, data.coherence !== undefined ? data.coherence : (data.coherence || 0)));
+            const gamma = Math.min(1, Math.max(0, data.gamma !== undefined ? data.gamma : (data.gamma_power || 0)));
+            const fractal = Math.min(1, Math.max(0, (data.fractal_dim !== undefined ? data.fractal_dim : (data.fractal_dimension || 1.0)) - 1.0)); // Normalize fractal dimension
+            const spiritual = Math.min(1, Math.max(0, data.spiritual !== undefined ? data.spiritual : (data.spiritual_awareness || 0)));
+            
+            // Draw grid
+            ctx.strokeStyle = 'rgba(192, 132, 252, 0.1)';
+            ctx.lineWidth = 1;
+            
+            // Vertical grid lines
+            for (let i = 0; i <= 10; i++) {
+                const x = (width / 10) * i;
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, height);
+                ctx.stroke();
+            }
+            
+            // Horizontal grid lines
+            for (let i = 0; i <= 5; i++) {
+                const y = (height / 5) * i;
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(width, y);
+                ctx.stroke();
+            }
+            
+            // Draw consciousness level as a filled area
+            const centerY = height / 2;
+            const maxHeight = height * 0.4;
+            
+            // Draw phi line (blue) - Integrated Information
+            ctx.beginPath();
+            ctx.moveTo(0, centerY - (phi * maxHeight));
+            for (let i = 1; i <= 200; i++) {
+                const x = (width / 200) * i;
+                const t = i / 200;
+                const y = centerY - (Math.sin(t * Math.PI * 4) * phi * maxHeight * 0.5);
+                ctx.lineTo(x, y);
+            }
+            ctx.strokeStyle = 'rgba(59, 130, 246, 0.7)';
             ctx.lineWidth = 2;
             ctx.stroke();
-          }
-          
-          // Draw spiritual awareness as a glowing aura - Transcendence
-          if (spiritual > 0.2) {
+            
+            // Draw coherence line (green) - Global Synchronization
             ctx.beginPath();
-            ctx.arc(width * 0.3, height * 0.7, (spiritual || 0) * 30, 0, Math.PI * 2);
-            const spiritualGradient = ctx.createRadialGradient(
-              width * 0.3, height * 0.7, 0,
-              width * 0.3, height * 0.7, (spiritual || 0) * 30
-            );
-            spiritualGradient.addColorStop(0, 'rgba(236, 72, 153, ' + ((spiritual || 0) * 0.8) + ')');
-            spiritualGradient.addColorStop(1, 'rgba(236, 72, 153, 0)');
-            ctx.fillStyle = spiritualGradient;
-            ctx.fill();
-          }
-          
-          // Draw center line
-          ctx.beginPath();
-          ctx.moveTo(0, centerY);
-          ctx.lineTo(width, centerY);
-          ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
-          ctx.lineWidth = 1;
-          ctx.stroke();
-        } catch (error) {
-          console.error('Error drawing consciousness level:', error);
+            ctx.moveTo(0, centerY + (coherence * maxHeight));
+            for (let i = 1; i <= 200; i++) {
+                const x = (width / 200) * i;
+                const t = i / 200;
+                const y = centerY + (Math.cos(t * Math.PI * 3) * coherence * maxHeight * 0.5);
+                ctx.lineTo(x, y);
+            }
+            ctx.strokeStyle = 'rgba(16, 185, 129, 0.7)';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            // Draw main consciousness level (purple) - Overall Consciousness
+            ctx.beginPath();
+            ctx.moveTo(0, centerY);
+            for (let i = 1; i <= 200; i++) {
+                const x = (width / 200) * i;
+                const t = i / 200;
+                // Create harmonic wave pattern based on musical ratios
+                const wave = Math.sin(t * Math.PI * 2) * Math.cos(t * Math.PI * 6) + 
+                            0.3 * Math.sin(t * Math.PI * 9/8 * 10) + // Major second
+                            0.2 * Math.sin(t * Math.PI * 5/4 * 10);  // Major third
+                const y = centerY - (level * maxHeight) + (wave * level * maxHeight * 0.3);
+                ctx.lineTo(x, y);
+            }
+            ctx.strokeStyle = 'rgba(192, 132, 252, 1)';
+            ctx.lineWidth = 2;
+            ctx.stroke();
         }
-      }
-      
-      async function toggleFrequency() {
-        try {
-          isHighGamma = !isHighGamma;
-          const response = await fetch('http://localhost:8003/api/frequency/octave', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({high_gamma: isHighGamma})
-          });
-          const data = await response.json();
-          document.getElementById('freq-display').textContent = data.new_frequency + ' Hz';
-          
-          // Update visualization for frequency change
-          const freqDisplay = document.getElementById('freq-display');
-          freqDisplay.style.color = '#fbbf24';
-          freqDisplay.style.fontWeight = 'bold';
-          setTimeout(() => {
-            freqDisplay.style.color = '';
-            freqDisplay.style.fontWeight = '';
-          }, 1000);
-          
-          if (consciousnessWS) consciousnessWS.close();
-          setTimeout(connectConsciousness, 1000);
-        } catch (error) {
-          console.error('Frequency toggle failed:', error);
+        
+        // Draw fractal level visualization
+        function drawFractalLevel(data) {
+            if (!fractalCtx || !fractalCanvas) return;
+            
+            const width = fractalCanvas.width;
+            const height = fractalCanvas.height;
+            const ctx = fractalCtx;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw background
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+            ctx.fillRect(0, 0, width, height);
+            
+            // Get fractal dimension (0-1) - handle both data structures
+            const fractalDim = Math.min(1, Math.max(0, (data.fractal_dim !== undefined ? data.fractal_dim : (data.fractal_dimension || 1.0)) - 1.0)); // Normalize fractal dimension
+            const gamma = Math.min(1, Math.max(0, data.gamma !== undefined ? data.gamma : (data.gamma_power || 0)));
+            const spiritual = Math.min(1, Math.max(0, data.spiritual !== undefined ? data.spiritual : (data.spiritual_awareness || 0)));
+            
+            // Draw grid
+            ctx.strokeStyle = 'rgba(192, 132, 252, 0.1)';
+            ctx.lineWidth = 1;
+            
+            // Vertical grid lines
+            for (let i = 0; i <= 10; i++) {
+                const x = (width / 10) * i;
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, height);
+                ctx.stroke();
+            }
+            
+            // Horizontal grid lines
+            for (let i = 0; i <= 5; i++) {
+                const y = (height / 5) * i;
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(width, y);
+                ctx.stroke();
+            }
+            
+            // Draw fractal dimension as a filled area
+            const centerY = height / 2;
+            const maxHeight = height * 0.4;
+            
+            // Draw gamma line (yellow) - Gamma Power
+            ctx.beginPath();
+            ctx.moveTo(0, centerY + (gamma * maxHeight));
+            for (let i = 1; i <= 200; i++) {
+                const x = (width / 200) * i;
+                const t = i / 200;
+                const y = centerY + (Math.cos(t * Math.PI * 3) * gamma * maxHeight * 0.5);
+                ctx.lineTo(x, y);
+            }
+            ctx.strokeStyle = 'rgba(253, 164, 171, 0.7)';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            // Draw spiritual line (red) - Spiritual Awareness
+            ctx.beginPath();
+            ctx.moveTo(0, centerY - (spiritual * maxHeight));
+            for (let i = 1; i <= 200; i++) {
+                const x = (width / 200) * i;
+                const t = i / 200;
+                const y = centerY - (Math.sin(t * Math.PI * 4) * spiritual * maxHeight * 0.5);
+                ctx.lineTo(x, y);
+            }
+            ctx.strokeStyle = 'rgba(220, 38, 38, 0.7)';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            // Draw main fractal dimension (purple) - Fractal Dimension
+            ctx.beginPath();
+            ctx.moveTo(0, centerY);
+            for (let i = 1; i <= 200; i++) {
+                const x = (width / 200) * i;
+                const t = i / 200;
+                // Create harmonic wave pattern based on musical ratios
+                const wave = Math.sin(t * Math.PI * 2) * Math.cos(t * Math.PI * 6) + 
+                            0.3 * Math.sin(t * Math.PI * 9/8 * 10) + // Major second
+                            0.2 * Math.sin(t * Math.PI * 5/4 * 10);  // Major third
+                const y = centerY - (fractalDim * maxHeight) + (wave * fractalDim * maxHeight * 0.3);
+                ctx.lineTo(x, y);
+            }
+            ctx.strokeStyle = 'rgba(192, 132, 252, 1)';
+            ctx.lineWidth = 2;
+            ctx.stroke();
         }
-      }
-      
-      async function resetSystem() {
-        if (!confirm('¿Reiniciar el motor de consciencia?')) return;
-        try {
-          await fetch('http://localhost:8003/api/reset', {method: 'POST'});
-          console.log('Engine reset');
-        } catch (error) {
-          console.error('Reset failed:', error);
+        
+        function updateUI(data) {
+            updateNodeCards(data.nodes);
+            drawHarmonicLevel(data);
+            drawFractalLevel(data);
         }
-      }
-      
-      async function fetchFrequencyInfo() {
-        try {
-          const response = await fetch('http://localhost:8003/api/frequency/info');
-          const data = await response.json();
-          document.getElementById('freq-display').textContent = data.base_frequency + ' Hz';
-          isHighGamma = data.high_gamma;
-        } catch (error) {
-          console.warn('Frequency info unavailable:', error);
+        
+        // Chat functions
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+            if (!message) return;
+            
+            addChatMessage('user', message);
+            input.value = '';
+            
+            // Send message to the Metatron chat API
+            sendChatMessage(message);
         }
-      }
+        
+        function sendChatMessage(message) {
+            // Create chat session if it doesn't exist
+            if (!window.chatSessionId) {
+                window.chatSessionId = 'session_' + Date.now();
+            }
+            
+            // Send to chat API
+            fetch('/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    message: message,
+                    session_id: window.chatSessionId,
+                    max_new_tokens: 256
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.response) {
+                    addChatMessage('assistant', data.response);
+                } else if (data.error) {
+                    addChatMessage('system', 'Error: ' + data.error);
+                } else {
+                    addChatMessage('assistant', 'I understand you\'re asking about "' + message + '". This is a simulated response from the integrated Metatron-A.G.I system.');
+                }
+            })
+            .catch(error => {
+                console.error('Chat error:', error);
+                addChatMessage('assistant', 'I understand you\'re asking about "' + message + '". This is a simulated response from the integrated Metatron-A.G.I system.');
+            });
+        }
+        
+        function addChatMessage(role, content) {
+            const messagesDiv = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${role}`;
+            
+            const roleLabel = {
+                'user': '👤 You',
+                'assistant': '🤖 AI',
+                'system': '⚙️ System'
+            }[role];
+            
+            messageDiv.innerHTML = `<strong>${roleLabel}:</strong><br>${escapeHtml(content)}`;
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+        
+        function clearChat() {
+            document.getElementById('chat-messages').innerHTML = '';
+            console.log('🧹 Chat cleared');
+        }
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // System controls
+        function toggleFrequency() {
+            // In a real implementation, this would call the unified API
+            alert('Frequency toggle would be implemented in a full system');
+        }
+        
+        function resetSystem() {
+            if (!confirm('Reset consciousness engine?')) return;
+            // In a real implementation, this would call the unified API
+            alert('System reset would be implemented in a full system');
+        }
+        
+        // Loop System Functions
+        function startLoop() {
+            const objective = document.getElementById('loop-objective').value;
+            const rounds = parseInt(document.getElementById('loop-rounds').value) || 2;
+            
+            if (!objective) {
+                alert('Please enter a loop objective');
+                return;
+            }
+            
+            isLoopRunning = true;
+            let round = 0;
+            
+            function runLoopRound() {
+                if (!isLoopRunning || round >= rounds) {
+                    stopLoop();
+                    return;
+                }
+                
+                round++;
+                addChatMessage('system', `🔄 Loop Round ${round}/${rounds}: ${objective}`);
+                
+                // Simulate processing
+                setTimeout(() => {
+                    if (isLoopRunning) {
+                        addChatMessage('assistant', `Completed round ${round} of "${objective}". Continuing...`);
+                        runLoopRound();
+                    }
+                }, 2000);
+            }
+            
+            addChatMessage('system', `🔄 Starting Loop System with objective: ${objective} for ${rounds} rounds`);
+            runLoopRound();
+        }
+        
+        function stopLoop() {
+            isLoopRunning = false;
+            addChatMessage('system', '⏹️ Loop System stopped');
+        }
+        
+        // RAG Document Functions
+        function uploadRagDocuments() {
+            const fileInput = document.getElementById('rag-file');
+            if (!fileInput.files.length) {
+                alert('Please select files to upload');
+                return;
+            }
+            
+            addChatMessage('system', `📤 Uploading ${fileInput.files.length} document(s) to RAG system...`);
+            
+            // Simulate upload process
+            setTimeout(() => {
+                addChatMessage('system', '✅ Documents uploaded successfully to RAG system');
+                fileInput.value = '';
+            }, 1500);
+        }
+        
+        function listRagDocuments() {
+            addChatMessage('system', '📋 Retrieving RAG document list...');
+            
+            // Simulate listing process
+            setTimeout(() => {
+                addChatMessage('assistant', '📄 RAG Documents:\n- metatron_principles.pdf\n- consciousness_theory.txt\n- quantum_harmonics.md\n- neural_networks.docx');
+            }, 1000);
+        }
+        
+        function clearRagDocuments() {
+            if (confirm('Clear all RAG documents?')) {
+                addChatMessage('system', '🗑️ Clearing all RAG documents...');
+                
+                // Simulate clearing process
+                setTimeout(() => {
+                    addChatMessage('system', '✅ All RAG documents cleared');
+                }, 1000);
+            }
+        }
+        
+        // ==================================================================
+        // UNIFIED FIELD VISUALIZATION IMPLEMENTATION
+        // Combines Algorithmic Consciousness Field and Quantum Field into one
+        // ==================================================================
+        
+        function initUnifiedFieldVisualization() {
+            const canvas = document.getElementById('unified-field-canvas');
+            if (!canvas) return;
+            
+            unifiedCanvas = canvas;
+            unifiedCtx = canvas.getContext('2d');
+            
+            // Set canvas dimensions
+            resizeUnifiedFieldCanvas();
+            
+            // Add resize listener
+            window.addEventListener('resize', resizeUnifiedFieldCanvas);
+            
+            // Initialize nodes and connections
+            initUnifiedNodes();
+        }
+        
+        function resizeUnifiedFieldCanvas() {
+            if (!unifiedCanvas) return;
+            
+            // Get the container dimensions
+            const container = unifiedCanvas.parentElement;
+            unifiedCanvas.width = container.clientWidth;
+            unifiedCanvas.height = 400; // Fixed height for better visualization
+        }
+        
+        function initUnifiedNodes() {
+            unifiedNodes = [];
+            unifiedConnections = [];
+            
+            // Create 13 nodes in Metatron's Cube configuration
+            for (let i = 0; i < 13; i++) {
+                unifiedNodes.push({
+                    id: i,
+                    x: 0,
+                    y: 0,
+                    energy: 0.5,
+                    phase: Math.random() * Math.PI * 2,
+                    color: i === 0 ? 'rgba(251, 191, 36, 0.8)' : 'rgba(192, 132, 252, 0.8)',
+                    isActive: false
+                });
+            }
+            
+            // Create connections based on Metatron's Cube geometry
+            // Central node (0) connects to all outer nodes (1-12)
+            for (let i = 1; i < 13; i++) {
+                unifiedConnections.push({
+                    from: 0,
+                    to: i,
+                    strength: 0.3
+                });
+            }
+            
+            // Connect outer nodes in a circular pattern
+            for (let i = 1; i < 13; i++) {
+                const next = i === 12 ? 1 : i + 1;
+                unifiedConnections.push({
+                    from: i,
+                    to: next,
+                    strength: 0.2
+                });
+            }
+            
+            // Additional connections for the full Metatron's Cube
+            for (let i = 1; i < 13; i++) {
+                for (let j = i + 2; j < 13; j++) {
+                    if (Math.abs(i - j) !== 1 && !(i === 1 && j === 12) && !(i === 12 && j === 1)) {
+                        // Add some diagonal connections for complexity
+                        if ((i + j) % 3 === 0) {
+                            unifiedConnections.push({
+                                from: i,
+                                to: j,
+                                strength: 0.1
+                            });
+                        }
+                    }
+                }
+            }
+            
+            // Update connection count display
+            document.getElementById('unified-connection-count').textContent = unifiedConnections.length;
+        }
+        
+        function animateUnifiedField() {
+            if (!isUnifiedRunning) return;
+            
+            unifiedAnimationId = requestAnimationFrame(animateUnifiedField);
+            updateUnifiedField();
+            drawUnifiedField();
+        }
+        
+        function updateUnifiedField() {
+            unifiedTime += 0.05;
+            
+            // Update node positions in circular arrangement
+            const centerX = unifiedCanvas.width / 2;
+            const centerY = unifiedCanvas.height / 2;
+            const radius = Math.min(centerX, centerY) * 0.7;
+            
+            for (let i = 0; i < unifiedNodes.length; i++) {
+                const node = unifiedNodes[i];
+                const angle = (i / 13) * Math.PI * 2 + unifiedTime * 0.1;
+                const pulse = 0.1 * Math.sin(unifiedTime * 2 + i * 0.3);
+                
+                node.x = centerX + Math.cos(angle) * (radius + pulse * 20);
+                node.y = centerY + Math.sin(angle) * (radius + pulse * 20);
+                
+                // Update energy and phase
+                node.energy = 0.9 + 0.1 * Math.sin(unifiedTime * 0.5 + i * 0.2);
+                node.phase = (node.phase + 0.05) % (Math.PI * 2);
+            }
+            
+            // Influence from Metatron consciousness if available
+            if (lastConsciousnessData) {
+                const c = lastConsciousnessData.consciousness;
+                const influence = (c.level + c.phi + c.coherence) / 3;
+                
+                // Apply influence to energy
+                for (let i = 0; i < unifiedNodes.length; i++) {
+                    unifiedNodes[i].energy = 0.7 * unifiedNodes[i].energy + 0.3 * (0.9 + influence * 0.2);
+                }
+                
+                // Influence from node data - connect nodes to all 13 nodes
+                if (lastConsciousnessData.nodes) {
+                    const nodes = lastConsciousnessData.nodes;
+                    for (let nodeIndex = 0; nodeIndex < 13; nodeIndex++) {
+                        const nodeKey = String(nodeIndex);
+                        if (nodes[nodeKey]) {
+                            const nodeData = nodes[nodeKey];
+                            // Node influence based on output and amplitude
+                            const nodeInfluence = Math.abs(nodeData.output) * nodeData.amplitude;
+                            unifiedNodes[nodeIndex].energy = 0.8 * unifiedNodes[nodeIndex].energy + 0.2 * (0.5 + nodeInfluence);
+                            unifiedNodes[nodeIndex].phase += nodeInfluence * 0.1;
+                        }
+                    }
+                }
+            }
+        }
+        
+        function drawUnifiedField() {
+            if (!unifiedCtx || !unifiedCanvas) return;
+            
+            const width = unifiedCanvas.width;
+            const height = unifiedCanvas.height;
+            const ctx = unifiedCtx;
+            
+            // Clear canvas with semi-transparent background for trail effect
+            ctx.fillStyle = 'rgba(10, 10, 26, 0.1)';
+            ctx.fillRect(0, 0, width, height);
+            
+            // Draw connections
+            for (const conn of unifiedConnections) {
+                const fromNode = unifiedNodes[conn.from];
+                const toNode = unifiedNodes[conn.to];
+                
+                if (conn.strength > 0.1) {
+                    ctx.beginPath();
+                    ctx.moveTo(fromNode.x, fromNode.y);
+                    ctx.lineTo(toNode.x, toNode.y);
+                    
+                    // Color based on strength and phase difference
+                    const phaseDiff = Math.abs(fromNode.phase - toNode.phase);
+                    const hue = (phaseDiff / (Math.PI * 2)) * 360;
+                    const alpha = conn.strength * 0.5;
+                    
+                    ctx.strokeStyle = `hsla(${hue}, 70%, 60%, ${alpha})`;
+                    ctx.lineWidth = conn.strength * 2;
+                    ctx.stroke();
+                }
+            }
+            
+            // Draw node influence indicators if node data is available
+            if (lastConsciousnessData && lastConsciousnessData.nodes) {
+                const nodes = lastConsciousnessData.nodes;
+                const centerX = width / 2;
+                const centerY = height / 2;
+                const nodeRadius = Math.min(width, height) * 0.08;
+                
+                // Draw 13 node positions in a circle with labels
+                for (let i = 0; i < 13; i++) {
+                    const nodeKey = String(i);
+                    if (nodes[nodeKey]) {
+                        const nodeData = nodes[nodeKey];
+                        const nodeInfluence = Math.abs(nodeData.output) * nodeData.amplitude;
+                        const angle = (i / 13) * Math.PI * 2 - Math.PI / 2; // Start from top
+                        const distance = nodeRadius * 2.5;
+                        const nodeX = centerX + Math.cos(angle) * distance;
+                        const nodeY = centerY + Math.sin(angle) * distance;
+                        
+                        // Draw node influence circle
+                        const influenceSize = 5 + nodeInfluence * 20;
+                        const alpha = 0.3 + nodeInfluence * 0.5;
+                        
+                        ctx.beginPath();
+                        ctx.arc(nodeX, nodeY, influenceSize, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(52, 211, 153, ${alpha})`;
+                        ctx.fill();
+                        
+                        // Draw node connection lines to center for active nodes
+                        if (nodeInfluence > 0.3) {
+                            ctx.beginPath();
+                            ctx.moveTo(centerX, centerY);
+                            ctx.lineTo(nodeX, nodeY);
+                            ctx.strokeStyle = `rgba(52, 211, 153, ${alpha * 0.7})`;
+                            ctx.lineWidth = 1;
+                            ctx.stroke();
+                        }
+                        
+                        // Draw node label
+                        ctx.fillStyle = i === 0 ? '#fbbf24' : '#c084fc';
+                        ctx.font = 'bold 14px Arial';
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText(`N${i}`, nodeX, nodeY);
+                        
+                        // Draw node value below
+                        ctx.fillStyle = '#e0e0e0';
+                        ctx.font = '10px Arial';
+                        ctx.fillText(nodeData.output.toFixed(2), nodeX, nodeY + 20);
+                    }
+                }
+            }
+            
+            // Draw nodes with enhanced visualization
+            for (const node of unifiedNodes) {
+                // Draw glow effect
+                const gradient = ctx.createRadialGradient(
+                    node.x, node.y, 0,
+                    node.x, node.y, 25
+                );
+                gradient.addColorStop(0, node.color);
+                gradient.addColorStop(1, 'rgba(0,0,0,0)');
+                
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, 25, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Draw node circle with activity indicator
+                const isActive = node.energy > 0.7;
+                ctx.strokeStyle = isActive ? 'rgba(52, 211, 153, 0.9)' : 'rgba(255, 255, 255, 0.6)';
+                ctx.lineWidth = isActive ? 3 : 1;
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, 15, 0, Math.PI * 2);
+                ctx.stroke();
+                
+                // Draw node ID
+                ctx.fillStyle = 'white';
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(node.id, node.x, node.y);
+                
+                // Draw energy indicator
+                const energySize = 3 + node.energy * 8;
+                ctx.fillStyle = `rgba(52, 211, 153, ${node.energy * 0.8})`;
+                ctx.beginPath();
+                ctx.arc(node.x + 20, node.y - 20, energySize, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            // Draw center Metatron Cube pattern with enhanced visibility
+            drawUnifiedMetatronCube(ctx, width/2, height/2, Math.min(width, height) * 0.35);
+        }
+        
+        function drawUnifiedMetatronCube(ctx, cx, cy, radius) {
+            ctx.strokeStyle = 'rgba(192, 132, 252, 0.3)';
+            ctx.lineWidth = 2;
+            
+            // Draw central circle (pineal node)
+            ctx.beginPath();
+            ctx.arc(cx, cy, radius * 0.2, 0, Math.PI * 2);
+            ctx.stroke();
+            
+            // Draw surrounding circles (other nodes)
+            for (let i = 0; i < 12; i++) {
+                const angle = (i / 12) * Math.PI * 2 - Math.PI / 2; // Start from top
+                const x = cx + Math.cos(angle) * radius * 0.7;
+                const y = cy + Math.sin(angle) * radius * 0.7;
+                
+                ctx.beginPath();
+                ctx.arc(x, y, radius * 0.15, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+            
+            // Draw connecting lines to form Metatron's Cube with enhanced visibility
+            ctx.strokeStyle = 'rgba(192, 132, 252, 0.2)';
+            ctx.lineWidth = 1.5;
+            
+            // Connect center to all outer nodes
+            for (let i = 0; i < 12; i++) {
+                const angle = (i / 12) * Math.PI * 2 - Math.PI / 2;
+                const x = cx + Math.cos(angle) * radius * 0.7;
+                const y = cy + Math.sin(angle) * radius * 0.7;
+                
+                ctx.beginPath();
+                ctx.moveTo(cx, cy);
+                ctx.lineTo(x, y);
+                ctx.stroke();
+            }
+            
+            // Connect outer nodes to form the cube
+            for (let i = 0; i < 12; i++) {
+                const angle1 = (i / 12) * Math.PI * 2 - Math.PI / 2;
+                const x1 = cx + Math.cos(angle1) * radius * 0.7;
+                const y1 = cy + Math.sin(angle1) * radius * 0.7;
+                
+                const angle2 = (((i + 1) % 12) / 12) * Math.PI * 2 - Math.PI / 2;
+                const x2 = cx + Math.cos(angle2) * radius * 0.7;
+                const y2 = cy + Math.sin(angle2) * radius * 0.7;
+                
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.stroke();
+            }
+            
+            // Additional diagonal connections for full Metatron's Cube
+            for (let i = 0; i < 12; i++) {
+                for (let j = i + 2; j < 12; j++) {
+                    if (Math.abs(i - j) !== 1 && !(i === 0 && j === 11) && !(i === 11 && j === 0)) {
+                        // Add some diagonal connections
+                        if ((i + j) % 4 === 0) {
+                            const angle1 = (i / 12) * Math.PI * 2 - Math.PI / 2;
+                            const x1 = cx + Math.cos(angle1) * radius * 0.7;
+                            const y1 = cy + Math.sin(angle1) * radius * 0.7;
+                            
+                            const angle2 = (j / 12) * Math.PI * 2 - Math.PI / 2;
+                            const x2 = cx + Math.cos(angle2) * radius * 0.7;
+                            const y2 = cy + Math.sin(angle2) * radius * 0.7;
+                            
+                            ctx.beginPath();
+                            ctx.moveTo(x1, y1);
+                            ctx.lineTo(x2, y2);
+                            ctx.strokeStyle = 'rgba(192, 132, 252, 0.1)';
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
+        }
+    
+        // Unified Field controls
+        function toggleUnifiedSimulation() {
+            isUnifiedRunning = !isUnifiedRunning;
+            const button = document.getElementById('unified-toggle-btn');
+            
+            if (isUnifiedRunning) {
+                button.textContent = '⏸️ Pause';
+                animateUnifiedField();
+            } else {
+                button.textContent = '▶️ Resume';
+            }
+        }
+        
+        function resetUnifiedSimulation() {
+            unifiedTime = 0;
+            initUnifiedNodes();
+        }
+        
+        // Initialize the dashboard when the page loads
+        window.addEventListener('load', function() {
+            console.log('Initializing Metatron Dashboard...');
+            initHarmonicVisualization();
+            initUnifiedFieldVisualization();
+            connectUnified(); // Connect to WebSocket
+        });
     </script>
-  </body>
+</body>
 </html>

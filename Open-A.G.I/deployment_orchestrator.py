@@ -979,11 +979,11 @@ class DeploymentOrchestrator:
             available_memory = node.memory_gb * 1024 * 0.8
             
             if required_cpu > available_cpu:
-                logger.warning(f"⚠️ CPU insuficiente en {node.node_id}: {required_cpu} > {available_cpu}")
+                logger.warning(f"[WARN] CPU insuficiente en {node.node_id}: {required_cpu} > {available_cpu}")
                 return False
             
             if required_memory > available_memory:
-                logger.warning(f"⚠️ Memoria insuficiente en {node.node_id}: {required_memory} > {available_memory}")
+                logger.warning(f"[WARN] Memoria insuficiente en {node.node_id}: {required_memory} > {available_memory}")
                 return False
             
             return True

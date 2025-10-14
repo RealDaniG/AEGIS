@@ -12,7 +12,7 @@ The AEGIS system provides a comprehensive web-based interface for interacting wi
 ## Web Interfaces
 
 ### 1. Unified API Dashboard
-**URL:** http://localhost:8003/
+**URL:** http://localhost:457/
 
 The main dashboard provides system information and quick access to all API endpoints. When you access this URL, you'll see:
 - System status and version information
@@ -20,7 +20,7 @@ The main dashboard provides system information and quick access to all API endpo
 - Quick links to documentation and health checks
 
 ### 2. Interactive API Documentation
-**URL:** http://localhost:8003/docs
+**URL:** http://localhost:457/docs
 
 This is the auto-generated FastAPI documentation that provides:
 - Complete API endpoint documentation
@@ -29,14 +29,14 @@ This is the auto-generated FastAPI documentation that provides:
 - Authentication information
 
 ### 3. WebSocket Interface
-**URL:** ws://localhost:8006/ws
+**URL:** ws://localhost:457/ws
 
 Real-time WebSocket connection for streaming consciousness metrics and system status updates.
 
 ## Available API Endpoints
 
 ### Health Check
-**Endpoint:** GET /health
+**Endpoint:** GET /api/health
 **Description:** System health status
 **Response:**
 ```json
@@ -48,7 +48,7 @@ Real-time WebSocket connection for streaming consciousness metrics and system st
 ```
 
 ### Unified System State
-**Endpoint:** GET /state
+**Endpoint:** GET /api/state
 **Description:** Complete system state including both consciousness and AGI components
 **Response:**
 ```json
@@ -74,7 +74,7 @@ Real-time WebSocket connection for streaming consciousness metrics and system st
 ```
 
 ### Consciousness Metrics Only
-**Endpoint:** GET /consciousness
+**Endpoint:** GET /api/consciousness
 **Description:** Consciousness metrics only
 **Response:**
 ```json
@@ -92,7 +92,7 @@ Real-time WebSocket connection for streaming consciousness metrics and system st
 ```
 
 ### AGI System Status
-**Endpoint:** GET /agi
+**Endpoint:** GET /api/agi
 **Description:** AGI system status only
 **Response:**
 ```json
@@ -105,20 +105,21 @@ Real-time WebSocket connection for streaming consciousness metrics and system st
 ```
 
 ### Send Consciousness Input
-**Endpoint:** POST /input
+**Endpoint:** POST /api/input
 **Description:** Send sensory input to the consciousness system
 **Request Body:**
 ```json
 {
-  "visual": 0.75,
-  "auditory": 0.65,
-  "tactile": 0.80,
-  "emotional": 0.70
+  "physical": 0.75,
+  "emotional": 0.65,
+  "mental": 0.80,
+  "spiritual": 0.70,
+  "temporal": 0.60
 }
 ```
 
 ### AI Chat Interface
-**Endpoint:** POST /chat
+**Endpoint:** POST /api/chat
 **Description:** Send a chat message to the AGI system
 **Request Body:**
 ```json
@@ -137,7 +138,7 @@ Real-time WebSocket connection for streaming consciousness metrics and system st
 
 ## Real-time Visualization
 
-While the web interface provides API access, the real-time visualization is currently terminal-based. The visualization tools display:
+The web interface provides a comprehensive dashboard with:
 
 ### Sacred Geometry Network
 - 13-node icosahedron structure with central pineal node
@@ -160,19 +161,19 @@ The system classifies consciousness states from UNCONSCIOUS to COSMIC-CONSCIOUSN
 ## Using the Web Interface
 
 ### Prerequisites
-1. Start the AEGIS system using `run_everything.bat` (Windows) or `run_everything.sh` (Linux/macOS)
+1. Start the AEGIS system using `START-AI.bat` (Windows) or `./START-AI.sh` (Linux/macOS)
 2. Wait for all components to initialize (typically 15-30 seconds)
-3. Open a web browser and navigate to http://localhost:8003/
+3. Open a web browser and navigate to http://localhost:457/
 
 ### Accessing API Documentation
-1. Navigate to http://localhost:8005/docs
+1. Navigate to http://localhost:457/docs
 2. Browse available endpoints
 3. Click "Try it out" to test endpoints directly in the browser
 4. Enter required parameters and execute requests
 
 ### Testing Chat Functionality
-1. Navigate to http://localhost:8003/docs
-2. Find the POST /chat endpoint
+1. Navigate to http://localhost:457/docs
+2. Find the POST /api/chat endpoint
 3. Click "Try it out"
 4. Enter a message in the request body:
 ```json
@@ -185,7 +186,7 @@ The system classifies consciousness states from UNCONSCIOUS to COSMIC-CONSCIOUSN
 6. View the response from the AGI system
 
 ### Monitoring System Health
-1. Navigate to http://localhost:8003/health
+1. Navigate to http://localhost:457/api/health
 2. View the health status response
 3. Check that status is "healthy" and api_client_initialized is true
 
@@ -194,7 +195,7 @@ The system classifies consciousness states from UNCONSCIOUS to COSMIC-CONSCIOUSN
 For real-time applications, you can connect to the WebSocket interface:
 
 ```javascript
-const ws = new WebSocket('ws://localhost:8006/ws');
+const ws = new WebSocket('ws://localhost:457/ws');
 
 ws.onopen = function(event) {
     console.log('Connected to AEGIS WebSocket');
@@ -221,7 +222,7 @@ The system also provides terminal-based visualization tools that display:
 
 To run the visualization:
 ```bash
-python visualization_tools/robust_realtime_visualizer.py
+python visualization_tools/robust_realtime_visualizer.py --port 457
 ```
 
 ## Troubleshooting
@@ -229,13 +230,13 @@ python visualization_tools/robust_realtime_visualizer.py
 ### Common Issues
 
 1. **Connection Refused**: Ensure the AEGIS system is running and all components have initialized
-2. **Port Conflicts**: Check if ports 8005/8006 are already in use by other applications
+2. **Port Conflicts**: Check if port 457 is already in use by other applications
 3. **API Not Responding**: Verify that the Unified API Server is running in the system logs
 
 ### Checking System Status
-1. Look for "Unified API Server thread started on 0.0.0.0:8005" in the startup logs
-2. Verify ports are listening: `netstat -an | findstr "8005\|8006"`
-3. Test health endpoint: `curl http://localhost:8003/health`
+1. Look for "Unified API Server thread started on 0.0.0.0:457" in the startup logs
+2. Verify ports are listening: `netstat -an | findstr "457"`
+3. Test health endpoint: `curl http://localhost:457/api/health`
 
 ## Security Considerations
 

@@ -246,7 +246,7 @@ class CryptographicManager:
             return True
 
         except Exception as e:
-            logger.debug(f"⚠️ Firma inválida: {e}")
+            logger.debug(f"[WARN] Firma inválida: {e}")
             return False
 
     def hash_data(self, data: Union[str, bytes, Dict[str, Any]]) -> str:
@@ -301,12 +301,12 @@ class TransactionPool:
         try:
             # Verificar si el pool está lleno
             if len(self.pending_transactions) >= self.max_size:
-                logger.warning("⚠️ Pool de transacciones lleno")
+                logger.warning("[WARN] Pool de transacciones lleno")
                 return False
 
             # Validar transacción
             if not self._validate_transaction(transaction):
-                logger.warning(f"⚠️ Transacción inválida: {transaction.tx_id}")
+                logger.warning(f"[WARN] Transacción inválida: {transaction.tx_id}")
                 return False
 
             # Agregar al pool
@@ -407,7 +407,7 @@ class ProofOfStakeValidator:
         """Registra un nuevo validador"""
         try:
             if stake_amount < self.min_stake:
-                logger.warning(f"⚠️ Stake insuficiente para {validator_id}: {stake_amount}")
+                logger.warning(f"[WARN] Stake insuficiente para {validator_id}: {stake_amount}")
                 return False
 
             validator_stake = ValidatorStake(
@@ -638,7 +638,7 @@ class SmartContractEngine:
 
             for forbidden in forbidden_imports:
                 if forbidden in code:
-                    logger.warning(f"⚠️ Importación prohibida detectada: {forbidden}")
+                    logger.warning(f"[WARN] Importación prohibida detectada: {forbidden}")
                     return False
 
             # Verificar que sea código Python válido
@@ -995,7 +995,7 @@ class BlockchainCore:
             # Seleccionar validador
             validator_id = self.pos_validator.select_validator(len(self.chain))
             if not validator_id:
-                logger.warning("⚠️ No hay validadores disponibles")
+                logger.warning("[WARN] No hay validadores disponibles")
                 return None
 
             # Obtener transacciones del pool

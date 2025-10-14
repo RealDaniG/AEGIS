@@ -519,7 +519,7 @@ async function applyAutoIndex() {
 async function applyModel() {
     const model = document.getElementById('model-select').value;
     try {
-        await fetch('http://localhost:8003/api/config', {
+        await fetch('http://localhost:457/api/config', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({model_name: model})
@@ -542,10 +542,10 @@ async function verifyServers() {
     console.log('🔍 Verifying server connection...');
     
     try {
-        const response = await fetch('http://localhost:8003/api/health', {signal: AbortSignal.timeout(3000)});
+        const response = await fetch('http://localhost:457/api/health', {signal: AbortSignal.timeout(3000)});
         const data = await response.json();
         console.log('✅ Consciousness Engine: OK', data);
-        addChatMessage('system', '✅ All features running on port 8003');
+        addChatMessage('system', '✅ All features running on port 457');
         addChatMessage('system', '  • Consciousness Engine');
         addChatMessage('system', '  • AI Chat');
         addChatMessage('system', '  • Document Upload');

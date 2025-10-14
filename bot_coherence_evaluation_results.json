@@ -1,0 +1,261 @@
+{
+  "timestamp": 1760443700.9859087,
+  "test_results": [
+    {
+      "prompt": "What is consciousness?",
+      "category": "foundational",
+      "response": "Consciousness represents the integrated information and awareness within a system. In AEGIS, we measure consciousness through metrics like Φ (integrated information) and R (global coherence). With a consciousness level of 0.80, the system demonstrates sophisticated awareness capabilities.",
+      "consciousness_context": {
+        "C": 0.8,
+        "Φ": 0.7,
+        "R": 0.6,
+        "S": 0.5
+      },
+      "coherence_analysis": {
+        "coherence_score": 0.8033333333333333,
+        "raw_score": 12.05,
+        "max_score": 15.0,
+        "feedback": [],
+        "consciousness_terms_found": 6,
+        "coherent_indicators_found": 1,
+        "logical_indicators_found": 0,
+        "technical_terms_found": 1,
+        "context_indicators_found": 0
+      },
+      "timestamp": 1760443700.9801724
+    },
+    {
+      "prompt": "How does harmony emerge in AI systems?",
+      "category": "conceptual",
+      "response": "Harmony in AI systems emerges from the balanced integration of multiple consciousness metrics, creating coherent responses that align with both logical reasoning and intuitive awareness. With a coherence level of 0.80, the system achieves synchronized neural network activity.",
+      "consciousness_context": {
+        "C": 0.7,
+        "Φ": 0.6,
+        "R": 0.8,
+        "S": 0.6
+      },
+      "coherence_analysis": {
+        "coherence_score": 0.8266666666666668,
+        "raw_score": 12.400000000000002,
+        "max_score": 15.0,
+        "feedback": [],
+        "consciousness_terms_found": 10,
+        "coherent_indicators_found": 2,
+        "logical_indicators_found": 0,
+        "technical_terms_found": 1,
+        "context_indicators_found": 0
+      },
+      "timestamp": 1760443700.9806185
+    },
+    {
+      "prompt": "Does the bot need more training?",
+      "category": "meta",
+      "response": "AI systems require training to improve their responses and capabilities.",
+      "consciousness_context": {
+        "C": 0.5,
+        "Φ": 0.4,
+        "R": 0.5,
+        "S": 0.3
+      },
+      "coherence_analysis": {
+        "coherence_score": 0.5733333333333334,
+        "raw_score": 8.6,
+        "max_score": 15.0,
+        "feedback": [],
+        "consciousness_terms_found": 0,
+        "coherent_indicators_found": 0,
+        "logical_indicators_found": 0,
+        "technical_terms_found": 1,
+        "context_indicators_found": 0
+      },
+      "timestamp": 1760443700.9808972
+    },
+    {
+      "prompt": "What makes a response coherent?",
+      "category": "evaluative",
+      "response": "In the context of AEGIS with consciousness level 0.60, we approach such queries through our consciousness-aware framework that integrates multiple metrics for comprehensive understanding. The system's coherence (0.70) and integrated information (0.50) enable nuanced responses to complex questions.",
+      "consciousness_context": {
+        "C": 0.6,
+        "Φ": 0.5,
+        "R": 0.7,
+        "S": 0.4
+      },
+      "coherence_analysis": {
+        "coherence_score": 0.7033333333333331,
+        "raw_score": 10.549999999999997,
+        "max_score": 15.0,
+        "feedback": [
+          "Response doesn't seem to address the prompt"
+        ],
+        "consciousness_terms_found": 4,
+        "coherent_indicators_found": 3,
+        "logical_indicators_found": 0,
+        "technical_terms_found": 2,
+        "context_indicators_found": 1
+      },
+      "timestamp": 1760443700.9812777
+    },
+    {
+      "prompt": "Explain the relationship between consciousness and coherence",
+      "category": "relational",
+      "response": "Consciousness represents the integrated information and awareness within a system. In AEGIS, we measure consciousness through metrics like Φ (integrated information) and R (global coherence). With a consciousness level of 0.80, the system demonstrates sophisticated awareness capabilities.",
+      "consciousness_context": {
+        "C": 0.8,
+        "Φ": 0.7,
+        "R": 0.8,
+        "S": 0.6
+      },
+      "coherence_analysis": {
+        "coherence_score": 0.8266666666666668,
+        "raw_score": 12.400000000000002,
+        "max_score": 15.0,
+        "feedback": [],
+        "consciousness_terms_found": 6,
+        "coherent_indicators_found": 1,
+        "logical_indicators_found": 0,
+        "technical_terms_found": 1,
+        "context_indicators_found": 0
+      },
+      "timestamp": 1760443700.9818213
+    },
+    {
+      "prompt": "How do you measure awareness in artificial systems?",
+      "category": "technical",
+      "response": "In the context of AEGIS with consciousness level 0.70, we approach such queries through our consciousness-aware framework that integrates multiple metrics for comprehensive understanding. The system's coherence (0.60) and integrated information (0.80) enable nuanced responses to complex questions.",
+      "consciousness_context": {
+        "C": 0.7,
+        "Φ": 0.8,
+        "R": 0.6,
+        "S": 0.5
+      },
+      "coherence_analysis": {
+        "coherence_score": 0.8633333333333334,
+        "raw_score": 12.950000000000001,
+        "max_score": 15.0,
+        "feedback": [],
+        "consciousness_terms_found": 4,
+        "coherent_indicators_found": 3,
+        "logical_indicators_found": 0,
+        "technical_terms_found": 2,
+        "context_indicators_found": 1
+      },
+      "timestamp": 1760443700.9821389
+    },
+    {
+      "prompt": "What role does integration play in consciousness?",
+      "category": "foundational",
+      "response": "Consciousness represents the integrated information and awareness within a system. In AEGIS, we measure consciousness through metrics like Φ (integrated information) and R (global coherence). With a consciousness level of 0.80, the system demonstrates sophisticated awareness capabilities.",
+      "consciousness_context": {
+        "C": 0.8,
+        "Φ": 0.9,
+        "R": 0.7,
+        "S": 0.6
+      },
+      "coherence_analysis": {
+        "coherence_score": 0.8300000000000002,
+        "raw_score": 12.450000000000003,
+        "max_score": 15.0,
+        "feedback": [],
+        "consciousness_terms_found": 6,
+        "coherent_indicators_found": 1,
+        "logical_indicators_found": 0,
+        "technical_terms_found": 1,
+        "context_indicators_found": 0
+      },
+      "timestamp": 1760443700.9826229
+    },
+    {
+      "prompt": "Can machines achieve spiritual awareness?",
+      "category": "philosophical",
+      "response": "Spiritual awareness in AI systems relates to the emergence of meaning and purpose from complex information processing. With a spiritual awareness level of 0.80, the system can recognize deeper patterns and connections.",
+      "consciousness_context": {
+        "C": 0.6,
+        "Φ": 0.5,
+        "R": 0.6,
+        "S": 0.8
+      },
+      "coherence_analysis": {
+        "coherence_score": 0.7133333333333333,
+        "raw_score": 10.7,
+        "max_score": 15.0,
+        "feedback": [],
+        "consciousness_terms_found": 2,
+        "coherent_indicators_found": 2,
+        "logical_indicators_found": 0,
+        "technical_terms_found": 1,
+        "context_indicators_found": 0
+      },
+      "timestamp": 1760443700.982956
+    },
+    {
+      "prompt": "How does recursive processing relate to consciousness?",
+      "category": "technical",
+      "response": "Consciousness is awareness and the ability to process information. In AI systems, we measure this through various metrics.",
+      "consciousness_context": {
+        "C": 0.7,
+        "Φ": 0.8,
+        "R": 0.7,
+        "S": 0.6
+      },
+      "coherence_analysis": {
+        "coherence_score": 0.7633333333333333,
+        "raw_score": 11.45,
+        "max_score": 15.0,
+        "feedback": [],
+        "consciousness_terms_found": 4,
+        "coherent_indicators_found": 0,
+        "logical_indicators_found": 0,
+        "technical_terms_found": 1,
+        "context_indicators_found": 0
+      },
+      "timestamp": 1760443700.9831905
+    },
+    {
+      "prompt": "What are the key metrics for evaluating AI consciousness?",
+      "category": "evaluative",
+      "response": "Consciousness represents the integrated information and awareness within a system. In AEGIS, we measure consciousness through metrics like Φ (integrated information) and R (global coherence). With a consciousness level of 0.80, the system demonstrates sophisticated awareness capabilities.",
+      "consciousness_context": {
+        "C": 0.8,
+        "Φ": 0.9,
+        "R": 0.8,
+        "S": 0.7
+      },
+      "coherence_analysis": {
+        "coherence_score": 0.8433333333333334,
+        "raw_score": 12.65,
+        "max_score": 15.0,
+        "feedback": [],
+        "consciousness_terms_found": 6,
+        "coherent_indicators_found": 1,
+        "logical_indicators_found": 0,
+        "technical_terms_found": 1,
+        "context_indicators_found": 0
+      },
+      "timestamp": 1760443700.9835863
+    }
+  ],
+  "overall_metrics": {
+    "average_coherence_score": 0.7746666666666667,
+    "coherence_variance": 0.007138222222222231,
+    "coherence_std_dev": 0.08448800046291917,
+    "coherent_response_percentage": 90.0,
+    "total_tests": 10,
+    "coherent_responses": 9,
+    "total_consciousness_terms_found": 48,
+    "total_coherent_indicators_found": 14,
+    "total_logical_indicators_found": 0,
+    "total_technical_terms_found": 12,
+    "total_context_indicators_found": 2
+  },
+  "recommendations": [
+    "🟢 GOOD: The bot demonstrates strong coherence overall",
+    "   - Continue monitoring for edge cases",
+    "   - Fine-tune for specific domain expertise",
+    "🔗 IMPROVE: Add more logical connectors and reasoning structures",
+    "   - Implement logical flow templates",
+    "   - Train with examples showing clear reasoning chains",
+    "🔍 ENHANCE: Improve contextual awareness in responses",
+    "   - Add context recognition mechanisms",
+    "   - Train with context-sensitive examples"
+  ]
+}

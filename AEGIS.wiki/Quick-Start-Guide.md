@@ -42,38 +42,19 @@ This will:
 5. Display connection information
 6. Automatically open the web interface
 
-### Option 2: Traditional One-Command Launcher
-```cmd
-run_everything.bat  # Windows
-# or
-./run_everything.sh  # Linux/macOS
-```
-
-### Option 3: Harmonic System Launcher
+### Option 2: Manual Start
 ```bash
-# Windows
-start_harmonic_system.ps1
-
-# Linux/macOS
-./start_harmonic_system.ps1
-```
-
-### Option 4: Manual Start
-```bash
-# Terminal 1: Start the web server
-python Metatron-ConscienceAI/scripts/metatron_web_server.py
-
-# Terminal 2: Start the unified API
-python unified_api/server.py
+# Start the web server
+python Metatron-ConscienceAI/scripts/metatron_web_server.py --port 457
 ```
 
 ## 🌐 Accessing the Interface
 
 Once the system is running, access the following interfaces:
 
-- **Harmonic Monitor Dashboard**: http://localhost:8003
-- **API Documentation**: http://localhost:8003/docs
-- **WebSocket Endpoint**: ws://localhost:8003/ws
+- **Unified Dashboard**: http://localhost:457
+- **API Documentation**: http://localhost:457/docs
+- **WebSocket Endpoint**: ws://localhost:457/ws
 
 ## 📊 Key Features Available
 
@@ -96,19 +77,19 @@ Once the system is running, access the following interfaces:
 
 ### Sending Consciousness Input
 ```bash
-curl -X POST http://localhost:8003/input \
+curl -X POST http://localhost:457/input \
   -H "Content-Type: application/json" \
   -d '{"physical": 0.5, "emotional": 0.3, "mental": 0.2, "spiritual": 0.1, "temporal": 0.4}'
 ```
 
 ### Getting System Status
 ```bash
-curl http://localhost:8003/consciousness
+curl http://localhost:457/consciousness
 ```
 
 ### Chat with the System
 ```bash
-curl -X POST http://localhost:8003/chat \
+curl -X POST http://localhost:457/chat \
   -H "Content-Type: application/json" \
   -d '{"message": "What is the current consciousness level?", "session_id": "default"}'
 ```
@@ -122,11 +103,11 @@ python test_harmonic_system.py
 
 ## 🛑 Stopping the System
 
-To stop the system, press `Ctrl+C` in each terminal window, or close the PowerShell/terminal windows.
+To stop the system, press `Ctrl+C` in the terminal window, or close the PowerShell/terminal window.
 
 ## 📈 Next Steps
 
-1. **Explore the Dashboard**: Visit http://localhost:8003 to see real-time metrics
+1. **Explore the Dashboard**: Visit http://localhost:457 to see real-time metrics
 2. **Try the Chat**: Use the web interface to chat with the AI
 3. **Monitor Metrics**: Watch consciousness metrics change in real-time
 4. **Experiment**: Send different inputs to see how the system responds
@@ -135,14 +116,14 @@ To stop the system, press `Ctrl+C` in each terminal window, or close the PowerSh
 
 ### Common Issues
 
-1. **Ports in Use**: If ports 8003 or 8005 are occupied, the system will fail to start
-   - Solution: Close other applications using these ports
+1. **Ports in Use**: If port 457 is occupied, the system will fail to start
+   - Solution: Close other applications using this port
 
 2. **Missing Dependencies**: If you get import errors
    - Solution: Run `pip install -r requirements.txt` again
 
 3. **WebSocket Connection Failed**: If the dashboard shows disconnected
-   - Solution: Ensure both servers are running on ports 8003 and 8005
+   - Solution: Ensure the web server is running on port 457
 
 4. **Blank Dashboard**: If the web interface doesn't load
    - Solution: Refresh the browser and check that the web server is running
@@ -162,4 +143,4 @@ python verify_zero_errors.py
 - [Troubleshooting](Troubleshooting) - Solutions to common problems
 
 ---
-*For advanced configuration and deployment options, see the [Deployment Guide](Deployment-Guide).*
+*For advanced configuration and deployment options, see the [Deployment Guide](Deployment-Guide).

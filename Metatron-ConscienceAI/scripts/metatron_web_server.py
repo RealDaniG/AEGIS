@@ -203,7 +203,7 @@ async def startup_event():
         
         print("="*80)
         print("METATRON CONSCIOUSNESS ENGINE READY FOR OPERATION")
-        print("All features integrated on PORT 8003")
+        print("All features integrated on PORT 457")
         print("="*80 + "\n")
         
     except Exception as e:
@@ -215,9 +215,9 @@ async def startup_event():
 @app.get("/")
 async def root():
     """Serve integrated interface with cache-busting headers"""
-    # Priority: advanced integrated dashboard > integrated dashboard > unified dashboard > stream > integrated > unified > original visualization
+    # Priority: unified_metatron_dashboard.html as main version > index_stream.html as main version > advanced integrated dashboard > integrated dashboard > unified dashboard > stream > integrated > unified > original visualization
     # Note: harmonic_monitor.html has been integrated into the main dashboard and is no longer served separately
-    for filename in ["metatron_advanced_integrated.html", "integrated_dashboard.html", "unified_dashboard_updated.html", "unified_dashboard.html", "index_stream.html", "metatron_integrated.html", "metatron_unified.html", "metatron_visualization.html"]:
+    for filename in ["unified_metatron_dashboard.html", "index_stream.html", "metatron_integrated.html", "metatron_advanced_integrated.html", "integrated_dashboard.html", "unified_dashboard_updated.html", "unified_dashboard.html", "metatron_unified.html", "metatron_visualization.html"]:
         webui_path = os.path.join(os.path.dirname(__file__), "..", "webui", filename)
         if os.path.exists(webui_path):
             return FileResponse(
@@ -448,7 +448,7 @@ async def websocket_endpoint(websocket: WebSocket):
     }
     
     try:
-        print(f"✅ WebSocket client connected. Total connections: {len(active_connections)}")
+        print(f"[OK] WebSocket client connected. Total connections: {len(active_connections)}")
         
         # Send initial state immediately
         try:
@@ -480,9 +480,9 @@ async def websocket_endpoint(websocket: WebSocket):
             
             await websocket.send_json(initial_data)
             connection_metadata[connection_id]['updates_sent'] += 1
-            print(f"📤 Sent initial state to client")
+            print(f"[SENT] Sent initial state to client")
         except Exception as e:
-            print(f"⚠️ Error sending initial state: {e}")
+            print(f"[WARN] Error sending initial state: {e}")
         
         # Continuous update loop
         while True:
@@ -491,9 +491,15 @@ async def websocket_endpoint(websocket: WebSocket):
             performance_metrics['total_updates'] += 1
             performance_metrics['last_update_time'] = time.time()
             
-            # Debug logging - more frequent to see if updates are happening
-            if performance_metrics['total_updates'] % 10 == 0:  # Changed from 100 to 10
-                print(f"Update #{performance_metrics['total_updates']}: C={state['global']['consciousness_level']:.4f}, Φ={state['global']['phi']:.4f}, R={state['global']['coherence']:.4f}")
+            # Debug logging - show all nodes activity, but less frequently
+            if performance_metrics['total_updates'] % 100 == 0:  # Every 100 updates instead of 50
+                c = state['global']
+                # Count active nodes (nodes with significant output)
+                active_nodes = sum(1 for node_data in state['nodes'].values() 
+                                 if abs(node_data['output']) > 0.1)
+                print(f"Update #{performance_metrics['total_updates']}: "
+                      f"C={c['consciousness_level']:.4f}, Φ={c['phi']:.4f}, R={c['coherence']:.4f} "
+                      f"Active: {active_nodes}/13")
             
             # Prepare data for sending (convert numpy types to native Python)
             websocket_data = {
@@ -1399,7 +1405,7 @@ async def websocket_chat_endpoint(websocket: WebSocket):
             pass  # Ignore errors when closing
 
 
-def main(port=8003):
+def main(port=457):
     """Run the server"""
     print("\n" + "="*60)
     print("Starting Metatron Consciousness Web Server")
@@ -1422,7 +1428,7 @@ def main(port=8003):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Start Metatron Consciousness Web Server")
-    parser.add_argument("--port", type=int, default=8003, help="Port to run the server on (default: 8003)")
+    parser.add_argument("--port", type=int, default=457, help="Port to run the server on (default: 457)")
     args = parser.parse_args()
     
     main(args.port)

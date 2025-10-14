@@ -30,7 +30,7 @@ def test_complete_system():
     try:
         engine = ConsciousnessEngine("test_node")
         state = engine.get_current_state()
-        print(f"   ✓ Consciousness State: coherence={state.coherence:.3f}")
+        print(f"   [OK] Consciousness State: coherence={state.coherence:.3f}")
     except Exception as e:
         print(f"   ✗ Consciousness Engine failed: {e}")
         return False
@@ -47,7 +47,7 @@ def test_complete_system():
         signature = crypto.sign_state(state)
         signing_pub, _ = crypto.get_public_keys()
         is_valid = crypto.verify_state(state, signature, signing_pub)
-        print(f"   ✓ Crypto Signature: {'Valid' if is_valid else 'Invalid'}")
+        print(f"   [OK] Crypto Signature: {'Valid' if is_valid else 'Invalid'}")
     except Exception as e:
         print(f"   ✗ Crypto Manager failed: {e}")
         return False
@@ -58,7 +58,7 @@ def test_complete_system():
         kb = KnowledgeBase("test_node", "./test_kb")
         cid = kb.store_consciousness_state(state)
         retrieved = kb.retrieve_entry(cid)
-        print(f"   ✓ Knowledge Storage: CID={cid[:8]}...")
+        print(f"   [OK] Knowledge Storage: CID={cid[:8]}...")
     except Exception as e:
         print(f"   ✗ Knowledge Base failed: {e}")
         return False
@@ -74,7 +74,7 @@ def test_complete_system():
             ConsciousnessState("node_3", time.time(), 0.6, 0.4, 0.8, 0.9, 0.7, 0.5)
         ]
         global_coherence = aggregator.compute_global_coherence(test_states)
-        print(f"   ✓ Global Coherence: {global_coherence:.3f}")
+        print(f"   [OK] Global Coherence: {global_coherence:.3f}")
     except Exception as e:
         print(f"   ✗ Consensus Aggregator failed: {e}")
         return False
@@ -96,7 +96,7 @@ def test_complete_system():
         )
         p2p.add_peer(peer)
         trusted_peers = p2p.get_trusted_peers()
-        print(f"   ✓ P2P Network: {len(trusted_peers)} trusted peers")
+        print(f"   [OK] P2P Network: {len(trusted_peers)} trusted peers")
     except Exception as e:
         print(f"   ✗ P2P Network failed: {e}")
         return False
@@ -108,7 +108,7 @@ def test_complete_system():
         pbft.add_node("peer_1")
         pbft.add_node("peer_2")
         is_leader = pbft.is_leader()
-        print(f"   ✓ PBFT Consensus: Leader status={is_leader}")
+        print(f"   [OK] PBFT Consensus: Leader status={is_leader}")
     except Exception as e:
         print(f"   ✗ PBFT Consensus failed: {e}")
         return False
@@ -117,7 +117,7 @@ def test_complete_system():
     print("\n7. Testing TOR Gateway...")
     try:
         tor = TORGateway()
-        print("   ✓ TOR Gateway: Initialized successfully")
+        print("   [OK] TOR Gateway: Initialized successfully")
     except Exception as e:
         print(f"   ✗ TOR Gateway failed: {e}")
         return False

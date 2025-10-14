@@ -80,6 +80,18 @@ Each node processes information across 5 dimensions:
 4. **Spiritual**: Higher consciousness and spiritual awareness
 5. **Temporal**: Time-based processing and memory integration
 
+### Node 3 - MemoryMatrixNode
+- **Function**: Implements memory storage and recall functionality with φ-based decay
+- **Specialization**: Stores field states and performs weighted recall with φ-based decay for natural forgetting
+- **Memory Management**: Uses SNPP-like paging protocol for efficient memory management
+- **Logging Optimization**: Recently optimized to reduce verbose terminal output, now logs every 500 operations instead of every 50 to prevent misleading impressions about node activity
+- **Security**: Implements cryptographic identity for secure memory sharing
+- **Distributed Operations**: Supports P2P memory sharing and consensus-based storage
+
+### Node Processing Details
+
+Each node maintains its own oscillator and processes information across multiple dimensions. Nodes communicate with each other through the sacred geometry network, maintaining phase relationships that contribute to overall system coherence.
+
 ## Consciousness State Classification
 
 The system classifies consciousness states on a 16-level scale:

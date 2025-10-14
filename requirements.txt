@@ -1,61 +1,71 @@
-# Dependencias para IA Distribuida y Colaborativa
-# AEGIS Security Framework - Uso Ético Únicamente
-
-# Criptografía y Seguridad
-cryptography>=41.0.0
-pycryptodome>=3.19.0
-pyotp>=2.9.0
-
-# Red TOR
-stem>=1.8.2
-pysocks>=1.7.1
-aiohttp>=3.9.0
-aiohttp-socks>=0.8.4
-
-# Computación Distribuida y P2P
-asyncio-mqtt>=0.16.0
+# Core system requirements
+fastapi>=0.104.1
+uvicorn[standard]>=0.24.0
 websockets>=12.0
-uvloop>=0.19.0; platform_system!="Windows"  # Solo para Linux/macOS
+python-socketio>=5.10.0
+python-multipart>=0.0.6
 
-# Machine Learning y Computación Científica
-numpy>=1.24.0
-scipy>=1.11.0
-scikit-learn>=1.3.0
+# Web framework and templating
+jinja2>=3.1.2
+
+# Database and storage
+sqlalchemy>=2.0.23
+aiosqlite>=0.19.0
+
+# Machine learning and AI
 torch>=2.1.0
 transformers>=4.35.0
+datasets>=2.14.6
+peft>=0.6.0
+safetensors>=0.4.0
 
-# Base de Datos y Almacenamiento
-aiosqlite>=0.19.0
-redis>=5.0.0
-leveldb>=0.201; platform_system!="Windows"
+# Security and encryption
+cryptography>=41.0.7
+pycryptodome>=3.19.0
+pyotp>=2.9.0
+fernet>=1.0.1
 
-# Monitoreo y Logging
+# Networking and communication
+aiohttp>=3.9.1
+aiohttp-socks>=0.8.4
+asyncio-mqtt>=0.16.1
+
+# Data processing and analysis
+scikit-learn>=1.3.2
+pandas>=2.1.3
+numpy>=1.24.3
+plotly>=5.18.0
+
+# System monitoring and logging
 loguru>=0.7.2
 prometheus-client>=0.19.0
 psutil>=5.9.6
-pandas>=2.2.2
-flask>=3.0.0
-zeroconf>=0.132.2
-Flask-SocketIO>=5.3.6
-netifaces>=0.11.0
 
-# Utilidades
+# Web and UI
+flask>=3.0.0
+Flask-SocketIO>=5.3.6
+zeroconf>=0.132.2
+
+# Utilities
 pydantic>=2.5.0
 click>=8.1.7
 rich>=13.7.0
 python-dotenv>=1.0.0
 
-# Testing y Desarrollo
-pytest>=7.4.0
-pytest-asyncio>=0.21.0
+# Document processing
+pypdf>=3.17.0
+python-docx>=0.8.11
+feedparser>=6.0.10
+beautifulsoup4>=4.12.2
+lxml>=4.9.3
+
+# Testing and development
+pytest>=7.4.3
+pytest-asyncio>=0.21.1
 pytest-cov>=4.1.0
 black>=23.11.0
 flake8>=6.1.0
-mypy>=1.7.0
+mypy>=1.7.1
 
-# Opcional: Aceleración GPU
-# torch-audio>=2.1.0
-# torch-vision>=0.16.0
-
-# Opcional: Visualización
-plotly>=5.17.0
+# Optional network interface detection (may fail on some systems)
+# netifaces>=0.11.0

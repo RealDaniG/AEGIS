@@ -613,4 +613,4 @@ if __name__ == "__main__":
         else:
             print(f"{key:25s}: {value}")
     
-    print("\n✓ Consciousness metrics tests passed!")
+    print("\n[OK] Consciousness metrics tests passed!")

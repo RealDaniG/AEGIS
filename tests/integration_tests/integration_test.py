@@ -36,7 +36,7 @@ def test_module_imports():
     for module_name in modules_to_test:
         try:
             __import__(module_name)
-            print(f"  ✓ {module_name} imported successfully")
+            print(f"  [OK] {module_name} imported successfully")
         except ImportError as e:
             print(f"  ✗ {module_name} failed to import: {e}")
             failed_imports.append(module_name)
@@ -67,7 +67,7 @@ async def test_logging_system():
         
         result = await start_logging_system(config)
         if result:
-            print("  ✓ Logging system started successfully")
+            print("  [OK] Logging system started successfully")
             return True
         else:
             print("  ✗ Logging system failed to start")
@@ -92,7 +92,7 @@ async def test_config_manager():
         
         result = await start_config_system(config)
         if result:
-            print("  ✓ Configuration manager started successfully")
+            print("  [OK] Configuration manager started successfully")
             return True
         else:
             print("  ✗ Configuration manager failed to start")
@@ -119,7 +119,7 @@ async def test_api_server():
         
         result = await start_api_server(config)
         if result:
-            print("  ✓ API server started successfully")
+            print("  [OK] API server started successfully")
             return True
         else:
             print("  ✗ API server failed to start")
@@ -145,7 +145,7 @@ async def test_metrics_collector():
         
         result = await start_metrics_collector(config)
         if result:
-            print("  ✓ Metrics collector started successfully")
+            print("  [OK] Metrics collector started successfully")
             return True
         else:
             print("  ✗ Metrics collector failed to start")
@@ -171,7 +171,7 @@ async def test_alert_system():
         
         result = await start_alert_system(config)
         if result:
-            print("  ✓ Alert system started successfully")
+            print("  [OK] Alert system started successfully")
             return True
         else:
             print("  ✗ Alert system failed to start")
@@ -197,7 +197,7 @@ async def test_web_dashboard():
         
         result = await start_web_dashboard(config)
         if result:
-            print("  ✓ Web dashboard started successfully")
+            print("  [OK] Web dashboard started successfully")
             return True
         else:
             print("  ✗ Web dashboard failed to start")
@@ -226,7 +226,7 @@ async def test_backup_system():
         
         result = await start_backup_system(config)
         if result:
-            print("  ✓ Backup system started successfully")
+            print("  [OK] Backup system started successfully")
             return True
         else:
             print("  ✗ Backup system failed to start")
@@ -252,7 +252,7 @@ async def test_test_framework():
         
         result = await start_test_framework(config)
         if result:
-            print("  ✓ Test framework started successfully")
+            print("  [OK] Test framework started successfully")
             return True
         else:
             print("  ✗ Test framework failed to start")

@@ -1,43 +1,45 @@
-
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AEGIS Framework - Dashboard de Monitoreo</title>
+    <title>AEGIS Dashboard</title>
     <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .metric-card { transition: all 0.3s ease; }
-        .metric-card:hover { transform: translateY(-2px); }
-        .alert-critical { border-left: 4px solid #ef4444; }
-        .alert-warning { border-left: 4px solid #f59e0b; }
-        .alert-info { border-left: 4px solid #3b82f6; }
         .node-online { color: #10b981; }
         .node-offline { color: #ef4444; }
         .node-degraded { color: #f59e0b; }
+        .alert-critical { border-left: 4px solid #ef4444; }
+        .alert-warning { border-left: 4px solid #f59e0b; }
+        .alert-info { border-left: 4px solid #3b82f6; }
+        .metric-card {
+            transition: transform 0.2s;
+        }
+        .metric-card:hover {
+            transform: translateY(-2px);
+        }
     </style>
 </head>
-<body class="bg-gray-100 min-h-screen">
+<body class="bg-gray-100">
     <div class="container mx-auto px-4 py-8">
-        <!-- Header -->
-        <div class="mb-8">
-            <h1 class="text-4xl font-bold text-gray-800 mb-2">🛡️ AEGIS Framework</h1>
-            <p class="text-gray-600">Dashboard de Monitoreo en Tiempo Real</p>
-        </div>
+        <header class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-800">🛡️ AEGIS System Dashboard</h1>
+            <p class="text-gray-600">Real-time monitoring and analytics for the autonomous governance system</p>
+        </header>
 
-        <!-- System Health Overview -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <!-- Key Metrics -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <div class="bg-white rounded-lg shadow-md p-6 metric-card">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-medium text-gray-600">Salud del Sistema</p>
+                        <p class="text-sm font-medium text-gray-600">System Health</p>
                         <p class="text-2xl font-bold text-green-600" id="system-health">--</p>
                     </div>
                     <div class="text-green-500">
                         <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                            <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path>
                         </svg>
                     </div>
                 </div>
@@ -46,12 +48,12 @@
             <div class="bg-white rounded-lg shadow-md p-6 metric-card">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-medium text-gray-600">Nodos Activos</p>
+                        <p class="text-sm font-medium text-gray-600">Active Nodes</p>
                         <p class="text-2xl font-bold text-blue-600" id="active-nodes">--</p>
                     </div>
                     <div class="text-blue-500">
                         <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"></path>
                         </svg>
                     </div>
                 </div>
@@ -60,7 +62,7 @@
             <div class="bg-white rounded-lg shadow-md p-6 metric-card">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-medium text-gray-600">Alertas Críticas</p>
+                        <p class="text-sm font-medium text-gray-600">Critical Alerts</p>
                         <p class="text-2xl font-bold text-red-600" id="critical-alerts">--</p>
                     </div>
                     <div class="text-red-500">
@@ -74,7 +76,7 @@
             <div class="bg-white rounded-lg shadow-md p-6 metric-card">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-medium text-gray-600">Tiempo de Respuesta</p>
+                        <p class="text-sm font-medium text-gray-600">Response Time</p>
                         <p class="text-2xl font-bold text-purple-600" id="response-time">--</p>
                     </div>
                     <div class="text-purple-500">
@@ -89,24 +91,24 @@
         <!-- Charts Row -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
             <div class="bg-white rounded-lg shadow-md p-6">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">📊 Uso de CPU</h3>
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">📊 CPU Usage</h3>
                 <div id="cpu-chart" style="height: 300px;"></div>
             </div>
 
             <div class="bg-white rounded-lg shadow-md p-6">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">💾 Uso de Memoria</h3>
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">💾 Memory Usage</h3>
                 <div id="memory-chart" style="height: 300px;"></div>
             </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
             <div class="bg-white rounded-lg shadow-md p-6">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">🌐 Latencia de Red</h3>
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">🌐 Network Latency</h3>
                 <div id="latency-chart" style="height: 300px;"></div>
             </div>
 
             <div class="bg-white rounded-lg shadow-md p-6">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">🤖 Precisión del Modelo</h3>
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">🤖 Model Accuracy</h3>
                 <div id="accuracy-chart" style="height: 300px;"></div>
             </div>
         </div>
@@ -114,14 +116,14 @@
         <!-- Nodes and Alerts Row -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div class="bg-white rounded-lg shadow-md p-6">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">🔗 Estado de Nodos</h3>
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">🔗 Node Status</h3>
                 <div id="nodes-list" class="space-y-3">
                     <!-- Nodes will be populated here -->
                 </div>
             </div>
 
             <div class="bg-white rounded-lg shadow-md p-6">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">🚨 Alertas Activas</h3>
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">🚨 Active Alerts</h3>
                 <div id="alerts-list" class="space-y-3">
                     <!-- Alerts will be populated here -->
                 </div>
@@ -158,8 +160,8 @@
                 line: { color: '#3b82f6' }
             }], {
                 title: '',
-                xaxis: { title: 'Tiempo' },
-                yaxis: { title: 'Porcentaje (%)' },
+                xaxis: { title: 'Time' },
+                yaxis: { title: 'Percentage (%)' },
                 margin: { t: 20 }
             }, chartConfig);
 
@@ -173,8 +175,8 @@
                 line: { color: '#10b981' }
             }], {
                 title: '',
-                xaxis: { title: 'Tiempo' },
-                yaxis: { title: 'Porcentaje (%)' },
+                xaxis: { title: 'Time' },
+                yaxis: { title: 'Percentage (%)' },
                 margin: { t: 20 }
             }, chartConfig);
 
@@ -188,8 +190,8 @@
                 line: { color: '#f59e0b' }
             }], {
                 title: '',
-                xaxis: { title: 'Tiempo' },
-                yaxis: { title: 'Latencia (ms)' },
+                xaxis: { title: 'Time' },
+                yaxis: { title: 'Latency (ms)' },
                 margin: { t: 20 }
             }, chartConfig);
 
@@ -203,8 +205,8 @@
                 line: { color: '#8b5cf6' }
             }], {
                 title: '',
-                xaxis: { title: 'Tiempo' },
-                yaxis: { title: 'Precisión', range: [0, 1] },
+                xaxis: { title: 'Time' },
+                yaxis: { title: 'Accuracy', range: [0, 1] },
                 margin: { t: 20 }
             }, chartConfig);
         }
@@ -321,7 +323,7 @@
                     alertsList.innerHTML = '';
                     
                     if (alerts.length === 0) {
-                        alertsList.innerHTML = '<p class="text-gray-500 text-center py-4">No hay alertas activas</p>';
+                        alertsList.innerHTML = '<p class="text-gray-500 text-center py-4">No active alerts</p>';
                         return;
                     }
                     
@@ -339,7 +341,7 @@
                                 </div>
                                 <button onclick="acknowledgeAlert('${alert.alert_id}')" 
                                         class="text-sm bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600">
-                                    Reconocer
+                                    Acknowledge
                                 </button>
                             </div>
                         `;

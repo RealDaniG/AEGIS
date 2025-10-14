@@ -43,7 +43,7 @@ class OptimizedConsciousnessEngine:
         # 4. Improve coherence through synchronization
         self._enhance_coherence()
         
-        print("✓ Optimizations applied successfully")
+        print("[OK] Optimizations applied successfully")
         
     def _enhance_coupling(self):
         """

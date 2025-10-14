@@ -143,7 +143,7 @@ class HeartbeatManager:
         if node_info.failure_count >= self.failure_detector_threshold:
             if node_info.status == NodeStatus.HEALTHY:
                 node_info.status = NodeStatus.SUSPECTED
-                logger.warning(f"⚠️ Nodo {node_info.node_id} marcado como sospechoso")
+                logger.warning(f"[WARN] Nodo {node_info.node_id} marcado como sospechoso")
                 
                 # Iniciar proceso de recuperación
                 await self._initiate_node_recovery(node_info)
@@ -377,7 +377,7 @@ class NodeRecoveryManager:
                     logger.info(f"✅ Recuperación exitosa de nodo {node_info.node_id}")
                     return True
                 else:
-                    logger.warning(f"⚠️ Fallo en recuperación de nodo {node_info.node_id}")
+                    logger.warning(f"[WARN] Fallo en recuperación de nodo {node_info.node_id}")
                     return False
             else:
                 logger.error(f"❌ No hay estrategia de recuperación para {failure_type.value}")

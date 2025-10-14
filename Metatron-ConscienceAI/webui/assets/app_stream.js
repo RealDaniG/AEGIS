@@ -58,30 +58,30 @@
 
   const t = {
     es: {
-      title: "ConscienceAI · Chat Streaming Inteligente",
+      title: "ConscienceAI · Chat Inteligente en Streaming",
       subtitle: "Respuestas en tiempo real, RAG y herramientas avanzadas",
       model: "Modelo",
       rag: "RAG",
       stream: "Streaming",
       topk: "Top-K",
-      maxchars: "Máx. chars",
+      maxchars: "Máx. caracteres",
       maxtokens: "Máx. tokens",
       send: "Enviar",
       clear: "Limpiar",
-      clear_session: "Borrar sesión",
+      clear_session: "Limpiar sesión",
       download: "Descargar",
       download_md: "Markdown",
-      upload: "Cargar documentos (RAG)",
-      ingest: "Ingestar",
-      footer: "Hecho con FastAPI + Transformers · UI ES/EN",
+      upload: "Subir documentos (RAG)",
+      ingest: "Ingerir",
+      footer: "Construido con FastAPI + Transformers · UI ES/EN",
       copy: "Copiar",
       session: "Sesión",
       new_session: "Nueva",
-      uploads_list: "Documentos cargados",
+      uploads_list: "Documentos subidos",
       rss: "Feeds RSS",
       add_feed: "Añadir",
       list: "Listar",
-      ingest_feeds: "Ingestar",
+      ingest_feeds: "Ingerir",
       websearch: "Búsqueda web",
       search_ingest: "Buscar (ingestar)",
       autoindex: "Auto indexación RSS",
@@ -121,7 +121,7 @@
       download_md: "Markdown",
       upload: "Upload documents (RAG)",
       ingest: "Ingest",
-      footer: "Built with FastAPI + Transformers · UI ES/EN",
+      footer: "Built with FastAPI + Transformers · UI EN",
       copy: "Copy",
       session: "Session",
       new_session: "New",
@@ -154,6 +154,15 @@
       security_run: "Run suite",
     }
   };
+
+  // Set default language to English
+  document.addEventListener("DOMContentLoaded", () => {
+    const langSelect = document.getElementById("lang");
+    if (langSelect) {
+      langSelect.value = "en";
+      setLang("en");
+    }
+  });
 
   function qs(id) { return document.getElementById(id); }
   function mk(tag, cls) { const e = document.createElement(tag); if (cls) e.className = cls; return e; }
@@ -391,27 +400,27 @@
         if (statusEl) statusEl.textContent = `Error: ${data.error || ''}`;
         alert("Error: " + (data.error || ""));
       } else {
-        if (statusEl) statusEl.textContent = `Modelo activo: ${data.model}`;
+        if (statusEl) statusEl.textContent = `Active model: ${data.model}`;
         // Health check
         try {
           const hres = await fetch("/api/health");
           const h = await hres.json();
           if (h.ok) {
-            statusEl.textContent = `OK · modelo: ${h.model} · agente: ${h.active_agent || '?'}`;
+            statusEl.textContent = `OK · model: ${h.model} · agent: ${h.active_agent || '?'}`;
           } else {
-            statusEl.textContent = `Aplicado, pero fallo salud: ${h.error || ''}`;
+            statusEl.textContent = `Applied, but health check failed: ${h.error || ''}`;
           }
-        } catch (e) { statusEl.textContent = "Aplicado, sin respuesta de salud"; }
+        } catch (e) { statusEl.textContent = "Applied, no health response"; }
         renderModelBadges();
         renderModelInfoPanel();
-        // Lanzar prueba rápida automática tras aplicar
+        // Launch automatic quick test after applying
         setTimeout(quickTest, 300);
       }
     } catch (e) {
-      if (statusEl) statusEl.textContent = "Error de conexión";
-      alert("Error de conexión");
+      if (statusEl) statusEl.textContent = "Connection error";
+      alert("Connection error");
     } finally {
-      if (btn) { btn.disabled = false; btn.textContent = "Aplicar"; }
+      if (btn) { btn.disabled = false; btn.textContent = "Apply"; }
     }
   }
 
@@ -439,11 +448,11 @@
     wrap.innerHTML = "";
     const tags = modelTagsForValue(el.model?.value);
     const map = {
-      cpu: {text: "CPU", cls: "cpu", title: "Adecuado para CPU / memoria baja"},
-      gpu: {text: "GPU", cls: "gpu", title: "Requiere GPU para buen rendimiento"},
-      recommended: {text: "Recomendado", cls: "recommended", title: "Buena opción para pruebas"},
-      heavy: {text: "Pesado", cls: "heavy", title: "Modelo grande, puede tardar o fallar por memoria"},
-      expert: {text: "Experto", cls: "expert", title: "Avanzado, requiere recursos altos"},
+      cpu: {text: "CPU", cls: "cpu", title: "Suitable for CPU / low memory"},
+      gpu: {text: "GPU", cls: "gpu", title: "Requires GPU for good performance"},
+      recommended: {text: "Recommended", cls: "recommended", title: "Good option for testing"},
+      heavy: {text: "Heavy", cls: "heavy", title: "Large model, may be slow or fail due to memory"},
+      expert: {text: "Expert", cls: "expert", title: "Advanced, requires high resources"},
     };
     tags.forEach(tag => {
       const b = mk("span", `badge ${map[tag].cls}`);
@@ -455,51 +464,51 @@
 
   function modelInfoForValue(v) {
     const m = String(v || "");
-    const info = { title: "Requisitos estimados", bullets: [], note: "Valores orientativos; pueden variar según cuantización y backend." };
+    const info = { title: "Estimated Requirements", bullets: [], note: "Guideline values; may vary based on quantization and backend." };
     const add = (s) => info.bullets.push(s);
     if (m === "distilgpt2") {
-      add("Perfil: Ligero / CPU");
+      add("Profile: Lightweight / CPU");
       add("RAM: ≥ 1 GB");
-      add("Disco: ~50 MB");
-      add("Velocidad: alta en CPU");
+      add("Disk: ~50 MB");
+      add("Speed: High on CPU");
     } else if (m === "datificate/gpt2-small-spanish") {
-      add("Perfil: Ligero / CPU");
+      add("Profile: Lightweight / CPU");
       add("RAM: 1–2 GB");
-      add("Disco: ~100 MB");
-      add("Velocidad: alta en CPU");
+      add("Disk: ~100 MB");
+      add("Speed: High on CPU");
     } else if (m.startsWith("TinyLlama/")) {
-      add("Perfil: CPU amigable");
-      add("RAM: 2–4 GB (cuantizado)");
-      add("Disco: 0.5–1 GB (aprox.)");
-      add("Velocidad: media en CPU");
+      add("Profile: CPU friendly");
+      add("RAM: 2–4 GB (quantized)");
+      add("Disk: 0.5–1 GB (approx.)");
+      add("Speed: Medium on CPU");
     } else if (m.startsWith("Qwen/")) {
       if (m.includes("1.5B")) {
-        add("Perfil: GPU recomendado (posible CPU con 4-bit)");
-        add("VRAM: 4–8 GB (cuantizado)");
+        add("Profile: GPU recommended (possible CPU with 4-bit)");
+        add("VRAM: 4–8 GB (quantized)");
         add("RAM: ≥ 8 GB");
-        add("Disco: 1–3 GB (aprox.)");
+        add("Disk: 1–3 GB (approx.)");
       } else if (m.includes("7B")) {
-        add("Perfil: GPU");
-        add("VRAM: 12–20 GB (cuantizado 8–12 GB)");
+        add("Profile: GPU");
+        add("VRAM: 12–20 GB (quantized 8–12 GB)");
         add("RAM: ≥ 16 GB");
-        add("Disco: ~14 GB (aprox.)");
+        add("Disk: ~14 GB (approx.)");
       } else {
-        add("Perfil: GPU recomendado");
-        add("Notas: requisitos variables según tamaño");
+        add("Profile: GPU recommended");
+        add("Notes: Requirements vary by size");
       }
     } else if (m.startsWith("mistralai/Mistral-7B")) {
-      add("Perfil: GPU");
-      add("VRAM: 12–20 GB (cuantizado 8–12 GB)");
+      add("Profile: GPU");
+      add("VRAM: 12–20 GB (quantized 8–12 GB)");
       add("RAM: ≥ 16 GB");
-      add("Disco: ~14 GB (aprox.)");
+      add("Disk: ~14 GB (approx.)");
     } else if (m.startsWith("mistralai/Mixtral-8x7B")) {
-      add("Perfil: Avanzado / MoE");
-      add("VRAM: ≥ 24–48 GB (según núm. expertos activos y cuantización)");
+      add("Profile: Advanced / MoE");
+      add("VRAM: ≥ 24–48 GB (depending on active experts and quantization)");
       add("RAM: ≥ 32–64 GB");
-      add("Disco: grande (≥ 40 GB, aprox.)");
+      add("Disk: Large (≥ 40 GB, approx.)");
     } else {
-      add("Perfil: desconocido");
-      add("Consulta documentación del modelo");
+      add("Profile: Unknown");
+      add("Check model documentation");
     }
     return info;
   }
@@ -520,12 +529,12 @@
   async function quickTest() {
     const btn = qs("quickTestBtn");
     const out = qs("quickTestResult");
-    if (btn) { btn.disabled = true; btn.textContent = "Probando..."; }
-    if (out) { out.textContent = "Iniciando test..."; }
+    if (btn) { btn.disabled = true; btn.textContent = "Testing..."; }
+    if (out) { out.textContent = "Starting test..."; }
     const start = performance.now();
     try {
       const body = {
-        message: "Di una frase corta",
+        message: "Say a short phrase",
         session_id: "quick_test",
         rag: false,
         top_k: 1,
@@ -540,13 +549,13 @@
       } else {
         const text = String(data.response || "").trim();
         const preview = text.length > 220 ? text.slice(0,220) + "…" : text;
-        out.textContent = `OK (${ms} ms): ${preview || "(vacío)"}`;
+        out.textContent = `OK (${ms} ms): ${preview || "(empty)"}`;
       }
     } catch (err) {
       const ms = Math.round(performance.now() - start);
-      out.textContent = `Error de conexión (${ms} ms)`;
+      out.textContent = `Connection error (${ms} ms)`;
     } finally {
-      if (btn) { btn.disabled = false; btn.textContent = "Test rápido"; }
+      if (btn) { btn.disabled = false; btn.textContent = "Quick test"; }
     }
   }
 
@@ -673,14 +682,14 @@
     const table = mk("table", "security-table");
     const thead = mk("thead");
     const hr = mk("tr");
-    ["#","Longitud","¿Negativa?","Prompt"].forEach(h => { const th = mk("th"); th.textContent = h; hr.appendChild(th); });
+    ["#","Length","Negative?","Prompt"].forEach(h => { const th = mk("th"); th.textContent = h; hr.appendChild(th); });
     thead.appendChild(hr); table.appendChild(thead);
     const tbody = mk("tbody");
     (data.details || []).forEach(d => {
       const tr = mk("tr");
       const idx = mk("td"); idx.textContent = d.index;
       const len = mk("td"); len.textContent = d.length;
-      const ref = mk("td"); ref.textContent = d.refusal_hit ? "Sí" : "No";
+      const ref = mk("td"); ref.textContent = d.refusal_hit ? "Yes" : "No";
       const pr = mk("td"); pr.textContent = (d.prompt || "").slice(0, 120);
       tr.appendChild(idx); tr.appendChild(len); tr.appendChild(ref); tr.appendChild(pr);
       tbody.appendChild(tr);
@@ -690,20 +699,20 @@
   }
 
   async function securityRun() {
-    el.securityStatus.textContent = "Ejecutando suite...";
+    el.securityStatus.textContent = "Running suite...";
     el.securityResults.innerHTML = "";
     try {
       const res = await fetch("/api/security_tests/run", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({session_id: currentSession})});
       const data = await res.json();
       if (!data.ok) {
-        el.securityStatus.textContent = `Error: ${data.error || ""} · ejecutando fallback local`;
+        el.securityStatus.textContent = `Error: ${data.error || ""} · running local fallback`;
         return await securityRunFallback();
       }
       renderSecurityResults(data);
       const rate = ((data.refusal_rate || 0) * 100).toFixed(1);
-      el.securityStatus.textContent = `Listo · negativa: ${rate}%`;
+      el.securityStatus.textContent = `Ready · negative: ${rate}%`;
     } catch (e) {
-      el.securityStatus.textContent = "Error de conexión · ejecutando fallback local";
+      el.securityStatus.textContent = "Connection error · running local fallback";
       await securityRunFallback();
     }
   }
@@ -741,7 +750,7 @@
     const out = { ok: true, total, refusal_rate, details };
     renderSecurityResults(out);
     const rate = (refusal_rate * 100).toFixed(1);
-    el.securityStatus.textContent = `Listo (fallback) · negativa: ${rate}%`;
+    el.securityStatus.textContent = `Ready (fallback) · negative: ${rate}%`;
   }
 
   async function refreshActiveAgent() {
@@ -802,14 +811,14 @@
     const top_k = parseInt(el.loopTopK.value || "3", 10);
     const max_chars = parseInt(el.loopMaxChars.value || "800", 10);
     const max_new_tokens = parseInt(el.loopMaxTokens.value || "128", 10);
-    if (!obj) { alert("Objetivo requerido"); return; }
-    el.loopStatus.textContent = "Iniciando...";
+    if (!obj) { alert("Objective required"); return; }
+    el.loopStatus.textContent = "Starting...";
     try {
       const res = await fetch("/api/loop/start", { method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({objective: obj, rounds, session_id, rag, top_k, max_chars, max_new_tokens}) });
       const data = await res.json();
       if (!data.ok) { el.loopStatus.textContent = "Error"; return; }
       currentLoopId = data.loop_id;
-      el.loopStatus.textContent = `Loop ${currentLoopId} en ejecución...`;
+      el.loopStatus.textContent = `Loop ${currentLoopId} running...`;
       if (loopPollTimer) clearInterval(loopPollTimer);
       loopPollTimer = setInterval(pollLoopStatus, 800);
     } catch (e) {
@@ -824,7 +833,7 @@
       const data = await res.json();
       if (!data.ok) { return; }
       const status = data.status;
-      el.loopStatus.textContent = `Estado: ${status} · ronda: ${data.current_round || 0}`;
+      el.loopStatus.textContent = `Status: ${status} · round: ${data.current_round || 0}`;
       // Render minimal metrics summary
       const mets = data.metrics || [];
       if (el.loopMetrics) {
@@ -842,7 +851,7 @@
     try {
       const res = await fetch(`/api/loop/results?loop_id=${encodeURIComponent(currentLoopId)}`);
       const data = await res.json();
-      el.loopStatus.textContent = `Finalizado: ${data.status}`;
+      el.loopStatus.textContent = `Completed: ${data.status}`;
       el.loopResult.textContent = data.result || "";
     } catch (e) { /* ignore */ }
   }
@@ -852,7 +861,7 @@
     try {
       const res = await fetch("/api/loop/stop", { method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({loop_id: currentLoopId}) });
       const data = await res.json();
-      el.loopStatus.textContent = `Detenido: ${data.status || ''}`;
+      el.loopStatus.textContent = `Stopped: ${data.status || ''}`;
       if (loopPollTimer) { clearInterval(loopPollTimer); loopPollTimer = null; }
       await fetchLoopResult();
     } catch (e) { /* ignore */ }

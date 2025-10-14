@@ -116,13 +116,14 @@ except (ImportError, FileNotFoundError, AttributeError):
 if not HAS_P2P or EnhancedP2PWrapper is None:
     class EnhancedP2PWrapper:
         def __init__(self, node_id, port):
-            print("⚠️  P2P network not available - using placeholder")
+            print("[WARN] P2P network not available - using placeholder")
         
         async def send_message(self, *args, **kwargs):
             return False
             
         def connect_to_peer(self, *args, **kwargs):
             return False
+            
             
         def register_message_handler(self, *args, **kwargs):
             pass
@@ -175,7 +176,7 @@ class MemoryPagingProtocol:
         # Ensure storage directory exists
         os.makedirs(self.disk_storage_path, exist_ok=True)
         
-        print(f"🧠 Memory Paging Protocol initialized with page size {page_size}")
+        print(f"[MEMORY] Memory Paging Protocol initialized with page size {page_size}")
     
     def set_memory_priority(self, memory_id: str, priority: int):
         """Set priority level for a memory entry (1-10, higher is more important)"""
@@ -200,8 +201,8 @@ class MemoryPagingProtocol:
                 try:
                     # In a real implementation, this would send actual notifications
                     # through the P2P network or WebSocket connections
-                    print(f"🔔 Memory notification: {event_type} for {memory_id} -> {subscriber_id}")
-                    
+                    print(f"[NOTIFY] Memory notification: {event_type} for {memory_id} -> {subscriber_id}")
+                        
                     # Send notification via P2P network if available
                     if HAS_P2P and self.memory_node.p2p_network:
                         notification_message = {
@@ -218,7 +219,7 @@ class MemoryPagingProtocol:
                         }
                         await self.memory_node.p2p_network.send_message(subscriber_id, notification_message)
                 except Exception as e:
-                    print(f"⚠️  Failed to notify subscriber {subscriber_id}: {e}")
+                    print(f"[WARN] Failed to notify subscriber {subscriber_id}: {e}")
     
     def page_out_memory(self, memory_entries: List[Dict[str, Any]]) -> List[str]:
         """
@@ -259,10 +260,10 @@ class MemoryPagingProtocol:
                 self.page_table[memory_id] = filename
                 paged_out.append(memory_id)
                 
-                print(f"💾 Paged out memory {memory_id} to {filename}")
+                print(f"[DISK] Paged out memory {memory_id} to {filename}")
                 
             except Exception as e:
-                print(f"⚠️  Failed to page out memory: {e}")
+                print(f"[WARN]  Failed to page out memory: {e}")
         
         return paged_out
     
@@ -298,11 +299,11 @@ class MemoryPagingProtocol:
             # Remove file
             os.remove(filename)
             
-            print(f"📂 Paged in memory {memory_id} from {filename}")
+            print(f"[FOLDER] Paged in memory {memory_id} from {filename}")
             return memory_entry
             
         except Exception as e:
-            print(f"⚠️  Failed to page in memory {memory_id}: {e}")
+            print(f"[WARN]  Failed to page in memory {memory_id}: {e}")
             return None
     
     def get_memory_status(self) -> Dict[str, Any]:
@@ -363,12 +364,12 @@ class MemoryMatrixNode:
                     signing_key=signing_key,
                     encryption_key=encryption_key
                 )
-                print(f"✅ Crypto identity initialized for node {node_id}")
+                print(f"[OK] Crypto identity initialized for node {node_id}")
             except Exception as e:
-                print(f"⚠️  Failed to initialize crypto identity: {e}")
+                print(f"[WARN] Failed to initialize crypto identity: {e}")
                 self.node_identity = None
         else:
-            print("⚠️  Crypto framework not available - using placeholder")
+            print("[WARN] Crypto framework not available - using placeholder")
             self.node_identity = None
         
         # Initialize consensus engine (Phase 3.1)
@@ -399,7 +400,7 @@ class MemoryMatrixNode:
         # This avoids the "no running event loop" error
         self.network_started = False
         
-        print(f"✅ MemoryMatrixNode (Node {node_id}) initialized with φ = {self.phi:.6f}")
+        print(f"[OK] MemoryMatrixNode initialized with phi = {self.phi:.6f}")
     
     def _initialize_consensus_engine(self):
         """Initialize the consensus engine for distributed memory operations (Phase 3.1)"""
@@ -414,12 +415,12 @@ class MemoryMatrixNode:
                     node_id=f"memory_node_{self.node_id}",
                     nodes=memory_nodes
                 )
-                print(f"✅ Consensus engine initialized for node {self.node_id}")
+                print(f"[OK] Consensus engine initialized for node {self.node_id}")
             else:
-                print("⚠️  Consensus framework not available - using standalone mode")
+                print("[WARN] Consensus framework not available - using standalone mode")
                 self.consensus_engine = None
         except Exception as e:
-            print(f"⚠️  Failed to initialize consensus engine: {e}")
+            print(f"[WARN] Failed to initialize consensus engine: {e}")
             self.consensus_engine = None
     
     def _initialize_tor_gateway(self):
@@ -428,12 +429,12 @@ class MemoryMatrixNode:
             if HAS_TOR and TorGateway:
                 # Initialize TOR gateway
                 self.tor_gateway = TorGateway()
-                print(f"✅ TOR gateway initialized for node {self.node_id}")
+                print(f"[OK] TOR gateway initialized for node {self.node_id}")
             else:
-                print("⚠️  TOR framework not available - using standard networking")
+                print("[WARN] TOR framework not available - using standard networking")
                 self.tor_gateway = None
         except Exception as e:
-            print(f"⚠️  Failed to initialize TOR gateway: {e}")
+            print(f"[WARN] Failed to initialize TOR gateway: {e}")
             self.tor_gateway = None
     
     async def start_network(self):
@@ -443,7 +444,7 @@ class MemoryMatrixNode:
         if not self.network_started:
             await self.p2p_network.start_network()
             self.network_started = True
-            print(f"📡 P2P network started for MemoryMatrixNode {self.node_id}")
+            print(f"[NETWORK] MemoryMatrixNode P2P network started")
     
     async def _handle_memory_share_request(self, peer_id: str, message: Dict[str, Any]):
         """
@@ -469,7 +470,7 @@ class MemoryMatrixNode:
                     "timestamp": time.time()
                 }
                 await self.p2p_network.send_message(peer_id, response)
-                print(f"🧠 Node {self.node_id}: Received memory share from {peer_id}")
+                print(f"[MEMORY] Node {self.node_id}: Received memory share from {peer_id}")
         except Exception as e:
             print(f"Failed to handle memory share request: {e}")
     
@@ -493,7 +494,7 @@ class MemoryMatrixNode:
                 "timestamp": time.time()
             }
             await self.p2p_network.send_message(peer_id, response)
-            print(f"🧠 Node {self.node_id}: Synced memory with {peer_id}")
+            print(f"[MEMORY] Node {self.node_id}: Synced memory with {peer_id}")
         except Exception as e:
             print(f"Failed to handle memory sync request: {e}")
     
@@ -515,7 +516,7 @@ class MemoryMatrixNode:
             
             # Add to memory buffer
             self.memory_buffer.append(memory_entry)
-            print(f"🧠 Node {self.node_id}: Imported shared memory entry")
+            print(f"[MEMORY] Node {self.node_id}: Imported shared memory entry")
         except Exception as e:
             print(f"Failed to import shared memory: {e}")
     
@@ -571,9 +572,9 @@ class MemoryMatrixNode:
             
             success = await self.p2p_network.send_message(peer_id, message)
             if success:
-                print(f"📡 Node {self.node_id}: Shared memory with {peer_id}")
+                print(f"[NETWORK] Node {self.node_id}: Shared memory with {peer_id}")
             else:
-                print(f"⚠️  Node {self.node_id}: Failed to share memory with {peer_id}")
+                print(f"[WARN] Node {self.node_id}: Failed to share memory with {peer_id}")
             return success
         except Exception as e:
             print(f"Failed to share memory with peer: {e}")
@@ -608,7 +609,7 @@ class MemoryMatrixNode:
             # If TOR is available, use it for anonymous transmission
             if self.tor_gateway:
                 # In a full implementation, this would route through TOR
-                print(f" onion routing memory to {peer_id}")
+                print(f"[TOR] Routing memory to {peer_id}")
                 # For now, we'll still use the standard P2P network but log TOR usage
                 message = {
                     "type": "memory",
@@ -621,9 +622,9 @@ class MemoryMatrixNode:
                 
                 success = await self.p2p_network.send_message(peer_id, message)
                 if success:
-                    print(f"📡 Node {self.node_id}: Shared memory anonymously with {peer_id} via TOR network")
+                    print(f"[NETWORK] Node {self.node_id}: Shared memory anonymously with {peer_id} via TOR network")
                 else:
-                    print(f"⚠️  Node {self.node_id}: Failed to share memory anonymously with {peer_id}")
+                    print(f"[WARN] Node {self.node_id}: Failed to share memory anonymously with {peer_id}")
                 return success
             else:
                 # Fallback to standard P2P sharing
@@ -651,9 +652,9 @@ class MemoryMatrixNode:
             }
             success = await self.p2p_network.send_message(peer_id, message)
             if success:
-                print(f"📡 Node {self.node_id}: Requested memory sync with {peer_id}")
+                print(f"[NETWORK] Node {self.node_id}: Requested memory sync with {peer_id}")
             else:
-                print(f"⚠️  Node {self.node_id}: Failed to request memory sync with {peer_id}")
+                print(f"[WARN] Node {self.node_id}: Failed to request memory sync with {peer_id}")
             return success
         except Exception as e:
             print(f"Failed to request memory sync: {e}")
@@ -685,10 +686,10 @@ class MemoryMatrixNode:
             self.current_field_state = np.zeros(field_state.size)
         self.current_field_state = field_state.copy()
         
-        # Log storage for debugging
-        if len(self.memory_buffer) % 50 == 0:
-            print(f"🧠 Node {self.node_id}: Stored field state #{len(self.memory_buffer)} "
-                  f"(size: {field_state.size})")
+        # Only log once during initialization to confirm memory system is working
+        # Remove periodic logging to reduce terminal noise
+        if len(self.memory_buffer) == 1:
+            print(f"[MEMORY] MemoryMatrixNode: Memory system initialized and working (stored first field state)")
     
     async def store_field_state_consensus(self, field_state: np.ndarray, metadata: Optional[Dict[str, Any]] = None):
         """
@@ -723,14 +724,14 @@ class MemoryMatrixNode:
             if success:
                 # Store locally if consensus reached
                 self.store_field_state(field_state, metadata)
-                print(f"✅ Field state stored with consensus in node {self.node_id}")
+                print(f"[OK] Field state stored with consensus in node {self.node_id}")
                 return True
             else:
-                print(f"❌ Consensus not reached for field state storage in node {self.node_id}")
+                print(f"[ERROR] Consensus not reached for field state storage in node {self.node_id}")
                 return False
                 
         except Exception as e:
-            print(f"❌ Error in consensus-based field state storage: {e}")
+            print(f"[ERROR] Error in consensus-based field state storage: {e}")
             return False
     
     def weighted_recall(self, query_field: Optional[np.ndarray] = None, 
@@ -933,7 +934,7 @@ class MemoryMatrixNode:
             # Use real p2p_network.send_message() if available
             # This is a simplified example - in practice you would need to
             # properly integrate with the P2P network's message handling
-            print(f"📡 Sending memory share request to {target_node} via P2P network")
+            print(f"[NETWORK] Sending memory share request to {target_node} via P2P network")
             # In a full implementation, you would call:
             # await self.p2p_network.send_message(target_node, message)
             return True
@@ -985,7 +986,7 @@ class MemoryMatrixNode:
         self.last_updated = time.time()
         self.recall_weight = 0.0
         self.decay_factor = 1.0
-        print(f"🔄 Node {self.node_id}: State reset")
+        print(f"[RESET] Node {self.node_id}: State reset")
     
     async def _handle_tor_memory_share_request(self, peer_id: str, message: Dict[str, Any]):
         """
@@ -1011,7 +1012,7 @@ class MemoryMatrixNode:
                     "timestamp": time.time()
                 }
                 await self.p2p_network.send_message(peer_id, response)
-                print(f"🧠 Node {self.node_id}: Received anonymous memory share from {peer_id} via TOR")
+                print(f"[MEMORY] Node {self.node_id}: Received anonymous memory share from {peer_id} via TOR")
         except Exception as e:
             print(f"Failed to handle TOR memory share request: {e}")
     
@@ -1035,7 +1036,7 @@ class MemoryMatrixNode:
                 "timestamp": time.time()
             }
             await self.p2p_network.send_message(peer_id, response)
-            print(f"🧠 Node {self.node_id}: Synced memory anonymously with {peer_id} via TOR")
+            print(f"[MEMORY] Node {self.node_id}: Synced memory anonymously with {peer_id} via TOR")
         except Exception as e:
             print(f"Failed to handle TOR memory sync request: {e}")
     
@@ -1053,10 +1054,10 @@ class MemoryMatrixNode:
                 
             # Process consensus proposal
             await self.consensus_engine.process_proposal(message)
-            print(f"🔄 Processed consensus proposal from {peer_id} in node {self.node_id}")
+            print(f"[CONSENSUS] Processed consensus proposal from {peer_id} in node {self.node_id}")
             
         except Exception as e:
-            print(f"❌ Error handling consensus proposal: {e}")
+            print(f"[ERROR] Error handling consensus proposal: {e}")
     
     async def _handle_consensus_vote(self, peer_id: str, message: Dict[str, Any]):
         """
@@ -1072,10 +1073,10 @@ class MemoryMatrixNode:
                 
             # Process consensus vote
             await self.consensus_engine.process_vote(message)
-            print(f"🔄 Processed consensus vote from {peer_id} in node {self.node_id}")
+            print(f"[CONSENSUS] Processed consensus vote from {peer_id} in node {self.node_id}")
             
         except Exception as e:
-            print(f"❌ Error handling consensus vote: {e}")
+            print(f"[ERROR] Error handling consensus vote: {e}")
     
     async def _handle_consensus_commit(self, peer_id: str, message: Dict[str, Any]):
         """
@@ -1091,10 +1092,10 @@ class MemoryMatrixNode:
                 
             # Process consensus commit
             await self.consensus_engine.process_commit(message)
-            print(f"🔄 Processed consensus commit from {peer_id} in node {self.node_id}")
+            print(f"[CONSENSUS] Processed consensus commit from {peer_id} in node {self.node_id}")
             
         except Exception as e:
-            print(f"❌ Error handling consensus commit: {e}")
+            print(f"[ERROR] Error handling consensus commit: {e}")
 
 # Example usage and testing
 if __name__ == "__main__":
@@ -1129,4 +1130,4 @@ if __name__ == "__main__":
     metrics = memory_node.get_memory_metrics()
     print(f"Memory metrics: {metrics}")
     
-    print("\n✅ MemoryMatrixNode tests completed successfully!")
+    print("\n[OK] MemoryMatrixNode tests completed successfully!")

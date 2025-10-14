@@ -54,7 +54,7 @@ def check_matrix_status(filepath="./matrix_data.json"):
                     if row_node == col_node:
                         print(f"{'●':<15}", end="")
                     elif col_node in matrix.get(row_node, []):
-                        print(f"{'✓':<15}", end="")
+                        print(f"{'[OK]':<15}", end="")
                     else:
                         print(f"{'✗':<15}", end="")
                 print()

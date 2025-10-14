@@ -9,7 +9,7 @@ async def test_nat():
     print("Testing NAT Traversal Manager...")
     try:
         nat = NATTraversalManager()
-        print("  ✓ NAT Traversal Manager created successfully")
+        print("  [OK] NAT Traversal Manager created successfully")
         return True
     except Exception as e:
         print(f"  ✗ NAT Traversal Manager failed: {e}")

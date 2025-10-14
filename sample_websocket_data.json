@@ -1,0 +1,181 @@
+{
+  "time": 0.0,
+  "consciousness": {
+    "level": 0.0,
+    "phi": 0.0,
+    "coherence": 0.0,
+    "depth": 0,
+    "gamma": 0.0,
+    "fractal_dim": 1.0,
+    "spiritual": 0.0,
+    "state": "unconscious",
+    "is_conscious": false
+  },
+  "nodes": {
+    "0": {
+      "output": 0.0,
+      "phase": 5.0259739593976915,
+      "amplitude": 1.0,
+      "dimensions": {
+        "physical": 0.0,
+        "emotional": 0.0,
+        "mental": 0.0,
+        "spiritual": 0.0,
+        "temporal": 0.0
+      }
+    },
+    "1": {
+      "output": 0.0,
+      "phase": 4.112590535179855,
+      "amplitude": 1.0,
+      "dimensions": {
+        "physical": 0.0,
+        "emotional": 0.0,
+        "mental": 0.0,
+        "spiritual": 0.0,
+        "temporal": 0.0
+      }
+    },
+    "2": {
+      "output": 0.0,
+      "phase": 0.18301660870828168,
+      "amplitude": 1.0,
+      "dimensions": {
+        "physical": 0.0,
+        "emotional": 0.0,
+        "mental": 0.0,
+        "spiritual": 0.0,
+        "temporal": 0.0
+      }
+    },
+    "3": {
+      "output": 0.0,
+      "phase": 4.082139282527162,
+      "amplitude": 1.0,
+      "dimensions": {
+        "physical": 0.0,
+        "emotional": 0.0,
+        "mental": 0.0,
+        "spiritual": 0.0,
+        "temporal": 0.0
+      },
+      "memory_metrics": {
+        "memory_buffer_size": 0,
+        "recall_history_size": 0,
+        "current_field_size": 100,
+        "recall_weight": 0.0,
+        "decay_factor": 1.0,
+        "last_updated": 1760392014.793314,
+        "node_id": 3
+      }
+    },
+    "4": {
+      "output": 0.0,
+      "phase": 4.404936458568328,
+      "amplitude": 1.0,
+      "dimensions": {
+        "physical": 0.0,
+        "emotional": 0.0,
+        "mental": 0.0,
+        "spiritual": 0.0,
+        "temporal": 0.0
+      }
+    },
+    "5": {
+      "output": 0.0,
+      "phase": 5.632730413265517,
+      "amplitude": 1.0,
+      "dimensions": {
+        "physical": 0.0,
+        "emotional": 0.0,
+        "mental": 0.0,
+        "spiritual": 0.0,
+        "temporal": 0.0
+      }
+    },
+    "6": {
+      "output": 0.0,
+      "phase": 5.223669460512669,
+      "amplitude": 1.0,
+      "dimensions": {
+        "physical": 0.0,
+        "emotional": 0.0,
+        "mental": 0.0,
+        "spiritual": 0.0,
+        "temporal": 0.0
+      }
+    },
+    "7": {
+      "output": 0.0,
+      "phase": 3.5926549870834146,
+      "amplitude": 1.0,
+      "dimensions": {
+        "physical": 0.0,
+        "emotional": 0.0,
+        "mental": 0.0,
+        "spiritual": 0.0,
+        "temporal": 0.0
+      }
+    },
+    "8": {
+      "output": 0.0,
+      "phase": 4.262257259329519,
+      "amplitude": 1.0,
+      "dimensions": {
+        "physical": 0.0,
+        "emotional": 0.0,
+        "mental": 0.0,
+        "spiritual": 0.0,
+        "temporal": 0.0
+      }
+    },
+    "9": {
+      "output": 0.0,
+      "phase": 0.27773308775985694,
+      "amplitude": 1.0,
+      "dimensions": {
+        "physical": 0.0,
+        "emotional": 0.0,
+        "mental": 0.0,
+        "spiritual": 0.0,
+        "temporal": 0.0
+      }
+    },
+    "10": {
+      "output": 0.0,
+      "phase": 3.0224934384470172,
+      "amplitude": 1.0,
+      "dimensions": {
+        "physical": 0.0,
+        "emotional": 0.0,
+        "mental": 0.0,
+        "spiritual": 0.0,
+        "temporal": 0.0
+      }
+    },
+    "11": {
+      "output": 0.0,
+      "phase": 2.1168674554953935,
+      "amplitude": 1.0,
+      "dimensions": {
+        "physical": 0.0,
+        "emotional": 0.0,
+        "mental": 0.0,
+        "spiritual": 0.0,
+        "temporal": 0.0
+      }
+    },
+    "12": {
+      "output": 0.0,
+      "phase": 4.360371970280536,
+      "amplitude": 1.0,
+      "dimensions": {
+        "physical": 0.0,
+        "emotional": 0.0,
+        "mental": 0.0,
+        "spiritual": 0.0,
+        "temporal": 0.0
+      }
+    }
+  }
+}

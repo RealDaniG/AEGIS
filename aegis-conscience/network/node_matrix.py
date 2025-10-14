@@ -128,7 +128,7 @@ class NodeMatrixManager:
             
             # Check if we're already connected
             if self._is_connected_to(node_id):
-                print(f"   ✓ Already connected to {node_id}")
+                print(f"   [OK] Already connected to {node_id}")
                 continue
             
             # Try to connect
