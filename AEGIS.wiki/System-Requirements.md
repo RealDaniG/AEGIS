@@ -1,5 +1,15 @@
 # AEGIS System Requirements
 
+## 📋 v3.2 Release Notes
+
+### Enhanced Unified Dashboard and Missing Feature Integration
+- **Complete Mirror Loop Implementation**: Full AI reflection system with recursive analysis capabilities
+- **RAG Document Management**: Comprehensive document upload, listing, and management system
+- **RSS Feed Integration**: Online stream keyword search and URL connection system
+- **Memory Node Integration**: Full integration with Open AGI memory matrix and real-time memory metrics display
+- **Enhanced UI/UX**: Larger and more centered metrics sections for improved visualization
+- **Port Consolidation**: All services now running on unified port 457 for simplified access
+
 ## Overview
 
 This document outlines the comprehensive requirements for the AEGIS (Autonomous Governance and Intelligent Systems) platform. It covers functional requirements, non-functional requirements, system constraints, and dependencies necessary for successful deployment and operation of the consciousness-aware distributed AI system.

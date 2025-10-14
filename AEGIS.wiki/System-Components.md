@@ -1,5 +1,15 @@
 # Component Architecture
 
+## 📋 v3.2 Release Notes
+
+### Enhanced Unified Dashboard and Missing Feature Integration
+- **Complete Mirror Loop Implementation**: Full AI reflection system with recursive analysis capabilities
+- **RAG Document Management**: Comprehensive document upload, listing, and management system
+- **RSS Feed Integration**: Online stream keyword search and URL connection system
+- **Memory Node Integration**: Full integration with Open AGI memory matrix and real-time memory metrics display
+- **Enhanced UI/UX**: Larger and more centered metrics sections for improved visualization
+- **Port Consolidation**: All services now running on unified port 457 for simplified access
+
 AEGIS consists of eight core components that work together to create a consciousness-aware distributed AI system. Each component has a specific role and functionality within the overall architecture.
 
 ## 1. P2P Networking and Privacy Layer (Open-A.G.I)
