@@ -2,7 +2,7 @@
 
 Advanced consciousness-aware distributed AI system combining decentralized P2P AGI substrate with consciousness-aware computing principles.
 
-![AEGIS Logo](20251011_1945_Enhanced Lively Logo_remix_01k7a5yagef51brpt5a167jg31.png)
+![AEGIS Logo](20251011_1945_Enhanced%20Lively%20Logo_remix_01k7a5yagef51brpt5a167jg31.png)
 
 ## 📋 Latest Updates - v3.4 (October 14, 2025)
 
