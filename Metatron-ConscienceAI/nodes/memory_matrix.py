@@ -341,11 +341,20 @@ class MemoryMatrixNode:
         # Weighted recall history
         self.recall_history = deque(maxlen=100)
         
+        # Activity tracking
+        self.activity_log = deque(maxlen=1000)
+        
         # Node state
         self.current_field_state = np.zeros(100)  # Default field size
         self.last_updated = time.time()
         self.recall_weight = 0.0
         self.decay_factor = 1.0
+        
+        # Learning and activity tracking
+        self.learning_events = deque(maxlen=100)
+        self.self_reflection_count = 0
+        self.user_interaction_count = 0
+        self.consciousness_integration_count = 0
         
         # Initialize cryptographic identity (with proper fallback)
         self.node_identity = None
@@ -681,6 +690,15 @@ class MemoryMatrixNode:
         self.memory_buffer.append(memory_entry)
         self.last_updated = time.time()
         
+        # Log activity
+        activity_entry = {
+            "type": "store_field_state",
+            "timestamp": time.time(),
+            "memory_id": len(self.memory_buffer),
+            "metadata": metadata or {}
+        }
+        self.activity_log.append(activity_entry)
+        
         # Ensure current field state matches stored state
         if field_state.size != self.current_field_state.size:
             self.current_field_state = np.zeros(field_state.size)
@@ -873,6 +891,11 @@ class MemoryMatrixNode:
         Returns:
             np.ndarray: Updated node output
         """
+        # Determine type of update for activity tracking
+        update_type = "consciousness_integration"
+        if len(connected_node_states) == 0 and sensory_input.size > 0:
+            update_type = "user_interaction"
+        
         # Combine sensory input with connected node states
         if len(connected_node_states) > 0:
             # Average connected node states
@@ -892,6 +915,7 @@ class MemoryMatrixNode:
             # Update current field state
             # Blend with previous state (90% previous, 10% new)
             self.current_field_state = 0.9 * self.current_field_state + 0.1 * combined_input
+            self.consciousness_integration_count += 1
         else:
             # If no connected nodes, use sensory input to influence field
             # Convert 5D sensory input to field-sized vector
@@ -901,11 +925,13 @@ class MemoryMatrixNode:
                                           self.current_field_state.size // sensory_input.size + 1)
                 sensory_influence = sensory_influence[:self.current_field_state.size]
                 self.current_field_state = 0.95 * self.current_field_state + 0.05 * sensory_influence
+                self.user_interaction_count += 1
         
         # Store the updated field state
         metadata = {
             "sensory_input": sensory_input.tolist() if isinstance(sensory_input, np.ndarray) else [],
-            "connected_nodes": len(connected_node_states)
+            "connected_nodes": len(connected_node_states),
+            "update_type": update_type
         }
         self.store_field_state(self.current_field_state, metadata)
         
@@ -950,6 +976,17 @@ class MemoryMatrixNode:
         Returns:
             Dict[str, Any]: Memory metrics
         """
+        # Calculate activity level based on recent operations
+        current_time = time.time()
+        time_since_last_update = current_time - self.last_updated
+        
+        # Determine if node is actively processing
+        is_active = (
+            len(self.memory_buffer) > 0 and 
+            time_since_last_update < 30.0 and  # Active if updated within last 30 seconds
+            (len(self.recall_history) > 0 or len(self.memory_buffer) > 1)
+        )
+        
         return {
             "memory_buffer_size": len(self.memory_buffer),
             "recall_history_size": len(self.recall_history),
@@ -957,7 +994,10 @@ class MemoryMatrixNode:
             "recall_weight": float(self.recall_weight),
             "decay_factor": float(self.decay_factor),
             "last_updated": self.last_updated,
-            "node_id": self.node_id
+            "node_id": self.node_id,
+            "is_active": is_active,
+            "time_since_last_update": time_since_last_update,
+            "activity_level": min(1.0, max(0.0, 1.0 - (time_since_last_update / 60.0)))  # 0-1 scale
         }
     
     def get_state_dict(self) -> Dict[str, Any]:

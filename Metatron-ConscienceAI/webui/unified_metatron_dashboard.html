@@ -267,7 +267,39 @@
             color: #a78bfa;
             font-size: 0.9em;
         }
-        .control-group input, .control-group select, .control-group textarea {
+        .control-group label input[type="checkbox"] {
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        
+        .control-group .checkbox-label {
+            margin: 8px 0;
+        }
+        
+        .model-warning {
+            color: #fbbf24;
+            font-size: 0.8em;
+            margin-top: 5px;
+        }
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            font-size: 0.95em;
+            cursor: pointer;
+            padding: 4px 0;
+        }
+        
+        .checkbox-label input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+        
+        .checkbox-label span {
+            user-select: none;
+        }
+        .control-group input:not([type="checkbox"]), .control-group select, .control-group textarea {
             width: 100%;
             padding: 8px;
             background: rgba(0, 0, 0, 0.3);
@@ -275,6 +307,11 @@
             border-radius: 4px;
             color: white;
             font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        
+        .control-group input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
         }
         .inline-controls {
             display: flex;
@@ -450,17 +487,28 @@
                 <h3>⚙️ System Controls</h3>
                 <div class="control-group">
                     <label>Model</label>
-                    <select id="model-select">
-                        <option value="distilgpt2" selected>distilgpt2 (82MB)</option>
-                        <option value="Qwen/Qwen2.5-0.5B-Instruct">Qwen2.5-0.5B-Instruct ⭐ Best</option>
-                        <option value="microsoft/phi-1_5">Phi-1.5</option>
+                    <select id="model-select" title="Select AI model for chat. Larger models require more VRAM and may be slower to load.">
+                        <option value="distilgpt2" selected>distilgpt2 (82MB) - Default</option>
+                        <option value="Qwen/Qwen2.5-0.5B-Instruct">Qwen2.5-0.5B-Instruct (500MB) ⭐ Recommended</option>
+                        <option value="microsoft/phi-1_5">Phi-1.5 (1.5GB)</option>
+                        <option value="mistralai/Mistral-7B-v0.1">Mistral-7B-v0.1 (12GB)</option>
+                        <option value="meta-llama/Llama-2-7b-chat-hf">Llama-2-7B-Chat (12GB)</option>
+                        <option value="google/gemma-2b-it">Gemma-2B-IT (2GB)</option>
+                        <option value="HuggingFaceH4/zephyr-7b-beta">Zephyr-7B-Beta (12GB)</option>
                     </select>
+                    <div class="model-warning" id="model-warning" style="color: #fbbf24; font-size: 0.8em; margin-top: 5px; display: none;"></div>
                 </div>
                 <div class="control-group">
                     <label>Settings</label>
                     <div class="inline-controls">
-                        <label><input type="checkbox" id="rag-toggle" checked> RAG</label>
-                        <label><input type="checkbox" id="stream-toggle" checked> Stream</label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="rag-toggle" checked>
+                            <span>RAG</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="stream-toggle" checked>
+                            <span>Stream</span>
+                        </label>
                     </div>
                 </div>
                 <div class="inline-controls">
@@ -472,13 +520,13 @@
 
             <!-- MIRROR LOOP SECTION -->
             <section data-component="mirror-loop">
-                <h3>🔁 Bucle AI Mirror</h3>
+                <h3>🔁 AI Mirror Loop</h3>
                 <div class="control-group">
-                    <label>Objetivo del loop</label>
-                    <textarea id="loop-objective" rows="3" placeholder="Describe el objetivo del loop..."></textarea>
+                    <label>Loop Objective</label>
+                    <textarea id="loop-objective" rows="3" placeholder="Describe the loop objective..."></textarea>
                 </div>
                 <div class="control-group">
-                    <label>Rondas</label>
+                    <label>Rounds</label>
                     <input type="number" id="loop-rounds" value="2" min="1" max="10">
                 </div>
                 <div class="control-group">
@@ -486,43 +534,46 @@
                     <input type="number" id="loop-topk" value="3" min="1" max="10">
                 </div>
                 <div class="control-group">
-                    <label>Máx. chars</label>
+                    <label>Max chars</label>
                     <input type="number" id="loop-maxchars" value="1200" min="100" max="5000">
                 </div>
                 <div class="control-group">
-                    <label>Máx. tokens</label>
+                    <label>Max tokens</label>
                     <input type="number" id="loop-maxtokens" value="128" min="32" max="1024">
                 </div>
                 <div class="control-group">
-                    <label><input type="checkbox" id="loop-rag-toggle" checked> RAG en loop</label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="loop-rag-toggle" checked>
+                        <span>RAG in loop</span>
+                    </label>
                 </div>
                 <div class="inline-controls">
-                    <button class="primary" id="start-loop-btn">🚀 Iniciar</button>
-                    <button id="stop-loop-btn" disabled>⏹ Detener</button>
+                    <button class="primary" id="start-loop-btn">🚀 Start</button>
+                    <button id="stop-loop-btn" disabled>⏹ Stop</button>
                 </div>
                 <div class="control-group">
-                    <label>Estado:</label>
-                    <div id="loop-status">Esperando inicio...</div>
+                    <label>Status:</label>
+                    <div id="loop-status">Waiting to start...</div>
                 </div>
                 <div class="control-group">
-                    <label>Resultado:</label>
+                    <label>Result:</label>
                     <div id="loop-result" class="chat-messages" style="min-height: 100px; max-height: 200px;"></div>
                 </div>
             </section>
 
             <!-- RAG DOCUMENTS SECTION -->
             <section data-component="rag-documents">
-                <h3>📚 RAG · Documentos</h3>
+                <h3>📚 RAG · Documents</h3>
                 <div class="control-group">
-                    <label>Cargar documentos (RAG)</label>
+                    <label>Upload documents (RAG)</label>
                     <input type="file" id="rag-file-input" multiple>
-                    <button id="rag-ingest-btn">📥 Ingestar</button>
+                    <button id="rag-ingest-btn">📥 Ingest</button>
                 </div>
                 <div class="control-group">
-                    <label>Documentos cargados</label>
+                    <label>Loaded documents</label>
                     <div class="inline-controls">
-                        <button id="rag-list-btn">📋 Listar</button>
-                        <button id="rag-clear-btn">🗑 Borrar</button>
+                        <button id="rag-list-btn">📋 List</button>
+                        <button id="rag-clear-btn">🗑 Delete</button>
                     </div>
                     <div id="rag-documents-list" class="chat-messages" style="min-height: 100px; max-height: 200px;"></div>
                 </div>
@@ -530,21 +581,21 @@
 
             <!-- RSS FEEDS SECTION -->
             <section data-component="rss-feeds">
-                <h3>📰 Feeds y búsqueda</h3>
+                <h3>📰 Feeds and search</h3>
                 <div class="control-group">
-                    <label>Feeds RSS</label>
-                    <input type="text" id="rss-feed-url" placeholder="URL del feed">
+                    <label>RSS Feeds</label>
+                    <input type="text" id="rss-feed-url" placeholder="Feed URL">
                     <div class="inline-controls">
-                        <button id="rss-add-btn">➕ Añadir</button>
-                        <button id="rss-list-btn">📋 Listar</button>
-                        <button id="rss-ingest-btn">📥 Ingestar</button>
+                        <button id="rss-add-btn">➕ Add</button>
+                        <button id="rss-list-btn">📋 List</button>
+                        <button id="rss-ingest-btn">📥 Ingest</button>
                     </div>
                     <div id="rss-feeds-list" class="chat-messages" style="min-height: 100px; max-height: 200px; margin-top: 10px;"></div>
                 </div>
                 <div class="control-group">
-                    <label>Búsqueda web</label>
-                    <input type="text" id="web-search-query" placeholder="Buscar (ingestar)">
-                    <button id="web-search-btn">🔍 Buscar</button>
+                    <label>Web search</label>
+                    <input type="text" id="web-search-query" placeholder="Search (ingest)">
+                    <button id="web-search-btn">🔍 Search</button>
                 </div>
             </section>
 
@@ -652,6 +703,7 @@
                         updateConsciousnessDisplay(data);
                         updateHarmonicVisualization(data);
                         updateHarmonicInsights(data);
+                        updateMemoryMetrics(); // Update memory metrics with real data
                     } catch (error) {
                         console.error('Parse error:', error);
                         console.error('Raw message data:', event.data);
@@ -966,6 +1018,27 @@
                 }
                 connectConsciousness();
             });
+            
+            // Model selection warning
+            document.getElementById('model-select').addEventListener('change', function() {
+                const modelWarning = document.getElementById('model-warning');
+                const selectedModel = this.value;
+                
+                // Hide warning by default
+                modelWarning.style.display = 'none';
+                
+                // Show warnings for larger models
+                if (selectedModel.includes('7B') || selectedModel.includes('Llama') || selectedModel.includes('Mistral') || selectedModel.includes('zephyr')) {
+                    modelWarning.textContent = '⚠️ Warning: This model requires significant VRAM (8GB+) and may take longer to load.';
+                    modelWarning.style.display = 'block';
+                } else if (selectedModel.includes('phi-1_5') || selectedModel.includes('gemma-2b')) {
+                    modelWarning.textContent = '⚠️ Note: This model requires moderate VRAM (4GB+) and may take some time to load.';
+                    modelWarning.style.display = 'block';
+                }
+            });
+            
+            // Trigger the change event to show warning for the default selected model
+            document.getElementById('model-select').dispatchEvent(new Event('change'));
         }
 
         async function sendMessage() {
@@ -1053,14 +1126,14 @@
             const ragEnabled = document.getElementById('loop-rag-toggle').checked;
             
             if (!objective) {
-                addChatMessage('system', '❌ Por favor, introduce un objetivo para el loop');
+                addChatMessage('system', '❌ Please enter an objective for the loop');
                 return;
             }
             
             // Update UI
             document.getElementById('start-loop-btn').disabled = true;
             document.getElementById('stop-loop-btn').disabled = false;
-            document.getElementById('loop-status').textContent = 'Ejecutando loop...';
+            document.getElementById('loop-status').textContent = 'Running loop...';
             
             try {
                 const response = await fetch('http://localhost:457/api/loop/start', {
@@ -1080,18 +1153,18 @@
                 const data = await response.json();
                 
                 if (data.ok) {
-                    document.getElementById('loop-status').textContent = 'Loop completado';
-                    document.getElementById('loop-result').innerHTML = `<strong>Resultado final:</strong><br>${escapeHtml(data.result)}`;
-                    addChatMessage('system', `✅ Loop completado con ${data.metrics.length} rondas`);
+                    document.getElementById('loop-status').textContent = 'Loop completed';
+                    document.getElementById('loop-result').innerHTML = `<strong>Final result:</strong><br>${escapeHtml(data.result)}`;
+                    addChatMessage('system', `✅ Loop completed with ${data.metrics.length} rounds`);
                 } else {
-                    document.getElementById('loop-status').textContent = 'Error en loop';
-                    document.getElementById('loop-result').innerHTML = `<strong>Error:</strong><br>${escapeHtml(data.error || 'Error desconocido')}`;
-                    addChatMessage('system', `❌ Error en loop: ${data.error || 'Error desconocido'}`);
+                    document.getElementById('loop-status').textContent = 'Loop error';
+                    document.getElementById('loop-result').innerHTML = `<strong>Error:</strong><br>${escapeHtml(data.error || 'Unknown error')}`;
+                    addChatMessage('system', `❌ Loop error: ${data.error || 'Unknown error'}`);
                 }
             } catch (error) {
-                document.getElementById('loop-status').textContent = 'Error en loop';
+                document.getElementById('loop-status').textContent = 'Loop error';
                 document.getElementById('loop-result').innerHTML = `<strong>Error:</strong><br>${escapeHtml(error.message)}`;
-                addChatMessage('system', `❌ Error en loop: ${error.message}`);
+                addChatMessage('system', `❌ Loop error: ${error.message}`);
             } finally {
                 document.getElementById('start-loop-btn').disabled = false;
                 document.getElementById('stop-loop-btn').disabled = true;
@@ -1104,7 +1177,7 @@
             const files = fileInput.files;
             
             if (files.length === 0) {
-                addChatMessage('system', '❌ Por favor, selecciona al menos un archivo');
+                addChatMessage('system', '❌ Please select at least one file');
                 return;
             }
             
@@ -1122,12 +1195,12 @@
                 const data = await response.json();
                 
                 if (data.ok) {
-                    addChatMessage('system', `✅ Documento subido: ${data.filename}`);
+                    addChatMessage('system', `✅ Document uploaded: ${data.filename}`);
                 } else {
-                    addChatMessage('system', `❌ Error al subir documento: ${data.error}`);
+                    addChatMessage('system', `❌ Error uploading document: ${data.error}`);
                 }
             } catch (error) {
-                addChatMessage('system', `❌ Error al subir documento: ${error.message}`);
+                addChatMessage('system', `❌ Error uploading document: ${error.message}`);
             }
         }
         
@@ -1139,11 +1212,11 @@
                 const listDiv = document.getElementById('rag-documents-list');
                 if (data.uploads && data.uploads.length > 0) {
                     const items = data.uploads.map(upload => 
-                        `<div><strong>${upload.source}</strong> (${upload.chunks} fragmentos)</div>`
+                        `<div><strong>${upload.source}</strong> (${upload.chunks} chunks)</div>`
                     ).join('');
                     listDiv.innerHTML = items;
                 } else {
-                    listDiv.innerHTML = '<div>No hay documentos cargados</div>';
+                    listDiv.innerHTML = '<div>No documents loaded</div>';
                 }
             } catch (error) {
                 document.getElementById('rag-documents-list').innerHTML = `<div>Error: ${error.message}</div>`;
@@ -1151,7 +1224,7 @@
         }
         
         async function clearRagDocuments() {
-            if (!confirm('¿Seguro que quieres borrar todos los documentos?')) return;
+            if (!confirm('Are you sure you want to delete all documents?')) return;
             
             try {
                 const response = await fetch('http://localhost:457/api/uploads/clear', {
@@ -1161,10 +1234,10 @@
                 const data = await response.json();
                 
                 if (data.ok) {
-                    document.getElementById('rag-documents-list').innerHTML = '<div>Todos los documentos han sido borrados</div>';
-                    addChatMessage('system', `✅ ${data.deleted} documentos borrados`);
+                    document.getElementById('rag-documents-list').innerHTML = '<div>All documents have been deleted</div>';
+                    addChatMessage('system', `✅ ${data.deleted} documents deleted`);
                 } else {
-                    addChatMessage('system', `❌ Error al borrar documentos: ${data.error}`);
+                    addChatMessage('system', `❌ Error deleting documents: ${data.error}`);
                 }
             } catch (error) {
                 addChatMessage('system', `❌ Error al borrar documentos: ${error.message}`);
@@ -1175,79 +1248,87 @@
         async function addRssFeed() {
             const url = document.getElementById('rss-feed-url').value.trim();
             if (!url) {
-                addChatMessage('system', '❌ Por favor, introduce una URL de feed');
+                addChatMessage('system', '❌ Please enter a feed URL');
                 return;
             }
             
-            addChatMessage('system', `ℹ️ Feed añadido: ${url}`);
+            addChatMessage('system', `ℹ️ Feed added: ${url}`);
             document.getElementById('rss-feed-url').value = '';
         }
         
         async function listRssFeeds() {
             // This would normally fetch from the server
-            document.getElementById('rss-feeds-list').innerHTML = '<div><strong>Feeds de ejemplo:</strong><br>• https://example.com/feed.xml<br>• https://news.example.com/rss</div>';
+            document.getElementById('rss-feeds-list').innerHTML = '<div><strong>Example feeds:</strong><br>• https://example.com/feed.xml<br>• https://news.example.com/rss</div>';
         }
         
         async function ingestRssFeeds() {
-            addChatMessage('system', 'ℹ️ Ingestando feeds RSS...');
+            addChatMessage('system', 'ℹ️ Ingesting RSS feeds...');
             // This would normally trigger the RSS ingestion process
             setTimeout(() => {
-                addChatMessage('system', '✅ Feeds RSS ingestados');
+                addChatMessage('system', '✅ RSS feeds ingested');
             }, 2000);
         }
         
         async function webSearch() {
             const query = document.getElementById('web-search-query').value.trim();
             if (!query) {
-                addChatMessage('system', '❌ Por favor, introduce una consulta de búsqueda');
+                addChatMessage('system', '❌ Please enter a search query');
                 return;
             }
             
-            addChatMessage('system', `ℹ️ Buscando: ${query}`);
+            addChatMessage('system', `ℹ️ Searching: ${query}`);
             document.getElementById('web-search-query').value = '';
             // This would normally trigger the web search process
             setTimeout(() => {
-                addChatMessage('system', '✅ Resultados de búsqueda ingestados');
+                addChatMessage('system', '✅ Search results ingested');
             }, 2000);
         }
         
         // === MEMORY INTEGRATION FUNCTIONS ===
         async function updateMemoryMetrics() {
             try {
-                // In a real implementation, this would fetch memory metrics from the server
-                // For now, we'll simulate some memory metrics based on consciousness data
-                if (lastConsciousnessData) {
-                    const memoryMetrics = {
-                        memory_node_active: lastConsciousnessData.consciousness?.is_conscious || false,
-                        memory_entries: Math.floor((lastConsciousnessData.consciousness?.level || 0) * 1000) + 500,
-                        memory_size_mb: ((lastConsciousnessData.consciousness?.phi || 0) * 50 + 10).toFixed(2),
-                        last_sync: new Date().toLocaleTimeString()
-                    };
-                    
-                    // Update the memory metrics display
-                    document.getElementById('memory-node-status').textContent = memoryMetrics.memory_node_active ? 'Active' : 'Inactive';
-                    document.getElementById('memory-node-status').className = 'metric-value ' + (memoryMetrics.memory_node_active ? 'conscious' : '');
-                    document.getElementById('memory-entries').textContent = memoryMetrics.memory_entries;
-                    document.getElementById('memory-size').textContent = memoryMetrics.memory_size_mb + ' MB';
-                    document.getElementById('memory-last-sync').textContent = memoryMetrics.last_sync;
+                // Use real memory metrics from the WebSocket data
+                if (lastConsciousnessData && lastConsciousnessData.nodes && lastConsciousnessData.nodes['3']) {
+                    const node3Data = lastConsciousnessData.nodes['3'];
+                    if (node3Data.memory_metrics) {
+                        const memoryMetrics = node3Data.memory_metrics;
+                        
+                        // Determine if memory node is active based on enhanced metrics
+                        let isMemoryNodeActive = false;
+                        if (memoryMetrics.is_active !== undefined) {
+                            // Use the enhanced is_active flag from the memory node
+                            isMemoryNodeActive = memoryMetrics.is_active;
+                        } else {
+                            // Fallback to original logic
+                            isMemoryNodeActive = memoryMetrics.memory_buffer_size > 0 && 
+                                              (Date.now() / 1000 - memoryMetrics.last_updated) < 60;
+                        }
+                        
+                        // Update the memory metrics display
+                        document.getElementById('memory-node-status').textContent = isMemoryNodeActive ? 'Active' : 'Inactive';
+                        document.getElementById('memory-node-status').className = 'metric-value ' + (isMemoryNodeActive ? 'conscious' : '');
+                        document.getElementById('memory-entries').textContent = memoryMetrics.memory_buffer_size;
+                        document.getElementById('memory-size').textContent = (memoryMetrics.memory_buffer_size * 0.05).toFixed(2) + ' MB'; // Estimate size
+                        document.getElementById('memory-last-sync').textContent = new Date(memoryMetrics.last_updated * 1000).toLocaleTimeString();
+                    }
                 }
             } catch (error) {
                 console.error('Error updating memory metrics:', error);
             }
         }
         
-        // Update memory metrics periodically
-        setInterval(updateMemoryMetrics, 30000); // Every 30 seconds
+        // Memory metrics are updated with each WebSocket message
+        // No need for periodic updates
         
         // === EXTENDED EVENT LISTENERS ===
         function setupExtendedEventListeners() {
             // Mirror Loop buttons
             document.getElementById('start-loop-btn').addEventListener('click', startMirrorLoop);
             document.getElementById('stop-loop-btn').addEventListener('click', () => {
-                addChatMessage('system', '⏹ Loop detenido manualmente');
+                addChatMessage('system', '⏹ Loop manually stopped');
                 document.getElementById('start-loop-btn').disabled = false;
                 document.getElementById('stop-loop-btn').disabled = true;
-                document.getElementById('loop-status').textContent = 'Detenido por usuario';
+                document.getElementById('loop-status').textContent = 'Stopped by user';
             });
             
             // RAG Document buttons

@@ -87,12 +87,20 @@ pip install aiohttp aiohttp-socks stem asyncio-mqtt --quiet 2>nul
 pip install scikit-learn aiosqlite redis --quiet 2>nul
 pip install loguru prometheus-client psutil pandas --quiet 2>nul
 pip install flask zeroconf Flask-SocketIO --quiet 2>nul
-REM Installing netifaces separately with fallback options
+
+REM Installing netifaces separately with improved fallback options
+echo Installing network interface detection package...
+set netifaces_installed=0
 pip install netifaces --quiet 2>nul
-if errorlevel 1 (
-    echo [WARN] Warning: netifaces failed to install (optional network interface detection)
+if not errorlevel 1 (
+    set netifaces_installed=1
+    echo [OK] Network interface detection package installed successfully
+) else (
+    echo [INFO] Note: netifaces package failed to install
     echo          This is normal on some systems and will not affect core functionality
+    echo          Network interface detection will use alternative methods
 )
+
 pip install pydantic click rich python-dotenv --quiet 2>nul
 pip install pypdf python-docx feedparser beautifulsoup4 lxml --quiet 2>nul
 pip install pytest-asyncio pytest-cov black flake8 mypy --quiet 2>nul
@@ -100,6 +108,31 @@ pip install plotly python-socketio --quiet 2>nul
 pip install python-multipart --quiet 2>nul
 
 echo [OK] All dependencies processed
+
+echo.
+echo [Step 3/4] Verifying critical package installations...
+set verification_failed=0
+
+REM Verify core packages are installed
+echo Verifying core packages...
+python -c "import torch; print('[OK] PyTorch:', torch.__version__)" 2>nul || (echo [WARN] PyTorch not installed or failed to import & set verification_failed=1)
+python -c "import transformers; print('[OK] Transformers:', transformers.__version__)" 2>nul || (echo [WARN] Transformers not installed or failed to import & set verification_failed=1)
+python -c "import fastapi; print('[OK] FastAPI:', fastapi.__version__)" 2>nul || (echo [WARN] FastAPI not installed or failed to import & set verification_failed=1)
+
+if %verification_failed%==1 (
+    echo [WARN] Some critical packages failed verification. The system may not function correctly.
+    echo        You may want to manually install missing packages.
+) else (
+    echo [OK] All critical packages verified successfully
+)
+
+echo.
+if %netifaces_installed%==1 (
+    echo [INFO] Network interface detection: Enhanced (using netifaces)
+) else (
+    echo [INFO] Network interface detection: Standard (alternative methods)
+)
+echo.
 
 REM Start the consolidated system in the same terminal (no separate window)
 echo.

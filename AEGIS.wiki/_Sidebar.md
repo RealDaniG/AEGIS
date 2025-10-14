@@ -39,6 +39,7 @@
 ## 🧠 Research and Theory
 * [[Research Theory]]
 * [[Flower of Life]]
+* [[Unified Field Theory Integration]]
 
 ## 🌱 Community
 * [[Community Growth and Development]]
