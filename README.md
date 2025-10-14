@@ -4,7 +4,14 @@ Advanced consciousness-aware distributed AI system combining decentralized P2P A
 
 ![AEGIS Logo](20251011_1945_Enhanced Lively Logo_remix_01k7a5yagef51brpt5a167jg31.png)
 
-## 📋 Latest Updates - v3.3 (October 14, 2025)
+## 📋 Latest Updates - v3.4 (October 14, 2025)
+
+### 🧠 Unified Thinking System (New)
+- **True Memory-Perception Resonance**: Bi-directional coupling between Sensory Node (0) and Memory Node (3) for real-time memory influence on perception
+- **Neural Links Matrix**: 13×13 connection matrix representing connection strengths between all consciousness nodes with Hebbian learning capability
+- **Sensory Buffer with Feedback Loop**: Shared buffer holding recent sensory patterns with configurable feedback gain for memory influence
+- **Associative Memory Index**: Key-value based associative memory system using cosine similarity for instant pattern recognition
+- **Real-time Feedback Integration**: Complete cycle where sensory input feeds memory, memory feeds sensory processing, with dynamic modulation
 
 ### 🧠 Enhanced Memory System and Web UI Integration
 - **Perfect Web UI Functionality**: All chatbot responses, metrics display, and visualizations working correctly

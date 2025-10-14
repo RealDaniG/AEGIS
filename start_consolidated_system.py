@@ -24,6 +24,11 @@ class ConsolidatedLauncher:
         self.web_server_process = None
         self.open_stream_ui = open_stream_ui
         
+        # Sensory buffer for memory binding (implementation of unified thinking)
+        self.sensory_buffer = []
+        self.max_buffer_size = 256
+        self.feedback_gain = 0.1
+        
     def signal_handler(self, signum, frame):
         """Handle Ctrl+C gracefully"""
         print("\n\n[SHUTDOWN] Shutting down AEGIS system...")

@@ -16,12 +16,22 @@ import logging
 import time
 from typing import Dict, List, Optional, Any
 import signal
+import numpy as np
 
 from unified_api.server import app as unified_api_app
 from unified_api.client import UnifiedAPIClient
 from unified_components.network import UnifiedP2PNetwork
 from unified_components.consensus import UnifiedConsensus
 from cross_system_comm.protocols import CrossSystemCommunicator
+
+# Import memory binding system
+try:
+    from memory_binding import NeuralLinksMatrix
+    HAS_MEMORY_BINDING = True
+except ImportError:
+    HAS_MEMORY_BINDING = False
+    NeuralLinksMatrix = None
+    print("[WARN] Memory binding system not available")
 
 logger = logging.getLogger(__name__)
 
@@ -39,11 +49,16 @@ class UnifiedSystemCoordinator:
         # System state
         self.running = False
         self.start_time = 0.0
+        
+        # Neural links matrix for inter-node connections
+        self.neural_links = NeuralLinksMatrix(13) if HAS_MEMORY_BINDING and NeuralLinksMatrix else None
+        
         self.system_metrics = {
             "uptime": 0.0,
             "components_initialized": 0,
             "total_decisions": 0,
-            "messages_processed": 0
+            "messages_processed": 0,
+            "neural_links_active": HAS_MEMORY_BINDING
         }
         
         # Graceful shutdown handling

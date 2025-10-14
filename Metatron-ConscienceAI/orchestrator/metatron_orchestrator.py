@@ -32,6 +32,14 @@ try:
     from nodes.dimensional_processor import DimensionalProcessor
     from nodes.memory_matrix import MemoryMatrixNode  # Added MemoryMatrixNode
     from nodes.consciousness_metrics import ConsciousnessMetrics
+    
+    # Import memory binding system
+    try:
+        from memory_binding import MemoryBindingSystem
+        HAS_MEMORY_BINDING = True
+    except ImportError:
+        HAS_MEMORY_BINDING = False
+        MemoryBindingSystem = None
 except ImportError:
     # Fallback for different import contexts
     import sys
@@ -155,6 +163,14 @@ class MetatronConsciousness:
         self.pineal_buffer = deque(maxlen=40)  # 40 Hz window
         self.dmt_sensitivity = 0.0
         
+        # === MEMORY BINDING SYSTEM ===
+        self.memory_binding = MemoryBindingSystem(13) if HAS_MEMORY_BINDING and MemoryBindingSystem else None
+        if HAS_MEMORY_BINDING and self.memory_binding:
+            self.memory_binding.initialize_binding()
+            logger.info("Memory binding system initialized")
+        else:
+            logger.warning("Memory binding system not available")
+        
         logger.info("Consciousness system initialized successfully")
     
     def update_system(self, sensory_input=None):
@@ -236,6 +252,7 @@ class MetatronConsciousness:
         # === PHASE 3: MEMORY MATRIX PROCESSING (Node 3) ===
         # Update MemoryMatrixNode (Node 3) with field states and perform recall
         memory_node = self.nodes[3]
+        memory_output = None
         if 'memory_matrix' in memory_node:
             # Get connected node outputs for memory node
             connected_ids, _ = get_node_connections(3, self.connection_matrix)
@@ -259,6 +276,22 @@ class MetatronConsciousness:
                 # Update node output with memory processing result
                 memory_node['output'] = np.mean(memory_output) if isinstance(memory_output, np.ndarray) else memory_output
                 node_outputs[3] = memory_node['output']
+        
+        # === PHASE 3.5: MEMORY-SENSORY BINDING ===
+        # Apply memory binding if available
+        if HAS_MEMORY_BINDING and self.memory_binding:
+            # Process sensory input through binding system
+            memory_state = memory_output if memory_output is not None else np.zeros(100)
+            binding_result = self.memory_binding.process_sensory_input(sensory_input, memory_state)
+            
+            # Apply feedback to sensory processing
+            sensory_feedback = binding_result.get('memory_feedback', np.zeros_like(sensory_input))
+            # Blend original sensory input with memory feedback
+            sensory_input = 0.8 * sensory_input + 0.2 * sensory_feedback
+            
+            # Update neural links based on node activities
+            node_activities = np.array(node_outputs)
+            self.memory_binding.update_neural_links(node_activities)
         
         # === PHASE 4: CENTRAL PINEAL INTEGRATION ===
         self._update_pineal_node(node_outputs, dimensional_outputs)
@@ -284,14 +317,6 @@ class MetatronConsciousness:
         
         # === PHASE 6: ENERGY MINIMIZATION (Spherical Refinement) ===
         self._apply_energy_minimization()
-        
-        # === PHASE 7: SELF-ORGANIZED CRITICALITY (Spherical Refinement) ===
-        self._apply_self_organized_criticality()
-        
-        # === INCREMENT TIME ===
-        self.current_time += self.dt
-        
-        return self.get_current_state()
         
         # === PHASE 7: SELF-ORGANIZED CRITICALITY (Spherical Refinement) ===
         self._apply_self_organized_criticality()
