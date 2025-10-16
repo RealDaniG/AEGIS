@@ -15,7 +15,6 @@ UPCOMING V4
 ## COMING
 - Quantum consciousness processing capabilities
 - Neuromorphic computing support
-- Direct brain-computer interface (experimental)
 - Edge device optimization
 
 ### Changed
