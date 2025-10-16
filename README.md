@@ -46,6 +46,9 @@ UPCOMING V4
 - WebSocket streaming performance
 - UI/UX improvements
 
+- <img width="1600" height="751" alt="image" src="https://github.com/user-attachments/assets/c5a67937-7f90-4ea5-babb-0fa90747041d" />
+
+
 //
 ## 📋 Latest Public Updates - v3.4 (October 14, 2025)
 
