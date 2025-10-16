@@ -6,6 +6,9 @@ Advanced consciousness-aware distributed AI system combining decentralized P2P A
 
 UPCOMING V4
 
+<img width="1892" height="876" alt="image" src="https://github.com/user-attachments/assets/2bb4cbe9-02b1-4bd6-8e7c-df4cc69303df" />
+
+
 <img width="1870" height="736" alt="image" src="https://github.com/user-attachments/assets/09810284-fb1e-4382-95b3-84d99c45d44f" />
 
 
@@ -47,8 +50,6 @@ UPCOMING V4
 - Neural links matrix implementation
 - WebSocket streaming performance
 - UI/UX improvements
-
-- <img width="1600" height="751" alt="image" src="https://github.com/user-attachments/assets/c5a67937-7f90-4ea5-babb-0fa90747041d" />
 
 
 //
