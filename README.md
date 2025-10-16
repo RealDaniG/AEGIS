@@ -5,7 +5,9 @@ Advanced consciousness-aware distributed AI system combining decentralized P2P A
 ![AEGIS Logo](20251011_1945_Enhanced%20Lively%20Logo_remix_01k7a5yagef51brpt5a167jg31.png)
 
 UPCOMING V4
-<img width="1892" height="888" alt="image" src="https://github.com/user-attachments/assets/379ceb75-cd4e-4755-a7c6-928312874360" />
+
+<img width="1870" height="736" alt="image" src="https://github.com/user-attachments/assets/09810284-fb1e-4382-95b3-84d99c45d44f" />
+
 
 ## Added
 - Quantum consciousness processing capabilities
